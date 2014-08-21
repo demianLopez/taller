@@ -7,10 +7,14 @@
 
 #include <iostream>
 using namespace std;
+#include <SDL.h>
 
-int main(){
-	cout << "!!!Hello World!!! 2" << endl; // prints !!!Hello World!!!
-	return 0;
+//SDL_Window* gWindow = NULL;
+
+int main(int argc, char *argv[]){
+	SDL_Init( SDL_INIT_EVERYTHING );
+
 }
+
 
 
