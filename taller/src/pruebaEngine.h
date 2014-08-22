@@ -19,6 +19,8 @@ private:
 	virtual void render();
 	virtual void update(SDL_Event e);
 
+
+
 };
 
 #endif /* PRUEBAENGINE_H_ */
