@@ -6,6 +6,7 @@
  */
 
 #include "Game.h"
+#include "SDL.h"
 
 Game::Game(const char *title) {
 	//Seteo por default
@@ -39,7 +40,6 @@ void Game::start(){
 			gScreenSurface = SDL_GetWindowSurface(gWindow);
 			this->gameCicle();
 		}
-
 	}
 
 }
