@@ -9,14 +9,18 @@
 #define GAME_H_
 
 #include <iostream>
-#include "SDL.h"
+#include "LibIncludes.h"
+#include "GameElements.h"
 
+class Graphics;
 
 class Game {
 public:
 	Game(const char* title);
 	void setScreenSize(int height, int size);
 	void start();
+	void endGame();
+
 	virtual ~Game();
 private:
 	int height;
@@ -24,15 +28,20 @@ private:
 
 	const char* title;
 
+	bool quit;
+
 	SDL_Window *gWindow;
 	SDL_Surface *gScreenSurface;
+	SDL_Renderer* gRenderer;
 
 	void gameCicle();
 	void gameClose();
 
 protected:
-	virtual void render() = 0;
+	virtual void render(Graphics *g) = 0;
 	virtual void update(SDL_Event e) = 0;
+	virtual void init() { };
+	virtual void exit() { };
 };
 
 #endif /* GAME_H_ */

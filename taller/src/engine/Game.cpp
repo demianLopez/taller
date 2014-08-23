@@ -6,7 +6,8 @@
  */
 
 #include "Game.h"
-#include "SDL.h"
+#include "Image.h"
+#include "Graphics.h"
 
 Game::Game(const char *title) {
 	//Seteo por default
@@ -15,6 +16,7 @@ Game::Game(const char *title) {
 	this->gWindow = NULL;
 	this->gScreenSurface = NULL;
 	this->title = title;
+	this->quit = false;
 }
 
 void Game::setScreenSize(int height, int width){
@@ -37,32 +39,62 @@ void Game::start(){
 		else
 		{
 			//Get window surface
-			gScreenSurface = SDL_GetWindowSurface(gWindow);
-			this->gameCicle();
+			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+            SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+
+            //Initialize PNG loading
+
+            int imgFlags = IMG_INIT_PNG;
+            if( !( IMG_Init( imgFlags ) & imgFlags ) )
+            {
+                printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+                success = false;
+            } else {
+            	this->gScreenSurface = SDL_GetWindowSurface(gWindow);
+
+            	//Definimos GAME ELEMENTS
+            	GameElements::gScreenSurface = this->gScreenSurface;
+            	GameElements::gRenderer = this->gRenderer;
+
+            	//Arrancamos el gameCicle
+            	this->gameCicle();
+            }
 		}
 	}
 
 }
 
+void Game::endGame(){
+	this->quit = true;
+}
+
 void Game::gameCicle(){
-	bool quit = false;
+
+	Graphics *g = new Graphics();
+
 	SDL_Event e;
 
-	while(!quit) {
+	//Antes de arrancar el ciclo, llamamos a la funcion init
+	this->init();
+
+	while(!this->quit) {
 		while( SDL_PollEvent( &e ) != 0 ){
 			//User requests quit
 			if( e.type == SDL_QUIT ){
-				quit = true;
+				this->endGame();
 			} else {
 				this->update(e);
 			}
 		}
 
-		this->render();
+		SDL_RenderClear(gRenderer);
+		this->render(g);
 
-		SDL_UpdateWindowSurface(gWindow);
+		SDL_RenderPresent(gRenderer);
+		//SDL_UpdateWindowSurface(gWindow);
 	}
 
+	this->exit();
 	this->gameClose();
 }
 
@@ -72,11 +104,14 @@ void Game::gameClose(){
 	gHelloWorld = NULL;
 	*/
 	//Destroy window
-	SDL_DestroyWindow(gWindow);
-	gWindow = NULL;
+	SDL_DestroyWindow(this->gWindow);
+	SDL_DestroyRenderer(this->gRenderer);
+	this->gWindow = NULL;
+	this->gRenderer = NULL;
 
 	//Quit SDL subsystems
 	SDL_Quit();
+	IMG_Quit();
 }
 
 Game::~Game() {

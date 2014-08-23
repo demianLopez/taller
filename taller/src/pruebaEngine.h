@@ -9,6 +9,8 @@
 #define PRUEBAENGINE_H_
 
 #include "engine/Game.h"
+#include "engine/Image.h"
+
 using namespace std;
 
 class pruebaEngine: public Game {
@@ -16,11 +18,11 @@ public:
 	pruebaEngine(const char *title);
 	virtual ~pruebaEngine();
 private:
-	virtual void render();
 	virtual void update(SDL_Event e);
+	virtual void render(Graphics *g);
+	virtual void init();
 
-
-
+	Image* testImage;
 };
 
 #endif /* PRUEBAENGINE_H_ */

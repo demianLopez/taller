@@ -12,9 +12,9 @@ using namespace std;
 
 int main(int argc, char *argv[]){
 
-	pruebaEngine *pE = new pruebaEngine("Juego prueba");
+	pruebaEngine *pE = new pruebaEngine("Il");
 	pE->start();
-	cout<<"Termino";
+	cout<<"Termino2";
 	return 0;
 }
 

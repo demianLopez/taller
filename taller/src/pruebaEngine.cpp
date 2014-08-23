@@ -6,14 +6,19 @@
  */
 
 #include "pruebaEngine.h"
+#include "engine/Graphics.h";
 
 pruebaEngine::pruebaEngine(const char *title) : Game(title) {
-	// TODO Auto-generated constructor stub
+
 
 }
 
-void pruebaEngine::render(){
+void pruebaEngine::init(){
+	this->testImage = new Image("Resources/a.png");
+}
 
+void pruebaEngine::render(Graphics *g){
+	g->drawImage(testImage);
 }
 
 void pruebaEngine::update(SDL_Event e){
