@@ -18,7 +18,7 @@ class Game {
 public:
 	Game(const char* title);
 	void setScreenSize(int height, int size);
-	void start();
+	bool start();
 	void endGame();
 
 	virtual ~Game();

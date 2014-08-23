@@ -36,6 +36,7 @@ SDL_Surface* Image::loadSurface(const char *pFile)
 
     //Load image at specified path
     SDL_Surface* loadedSurface = IMG_Load(pFile);
+
     if( loadedSurface == NULL )
     {
         printf( "Unable to load image %s! SDL_image Error: %s\n", pFile, IMG_GetError() );
@@ -54,6 +55,14 @@ SDL_Surface* Image::loadSurface(const char *pFile)
     }
 
     return optimizedSurface;
+}
+
+int Image::getHeight(){
+	return this->gImage->h;
+}
+
+int Image::getWidth(){
+	return this->gImage->w;
 }
 
 Image::~Image() {

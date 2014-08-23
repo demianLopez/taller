@@ -13,7 +13,44 @@ Graphics::Graphics() {
 }
 
 void Graphics::drawImage(Image *image){
-	SDL_RenderCopy(GameElements::gRenderer, image->getTexture(), NULL, NULL );
+	this->drawImage(image, 0, 0);
+}
+
+void Graphics::drawImage(Image *image, int xo, int yo){
+	this->drawImage(image, xo, yo, image->getWidth(), image->getHeight());
+}
+
+void Graphics::drawImage(Image *image, int xo, int yo, int dx, int dy){
+	SDL_Rect imageData = {xo, yo, dx, dy};
+	SDL_RenderCopy(GameElements::gRenderer, image->getTexture(), NULL, &imageData);
+}
+
+void Graphics::drawFillRect(int xo, int yo, int dx, int dy){
+    SDL_Rect fillRect = { xo, yo, dx, dy};
+    //SDL_SetRenderDrawColor( gRenderer, 0xFF, 0x00, 0x00, 0xFF );
+    SDL_RenderFillRect(GameElements::gRenderer, &fillRect );
+}
+
+void Graphics::drawRect(int xo, int yo, int dx, int dy){
+    SDL_Rect outlineRect = { xo, yo, dx, dy };
+    //SDL_SetRenderDrawColor( gRenderer, 0x00, 0xFF, 0x00, 0xFF );
+    SDL_RenderDrawRect(GameElements::gRenderer, &outlineRect );
+}
+
+void Graphics::drawLine(int xo, int yo, int xf, int yf){
+	SDL_RenderDrawLine(GameElements::gRenderer, xo, yo, xf, yf);
+}
+
+void Graphics::drawPoint(int x, int y){
+	SDL_RenderDrawPoint(GameElements::gRenderer, x, y);
+}
+
+void Graphics::setColor(unsigned char red, unsigned char green, unsigned char blue){
+	this->setColor(red, green, blue, 255);
+}
+
+void Graphics::setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha){
+	SDL_SetRenderDrawColor(GameElements::gRenderer, red, green, blue, alpha);
 }
 
 Graphics::~Graphics() {

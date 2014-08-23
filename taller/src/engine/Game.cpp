@@ -15,6 +15,7 @@ Game::Game(const char *title) {
 	this->width = 800;
 	this->gWindow = NULL;
 	this->gScreenSurface = NULL;
+	this->gRenderer = NULL;
 	this->title = title;
 	this->quit = false;
 }
@@ -24,7 +25,7 @@ void Game::setScreenSize(int height, int width){
 	this->width = width;
 }
 
-void Game::start(){
+bool Game::start(){
 	bool success = true;
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
 		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
@@ -62,6 +63,7 @@ void Game::start(){
 		}
 	}
 
+	return success;
 }
 
 void Game::endGame(){
@@ -87,7 +89,9 @@ void Game::gameCicle(){
 			}
 		}
 
+		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
 		SDL_RenderClear(gRenderer);
+
 		this->render(g);
 
 		SDL_RenderPresent(gRenderer);

@@ -22,6 +22,9 @@ public:
 
 	//Convierte SDL_Surface en SDL texture!
 	static SDL_Texture *textureFromSurface(SDL_Surface *pSurface);
+
+	int getHeight();
+	int getWidth();
 private:
 	SDL_Surface *loadSurface(const char* pFile);
 

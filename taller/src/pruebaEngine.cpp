@@ -6,11 +6,10 @@
  */
 
 #include "pruebaEngine.h"
-#include "engine/Graphics.h";
+#include "engine/Graphics.h"
 
 pruebaEngine::pruebaEngine(const char *title) : Game(title) {
-
-
+	this->testImage = NULL;
 }
 
 void pruebaEngine::init(){
@@ -18,7 +17,14 @@ void pruebaEngine::init(){
 }
 
 void pruebaEngine::render(Graphics *g){
-	g->drawImage(testImage);
+	g->drawImage(testImage, 0, 50);
+	g->drawFillRect(20, 20, 20, 20);
+	g->drawRect(60, 20, 20, 20);
+
+
+	g->setColor(255, 0, 0);
+	g->drawLine(20, 60, 80, 60);
+	g->drawPoint(90, 60);
 }
 
 void pruebaEngine::update(SDL_Event e){
