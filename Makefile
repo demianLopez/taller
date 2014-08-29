@@ -19,11 +19,11 @@ OBJECTS = $(GRAPHIC_LIBS)
 
 all: $(EXEC) 
 		
-sprite.o: sprite/sprite.h sprite/sprite.cpp
-	$(CC) $(SDL_CPPFLAGS) -c sprite/sprite.cpp
+sprite.o: libs/sprite/sprite.h libs/sprite/sprite.cpp
+	$(CC) $(SDL_CPPFLAGS) -c libs/sprite/sprite.cpp
 		
-window.o: window/window.h window/window.cpp
-	$(CC) $(SDL_CPPFLAGS) -c window/window.cpp
+window.o: libs/window/window.h libs/window/window.cpp
+	$(CC) $(SDL_CPPFLAGS) -c libs/window/window.cpp
 		
 $(EXEC): jump_test.cpp $(OBJECTS)
 	$(CC) $(SDL_LDFLAGS) $(OBJECTS) jump_test.cpp -o $(EXEC)

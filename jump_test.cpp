@@ -8,7 +8,7 @@ int main() {
 
 	Window w = Window("Megaman NT Warriors", 1000, 1000, 0);
 
-	Sprite s = Sprite("./n.png", w);
+	Sprite s = Sprite("./res/players/player1.png", w);
 	SDL_Rect a = SDL_Rect();
 
 	bool running = true;
