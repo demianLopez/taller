@@ -16,12 +16,20 @@ void Graphics::drawImage(Image *image){
 	this->drawImage(image, 0, 0);
 }
 
+void Graphics::drawImage(Image *image, int xo, int yo, float rotation){
+	this->drawImage(image, xo, yo, image->getWidth(), image->getHeight(), rotation);
+}
+
 void Graphics::drawImage(Image *image, int xo, int yo){
-	this->drawImage(image, xo, yo, image->getWidth(), image->getHeight());
+	this->drawImage(image, xo, yo, image->getWidth(), image->getHeight(), 0);
+}
+
+void Graphics::drawImage(Image *image, int xo, int yo, int dx, int dy, float rotation){
+	image->render(xo, yo, dx, dy, rotation);
 }
 
 void Graphics::drawImage(Image *image, int xo, int yo, int dx, int dy){
-	image->render(xo, yo, dx, dy);
+	this->drawImage(image, xo, yo, dx, dy, 0);
 }
 
 void Graphics::drawFillRect(int xo, int yo, int dx, int dy){

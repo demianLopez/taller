@@ -26,6 +26,8 @@ private:
 
 	Image* testImage;
 	SpriteSheet *spriteSheet;
+
+	float rotation;
 };
 
 #endif /* PRUEBAENGINE_H_ */

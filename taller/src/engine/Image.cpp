@@ -13,6 +13,8 @@ Image::Image(const char* pFile) {
 
 	this->height = gImage->h;
 	this->width = gImage->w;
+
+	this->centerRotation = NULL;
 }
 
 Image::Image(){
@@ -21,11 +23,26 @@ Image::Image(){
 
 	this->height = 0;
 	this->width = 0;
+
+	this->centerRotation = NULL;
 }
 
 void Image::render(int xo, int yo, int dx, int dy){
 	SDL_Rect imageData = {xo, yo, dx, dy};
-	SDL_RenderCopy(GameElements::gRenderer, this->gImageTexture, NULL, &imageData);
+	this->render(xo, yo, dx, dy, 0);
+}
+
+void Image::render(int xo, int yo, int dx, int dy, float rotation){
+	SDL_Rect imageData = {xo, yo, dx, dy};
+	this->completeRender(&imageData, rotation, SDL_FLIP_NONE);
+}
+
+void Image::completeRender(SDL_Rect *imageData, float angle, SDL_RendererFlip flip){
+	SDL_RenderCopyEx(GameElements::gRenderer, this->gImageTexture, this->getImagePortion(), imageData, angle, this->centerRotation, flip);
+}
+
+SDL_Rect * Image::getImagePortion(){
+	return NULL;
 }
 
 SDL_Texture* Image::getImageTexture(){

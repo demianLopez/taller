@@ -23,6 +23,10 @@ public:
 	//Renderiza en la pantalla una imagen comenzada a dibujar desde x, y y de longitud dx dy
 	void drawImage(Image *image, int xo, int yo, int dx, int dy);
 
+	void drawImage(Image *image, int xo, int yo, int dx, int dy, float rotation);
+
+	void drawImage(Image *image, int xo, int yo, float rotation);
+
 	//Dibuja un rectamgulo lleno (pintado interiormente)
 	void drawFillRect(int xo, int yo, int dx, int dy);
 

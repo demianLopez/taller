@@ -18,7 +18,9 @@ public:
 
 	virtual ~Image();
 
-	virtual void render(int xo, int yo, int dx, int dy);
+	void render(int xo, int yo, int dx, int dy);
+	void render(int xo, int yo, int dx, int dy, float rotation);
+
 	//Convierte SDL_Surface en SDL texture!
 	static SDL_Texture *textureFromSurface(SDL_Surface *pSurface);
 
@@ -26,8 +28,13 @@ public:
 
 	int getHeight();
 	int getWidth();
+
+	void setRotationPoint(int x, int y);
+
 private:
 	SDL_Surface *loadSurface(const char* pFile);
+	SDL_Point* centerRotation;
+	void completeRender(SDL_Rect *imageData, float angle, SDL_RendererFlip flip);
 protected:
 	Image();
 
@@ -35,6 +42,9 @@ protected:
 	int width;
 	SDL_Texture* gImageTexture;
 	SDL_Surface *gImage;
+
+	virtual SDL_Rect * getImagePortion();
+
 };
 
 
