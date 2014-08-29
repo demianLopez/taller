@@ -10,6 +10,7 @@
 
 #include "engine/Game.h"
 #include "engine/Image.h"
+#include "engine/SpriteSheet.h"
 
 using namespace std;
 
@@ -21,8 +22,10 @@ private:
 	virtual void update(SDL_Event e);
 	virtual void render(Graphics *g);
 	virtual void init();
+	virtual void exit();
 
 	Image* testImage;
+	SpriteSheet *spriteSheet;
 };
 
 #endif /* PRUEBAENGINE_H_ */

@@ -21,8 +21,7 @@ void Graphics::drawImage(Image *image, int xo, int yo){
 }
 
 void Graphics::drawImage(Image *image, int xo, int yo, int dx, int dy){
-	SDL_Rect imageData = {xo, yo, dx, dy};
-	SDL_RenderCopy(GameElements::gRenderer, image->getTexture(), NULL, &imageData);
+	image->render(xo, yo, dx, dy);
 }
 
 void Graphics::drawFillRect(int xo, int yo, int dx, int dy){

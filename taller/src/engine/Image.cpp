@@ -7,13 +7,28 @@
 
 #include "Image.h"
 
-
 Image::Image(const char* pFile) {
 	this->gImage = this->loadSurface(pFile);
 	this->gImageTexture = Image::textureFromSurface(this->gImage);
+
+	this->height = gImage->h;
+	this->width = gImage->w;
 }
 
-SDL_Texture* Image::getTexture(){
+Image::Image(){
+	this->gImage = NULL;
+	this->gImageTexture = NULL;
+
+	this->height = 0;
+	this->width = 0;
+}
+
+void Image::render(int xo, int yo, int dx, int dy){
+	SDL_Rect imageData = {xo, yo, dx, dy};
+	SDL_RenderCopy(GameElements::gRenderer, this->gImageTexture, NULL, &imageData);
+}
+
+SDL_Texture* Image::getImageTexture(){
 	return this->gImageTexture;
 }
 
@@ -58,11 +73,11 @@ SDL_Surface* Image::loadSurface(const char *pFile)
 }
 
 int Image::getHeight(){
-	return this->gImage->h;
+	return this->height;
 }
 
 int Image::getWidth(){
-	return this->gImage->w;
+	return this->width;
 }
 
 Image::~Image() {

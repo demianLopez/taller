@@ -14,6 +14,12 @@ pruebaEngine::pruebaEngine(const char *title) : Game(title) {
 
 void pruebaEngine::init(){
 	this->testImage = new Image("Resources/a.png");
+	this->spriteSheet = new SpriteSheet("Resources/tilea3.png", 64 ,64);
+}
+
+void pruebaEngine::exit(){
+	delete testImage;
+	delete spriteSheet;
 }
 
 void pruebaEngine::render(Graphics *g){
@@ -21,6 +27,8 @@ void pruebaEngine::render(Graphics *g){
 	g->drawFillRect(20, 20, 20, 20);
 	g->drawRect(60, 20, 20, 20);
 
+	Image * subSprite = spriteSheet->getSubImage(0, 0);
+	g->drawImage(subSprite, 20, 20);
 
 	g->setColor(255, 0, 0);
 	g->drawLine(20, 60, 80, 60);

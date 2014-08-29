@@ -31,7 +31,7 @@ bool Game::start(){
 		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
 		success = false;
 	} else {
-		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN );
 		if(gWindow == NULL)
 		{
 			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
@@ -42,8 +42,6 @@ bool Game::start(){
 			//Get window surface
 			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
             SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-
-            //Initialize PNG loading
 
             int imgFlags = IMG_INIT_PNG;
             if( !( IMG_Init( imgFlags ) & imgFlags ) )
