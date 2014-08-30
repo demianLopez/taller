@@ -11,8 +11,9 @@ EXEC = Snowbros
 SDL_CPPFLAGS = $(CPPFLAGS) `sdl2-config --cflags`
 SDL_LDFLAGS = `sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf $(CPPLDFLAGS)
 
-GRAPHIC_LIBS = sprite.o window.o
+BOX_LDFLAGS = $(SDL_LDFLAGS) -lBox2D
 
+GRAPHIC_LIBS = sprite.o window.o
 
 #ALL
 OBJECTS = $(GRAPHIC_LIBS)
@@ -26,7 +27,7 @@ window.o: libs/window/window.h libs/window/window.cpp
 	$(CC) $(SDL_CPPFLAGS) -c libs/window/window.cpp
 		
 $(EXEC): jump_test.cpp $(OBJECTS)
-	$(CC) $(SDL_LDFLAGS) $(OBJECTS) jump_test.cpp -o $(EXEC)
+	$(CC) $(BOX_LDFLAGS) $(OBJECTS) jump_test.cpp -o $(EXEC)
 
 clean:
 	rm -r *.o *.save *~ $(EXEC)
