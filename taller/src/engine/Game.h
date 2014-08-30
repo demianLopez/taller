@@ -18,6 +18,9 @@ class Game {
 public:
 	Game(const char* title);
 	void setScreenSize(int height, int size);
+	unsigned int getFPS();
+	unsigned int getElapsedTime();
+
 	bool start();
 	void endGame();
 
@@ -29,7 +32,6 @@ private:
 	const char* title;
 
 	bool quit;
-
 	SDL_Window *gWindow;
 	SDL_Surface *gScreenSurface;
 	SDL_Renderer* gRenderer;
@@ -37,9 +39,15 @@ private:
 	void gameCicle();
 	void gameClose();
 
+	int fps;
+	int renderCount;
+
+	unsigned int lastRenderTime;
+	unsigned int lastFPSUpdateTime;
+
 protected:
 	virtual void render(Graphics *g) = 0;
-	virtual void update(SDL_Event e) = 0;
+	virtual void update(SDL_Event e, unsigned int delta) = 0;
 	virtual void init() { };
 	virtual void exit() { };
 };

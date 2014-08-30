@@ -19,7 +19,7 @@ public:
 	pruebaEngine(const char *title);
 	virtual ~pruebaEngine();
 private:
-	virtual void update(SDL_Event e);
+	virtual void update(SDL_Event e, unsigned int delta);
 	virtual void render(Graphics *g);
 	virtual void init();
 	virtual void exit();

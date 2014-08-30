@@ -10,6 +10,7 @@
 
 pruebaEngine::pruebaEngine(const char *title) : Game(title) {
 	this->testImage = NULL;
+	this->spriteSheet = NULL;
 	rotation = 0;
 }
 
@@ -31,14 +32,16 @@ void pruebaEngine::render(Graphics *g){
 	Image * subSprite = spriteSheet->getSubImage(0, 0);
 	g->drawImage(subSprite, 20, 20, rotation);
 
+
 	g->setColor(255, 0, 0);
+
 	g->drawLine(20, 60, 80, 60);
 	g->drawPoint(90, 60);
 
 	rotation+=0.05f;
 }
 
-void pruebaEngine::update(SDL_Event e){
+void pruebaEngine::update(SDL_Event e, unsigned int delta){
 	if( e.type == SDL_KEYDOWN){
 		if(e.key.keysym.sym == SDLK_UP){
 			cout<<"Presiono arriba";

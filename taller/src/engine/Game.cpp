@@ -18,11 +18,23 @@ Game::Game(const char *title) {
 	this->gRenderer = NULL;
 	this->title = title;
 	this->quit = false;
+	this->fps = 0;
+	this->renderCount = 0;
+	this->lastRenderTime = 0;
+	this->lastFPSUpdateTime = 0;
 }
 
 void Game::setScreenSize(int height, int width){
 	this->height = height;
 	this->width = width;
+}
+
+unsigned int Game::getFPS(){
+	return this->fps;
+}
+
+unsigned int Game::getElapsedTime(){
+	return SDL_GetTicks();
 }
 
 bool Game::start(){
@@ -31,7 +43,7 @@ bool Game::start(){
 		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
 		success = false;
 	} else {
-		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
 		if(gWindow == NULL)
 		{
 			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
@@ -41,6 +53,7 @@ bool Game::start(){
 		{
 			//Get window surface
 			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+
             SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
             int imgFlags = IMG_INIT_PNG;
@@ -57,6 +70,7 @@ bool Game::start(){
 
             	//Arrancamos el gameCicle
             	this->gameCicle();
+
             }
 		}
 	}
@@ -83,17 +97,31 @@ void Game::gameCicle(){
 			if( e.type == SDL_QUIT ){
 				this->endGame();
 			} else {
-				this->update(e);
+				int delta = SDL_GetTicks() - this->lastRenderTime;
+				this->update(e, delta);
+				this->lastRenderTime = SDL_GetTicks();
+
 			}
 		}
 
 		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
 		SDL_RenderClear(gRenderer);
 
+
 		this->render(g);
+
+
+		this->renderCount++;
+
+		if((SDL_GetTicks() - this->lastFPSUpdateTime) > 1000){
+			this->fps = this->renderCount;
+			this->renderCount = 0;
+			this->lastFPSUpdateTime = SDL_GetTicks();
+		}
 
 		SDL_RenderPresent(gRenderer);
 		//SDL_UpdateWindowSurface(gWindow);
+
 	}
 
 	this->exit();
