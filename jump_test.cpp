@@ -22,54 +22,54 @@
 #include "libs/window/window.h"
 #include "libs/sprite/sprite.h"
 
+//Constantes del mundo
+const float32 timeStep = 1 / 20.0; 	//Tiempo de la simulacion del mundo
+const int32 velocityIterations = 8;
+const int32 positionIterations = 3;
+
 int main() {
 
+	//Inicializo los componentes de SDL
 	SDL_Init(SDL_INIT_VIDEO);
 
-	Window w = Window("Megaman NT Warriors", 1000, 1000, 0);
+	//Creo una ventana
+	Window game_window = Window("Megaman NT Warriors", 1000, 1000, 0);
 
-	Sprite s = Sprite("./res/players/player1.png", w);
-	SDL_Rect a = SDL_Rect();
+	//Esto deberia ser una clase en si --------------------------
+	Sprite player = Sprite("./res/players/player1.png", game_window);
 
-	b2BodyDef b;
-	b.type = b2_kinematicBody;
-	b.position.Set(500, 500);
-	b.angle = 0;
+	b2BodyDef base_body;
+	base_body.type = b2_kinematicBody;
+	base_body.position.Set(500, 500);
+	base_body.angle = 0;
 
 	b2Vec2 gravity(0, -9.8);
-	bool doSleep = true;
 	b2World world = b2World(gravity);
-
 	world.SetGravity(gravity);
 
-	b2Body* dynamic = world.CreateBody(&b);
+	b2Body* full_body = world.CreateBody(&base_body);
+	full_body->SetLinearVelocity(b2Vec2(100, 0));
 
-	b2FixtureDef boxFixtureDef;
-	dynamic->SetLinearVelocity(b2Vec2(2,0));
-
+	/*Ciclo principal*/
 	bool running = true;
-
-	float32 timeStep = 1 / 20.0; 	//the length of time passed to simulate (seconds)
-	int32 velocityIterations = 8;   //how strongly to correct velocity
-	int32 positionIterations = 3;   //how strongly to correct position
-
 	while (running) {
-		s.draw(w);
-		w.render();
 
+		player.draw(game_window);
+		game_window.render();
 		world.Step(timeStep, velocityIterations, positionIterations);
-		b2Vec2 a = dynamic->GetPosition();
-		s.move(a.x,a.y);
+		b2Vec2 body_position = full_body->GetPosition();
+		player.move(body_position.x, body_position.y);
 
-		SDL_Event e;
-		while (SDL_PollEvent(&e) != 0) {
+		SDL_Event event;
+		while (SDL_PollEvent(&event) != 0) {
 
-			switch (e.type) {
+			switch (event.type) {
 			case SDL_QUIT:
 				running = false;
 				break;
 
 			case SDL_KEYDOWN:
+				//Keypress handle
 				break;
 
 			}
@@ -78,4 +78,6 @@ int main() {
 		SDL_Delay(20);
 
 	}
+
+
 }
