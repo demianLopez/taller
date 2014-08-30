@@ -36,17 +36,20 @@ int main() {
 	b.position.Set(500, 500);
 	b.angle = 0;
 
-	b.linearVelocity = b2Vec2(1, 0);
-
 	b2Vec2 gravity(0, -9.8);
 	bool doSleep = true;
 	b2World world = b2World(gravity);
 
 	world.SetGravity(gravity);
 
+	b2Body* dynamic = world.CreateBody(&b);
+
+	b2FixtureDef boxFixtureDef;
+	dynamic->SetLinearVelocity(b2Vec2(2,0));
+
 	bool running = true;
 
-	float32 timeStep = 1 / 20.0; //the length of time passed to simulate (seconds)
+	float32 timeStep = 1 / 20.0; 	//the length of time passed to simulate (seconds)
 	int32 velocityIterations = 8;   //how strongly to correct velocity
 	int32 positionIterations = 3;   //how strongly to correct position
 
@@ -55,6 +58,8 @@ int main() {
 		w.render();
 
 		world.Step(timeStep, velocityIterations, positionIterations);
+		b2Vec2 a = dynamic->GetPosition();
+		s.move(a.x,a.y);
 
 		SDL_Event e;
 		while (SDL_PollEvent(&e) != 0) {
