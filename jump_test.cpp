@@ -56,16 +56,16 @@ int main() {
 	Window game_window = Window("Megaman NT Warriors", 1000, 1000, 0);
 
 	//background
-	Sprite back = Sprite("./res/backgrounds/1.png", game_window);
-	back.set_scaled_height(1000);
-	back.set_scaled_width(1000);
+	Sprite background = Sprite("./res/backgrounds/1.png", game_window);
+	background.set_scaled_height(1000);
+	background.set_scaled_width(1000);
 
 	//Esto deberia ser una clase en si --------------------------
 	Sprite player = Sprite("./res/players/player1.png", game_window);
 
 	b2BodyDef base_body;
 	base_body.type = b2_kinematicBody;
-	base_body.position.Set(500, 500);
+	base_body.position.Set(0,0);
 	base_body.angle = 0;
 
 	b2Vec2 gravity(0, -9.8);
@@ -75,19 +75,19 @@ int main() {
 	b2Body* full_body = world.CreateBody(&base_body);
 	full_body->SetLinearVelocity(b2Vec2(100, 0));
 
-	b2CircleShape circleShape;
-	circleShape.m_p.Set(0, 0);
-	circleShape.m_radius = 4;
-	b2FixtureDef myFixtureDef;
-	myFixtureDef.shape = &circleShape;
-	myFixtureDef.density = 5;
-	full_body->CreateFixture(&myFixtureDef);
+	b2CircleShape body_shape;
+	body_shape.m_p.Set(0, 0);
+	body_shape.m_radius = 4;
+	b2FixtureDef body_fixture;
+	body_fixture.shape = &body_shape;
+	body_fixture.density = 5;
+	full_body->CreateFixture(&body_fixture);
 
 	/*Ciclo principal*/
 	bool running = true;
 	while (running) {
 
-		back.draw(game_window);
+		background.draw(game_window);
 		player.draw(game_window);
 		game_window.render();
 		world.Step(timeStep, velocityIterations, positionIterations);
@@ -111,5 +111,7 @@ int main() {
 		SDL_Delay(20);
 
 	}
+
+	SDL_Quit();
 
 }
