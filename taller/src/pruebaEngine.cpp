@@ -11,17 +11,20 @@
 pruebaEngine::pruebaEngine(const char *title) : Game(title) {
 	this->testImage = NULL;
 	this->spriteSheet = NULL;
+	this->subSprite = NULL;
 	rotation = 0;
 }
 
 void pruebaEngine::init(){
 	this->testImage = new Image("Resources/a.png");
 	this->spriteSheet = new SpriteSheet("Resources/tilea3.png", 64 ,64);
+	this->subSprite = spriteSheet->getSubImage(0, 1);
 }
 
 void pruebaEngine::exit(){
 	delete testImage;
 	delete spriteSheet;
+	delete subSprite;
 }
 
 void pruebaEngine::render(Graphics *g){
@@ -29,15 +32,17 @@ void pruebaEngine::render(Graphics *g){
 	g->drawFillRect(20, 20, 20, 20);
 	g->drawRect(60, 20, 20, 20);
 
-	Image * subSprite = spriteSheet->getSubImage(0, 0);
-	g->drawImage(subSprite, 20, 20, rotation);
-
+	g->drawImage(this->subSprite, 20, 20, rotation);
 
 	g->setColor(255, 0, 0);
 
 	g->drawLine(20, 60, 80, 60);
 	g->drawPoint(90, 60);
 
+	fpsText.str("");
+	fpsText<<this->getFPS()<< " FPS";
+
+	g->drawText(10, 10, fpsText.str().c_str());
 	rotation+=0.05f;
 }
 

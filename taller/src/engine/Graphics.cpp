@@ -8,12 +8,26 @@
 #include "Graphics.h"
 #include "Image.h"
 
-Graphics::Graphics() {
-
+Graphics::Graphics(TTF_Font * font) {
+	this->currentFont = font;
 }
 
 void Graphics::drawImage(Image *image){
 	this->drawImage(image, 0, 0);
+}
+
+void Graphics::drawText(int x, int y, const char * text){
+	SDL_Color textColor = { 255, 255, 255, 255 };
+
+
+	SDL_Surface* textSurface = TTF_RenderText_Solid(currentFont, text, textColor );
+	SDL_Texture* textTexture = Image::textureFromSurface(textSurface);
+
+	SDL_Rect textData = {x, y, textSurface->w, textSurface->h};
+	SDL_RenderCopy(GameElements::gRenderer, textTexture, NULL, &textData);
+
+	SDL_FreeSurface(textSurface);
+	SDL_DestroyTexture(textTexture);
 }
 
 void Graphics::drawImage(Image *image, int xo, int yo, float rotation){

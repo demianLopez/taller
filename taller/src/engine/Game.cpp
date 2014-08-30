@@ -22,6 +22,7 @@ Game::Game(const char *title) {
 	this->renderCount = 0;
 	this->lastRenderTime = 0;
 	this->lastFPSUpdateTime = 0;
+	this->gFont = NULL;
 }
 
 void Game::setScreenSize(int height, int width){
@@ -62,6 +63,14 @@ bool Game::start(){
                 printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
                 success = false;
             } else {
+
+                if(TTF_Init() == -1) {
+                       printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+                       success = false;
+                } else {
+                	this->gFont = TTF_OpenFont( "Resources/font.ttf", 28 );
+                }
+
             	this->gScreenSurface = SDL_GetWindowSurface(gWindow);
 
             	//Definimos GAME ELEMENTS
@@ -84,7 +93,7 @@ void Game::endGame(){
 
 void Game::gameCicle(){
 
-	Graphics *g = new Graphics();
+	Graphics *g = new Graphics(this->gFont);
 
 	SDL_Event e;
 
@@ -129,19 +138,17 @@ void Game::gameCicle(){
 }
 
 void Game::gameClose(){
-	/*
-	SDL_FreeSurface( gHelloWorld );
-	gHelloWorld = NULL;
-	*/
-	//Destroy window
 	SDL_DestroyWindow(this->gWindow);
 	SDL_DestroyRenderer(this->gRenderer);
+	TTF_CloseFont(gFont);
+
 	this->gWindow = NULL;
 	this->gRenderer = NULL;
 
 	//Quit SDL subsystems
 	SDL_Quit();
 	IMG_Quit();
+	TTF_Quit();
 }
 
 Game::~Game() {

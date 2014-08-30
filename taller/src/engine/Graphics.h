@@ -14,7 +14,7 @@ class Image;
 class Graphics {
 
 public:
-	Graphics();
+	Graphics(TTF_Font * font);
 	virtual ~Graphics();
 	//Renderiza en pantalla la imagen "image"
 	void drawImage(Image *image);
@@ -39,11 +39,13 @@ public:
 	//Dibuja un punto
 	void drawPoint(int x, int y);
 
+	void drawText(int x, int y, const char* text);
+
 	//Setea el color
 	void setColor(unsigned char red, unsigned char green, unsigned char blue);
 	void setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
 private:
-
+	TTF_Font *currentFont;
 };
 
 #endif /* GRAPHICS_H_ */

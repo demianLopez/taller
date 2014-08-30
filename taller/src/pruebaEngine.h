@@ -11,7 +11,9 @@
 #include "engine/Game.h"
 #include "engine/Image.h"
 #include "engine/SpriteSheet.h"
-
+#include <stdio.h>
+#include <string>
+#include <sstream>
 using namespace std;
 
 class pruebaEngine: public Game {
@@ -26,8 +28,11 @@ private:
 
 	Image* testImage;
 	SpriteSheet *spriteSheet;
+	Image* subSprite;
 
 	float rotation;
+
+	std::stringstream fpsText;
 };
 
 #endif /* PRUEBAENGINE_H_ */

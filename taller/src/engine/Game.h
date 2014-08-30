@@ -35,6 +35,7 @@ private:
 	SDL_Window *gWindow;
 	SDL_Surface *gScreenSurface;
 	SDL_Renderer* gRenderer;
+	TTF_Font *gFont;
 
 	void gameCicle();
 	void gameClose();
