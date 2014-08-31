@@ -1,5 +1,5 @@
 /**
- RGB_Parser.h
+ RGB_parser.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -19,8 +19,8 @@
 #ifndef RGB_PARSER_H_
 #define RGB_PARSER_H_
 
-#include <tuple>
 #include <string>
+#include <tuple>
 
 class RGB_Parser {
 public:

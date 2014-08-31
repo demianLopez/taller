@@ -1,5 +1,5 @@
 /**
- RGB_Parser.cpp
+ RGB_parser.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,5 +16,5 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#include "RGB_Parser.h"
+#include "RGB_parser.h"
 

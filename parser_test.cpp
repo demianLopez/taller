@@ -17,3 +17,12 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
+
+#include <iostream>
+
+int main (){
+
+	std::cout << "";
+
+	return 0;
+}
