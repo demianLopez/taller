@@ -8,6 +8,7 @@
 #include "Game.h"
 #include "Image.h"
 #include "Graphics.h"
+#include <stdio.h>
 
 Game::Game(const char *title) {
 	//Seteo por default

@@ -6,6 +6,7 @@
  */
 
 #include "Image.h"
+#include <stdio.h>
 
 Image::Image(const char* pFile) {
 	this->gImage = this->loadSurface(pFile);
@@ -28,7 +29,6 @@ Image::Image(){
 }
 
 void Image::render(int xo, int yo, int dx, int dy){
-	SDL_Rect imageData = {xo, yo, dx, dy};
 	this->render(xo, yo, dx, dy, 0);
 }
 
