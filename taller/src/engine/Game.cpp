@@ -21,9 +21,17 @@ Game::Game(const char *title) {
 	this->quit = false;
 	this->fps = 0;
 	this->renderCount = 0;
-	this->lastRenderTime = 0;
+	this->lastUpdateTime = 0;
 	this->lastFPSUpdateTime = 0;
 	this->gFont = NULL;
+	this->limitedFPS = false;
+	this->maxFPS = 0;
+	this->lastRenderTime = 0;
+}
+
+void Game::setMaxFPS(int maxFPS){
+	this->limitedFPS = true;
+	this->maxFPS = maxFPS;
 }
 
 void Game::setScreenSize(int height, int width){
@@ -107,35 +115,50 @@ void Game::gameCicle(){
 			if( e.type == SDL_QUIT ){
 				this->endGame();
 			} else {
-				int delta = SDL_GetTicks() - this->lastRenderTime;
+				int delta = SDL_GetTicks() - this->lastUpdateTime;
 				this->update(e, delta);
-				this->lastRenderTime = SDL_GetTicks();
+				this->lastUpdateTime = SDL_GetTicks();
 
 			}
 		}
 
-		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
-		SDL_RenderClear(gRenderer);
+		if(this->shuldWeRender()){
+			SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
+			SDL_RenderClear(gRenderer);
 
 
-		this->render(g);
+			this->render(g);
+			this->lastRenderTime = SDL_GetTicks();
 
 
-		this->renderCount++;
+			this->renderCount++;
 
-		if((SDL_GetTicks() - this->lastFPSUpdateTime) > 1000){
-			this->fps = this->renderCount;
-			this->renderCount = 0;
-			this->lastFPSUpdateTime = SDL_GetTicks();
+			if((SDL_GetTicks() - this->lastFPSUpdateTime) > 1000){
+				this->fps = this->renderCount;
+				this->renderCount = 0;
+				this->lastFPSUpdateTime = SDL_GetTicks();
+			}
+
+			SDL_RenderPresent(gRenderer);
 		}
-
-		SDL_RenderPresent(gRenderer);
-		//SDL_UpdateWindowSurface(gWindow);
 
 	}
 
 	this->exit();
 	this->gameClose();
+}
+
+bool Game::shuldWeRender(){
+	if(this->limitedFPS){
+		int timeInterval = 1000/this->maxFPS;
+		if((SDL_GetTicks() - this->lastRenderTime) > timeInterval){
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return true;
+	}
 }
 
 void Game::gameClose(){

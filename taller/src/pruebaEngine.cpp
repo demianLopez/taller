@@ -60,7 +60,7 @@ void pruebaEngine::render(Graphics *g){
 
 	g->drawText(10, 10, fpsText.str().c_str());
 	rotation+=0.05f;
-	g->drawFillRect(20, 20, 20, 20);
+	g->drawFillRect(400, 20, 20, 20);
 
 	g->drawAnimation(this->animation, 100, 100);
 }

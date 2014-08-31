@@ -20,6 +20,7 @@ public:
 	void setScreenSize(int height, int size);
 	unsigned int getFPS();
 	unsigned int getElapsedTime();
+	void setMaxFPS(int maxFPS);
 
 	bool start();
 	void endGame();
@@ -43,8 +44,14 @@ private:
 	int fps;
 	int renderCount;
 
+	unsigned int lastUpdateTime;
 	unsigned int lastRenderTime;
 	unsigned int lastFPSUpdateTime;
+
+	bool limitedFPS;
+	int maxFPS;
+
+	bool shuldWeRender();
 
 protected:
 	virtual void render(Graphics *g) = 0;

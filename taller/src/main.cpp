@@ -13,6 +13,7 @@ using namespace std;
 int main(int argc, char *argv[]){
 
 	pruebaEngine *pE = new pruebaEngine("Il");
+	pE->setMaxFPS(50);
 	pE->start();
 	cout<<"Termino2";
 	return 0;
