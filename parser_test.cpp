@@ -17,12 +17,18 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-
 #include <iostream>
+#include <tuple>
 
-int main (){
+#include "libs/RGB_parser/RGB_parser.h"
 
-	std::cout << "";
+int main() {
+
+	std::string color = "FF00&&";
+	int red, green, blue;
+	std::tie(red, green, blue) = RGB_Parser::decode(color);
+
+	std::cout << "(" << red << "," << green << "," << blue << ")" << std::endl;
 
 	return 0;
 }

@@ -2,7 +2,7 @@
 #General
 CC = gcc
 CPPFLAGS = -Wall -Wextra -g -pedantic -std=c++11
-CPPLDFLAGS = -lm -lstdc++
+CPPLDFLAGS = -lm -lstdc++ -std=c++11
 
 EXEC = test
 
