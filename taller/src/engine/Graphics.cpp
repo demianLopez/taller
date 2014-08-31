@@ -7,6 +7,8 @@
 
 #include "Graphics.h"
 #include "Image.h"
+#include "Animation.h"
+#include "AnimationFrame.h"
 
 Graphics::Graphics(TTF_Font * font) {
 	this->currentFont = font;
@@ -44,6 +46,11 @@ void Graphics::drawImage(Image *image, int xo, int yo, int dx, int dy, float rot
 
 void Graphics::drawImage(Image *image, int xo, int yo, int dx, int dy){
 	this->drawImage(image, xo, yo, dx, dy, 0);
+}
+
+void Graphics::drawAnimation(Animation * animation, int xo, int yo){
+	Image * animationImage = animation->getCurrentFrame()->getFrameImage();
+	this->drawImage(animationImage, xo, yo);
 }
 
 void Graphics::drawFillRect(int xo, int yo, int dx, int dy){

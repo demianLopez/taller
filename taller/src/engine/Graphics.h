@@ -10,6 +10,7 @@
 
 #include "LibIncludes.h"
 class Image;
+class Animation;
 
 class Graphics {
 
@@ -26,6 +27,8 @@ public:
 	void drawImage(Image *image, int xo, int yo, int dx, int dy, float rotation);
 
 	void drawImage(Image *image, int xo, int yo, float rotation);
+
+	void drawAnimation(Animation * animation, int xo, int yo);
 
 	//Dibuja un rectamgulo lleno (pintado interiormente)
 	void drawFillRect(int xo, int yo, int dx, int dy);
