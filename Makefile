@@ -1,8 +1,8 @@
 #Project Builder
 #General
-CC = gcc
-CPPFLAGS = -Wall -Wextra -g -pedantic -std=c++11
-CPPLDFLAGS = -lm -lstdc++ -std=c++11
+CC = gcc -std=c++11
+CPPFLAGS = -Wall -Wextra -g -pedantic 
+CPPLDFLAGS = -lm -lstdc++
 
 EXEC = test
 

@@ -24,10 +24,31 @@
 
 int main() {
 
-	std::string color = "FF00&&";
-	int red, green, blue;
-	std::tie(red, green, blue) = RGB_Parser::decode(color);
+	std::string color0 = "010A0F";
+	std::string color1 = "11AAFF";
+	std::string color2 = "RRrr&&";
+	std::string color3 = "Color3";
+	std::string color4 = "FFFFFFF";
+	std::string color5 = "00000";
 
+	int red, green, blue;
+
+	std::tie(red, green, blue) = RGB_Parser::decode(color0);
+	std::cout << "(" << red << "," << green << "," << blue << ")" << std::endl;
+
+	std::tie(red, green, blue) = RGB_Parser::decode(color1);
+	std::cout << "(" << red << "," << green << "," << blue << ")" << std::endl;
+
+	std::tie(red, green, blue) = RGB_Parser::decode(color2);
+	std::cout << "(" << red << "," << green << "," << blue << ")" << std::endl;
+
+	std::tie(red, green, blue) = RGB_Parser::decode(color3);
+	std::cout << "(" << red << "," << green << "," << blue << ")" << std::endl;
+
+	std::tie(red, green, blue) = RGB_Parser::decode(color4);
+	std::cout << "(" << red << "," << green << "," << blue << ")" << std::endl;
+
+	std::tie(red, green, blue) = RGB_Parser::decode(color5);
 	std::cout << "(" << red << "," << green << "," << blue << ")" << std::endl;
 
 	return 0;

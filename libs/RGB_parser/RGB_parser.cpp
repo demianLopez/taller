@@ -23,7 +23,9 @@ using std::make_tuple;
 using std::string;
 
 tuple<int, int, int> RGB_Parser::decode(string &encoded) {
-	int red, green, blue = 0;
+	int red = -1;
+	int green = -1;
+	int blue = -1;
 
 	if (encoded.size() != 6) {
 		return make_tuple(red, green, blue);
@@ -41,15 +43,15 @@ tuple<int, int, int> RGB_Parser::decode(string &encoded) {
 }
 
 int RGB_Parser::decode_base_16(std::string& encoded) {
-	char x = encoded[0];
-	char y = encoded[1];
+	unsigned char x = encoded[0];
+	unsigned char y = encoded[1];
 
-	char x_decoded;
-	char y_decoded;
+	unsigned char x_decoded;
+	unsigned char y_decoded;
 
 	if (x < 48 || y < 48) //Antes de los numeros
 		return -1;
-	if (x > 70 || y < 70) //Despues de las letras validas
+	if (x > 70 || y > 70) //Despues de las letras validas
 		return -1;
 	if (x > 57 && x < 65) //X no es un numero ni una letra
 		return -1;
