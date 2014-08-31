@@ -23,17 +23,12 @@ void pruebaEngine::init(){
 	this->spriteSheet = new SpriteSheet("Resources/tilea3.png", 64 ,64);
 	this->subSprite = spriteSheet->getSubImage(0, 1);
 
-	this->animationTest = new SpriteSheet("Resources/anim.png", 192, 192);
+	this->animationTest = new SpriteSheet("Resources/anim.png", 21, 40);
 	this->animation = new Animation();
 
-	this->animation->addFrame(this->animationTest->getSubImage(0, 0), 50);
-	this->animation->addFrame(this->animationTest->getSubImage(1, 0), 50);
-	this->animation->addFrame(this->animationTest->getSubImage(2, 0), 50);
-	this->animation->addFrame(this->animationTest->getSubImage(3, 0), 50);
-	this->animation->addFrame(this->animationTest->getSubImage(4, 0), 50);
-	this->animation->addFrame(this->animationTest->getSubImage(3, 0), 50);
-	this->animation->addFrame(this->animationTest->getSubImage(2, 0), 50);
-	this->animation->addFrame(this->animationTest->getSubImage(1, 0), 50);
+	for(int x = 0; x < 8; x++){
+		this->animation->addFrame(this->animationTest->getSubImage(x, 0), 75);
+	}
 
 }
 
@@ -41,6 +36,8 @@ void pruebaEngine::exit(){
 	delete testImage;
 	delete spriteSheet;
 	delete subSprite;
+	delete animationTest;
+	delete animation;
 }
 
 void pruebaEngine::render(Graphics *g){

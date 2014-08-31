@@ -87,6 +87,7 @@ bool Game::start(){
             	GameElements::gRenderer = this->gRenderer;
 
             	//Arrancamos el gameCicle
+
             	this->gameCicle();
 
             }
