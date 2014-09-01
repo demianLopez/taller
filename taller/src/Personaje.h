@@ -20,8 +20,8 @@ private:
 
 	// Velocidades (modulo) maximas por defecto.
 	// Asumo que la velocidad vertical no se modificaria.
-	const float VELOCIDAD_MAXIMA_DEFAULT_X = 10;
-	const float VELOCIDAD_MAXIMA_DEFAULT_Y = 10;
+	const float VELOCIDAD_MAXIMA_DEFAULT_X = 50;
+	const float VELOCIDAD_MAXIMA_DEFAULT_Y = 50;
 	const float VELOCIDAD_MAXIMA_BUFF_X = VELOCIDAD_MAXIMA_DEFAULT_X * 1.5;
 
 	float velocidadMaximaX;
