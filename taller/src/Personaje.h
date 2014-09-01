@@ -35,8 +35,8 @@ public:
 	Personaje(int x = 0, int y = 0);
 
 	// Acelera la velocidad del personaje en X e Y. Limitado
-	// por la velocidad maxima. Devuelve la nueva velocidad.
-	VectorXY acelerarPersonaje(float x, float y);
+	// por la velocidad maxima.
+	void acelerarPersonaje(float x, float y);
 
 	// Devuelve la posicion actual.
 	VectorXY verPosicionActual();

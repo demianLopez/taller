@@ -22,8 +22,8 @@ void Personaje::limitarVelocidad(float *coordenada, float velocidadMaxima){
 }
 
 // Acelera la velocidad del personaje en X e Y. Limitado
-// por la velocidad maxima. Devuelve la nueva velocidad.
-VectorXY Personaje::acelerarPersonaje(float x, float y){
+// por la velocidad maxima.
+void Personaje::acelerarPersonaje(float x, float y){
 	velocidad.aumentarEn(x,y);
 
 	// Limite de velocidad en X
@@ -46,7 +46,9 @@ void Personaje::moverPersonaje(){
 
 // Devuelve la posicion a la que se movera el personaje.
 VectorXY Personaje::siguientePosicion(){
-	return VectorXY(posicion).aumentarEn(velocidad);
+	VectorXY vector = VectorXY(posicion);
+	vector.aumentarEn(velocidad);
+	return vector;
 }
 
 // Frena al personaje en X y/o Y

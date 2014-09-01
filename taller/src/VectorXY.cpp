@@ -7,9 +7,9 @@ VectorXY::VectorXY(float x, float y) {
 }
 
 // Se crea en la misma posicion que vector.
-VectorXY::VectorXY(VectorXY vector){
-	this->x = vector.x;
-	this->y = vector.y;
+VectorXY::VectorXY(VectorXY *vector){
+	this->x = vector->x;
+	this->y = vector->y;
 }
 
 // Setea valores de x e y.

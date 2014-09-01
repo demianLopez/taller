@@ -12,7 +12,7 @@ public:
 	VectorXY(float x = 0, float y = 0);
 
 	// Se crea en la misma posicion que vector.
-	VectorXY(VectorXY vector);
+	VectorXY(VectorXY *vector);
 
 	// Setea valores de x e y.
 	void set(float x, float y);
