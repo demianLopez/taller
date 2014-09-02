@@ -8,8 +8,8 @@ CosaConMovimiento::CosaConMovimiento(float x, float y) {
 }
 
 // Mueve la posicion de la cosa dependiendo de su velocidad.
-void CosaConMovimiento::mover(){
-	posicion.aumentarEn(velocidad);
+void CosaConMovimiento::mover(int delta){
+	posicion.aumentarEn(velocidad.x * delta, velocidad.y * delta);
 	if(velocidad.x < 0){
 		mirandoParaLaDerecha = false;
 	}
