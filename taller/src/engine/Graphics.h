@@ -24,7 +24,8 @@ public:
 	//Renderiza en la pantalla una imagen comenzada a dibujar desde x, y y de longitud dx dy
 	void drawImage(Image *image, int xo, int yo, int dx, int dy);
 
-	void drawImage(Image *image, int xo, int yo, int dx, int dy, float rotation);
+	void drawImage(Image *image, int xo, int yo, int dx, int dy,
+			float rotation);
 
 	void drawImage(Image *image, int xo, int yo, float rotation);
 
@@ -46,7 +47,8 @@ public:
 
 	//Setea el color
 	void setColor(unsigned char red, unsigned char green, unsigned char blue);
-	void setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
+	void setColor(unsigned char red, unsigned char green, unsigned char blue,
+			unsigned char alpha);
 private:
 	TTF_Font *currentFont;
 };

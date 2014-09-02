@@ -25,7 +25,6 @@ public:
 
 	Image * getSpriteSheetImage();
 
-
 	virtual ~SpriteSheet();
 private:
 	Image *spriteImage;

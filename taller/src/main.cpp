@@ -5,16 +5,16 @@
  *      Author: EscDemi
  */
 
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #include <iostream>
 #include "pruebaEngine.h"
 using namespace std;
 
 int main(int argc, char *argv[]){
 
-	pruebaEngine *pE = new pruebaEngine("Il");
-	pE->setMaxFPS(50);
-	pE->start();
+	pruebaEngine pE = pruebaEngine("Il");
+	pE.setMaxFPS(50);
+	pE.start();
 	return 0;
 }
 

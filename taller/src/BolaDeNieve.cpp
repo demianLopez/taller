@@ -2,11 +2,11 @@
 
 // Crea una BolaDeNieve con la direccion indicada.
 BolaDeNieve::BolaDeNieve(bool haciaLaDerecha, float x, float y) {
-	posicion.set(x,y);
+	posicion.set(x, y);
 	posicionOriginal = verPosicionActual();
-	if (haciaLaDerecha){
+	if (haciaLaDerecha) {
 		velocidad.set(VELOCIDAD_EN_X, VELOCIDAD_EN_Y);
-	}else{
+	} else {
 		velocidad.set(-VELOCIDAD_EN_X, VELOCIDAD_EN_Y);
 	}
 	viva = true;
@@ -16,9 +16,9 @@ BolaDeNieve::BolaDeNieve(bool haciaLaDerecha, float x, float y) {
 BolaDeNieve::BolaDeNieve(bool haciaLaDerecha, VectorXY posicion) {
 	posicion.set(posicion.x, posicion.y);
 	posicionOriginal = verPosicionActual();
-	if (haciaLaDerecha){
+	if (haciaLaDerecha) {
 		velocidad.set(VELOCIDAD_EN_X, VELOCIDAD_EN_Y);
-	}else{
+	} else {
 		velocidad.set(-VELOCIDAD_EN_X, VELOCIDAD_EN_Y);
 	}
 	viva = true;

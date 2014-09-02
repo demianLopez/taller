@@ -14,7 +14,7 @@
 
 class Image {
 public:
-	Image(const char* pFile,int r, int g, int b);
+	Image(const char* pFile, int r, int g, int b);
 	Image(const char* pFile);
 
 	virtual ~Image();
@@ -35,7 +35,8 @@ public:
 private:
 	SDL_Surface *loadSurface(const char* pFile);
 	SDL_Point* centerRotation;
-	void completeRender(SDL_Rect *imageData, float angle, SDL_RendererFlip flip);
+	void completeRender(SDL_Rect *imageData, float angle,
+			SDL_RendererFlip flip);
 
 	int colorKeyR;
 	int colorKeyG;
@@ -52,7 +53,5 @@ protected:
 	virtual SDL_Rect * getImagePortion();
 
 };
-
-
 
 #endif /* IMAGE_H_ */

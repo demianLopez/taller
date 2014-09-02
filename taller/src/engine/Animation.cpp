@@ -15,16 +15,16 @@ Animation::Animation() {
 	this->lastDrawedFrame = 0;
 }
 
-AnimationFrame * Animation::getFrame(int index){
+AnimationFrame * Animation::getFrame(int index) {
 	return this->frameList[index];
 }
 
-AnimationFrame * Animation::getCurrentFrame(){
+AnimationFrame * Animation::getCurrentFrame() {
 
 	unsigned int currentTime = SDL_GetTicks();
 	unsigned int lastTimeDrawed = 0;
 
-	if(this->drawed){
+	if (this->drawed) {
 		lastTimeDrawed = this->lastTimeDrawed;
 	} else {
 		this->drawed = true;
@@ -36,10 +36,10 @@ AnimationFrame * Animation::getCurrentFrame(){
 	bool findFrame = false;
 	int currentFrame = this->lastDrawedFrame;
 
-	while(!findFrame){
+	while (!findFrame) {
 		AnimationFrame * frame = this->frameList[currentFrame];
 
-		if((lastTimeDrawed + frame->getFrameTime())>currentTime){
+		if ((lastTimeDrawed + frame->getFrameTime()) > currentTime) {
 			findFrame = true;
 		} else {
 			currentFrame++;
@@ -53,12 +53,12 @@ AnimationFrame * Animation::getCurrentFrame(){
 	return this->frameList[currentFrame];
 }
 
-void Animation::addFrame(Image * frameImage, int frameTime){
+void Animation::addFrame(Image * frameImage, int frameTime) {
 	AnimationFrame *animationFrame = new AnimationFrame(frameImage, frameTime);
 	this->frameList.push_back(animationFrame);
 }
 
-int Animation::getFrameCount(){
+int Animation::getFrameCount() {
 	return this->frameList.size();
 }
 

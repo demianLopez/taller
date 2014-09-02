@@ -29,79 +29,81 @@ Game::Game(const char *title) {
 	this->lastRenderTime = 0;
 }
 
-void Game::setMaxFPS(int maxFPS){
+void Game::setMaxFPS(int maxFPS) {
 	this->limitedFPS = true;
 	this->maxFPS = maxFPS;
 }
 
-void Game::setScreenSize(int height, int width){
+void Game::setScreenSize(int height, int width) {
 	this->height = height;
 	this->width = width;
 }
 
-unsigned int Game::getFPS(){
+unsigned int Game::getFPS() {
 	return this->fps;
 }
 
-unsigned int Game::getElapsedTime(){
+unsigned int Game::getElapsedTime() {
 	return SDL_GetTicks();
 }
 
-bool Game::start(){
+bool Game::start() {
 	bool success = true;
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
-		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+	if (SDL_Init( SDL_INIT_VIDEO) < 0) {
+		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 		success = false;
 	} else {
-		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
-		if(gWindow == NULL)
-		{
-			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED,
+				SDL_WINDOWPOS_UNDEFINED, this->width, this->height,
+				SDL_WINDOW_SHOWN);
+		if (gWindow == NULL) {
+			printf("Window could not be created! SDL_Error: %s\n",
+					SDL_GetError());
 			success = false;
-		}
-		else
-		{
+		} else {
 			//Get window surface
-			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+			gRenderer = SDL_CreateRenderer(gWindow, -1,
+					SDL_RENDERER_ACCELERATED);
 
-            SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+			SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-            int imgFlags = IMG_INIT_PNG;
-            if( !( IMG_Init( imgFlags ) & imgFlags ) )
-            {
-                printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-                success = false;
-            } else {
+			int imgFlags = IMG_INIT_PNG;
+			if (!(IMG_Init(imgFlags) & imgFlags)) {
+				printf("SDL_image could not initialize! SDL_image Error: %s\n",
+						IMG_GetError());
+				success = false;
+			} else {
 
-                if(TTF_Init() == -1) {
-                       printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
-                       success = false;
-                } else {
-                	this->gFont = TTF_OpenFont( "Resources/font.ttf", 28 );
-                }
+				if (TTF_Init() == -1) {
+					printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n",
+							TTF_GetError());
+					success = false;
+				} else {
+					this->gFont = TTF_OpenFont("Resources/font.ttf", 28);
+				}
 
-            	this->gScreenSurface = SDL_GetWindowSurface(gWindow);
+				this->gScreenSurface = SDL_GetWindowSurface(gWindow);
 
-            	//Definimos GAME ELEMENTS
-            	GameElements::gScreenSurface = this->gScreenSurface;
-            	GameElements::gRenderer = this->gRenderer;
+				//Definimos GAME ELEMENTS
+				GameElements::gScreenSurface = this->gScreenSurface;
+				GameElements::gRenderer = this->gRenderer;
 
-            	//Arrancamos el gameCicle
+				//Arrancamos el gameCicle
 
-            	this->gameCicle();
+				this->gameCicle();
 
-            }
+			}
 		}
 	}
 
 	return success;
 }
 
-void Game::endGame(){
+void Game::endGame() {
 	this->quit = true;
 }
 
-void Game::gameCicle(){
+void Game::gameCicle() {
 
 	Graphics *g = new Graphics(this->gFont);
 
@@ -110,10 +112,10 @@ void Game::gameCicle(){
 	//Antes de arrancar el ciclo, llamamos a la funcion init
 	this->init();
 
-	while(!this->quit) {
-		while( SDL_PollEvent( &e ) != 0 ){
+	while (!this->quit) {
+		while (SDL_PollEvent(&e) != 0) {
 			//User requests quit
-			if( e.type == SDL_QUIT ){
+			if (e.type == SDL_QUIT) {
 				this->endGame();
 			} else {
 				int delta = SDL_GetTicks() - this->lastUpdateTime;
@@ -123,18 +125,16 @@ void Game::gameCicle(){
 			}
 		}
 
-		if(this->shuldWeRender()){
+		if (this->shuldWeRender()) {
 			SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
 			SDL_RenderClear(gRenderer);
-
 
 			this->render(g);
 			this->lastRenderTime = SDL_GetTicks();
 
-
 			this->renderCount++;
 
-			if((SDL_GetTicks() - this->lastFPSUpdateTime) > 1000){
+			if ((SDL_GetTicks() - this->lastFPSUpdateTime) > 1000) {
 				this->fps = this->renderCount;
 				this->renderCount = 0;
 				this->lastFPSUpdateTime = SDL_GetTicks();
@@ -149,10 +149,10 @@ void Game::gameCicle(){
 	this->gameClose();
 }
 
-bool Game::shuldWeRender(){
-	if(this->limitedFPS){
-		int timeInterval = 1000/this->maxFPS;
-		if((SDL_GetTicks() - this->lastRenderTime) > timeInterval){
+bool Game::shuldWeRender() {
+	if (this->limitedFPS) {
+		int timeInterval = 1000 / this->maxFPS;
+		if ((SDL_GetTicks() - this->lastRenderTime) > timeInterval) {
 			return true;
 		} else {
 			return false;
@@ -162,7 +162,7 @@ bool Game::shuldWeRender(){
 	}
 }
 
-void Game::gameClose(){
+void Game::gameClose() {
 	SDL_DestroyWindow(this->gWindow);
 	SDL_DestroyRenderer(this->gRenderer);
 	TTF_CloseFont(gFont);

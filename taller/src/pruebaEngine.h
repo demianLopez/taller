@@ -21,7 +21,7 @@ using namespace std;
 
 class pruebaEngine: public Game {
 public:
-	pruebaEngine(const char *title);
+	pruebaEngine(const char* title);
 	virtual ~pruebaEngine();
 private:
 	virtual void update(SDL_Event e, unsigned int delta);
@@ -30,11 +30,11 @@ private:
 	virtual void exit();
 
 	Image* testImage;
-	SpriteSheet *spriteSheet;
+	SpriteSheet* spriteSheet;
 	Image* subSprite;
 
-	SpriteSheet *animationTest;
-	Animation * animation;
+	SpriteSheet* animationTest;
+	Animation* animation;
 
 	float rotation;
 

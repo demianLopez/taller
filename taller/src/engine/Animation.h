@@ -16,7 +16,6 @@ using namespace std;
 class AnimationFrame;
 class Image;
 
-
 class Animation {
 public:
 	Animation();
