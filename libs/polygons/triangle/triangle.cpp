@@ -18,12 +18,12 @@
  */
 #include "triangle.h"
 
-triangle::triangle() {
+Triangle::Triangle() {
 	// TODO Auto-generated constructor stub
 
 }
 
-triangle::~triangle() {
+Triangle::~Triangle() {
 	// TODO Auto-generated destructor stub
 }
 

@@ -19,10 +19,10 @@
 #ifndef REGULAR_POLYGON_H_
 #define REGULAR_POLYGON_H_
 
-class regular_polygon: public polygon {
+class Regular_polygon: public Polygon {
 public:
-	regular_polygon();
-	virtual ~regular_polygon();
+	Regular_polygon();
+	virtual ~Regular_polygon();
 };
 
 #endif /* REGULAR_POLYGON_H_ */

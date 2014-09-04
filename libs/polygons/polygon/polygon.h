@@ -19,10 +19,10 @@
 #ifndef POLYGON_H_
 #define POLYGON_H_
 
-class polygon {
+class Polygon {
 public:
-	polygon();
-	virtual ~polygon();
+	Polygon();
+	virtual ~Polygon();
 
 	virtual void draw() = 0;
 };

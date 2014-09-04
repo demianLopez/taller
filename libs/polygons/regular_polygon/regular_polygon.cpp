@@ -18,12 +18,12 @@
  */
 #include "regular_polygon.h"
 
-regular_polygon::regular_polygon() {
+Regular_polygon::Regular_polygon() {
 	// TODO Auto-generated constructor stub
 
 }
 
-regular_polygon::~regular_polygon() {
+Regular_polygon::~Regular_polygon() {
 	// TODO Auto-generated destructor stub
 }
 

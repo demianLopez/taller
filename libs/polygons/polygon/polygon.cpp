@@ -18,12 +18,12 @@
  */
 #include "polygon.h"
 
-polygon::polygon() {
+Polygon::Polygon() {
 	// TODO Auto-generated constructor stub
 
 }
 
-polygon::~polygon() {
+Polygon::~Polygon() {
 	// TODO Auto-generated destructor stub
 }
 

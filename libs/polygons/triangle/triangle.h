@@ -19,10 +19,10 @@
 #ifndef TRIANGLE_H_
 #define TRIANGLE_H_
 
-class triangle: public polygon {
+class Triangle: public Polygon {
 public:
-	triangle();
-	virtual ~triangle();
+	Triangle();
+	virtual ~Triangle();
 };
 
 #endif /* TRIANGLE_H_ */
