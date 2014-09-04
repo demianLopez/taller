@@ -1,5 +1,5 @@
 /**
- polygon.h
+ regular_polygon.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,15 +16,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef POLYGON_H_
-#define POLYGON_H_
+#include "regular_polygon.h"
 
-class polygon {
-public:
-	polygon();
-	virtual ~polygon();
+regular_polygon::regular_polygon() {
+	// TODO Auto-generated constructor stub
 
-	virtual void draw() = 0;
-};
+}
 
-#endif /* POLYGON_H_ */
+regular_polygon::~regular_polygon() {
+	// TODO Auto-generated destructor stub
+}
+
