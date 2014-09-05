@@ -26,7 +26,7 @@ public:
 	Regular_polygon();
 	virtual ~Regular_polygon();
 
-	void draw(){};
+	void draw(){}
 };
 
 #endif /* REGULAR_POLYGON_H_ */

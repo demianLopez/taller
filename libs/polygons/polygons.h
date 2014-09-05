@@ -22,5 +22,4 @@
 #include "polygon/polygon.h"
 #include "polygon_factory/polygon_factory.h"
 
-
 #endif /* POLYGONS_H_ */
