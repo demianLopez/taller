@@ -17,6 +17,15 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
+#include <SDL2/SDL.h>
+//#include "libs/polygons/polygon_factory/polygon_factory.h"
+#include "libs/polygons/polygons.h"
+
 int main() {
+	SDL_Color color;
+	color.r=3;
+	color.g=4;
+	color.b=66;
+	Polygon* pol = Polygon_factory::get_regular_poligon(4,2,color);
 	return 0;
 }

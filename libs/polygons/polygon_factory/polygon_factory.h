@@ -28,6 +28,7 @@ private:
 
 public:
 	static Polygon* get_regular_poligon(int sides, int scale, SDL_Color& color);
+
 };
 
 #endif /* POLYGON_FACTORY_H_ */

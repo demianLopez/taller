@@ -1,5 +1,5 @@
 /**
- regular_polygon.h
+ polygons.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,17 +16,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef REGULAR_POLYGON_H_
-#define REGULAR_POLYGON_H_
+#ifndef POLYGONS_H_
+#define POLYGONS_H_
 
-#include "../polygon/polygon.h"
+#include "polygon/polygon.h"
+#include "polygon_factory/polygon_factory.h"
 
-class Regular_polygon: public Polygon {
-public:
-	Regular_polygon();
-	virtual ~Regular_polygon();
 
-	void draw(){};
-};
-
-#endif /* REGULAR_POLYGON_H_ */
+#endif /* POLYGONS_H_ */
