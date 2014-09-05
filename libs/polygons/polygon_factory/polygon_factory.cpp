@@ -18,15 +18,6 @@
  */
 #include "polygon_factory.h"
 
-Polygon_factory::Polygon_factory() {
-	// TODO Auto-generated constructor stub
-
-}
-
-Polygon_factory::~Polygon_factory() {
-	// TODO Auto-generated destructor stub
-}
-
 Polygon* Polygon_factory::get_regular_poligon(int sides, int scale,
 		SDL_Color& color) {
 	return NULL;

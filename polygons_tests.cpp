@@ -18,7 +18,6 @@
  */
 
 #include <SDL2/SDL.h>
-//#include "libs/polygons/polygon_factory/polygon_factory.h"
 #include "libs/polygons/polygons.h"
 
 int main() {

@@ -23,8 +23,8 @@
 
 class Polygon_factory {
 private:
-	Polygon_factory();
-	virtual ~Polygon_factory();
+	Polygon_factory() {};
+	virtual ~Polygon_factory() {};
 
 public:
 	static Polygon* get_regular_poligon(int sides, int scale, SDL_Color& color);
