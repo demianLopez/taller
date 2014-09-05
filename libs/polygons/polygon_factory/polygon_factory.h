@@ -1,5 +1,5 @@
 /**
- polygon.h
+ polygon_factory.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,18 +16,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef POLYGON_H_
-#define POLYGON_H_
+#ifndef POLYGON_FACTORY_H_
+#define POLYGON_FACTORY_H_
 
-#include <SDL2/SDL.h>
-#include <Box2D/Box2D.h>
+#include "../polygon/polygon.h"
 
-class Polygon {
+class Polygon_factory {
+private:
+	Polygon_factory();
+	virtual ~Polygon_factory();
+
 public:
-	Polygon();
-	virtual ~Polygon();
-
-	virtual void draw() = 0;
+	static Polygon* get_regular_poligon(int sides, int scale, SDL_Color& color);
 };
 
-#endif /* POLYGON_H_ */
+#endif /* POLYGON_FACTORY_H_ */

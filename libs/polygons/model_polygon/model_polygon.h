@@ -1,5 +1,5 @@
 /**
- polygon.h
+ model_polygon.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,18 +16,13 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef POLYGON_H_
-#define POLYGON_H_
+#ifndef MODEL_POLYGON_H_
+#define MODEL_POLYGON_H_
 
-#include <SDL2/SDL.h>
-#include <Box2D/Box2D.h>
-
-class Polygon {
+class Model_polygon {
 public:
-	Polygon();
-	virtual ~Polygon();
-
-	virtual void draw() = 0;
+	Model_polygon();
+	virtual ~Model_polygon();
 };
 
-#endif /* POLYGON_H_ */
+#endif /* MODEL_POLYGON_H_ */
