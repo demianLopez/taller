@@ -20,6 +20,7 @@
 #define POLYGONS_H_
 
 #include "polygon/polygon.h"
+#include "rectangle/rectangle.h"
 #include "polygon_factory/polygon_factory.h"
 
 #endif /* POLYGONS_H_ */

@@ -1,5 +1,5 @@
 /**
- box2d_polygon_factory.h
+ model_polygon_factory.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,16 +16,20 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef BOX2D_POLYGON_FACTORY_H_
-#define BOX2D_POLYGON_FACTORY_H_
+#ifndef MODEL_POLYGON_FACTORY_H_
+#define MODEL_POLYGON_FACTORY_H_
 
-class Box2d_Polygon_factory {
+class Model_polygon_factory {
+
 private:
-	Box2d_Polygon_factory() {};
-	~Box2d_Polygon_factory() {};
+	Model_polygon_factory() {}
+	~Model_polygon_factory() {}
 
 public:
-	static b2PolygonShape get_regular_polygon(int edges);
+	static b2PolygonShape get_regular_polygon(size_t edges);
+	static b2PolygonShape get_rectangle(size_t height, size_t widht);
+	static b2PolygonShape get_circle(size_t height, size_t widht);
+
 };
 
-#endif /* BOX2D_POLYGON_FACTORY_H_ */
+#endif /* MODEL_POLYGON_FACTORY_H_ */

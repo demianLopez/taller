@@ -1,5 +1,5 @@
 /**
- box2d_polygon_factory.cpp
+ rectangle.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,5 +16,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#include "box2d_polygon_factory.h"
+#ifndef RECTANGLE_H_
+#define RECTANGLE_H_
 
+#include "../polygon/polygon.h"
+
+class Rectangle: public Polygon {
+public:
+	Rectangle();
+	virtual ~Rectangle();
+};
+
+#endif /* RECTANGLE_H_ */

@@ -23,11 +23,14 @@
 
 class Polygon_factory {
 private:
-	Polygon_factory() {};
-	virtual ~Polygon_factory() {};
+	Polygon_factory() {}
+	virtual ~Polygon_factory() {}
 
 public:
-	static Polygon* get_regular_poligon(int sides, int scale, SDL_Color& color);
+	static Polygon* get_regular_poligon(size_t sides, size_t scale,
+			SDL_Color& color);
+	static Polygon* get_rectangle(size_t height, size_t widht,
+			SDL_Color& color);
 
 };
 

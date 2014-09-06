@@ -1,5 +1,5 @@
 /**
- polygon_factory.cpp
+ rectangle.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,15 +16,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#include "polygon_factory.h"
-#include "../box2d_polygon_factory/box2d_polygon_factory.h"
+#include "rectangle.h"
 
-Polygon* Polygon_factory::get_regular_poligon(int sides, int scale,
-		SDL_Color& color) {
-	return NULL;
-}
-
-Polygon* Polygon_factory::get_rectangle(size_t height, size_t widht,
-		SDL_Color& color) {
+Rectangle::Rectangle() {
+	// TODO Auto-generated constructor stub
 
 }
+
+Rectangle::~Rectangle() {
+	// TODO Auto-generated destructor stub
+}
+

@@ -1,5 +1,5 @@
 /**
- polygon_factory.cpp
+ model_polygon_factory.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,15 +16,5 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#include "polygon_factory.h"
-#include "../box2d_polygon_factory/box2d_polygon_factory.h"
+#include "model_polygon_factory.h"
 
-Polygon* Polygon_factory::get_regular_poligon(int sides, int scale,
-		SDL_Color& color) {
-	return NULL;
-}
-
-Polygon* Polygon_factory::get_rectangle(size_t height, size_t widht,
-		SDL_Color& color) {
-
-}
