@@ -23,6 +23,9 @@ class Model_polygon {
 public:
 	Model_polygon();
 	virtual ~Model_polygon();
+
+public:
+	void resize(float scale);
 };
 
 #endif /* MODEL_POLYGON_H_ */

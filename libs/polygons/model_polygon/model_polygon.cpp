@@ -27,3 +27,5 @@ Model_polygon::~Model_polygon() {
 	// TODO Auto-generated destructor stub
 }
 
+void Model_polygon::resize(float scale) {
+}

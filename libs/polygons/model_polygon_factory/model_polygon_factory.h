@@ -19,6 +19,8 @@
 #ifndef MODEL_POLYGON_FACTORY_H_
 #define MODEL_POLYGON_FACTORY_H_
 
+#include "../model_polygon/model_polygon.h"
+
 class Model_polygon_factory {
 
 private:
@@ -26,9 +28,9 @@ private:
 	~Model_polygon_factory() {}
 
 public:
-	static b2PolygonShape get_regular_polygon(size_t edges);
-	static b2PolygonShape get_rectangle(size_t height, size_t widht);
-	static b2PolygonShape get_circle(size_t height, size_t widht);
+	static Model_polygon* get_regular_polygon(size_t edges);
+	static Model_polygon* get_rectangle(size_t height, size_t widht);
+	static Model_polygon* get_circle(size_t height, size_t widht);
 
 };
 
