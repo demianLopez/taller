@@ -20,7 +20,6 @@
 
 Rectangle::Rectangle() {
 	// TODO Auto-generated constructor stub
-
 }
 
 Rectangle::~Rectangle() {

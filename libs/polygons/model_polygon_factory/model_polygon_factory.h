@@ -20,18 +20,17 @@
 #define MODEL_POLYGON_FACTORY_H_
 
 #include "../model_polygon/model_polygon.h"
+#include <stddef.h>
 
 class Model_polygon_factory {
-
 private:
 	Model_polygon_factory() {}
-	~Model_polygon_factory() {}
+	virtual ~Model_polygon_factory() {}
 
 public:
 	static Model_polygon* get_regular_polygon(size_t edges);
-	static Model_polygon* get_rectangle(size_t height, size_t widht);
-	static Model_polygon* get_circle(size_t height, size_t widht);
-
+	static Model_polygon* get_rectangle(double height, double widht);
+	static Model_polygon* get_circle(double diameter);
 };
 
 #endif /* MODEL_POLYGON_FACTORY_H_ */

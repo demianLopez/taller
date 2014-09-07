@@ -17,11 +17,11 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 #include "polygon_factory.h"
-#include "../model_polygon_factory/model_polygon_factory.h"
+#include "../regular_polygon/regular_polygon.h"
 
-Polygon* Polygon_factory::get_regular_polygon(size_t sides, double scale,
+Polygon* Polygon_factory::get_regular_polygon(size_t edges, double scale,
 		SDL_Color& color) {
-	return NULL;
+	return new Regular_polygon(edges,scale,color);
 }
 
 Polygon* Polygon_factory::get_rectangle(double height, double widht,

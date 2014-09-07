@@ -20,7 +20,6 @@
 
 Polygon::Polygon() {
 	// TODO Auto-generated constructor stub
-
 }
 
 Polygon::~Polygon() {

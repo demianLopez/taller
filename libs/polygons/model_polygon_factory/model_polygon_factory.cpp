@@ -16,5 +16,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "model_polygon_factory.h"
 
+Model_polygon* Model_polygon_factory::get_regular_polygon(size_t edges) {
+	return new Model_polygon();
+}

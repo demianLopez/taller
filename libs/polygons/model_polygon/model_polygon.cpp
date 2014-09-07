@@ -20,7 +20,6 @@
 
 Model_polygon::Model_polygon() {
 	// TODO Auto-generated constructor stub
-
 }
 
 Model_polygon::~Model_polygon() {

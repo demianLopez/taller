@@ -22,9 +22,11 @@
 
 int main() {
 	SDL_Color color;
-	color.r=3;
-	color.g=4;
-	color.b=66;
-	Polygon* pol = Polygon_factory::get_regular_poligon(4,2,color);
+	color.r = 3;
+	color.g = 4;
+	color.b = 66;
+	Polygon* pol = Polygon_factory::get_regular_polygon(4, 2, color);
+
+	delete pol;
 	return 0;
 }

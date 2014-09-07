@@ -27,12 +27,11 @@ private:
 	virtual ~Polygon_factory() {}
 
 public:
-	static Polygon* get_regular_polygon(size_t sides, double scale,
+	static Polygon* get_regular_polygon(size_t edges, double scale,
 			SDL_Color& color);
 	static Polygon* get_rectangle(double height, double widht,
 			SDL_Color& color);
 	static Polygon* get_circle(double diameter, SDL_Color& color);
-
 };
 
 #endif /* POLYGON_FACTORY_H_ */

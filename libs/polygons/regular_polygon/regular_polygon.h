@@ -20,13 +20,17 @@
 #define REGULAR_POLYGON_H_
 
 #include "../polygon/polygon.h"
+#include "../model_polygon/model_polygon.h"
 
 class Regular_polygon: public Polygon {
+private:
+	Model_polygon* model;
+
 public:
-	Regular_polygon();
+	Regular_polygon(size_t edges, double scale, SDL_Color& colora);
 	virtual ~Regular_polygon();
 
-	void draw(){}
+	void draw() {}
 };
 
 #endif /* REGULAR_POLYGON_H_ */

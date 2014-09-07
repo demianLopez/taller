@@ -17,13 +17,13 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 #include "regular_polygon.h"
+#include "../model_polygon_factory/model_polygon_factory.h"
 
-Regular_polygon::Regular_polygon() {
-	// TODO Auto-generated constructor stub
-
+Regular_polygon::Regular_polygon(size_t edges, double scale,
+		SDL_Color& colora) {
+	this->model = Model_polygon_factory::get_regular_polygon(edges);
 }
 
 Regular_polygon::~Regular_polygon() {
-	// TODO Auto-generated destructor stub
+	delete this->model;
 }
-
