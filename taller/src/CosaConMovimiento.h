@@ -19,7 +19,8 @@ public:
 	CosaConMovimiento(float x = 0, float y = 0);
 
 	// Mueve la posicion de la cosa dependiendo de su velocidad.
-	void mover();
+	// Delta indica la cantidad de movimientos a realizar.
+	void mover(int delta = 1);
 
 	// Devuelve la posicion actual.
 	VectorXY verPosicionActual();
