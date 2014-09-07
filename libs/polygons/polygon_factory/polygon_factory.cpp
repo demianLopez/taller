@@ -17,14 +17,14 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 #include "polygon_factory.h"
-#include "../box2d_polygon_factory/box2d_polygon_factory.h"
+#include "../model_polygon_factory/model_polygon_factory.h"
 
-Polygon* Polygon_factory::get_regular_poligon(int sides, int scale,
+Polygon* Polygon_factory::get_regular_polygon(size_t sides, double scale,
 		SDL_Color& color) {
 	return NULL;
 }
 
-Polygon* Polygon_factory::get_rectangle(size_t height, size_t widht,
+Polygon* Polygon_factory::get_rectangle(double height, double widht,
 		SDL_Color& color) {
-
+	return NULL;
 }
