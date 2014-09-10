@@ -10,6 +10,7 @@
 #include "Graphics.h"
 #include <stdio.h>
 
+
 Game::Game(const char *title) {
 	//Seteo por default
 	this->height = 600;
@@ -123,25 +124,31 @@ void Game::gameCicle(){
 			}
 		}
 
-		if(this->shuldWeRender()){
-			SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
-			SDL_RenderClear(gRenderer);
-
-
-			this->render(g);
-			this->lastRenderTime = SDL_GetTicks();
-
-
-			this->renderCount++;
-
-			if((SDL_GetTicks() - this->lastFPSUpdateTime) > 1000){
-				this->fps = this->renderCount;
-				this->renderCount = 0;
-				this->lastFPSUpdateTime = SDL_GetTicks();
+		if(this->limitedFPS){
+			int renderTime = 1000 / this->maxFPS;
+			int elapsedTime = SDL_GetTicks() - this->lastRenderTime;
+			if(elapsedTime < renderTime){
+				SDL_Delay(renderTime - elapsedTime);
 			}
-
-			SDL_RenderPresent(gRenderer);
 		}
+
+		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
+		SDL_RenderClear(gRenderer);
+
+
+		this->render(g);
+		this->lastRenderTime = SDL_GetTicks();
+
+
+		this->renderCount++;
+
+		if((SDL_GetTicks() - this->lastFPSUpdateTime) > 1000){
+			this->fps = this->renderCount;
+			this->renderCount = 0;
+			this->lastFPSUpdateTime = SDL_GetTicks();
+		}
+
+		SDL_RenderPresent(gRenderer);
 
 	}
 
@@ -149,18 +156,6 @@ void Game::gameCicle(){
 	this->gameClose();
 }
 
-bool Game::shuldWeRender(){
-	if(this->limitedFPS){
-		int timeInterval = 1000/this->maxFPS;
-		if((SDL_GetTicks() - this->lastRenderTime) > timeInterval){
-			return true;
-		} else {
-			return false;
-		}
-	} else {
-		return true;
-	}
-}
 
 void Game::gameClose(){
 	SDL_DestroyWindow(this->gWindow);
