@@ -20,5 +20,19 @@
 #include "model_polygon_factory.h"
 
 Model_polygon* Model_polygon_factory::get_regular_polygon(size_t edges) {
+	if (edges < 3) //No es un poligono valido
+		return NULL;
+	if (edges == 4) //Devuelvo un rectangulo de 1x1
+		return get_rectangle(1,1);
+
 	return new Model_polygon();
+}
+
+Model_polygon* Model_polygon_factory::get_rectangle(double height,
+	double widht) {
+	return NULL;
+}
+
+Model_polygon* Model_polygon_factory::get_circle(double diameter) {
+	return NULL;
 }
