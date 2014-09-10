@@ -1,4 +1,5 @@
 /*
+ /*
  * pruebaEngine.cpp
  *
  *  Created on: 21/8/2014
@@ -57,7 +58,7 @@ void pruebaEngine::render(Graphics *g){
 
 	g->drawText(10, 10, fpsText.str().c_str());
 	rotation+=0.05f;
-	g->drawFillRect(400, 20, 20, 20);
+	g->drawFillRect(400, 20, 30, 20);
 
 	g->drawAnimation(this->animation, 100, 100);
 }
@@ -73,4 +74,3 @@ void pruebaEngine::update(SDL_Event e, unsigned int delta){
 pruebaEngine::~pruebaEngine() {
 	// TODO Auto-generated destructor stub
 }
-
