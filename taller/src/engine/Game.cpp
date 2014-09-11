@@ -117,10 +117,7 @@ void Game::gameCicle(){
 			if( e.type == SDL_QUIT ){
 				this->endGame();
 			} else {
-				int delta = SDL_GetTicks() - this->lastUpdateTime;
-				this->update(e, delta);
-				this->lastUpdateTime = SDL_GetTicks();
-
+				this->keyEvent(e);
 			}
 		}
 
@@ -131,6 +128,10 @@ void Game::gameCicle(){
 				SDL_Delay(renderTime - elapsedTime);
 			}
 		}
+
+		int delta = SDL_GetTicks() - this->lastUpdateTime;
+		this->update(delta);
+		this->lastUpdateTime = SDL_GetTicks();
 
 		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
 		SDL_RenderClear(gRenderer);

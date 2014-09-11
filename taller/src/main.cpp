@@ -12,11 +12,13 @@
 #include <stdio.h>
 
 #include "pruebaEngine.h"
+#include "Jugador.h"
 using namespace std;
 
 
 int main(int argc, char *argv[]){
 	pruebaEngine *pE = new pruebaEngine("Il");
+
 	pE->setMaxFPS(50);
 	pE->start();
 	return 0;

@@ -53,7 +53,8 @@ private:
 
 protected:
 	virtual void render(Graphics *g) = 0;
-	virtual void update(SDL_Event e, unsigned int delta) = 0;
+	virtual void update(unsigned int delta) = 0;
+	virtual void keyEvent(SDL_Event e) = 0;
 	virtual void init() { };
 	virtual void exit() { };
 };

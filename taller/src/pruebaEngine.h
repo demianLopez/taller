@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
+#include "Box2D/Box2D.h"
 
 using namespace std;
 
@@ -24,10 +25,14 @@ public:
 	pruebaEngine(const char *title);
 	virtual ~pruebaEngine();
 private:
-	virtual void update(SDL_Event e, unsigned int delta);
+	virtual void update(unsigned int delta);
 	virtual void render(Graphics *g);
+	virtual void keyEvent(SDL_Event e);
 	virtual void init();
 	virtual void exit();
+
+	b2World* world;
+	b2Body* body;
 
 	Image* testImage;
 	SpriteSheet *spriteSheet;
