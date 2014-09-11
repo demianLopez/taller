@@ -17,6 +17,11 @@ SubImage::SubImage(Image * originalImage, int width, int height, int xSprite, in
 	this->portionImage =  {xSprite * width, ySprite * height, width, height};
 }
 
+SubImage::~SubImage(){
+	this->gImageTexture = NULL;
+	this->gImage = NULL;
+}
+
 SDL_Rect * SubImage::getImagePortion(){
 	return &portionImage;
 }

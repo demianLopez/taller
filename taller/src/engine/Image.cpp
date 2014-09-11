@@ -10,30 +10,12 @@
 
 Image::Image(const char* pFile) {
 	this->gImage = this->loadSurface(pFile);
-	this->gImageTexture = Image::textureFromSurface(this->gImage);
+	this->gImageTexture = IMG_LoadTexture(GameElements::gRenderer, pFile);
 
 	this->height = gImage->h;
 	this->width = gImage->w;
 
 	this->centerRotation = NULL;
-
-	this->colorKeyR = 0;
-	this->colorKeyG = 0;
-	this->colorKeyB = 0;
-}
-
-Image::Image(const char* pFile,int r, int g, int b){
-	this->gImage = this->loadSurface(pFile);
-	this->gImageTexture = Image::textureFromSurface(this->gImage);
-
-	this->height = gImage->h;
-	this->width = gImage->w;
-
-	this->centerRotation = NULL;
-
-	this->colorKeyR = r;
-	this->colorKeyG = g;
-	this->colorKeyB = b;
 }
 
 Image::Image(){
@@ -44,11 +26,10 @@ Image::Image(){
 	this->width = 0;
 
 	this->centerRotation = NULL;
+}
 
-	this->colorKeyR = 0;
-	this->colorKeyG = 0;
-	this->colorKeyB = 0;
-
+int Image::setAlpha(unsigned char alpha){
+	return SDL_SetTextureAlphaMod(this->gImageTexture, alpha);
 }
 
 void Image::render(int xo, int yo, int dx, int dy){
@@ -99,7 +80,6 @@ SDL_Surface* Image::loadSurface(const char *pFile)
     }
     else
     {
-    	SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, this->colorKeyR, this->colorKeyG, this->colorKeyB));
         //Convert surface to screen format
         optimizedSurface = SDL_ConvertSurface( loadedSurface, GameElements::gScreenSurface->format, NULL );
         if( optimizedSurface == NULL )

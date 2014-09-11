@@ -87,8 +87,9 @@ bool Game::start(){
             	GameElements::gScreenSurface = this->gScreenSurface;
             	GameElements::gRenderer = this->gRenderer;
 
-            	//Arrancamos el gameCicle
 
+
+            	//Arrancamos el gameCicle
             	this->gameCicle();
 
             }

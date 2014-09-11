@@ -22,6 +22,10 @@ public:
 	void render(int xo, int yo, int dx, int dy);
 	void render(int xo, int yo, int dx, int dy, float rotation);
 
+
+	//Return 0 if succes, or negative error code on faliure!
+	int setAlpha(unsigned char alpha);
+
 	//Convierte SDL_Surface en SDL texture!
 	static SDL_Texture *textureFromSurface(SDL_Surface *pSurface);
 
@@ -36,10 +40,6 @@ private:
 	SDL_Surface *loadSurface(const char* pFile);
 	SDL_Point* centerRotation;
 	void completeRender(SDL_Rect *imageData, float angle, SDL_RendererFlip flip);
-
-	int colorKeyR;
-	int colorKeyG;
-	int colorKeyB;
 
 protected:
 	Image();

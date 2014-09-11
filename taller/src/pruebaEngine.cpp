@@ -16,7 +16,6 @@ pruebaEngine::pruebaEngine(const char *title) : Game(title) {
 	this->subSprite = NULL;
 	this->animationTest = NULL;
 	this->animation = NULL;
-
 	rotation = 0;
 }
 
@@ -25,13 +24,17 @@ void pruebaEngine::init(){
 	this->testImage = new Image("Resources/a.png");
 	this->spriteSheet = new SpriteSheet("Resources/tilea3.png", 64 ,64);
 	this->subSprite = spriteSheet->getSubImage(0, 1);
+	delete this->subSprite;
+	this->subSprite = spriteSheet->getSubImage(0, 2);
 
-	this->animationTest = new SpriteSheet("Resources/anim.png", 21, 40);
+	this->animationTest = new SpriteSheet("Resources/mob_sumo.png", 81, 96);
 	this->animation = new Animation();
 
-	for(int x = 0; x < 8; x++){
+	for(int x = 0; x < 6; x++){
 		this->animation->addFrame(this->animationTest->getSubImage(x, 0), 75);
 	}
+
+	this->particleE = new ParticleEmiter(new Image("Resources/p.png"), 10);
 
 	b2Vec2 gravity(0,9.8);
 
@@ -84,6 +87,7 @@ void pruebaEngine::render(Graphics *g){
 
 	g->drawImage(this->subSprite, body->GetPosition().x * 10, body->GetPosition().y * 10, body->GetAngle() * 10);
 	g->drawAnimation(this->animation, 100, 100);
+	this->particleE->render(g);
 
 	/*
 	g->drawImage(testImage, 0, 50);
@@ -115,6 +119,7 @@ void pruebaEngine::keyEvent(SDL_Event e){
 
 
 void pruebaEngine::update(unsigned int delta){
+	this->particleE->update(delta);
 	float time = ((float) delta) / 1000;
 	world->Step(time, 6, 2);
 

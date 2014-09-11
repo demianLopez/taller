@@ -63,6 +63,10 @@ int Animation::getFrameCount(){
 }
 
 Animation::~Animation() {
+	for(auto *frame : this->frameList){
+		delete frame;
+	}
+
 	this->frameList.clear();
 }
 

@@ -12,6 +12,7 @@
 #include "engine/Image.h"
 #include "engine/SpriteSheet.h"
 #include "engine/Animation.h"
+#include "engine/ParticleEmiter.h"
 
 #include <stdio.h>
 #include <string>
@@ -40,6 +41,8 @@ private:
 
 	SpriteSheet *animationTest;
 	Animation * animation;
+
+	ParticleEmiter * particleE;
 
 	float rotation;
 
