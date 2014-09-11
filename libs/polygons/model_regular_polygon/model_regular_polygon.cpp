@@ -21,13 +21,28 @@
 
 #include "model_regular_polygon.h"
 
-Model_regular_polygon::Model_regular_polygon(size_t edges) {
+Model_regular_polygon::Model_regular_polygon(size_t edges, b2World* world) {
 	double perimeter = 2 * M_PI;
 	double segment_size = perimeter / edges;
 
 	//parametrizar
 
+	b2Vec2 vertex[edges];
+	for (int i; i < edges; i++) {
+		vertex[i].Set(0, 0);
+	}
 
+	b2PolygonShape polygon_shape;
+	polygon_shape.Set(vertex, edges); //seteo los vertices del poligono
+
+	b2FixtureDef body_fixture;
+	body_fixture.shape = &polygon_shape;
+
+	b2BodyDef body_definition;
+	body_definition.position.Set(0, 0); //seteo posicion base
+
+	this->body = world->CreateBody(&body_definition);
+	this->body->CreateFixture(&body_fixture); //add a fixture to the body
 }
 
 Model_regular_polygon::~Model_regular_polygon() {
