@@ -1,5 +1,5 @@
 /**
- model_polygon_factory.cpp
+ model_regular_polygon.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,24 +16,21 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+#define _USE_MATH_DEFINES
+#include <math.h>
 
-#include "model_polygon_factory.h"
-#include "../model_regular_polygon/model_regular_polygon.h"
+#include "model_regular_polygon.h"
 
-Model_polygon* Model_polygon_factory::get_regular_polygon(size_t edges) {
-	if (edges < 3) //No es un poligono valido
-		return NULL;
-	if (edges == 4) //Devuelvo un rectangulo de 1x1
-		return get_rectangle(1,1);
+Model_regular_polygon::Model_regular_polygon(size_t edges) {
+	double perimeter = 2 * M_PI;
+	double segment_size = perimeter / edges;
 
-	return new Model_regular_polygon(edges);
+	//parametrizar
+
+
 }
 
-Model_polygon* Model_polygon_factory::get_rectangle(double height,
-	double widht) {
-	return NULL;
+Model_regular_polygon::~Model_regular_polygon() {
+	// TODO Auto-generated destructor stub
 }
 
-Model_polygon* Model_polygon_factory::get_circle(double diameter) {
-	return NULL;
-}
