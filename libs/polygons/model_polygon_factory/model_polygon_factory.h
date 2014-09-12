@@ -28,9 +28,10 @@ private:
 	virtual ~Model_polygon_factory() {}
 
 public:
-	static Model_polygon* get_regular_polygon(size_t edges);
-	static Model_polygon* get_rectangle(double height, double widht);
-	static Model_polygon* get_circle(double diameter);
+	static Model_polygon* get_regular_polygon(size_t edges, double scale);
+	static Model_polygon* get_rectangle(double height, double widht,
+			double scale);
+	static Model_polygon* get_circle(double diameter, double scale);
 };
 
 #endif /* MODEL_POLYGON_FACTORY_H_ */

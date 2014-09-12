@@ -21,16 +21,40 @@
 
 #include "model_regular_polygon.h"
 
-Model_regular_polygon::Model_regular_polygon(size_t edges, b2World* world) {
+void set_point(double& x, double& y, double radians) {
+	x = cos(radians);
+	y = sin(radians);
+}
+
+void define_vertex(size_t edges, b2Vec2 vertex[edges]) {
 	double perimeter = 2 * M_PI;
 	double segment_size = perimeter / edges;
+	double traveled_perimeter = 0;
+	double x = 0, y = 0;
+	for (int i; i < edges; i++) {
+		vertex[i].Set(x, y);
+		traveled_perimeter += segment_size;
+		set_point(x, y, traveled_perimeter);
+	}
+}
 
-	//parametrizar
+void scale_vertex(size_t edges, b2Vec2 vertex[edges], double scale) {
+	for (int i; i < edges; i++) {
+		double x = vertex[i].x;
+		double y = vertex[i].y;
+		x *= scale;
+		y *= scale;
+		vertex[i].Set(x, y);
+	}
+}
+
+Model_regular_polygon::Model_regular_polygon(size_t edges, double scale,
+		b2World* world) {
 
 	b2Vec2 vertex[edges];
-	for (int i; i < edges; i++) {
-		vertex[i].Set(0, 0);
-	}
+	define_vertex(edges, vertex);
+
+	scale_vertex(edges, vertex, scale);
 
 	b2PolygonShape polygon_shape;
 	polygon_shape.Set(vertex, edges); //seteo los vertices del poligono

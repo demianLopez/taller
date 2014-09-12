@@ -26,8 +26,9 @@
 class Model_regular_polygon: public Model_polygon {
 private:
 	b2Body* body;
+
 public:
-	Model_regular_polygon(size_t edges, b2World* world);
+	Model_regular_polygon(size_t edges, double scale, b2World* world);
 	virtual ~Model_regular_polygon();
 };
 
