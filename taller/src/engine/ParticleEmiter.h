@@ -25,6 +25,7 @@ public:
 	Image * getParticleImage();
 
 	void restartParticle(Particle * particle);
+	void setMaxParticles(int numParticles);
 
 	virtual ~ParticleEmiter();
 private:

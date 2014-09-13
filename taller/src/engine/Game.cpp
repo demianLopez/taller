@@ -28,14 +28,26 @@ Game::Game(const char *title) {
 	this->limitedFPS = false;
 	this->maxFPS = 0;
 	this->lastRenderTime = 0;
+	this->sfps = 0;
 }
 
+int Game::getScreenHeight(){
+	return this->height;
+}
+
+int Game::getScreenWidth(){
+	return this->width;
+}
+
+void Game::showFPS(bool showFPS){
+	this->sfps = showFPS;
+}
 void Game::setMaxFPS(int maxFPS){
 	this->limitedFPS = true;
 	this->maxFPS = maxFPS;
 }
 
-void Game::setScreenSize(int height, int width){
+void Game::setScreenSize(int width, int height){
 	this->height = height;
 	this->width = width;
 }
@@ -141,6 +153,12 @@ void Game::gameCicle(){
 		this->render(g);
 		this->lastRenderTime = SDL_GetTicks();
 
+		if(this->sfps){
+			fpsText.clear();
+			fpsText.str("");
+			fpsText<<this->getFPS()<< " FPS";
+			g->drawText(10, 10, fpsText.str().c_str());
+		}
 
 		this->renderCount++;
 
@@ -174,6 +192,6 @@ void Game::gameClose(){
 }
 
 Game::~Game() {
-	// TODO Auto-generated destructor stub
+	this->fpsText.clear();
 }
 

@@ -11,19 +11,26 @@
 #include <iostream>
 #include "LibIncludes.h"
 #include "GameElements.h"
+#include <string>
+#include <sstream>
 
 class Graphics;
 
 class Game {
 public:
 	Game(const char* title);
-	void setScreenSize(int height, int size);
+	void setScreenSize(int width, int height);
 	unsigned int getFPS();
 	unsigned int getElapsedTime();
 	void setMaxFPS(int maxFPS);
 
 	bool start();
 	void endGame();
+
+	int getScreenHeight();
+	int getScreenWidth();
+
+	void showFPS(bool showFPS);
 
 	virtual ~Game();
 private:
@@ -50,6 +57,9 @@ private:
 
 	bool limitedFPS;
 	int maxFPS;
+
+	bool sfps; //SHOW FPS
+	std::stringstream fpsText;
 
 protected:
 	virtual void render(Graphics *g) = 0;

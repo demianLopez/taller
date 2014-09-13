@@ -16,6 +16,10 @@ ParticleEmiter::ParticleEmiter(Image * particleImage, int maxParticles) {
 	this->maxEmiter = maxParticles;
 }
 
+void ParticleEmiter::setMaxParticles(int numParticles){
+	this->maxEmiter = numParticles;
+}
+
 Image * ParticleEmiter::getParticleImage(){
 	return this->particleImage;
 }
