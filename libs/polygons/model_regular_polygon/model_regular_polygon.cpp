@@ -72,6 +72,5 @@ Model_regular_polygon::Model_regular_polygon(size_t sides, double scale,
 }
 
 Model_regular_polygon::~Model_regular_polygon() {
-	// TODO Auto-generated destructor stub
 }
 

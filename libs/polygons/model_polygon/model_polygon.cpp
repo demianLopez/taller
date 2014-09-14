@@ -52,13 +52,19 @@ void Model_polygon::set_angular_velocity(double angular_velocity) {
 }
 
 void Model_polygon::apply_force(double x_units, double y_units) {
+	b2Vec2 force(x_units, y_units);
+	this->body->ApplyForceToCenter()
 }
 
 void Model_polygon::apply_instant_force(double x_units, double y_units) {
+	b2Vec2 force(x_units, y_units);
+
 }
 
 void Model_polygon::create_body(b2BodyDef* body_definition,
 		b2FixtureDef* body_fixture, b2World& world) {
 	this->body = world.CreateBody(body_definition);
-	this->body->CreateFixture(body_fixture); //add a fixture to the body
+	this->body->CreateFixture(body_fixture);
+
+	this->body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 }
