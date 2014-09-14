@@ -9,6 +9,8 @@
 #define RESOURCES_H_
 
 class Image;
+class SpriteSheet;
+class Animation;
 
 class Resources {
 public:
@@ -17,11 +19,20 @@ public:
 	void loadBackground(const char * bPath);
 	void loadImage(const char * iPath);
 
+	void loadAnimations();
+
+	Animation * getPlayerAnimationLeft();
+	Animation * getPlayerAnimationRight();
+
 	Image * getBackground();
 
 	virtual ~Resources();
 private:
 	Image * backgroundImage;
+
+	SpriteSheet * characterSpriteSheet;
+	Animation * characterAnimationLeft;
+	Animation * characterAnimationRight;
 };
 
 #endif /* RESOURCES_H_ */
