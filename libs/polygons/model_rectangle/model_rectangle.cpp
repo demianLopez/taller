@@ -18,9 +18,19 @@
  */
 #include "model_rectangle.h"
 
-Model_rectangle::Model_rectangle() {
-	// TODO Auto-generated constructor stub
+Model_rectangle::Model_rectangle(double height, double widht, double density,
+		int body_type, b2World& world):Model_polygon(body_type,density) {
 
+	b2PolygonShape box_shape;
+	box_shape.SetAsBox(1,1); //seteo los vertices del poligono
+
+	b2FixtureDef body_fixture;
+	body_fixture.shape = &box_shape;
+
+	b2BodyDef body_definition;
+	body_definition.position.Set(0, 0); //seteo posicion base
+
+	Model_polygon::create_body(&body_definition, &body_fixture, world);
 }
 
 Model_rectangle::~Model_rectangle() {

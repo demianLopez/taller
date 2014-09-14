@@ -19,6 +19,7 @@
 
 #include "model_polygon_factory.h"
 #include "../model_regular_polygon/model_regular_polygon.h"
+#include "../model_rectangle/model_rectangle.h"
 
 Model_polygon* Model_polygon_factory::get_regular_polygon(size_t sides,
 		double scale, double density, int body_type, b2World& world) {
@@ -32,7 +33,7 @@ Model_polygon* Model_polygon_factory::get_regular_polygon(size_t sides,
 
 Model_polygon* Model_polygon_factory::get_rectangle(double height, double widht,
 		double density, int body_type, b2World& world) {
-	return NULL;
+	return new Model_rectangle(height, widht, density, body_type, world);
 }
 
 Model_polygon* Model_polygon_factory::get_circle(double diameter, double scale,
@@ -49,8 +50,7 @@ Model_polygon* Model_polygon_factory::get_static_regular_polygon(size_t sides,
 
 Model_polygon* Model_polygon_factory::get_static_rectangle(double height,
 		double widht, double density, b2World& world) {
-	return NULL;
-
+	return get_rectangle(height, widht, density, Model_polygon::STATIC, world);
 }
 
 Model_polygon* Model_polygon_factory::get_static_circle(double diameter,

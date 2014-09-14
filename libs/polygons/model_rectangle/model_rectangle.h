@@ -19,9 +19,12 @@
 #ifndef MODEL_RECTANGLE_H_
 #define MODEL_RECTANGLE_H_
 
+#include "../model_polygon/model_polygon.h"
+
 class Model_rectangle: public Model_polygon {
 public:
-	Model_rectangle();
+	Model_rectangle(double height, double widht,
+			double density, int body_type, b2World& world);
 	virtual ~Model_rectangle();
 };
 
