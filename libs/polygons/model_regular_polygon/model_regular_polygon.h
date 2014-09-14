@@ -25,12 +25,9 @@
 #include "../model_polygon/model_polygon.h"
 
 class Model_regular_polygon: public Model_polygon {
-private:
-	b2Body* body;
-
 public:
 	Model_regular_polygon(size_t edges, double scale, int body_type,
-			b2World& world);
+			double density, b2World& world);
 	virtual ~Model_regular_polygon();
 };
 

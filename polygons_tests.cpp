@@ -21,14 +21,14 @@
 #include "libs/polygons/polygons.h"
 
 int main() {
-	b2Vec2 gravity(0,9.8);
+	b2Vec2 gravity(0, 9.8);
 	b2World* world = new b2World(gravity);
 
 	Model_polygon* pol1 = Model_polygon_factory::get_static_regular_polygon(4,
-			2, *world);
+			2, 1, *world);
 	Model_polygon* pol2 = Model_polygon_factory::get_dynamic_regular_polygon(3,
-			2, *world);
-	Model_polygon* circle = Model_polygon_factory::get_dynamic_circle(2, 1,
+			2, 1, *world);
+	Model_polygon* circle = Model_polygon_factory::get_dynamic_circle(2, 1, 1,
 			*world);
 
 	delete pol1;

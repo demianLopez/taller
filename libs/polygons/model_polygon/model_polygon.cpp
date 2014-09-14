@@ -20,15 +20,45 @@
 
 #include <Box2D/Box2D.h>
 
-Model_polygon::Model_polygon(int body_type) {
-	if (body_type == STATIC)
-	{
+Model_polygon::Model_polygon(int body_type, double density) {
+	if (body_type == STATIC) {
 		this->body_type = b2_staticBody;
 	} else { //Por defecto es dinamico (body_type == DYNAMIC)
 		this->body_type = b2_dynamicBody;
 	}
+
+	this->body = NULL;
+	this->density = density;
 }
 
 Model_polygon::~Model_polygon() {
 	// TODO Auto-generated destructor stub
+}
+
+void Model_polygon::rotate(double angle) {
+
+}
+
+void Model_polygon::move(double x_units, double y_units) {
+}
+
+void Model_polygon::set_velocity(double x_units, double y_units) {
+	b2Vec2 velocity(x_units, y_units);
+	this->body->SetLinearVelocity(velocity);
+}
+
+void Model_polygon::set_angular_velocity(double angular_velocity) {
+	this->body->SetAngularVelocity(angular_velocity);
+}
+
+void Model_polygon::apply_force(double x_units, double y_units) {
+}
+
+void Model_polygon::apply_instant_force(double x_units, double y_units) {
+}
+
+void Model_polygon::create_body(b2BodyDef* body_definition,
+		b2FixtureDef* body_fixture, b2World& world) {
+	this->body = world.CreateBody(body_definition);
+	this->body->CreateFixture(body_fixture); //add a fixture to the body
 }

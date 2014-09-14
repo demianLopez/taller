@@ -19,6 +19,8 @@
 #ifndef MODEL_POLYGON_H_
 #define MODEL_POLYGON_H_
 
+#include <Box2D/Box2D.h>
+
 class Model_polygon {
 
 public:
@@ -27,14 +29,23 @@ public:
 
 protected:
 	int body_type;
-	int scale;
+	double density;
+	b2Body* body;
+
+protected:
+	void create_body(b2BodyDef* body_definition, b2FixtureDef* body_fixture,
+			b2World& world);
 
 public:
-	Model_polygon(int body_type);
+	Model_polygon(int body_type,double density);
 	virtual ~Model_polygon();
 
 	void rotate(double angle);
-	void move(double x_units,double y_units);
+	void move(double x_units, double y_units);
+	void set_velocity(double x_units, double y_units);
+	void set_angular_velocity(double angular_velocity);
+	void apply_force(double x_units, double y_units);
+	void apply_instant_force(double x_units, double y_units);
 };
 
 #endif /* MODEL_POLYGON_H_ */

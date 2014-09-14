@@ -49,8 +49,8 @@ void scale_vertex(size_t sides, b2Vec2* vertex, double scale) {
 }
 
 Model_regular_polygon::Model_regular_polygon(size_t sides, double scale,
-		int body_type, b2World& world) :
-		Model_polygon(body_type) {
+		int body_type, double density, b2World& world) :
+		Model_polygon(body_type, density) {
 
 	b2Vec2* vertex = new b2Vec2[sides];
 	define_vertex(sides, vertex);
@@ -66,8 +66,7 @@ Model_regular_polygon::Model_regular_polygon(size_t sides, double scale,
 	b2BodyDef body_definition;
 	body_definition.position.Set(0, 0); //seteo posicion base
 
-	this->body = world.CreateBody(&body_definition);
-	this->body->CreateFixture(&body_fixture); //add a fixture to the body
+	Model_polygon::create_body(&body_definition, &body_fixture, world);
 
 	delete[] vertex;
 }
