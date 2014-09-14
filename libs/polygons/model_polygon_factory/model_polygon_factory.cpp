@@ -20,59 +20,59 @@
 #include "model_polygon_factory.h"
 #include "../model_regular_polygon/model_regular_polygon.h"
 
-Model_polygon* Model_polygon_factory::get_regular_polygon(size_t edges,
-		double scale, int body_type) {
-	if (edges < 3) //No es un poligono valido
+Model_polygon* Model_polygon_factory::get_regular_polygon(size_t sides,
+		double scale, int body_type, b2World& world) {
+	if (sides < 3) //No es un poligono valido
 		return NULL;
-	if (edges == 4) //Devuelvo un rectangulo de 1x1
-		return get_rectangle(1, 1, scale, body_type);
+	if (sides == 4) //Devuelvo un rectangulo de 1x1
+		return get_rectangle(1, 1, scale, body_type, world);
 
-	return new Model_regular_polygon(edges);
+	return new Model_regular_polygon(sides, scale, body_type, world);
 }
 
 Model_polygon* Model_polygon_factory::get_rectangle(double height, double widht,
-		double scale, int body_type) {
+		double scale, int body_type, b2World& world) {
 	return NULL;
 }
 
 Model_polygon* Model_polygon_factory::get_circle(double diameter, double scale,
-		int body_type) {
+		int body_type, b2World& world) {
 	return NULL;
 
 }
 
-Model_polygon* Model_polygon_factory::get_static_regular_polygon(size_t edges,
-		double scale) {
+Model_polygon* Model_polygon_factory::get_static_regular_polygon(size_t sides,
+		double scale, b2World& world) {
 	return NULL;
 
 }
 
 Model_polygon* Model_polygon_factory::get_static_rectangle(double height,
-		double widht, double scale) {
+		double widht, double scale, b2World& world) {
 	return NULL;
 
 }
 
 Model_polygon* Model_polygon_factory::get_static_circle(double diameter,
-		double scale) {
+		double scale, b2World& world) {
 	return NULL;
 
 }
 
-Model_polygon* Model_polygon_factory::get_dynamic_regular_polygon(size_t edges,
-		double scale) {
+Model_polygon* Model_polygon_factory::get_dynamic_regular_polygon(size_t sides,
+		double scale, b2World& world) {
 	return NULL;
 
 }
 
 Model_polygon* Model_polygon_factory::get_dynamic_rectangle(double height,
-		double widht, double scale) {
+		double widht, double scale, b2World& world) {
 	return NULL;
 
 }
 
 Model_polygon* Model_polygon_factory::get_dynamic_circle(double diameter,
-		double scale) {
+		double scale, b2World& world) {
 	return NULL;
 
 }

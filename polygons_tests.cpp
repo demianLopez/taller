@@ -17,20 +17,23 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-#include <SDL2/SDL.h>
+#include <Box2D/Box2D.h>
 #include "libs/polygons/polygons.h"
 
 int main() {
-	SDL_Color color;
-	color.r = 3;
-	color.g = 4;
-	color.b = 66;
-	auto world;
-	Polygon* pol1 = Polygon_factory::get_regular_polygon(4, 2, color,world,Polygon::STATIC);
-	Polygon* pol2 = Polygon_factory::get_regular_polygon(3, 2, color,world,Polygon::DYNAMIC);
-	Polygon* circle = Polygon_factory::get_circle(2,color,world,Polygon::DYNAMIC);
+	b2Vec2 gravity(0,9.8);
+	b2World* world = new b2World(gravity);
 
+	Model_polygon* pol1 = Model_polygon_factory::get_static_regular_polygon(4,
+			2, *world);
+	Model_polygon* pol2 = Model_polygon_factory::get_dynamic_regular_polygon(3,
+			2, *world);
+	Model_polygon* circle = Model_polygon_factory::get_dynamic_circle(2, 1,
+			*world);
 
-	delete pol;
+	delete pol1;
+	delete pol2;
+	delete circle;
+	delete world;
 	return 0;
 }

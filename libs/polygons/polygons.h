@@ -19,8 +19,7 @@
 #ifndef POLYGONS_H_
 #define POLYGONS_H_
 
-#include "polygon/polygon.h"
-#include "rectangle/rectangle.h"
-#include "polygon_factory/polygon_factory.h"
+#include "model_polygon/model_polygon.h"
+#include "model_polygon_factory/model_polygon_factory.h"
 
 #endif /* POLYGONS_H_ */

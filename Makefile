@@ -16,7 +16,7 @@ BOX_LDFLAGS = $(SDL_LDFLAGS) -lBox2D
 #ALL
 VIEW = polygon.o polygon_factory.o regular_polygon.o
 MODEL = model_polygon.o model_regular_polygon.o model_polygon_factory.o
-OBJECTS = $(MODEL) $(VIEW)
+OBJECTS = $(MODEL) #$(VIEW)
 
 all: $(EXEC)
 

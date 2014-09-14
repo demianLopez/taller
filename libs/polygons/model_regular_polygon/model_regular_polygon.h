@@ -20,6 +20,7 @@
 #define MODEL_REGULAR_POLYGON_H_
 
 #include <stddef.h>
+#include <Box2D/Box2D.h>
 
 #include "../model_polygon/model_polygon.h"
 
@@ -28,7 +29,8 @@ private:
 	b2Body* body;
 
 public:
-	Model_regular_polygon(size_t edges, double scale, b2World* world);
+	Model_regular_polygon(size_t edges, double scale, int body_type,
+			b2World& world);
 	virtual ~Model_regular_polygon();
 };
 

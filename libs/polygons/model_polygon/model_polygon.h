@@ -33,6 +33,8 @@ public:
 	Model_polygon(int body_type);
 	virtual ~Model_polygon();
 
+	void rotate(double angle);
+	void move(double x_units,double y_units);
 };
 
 #endif /* MODEL_POLYGON_H_ */

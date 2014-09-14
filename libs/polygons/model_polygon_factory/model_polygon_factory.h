@@ -20,6 +20,8 @@
 #define MODEL_POLYGON_FACTORY_H_
 
 #include "../model_polygon/model_polygon.h"
+
+#include <Box2D/Box2D.h>
 #include <stddef.h>
 
 class Model_polygon_factory {
@@ -30,30 +32,32 @@ private:
 	}
 
 private:
-	static Model_polygon* get_regular_polygon(size_t edges, double scale,
-			int body_type);
+	static Model_polygon* get_regular_polygon(size_t sides, double scale,
+			int body_type, b2World& world);
 	static Model_polygon* get_rectangle(double height, double widht,
-			double scale, int body_type);
+			double scale, int body_type, b2World& world);
 	static Model_polygon* get_circle(double diameter, double scale,
-			int body_type);
-	static Model_polygon* get_paralelogram(int body_type);
-	static Model_polygon* get_trapezoid(int body_type);
+			int body_type, b2World& world);
+	static Model_polygon* get_paralelogram(int body_type, b2World& world);
+	static Model_polygon* get_trapezoid(int body_type, b2World& world);
 
 public:
-	static Model_polygon* get_static_regular_polygon(size_t edges,
-			double scale);
+	static Model_polygon* get_static_regular_polygon(size_t sides, double scale,
+			b2World& world);
 	static Model_polygon* get_static_rectangle(double height, double widht,
-			double scale);
-	static Model_polygon* get_static_circle(double diameter, double scale);
-	static Model_polygon* get_static_paralelogram();
-	static Model_polygon* get_static_trapezoid();
-	static Model_polygon* get_dynamic_regular_polygon(size_t edges,
-			double scale);
+			double scale, b2World& world);
+	static Model_polygon* get_static_circle(double diameter, double scale,
+			b2World& world);
+	static Model_polygon* get_static_paralelogram(b2World& world);
+	static Model_polygon* get_static_trapezoid(b2World& world);
+	static Model_polygon* get_dynamic_regular_polygon(size_t sides,
+			double scale, b2World& world);
 	static Model_polygon* get_dynamic_rectangle(double height, double widht,
-			double scale);
-	static Model_polygon* get_dynamic_circle(double diameter, double scale);
-	static Model_polygon* get_dynamic_paralelogram();
-	static Model_polygon* get_dynamic_trapezoid();
+			double scale, b2World& world);
+	static Model_polygon* get_dynamic_circle(double diameter, double scale,
+			b2World& world);
+	static Model_polygon* get_dynamic_paralelogram(b2World& world);
+	static Model_polygon* get_dynamic_trapezoid(b2World& world);
 };
 
 #endif /* MODEL_POLYGON_FACTORY_H_ */
