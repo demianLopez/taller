@@ -24,17 +24,33 @@
 
 class Model_polygon_factory {
 private:
-	Model_polygon_factory() {}
-	virtual ~Model_polygon_factory() {}
+	Model_polygon_factory() {
+	}
+	virtual ~Model_polygon_factory() {
+	}
+
+private:
+	static Model_polygon* get_regular_polygon(size_t edges, double scale,
+			int body_type);
+	static Model_polygon* get_rectangle(double height, double widht,
+			double scale, int body_type);
+	static Model_polygon* get_circle(double diameter, double scale,
+			int body_type);
+	static Model_polygon* get_paralelogram(int body_type);
+	static Model_polygon* get_trapezoid(int body_type);
 
 public:
-	static Model_polygon* get_static_regular_polygon(size_t edges, double scale);
-	static Model_polygon* get_static_rectangle(double height, double widht, double scale);
+	static Model_polygon* get_static_regular_polygon(size_t edges,
+			double scale);
+	static Model_polygon* get_static_rectangle(double height, double widht,
+			double scale);
 	static Model_polygon* get_static_circle(double diameter, double scale);
 	static Model_polygon* get_static_paralelogram();
 	static Model_polygon* get_static_trapezoid();
-	static Model_polygon* get_dynamic_regular_polygon(size_t edges, double scale);
-	static Model_polygon* get_dynamic_rectangle(double height, double widht, double scale);
+	static Model_polygon* get_dynamic_regular_polygon(size_t edges,
+			double scale);
+	static Model_polygon* get_dynamic_rectangle(double height, double widht,
+			double scale);
 	static Model_polygon* get_dynamic_circle(double diameter, double scale);
 	static Model_polygon* get_dynamic_paralelogram();
 	static Model_polygon* get_dynamic_trapezoid();

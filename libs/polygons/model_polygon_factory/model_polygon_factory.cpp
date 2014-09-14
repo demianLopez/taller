@@ -21,21 +21,58 @@
 #include "../model_regular_polygon/model_regular_polygon.h"
 
 Model_polygon* Model_polygon_factory::get_regular_polygon(size_t edges,
-		double scale) {
+		double scale, int body_type) {
 	if (edges < 3) //No es un poligono valido
 		return NULL;
 	if (edges == 4) //Devuelvo un rectangulo de 1x1
-		return get_rectangle(1, 1, scale);
+		return get_rectangle(1, 1, scale, body_type);
 
 	return new Model_regular_polygon(edges);
 }
 
 Model_polygon* Model_polygon_factory::get_rectangle(double height, double widht,
-		double scale) {
+		double scale, int body_type) {
 	return NULL;
 }
 
-Model_polygon* Model_polygon_factory::get_circle(double diameter,
+Model_polygon* Model_polygon_factory::get_circle(double diameter, double scale,
+		int body_type) {
+	return NULL;
+
+}
+
+Model_polygon* Model_polygon_factory::get_static_regular_polygon(size_t edges,
 		double scale) {
 	return NULL;
+
+}
+
+Model_polygon* Model_polygon_factory::get_static_rectangle(double height,
+		double widht, double scale) {
+	return NULL;
+
+}
+
+Model_polygon* Model_polygon_factory::get_static_circle(double diameter,
+		double scale) {
+	return NULL;
+
+}
+
+Model_polygon* Model_polygon_factory::get_dynamic_regular_polygon(size_t edges,
+		double scale) {
+	return NULL;
+
+}
+
+Model_polygon* Model_polygon_factory::get_dynamic_rectangle(double height,
+		double widht, double scale) {
+	return NULL;
+
+}
+
+Model_polygon* Model_polygon_factory::get_dynamic_circle(double diameter,
+		double scale) {
+	return NULL;
+
 }

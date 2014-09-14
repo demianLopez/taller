@@ -18,12 +18,14 @@
  */
 #include "model_polygon.h"
 
+#include <Box2D/Box2D.h>
+
 Model_polygon::Model_polygon(int body_type) {
 	if (body_type == STATIC)
 	{
-
-	} else if (body_type == STATIC) {
-
+		this->body_type = b2_staticBody;
+	} else { //Por defecto es dinamico (body_type == DYNAMIC)
+		this->body_type = b2_dynamicBody;
 	}
 }
 
