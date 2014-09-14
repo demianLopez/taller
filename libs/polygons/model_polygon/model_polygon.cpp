@@ -36,10 +36,15 @@ Model_polygon::~Model_polygon() {
 }
 
 void Model_polygon::rotate(double angle) {
-
+	double new_angle = this->body->GetAngle();
+	b2Vec2 position = this->body->GetPosition();
+	this->body->SetTransform(position, new_angle);
 }
 
 void Model_polygon::move(double x_units, double y_units) {
+	b2Vec2 position = this->body->GetPosition();
+	position.x += x_units;
+	position.y += y_units;
 }
 
 void Model_polygon::set_velocity(double x_units, double y_units) {
@@ -53,12 +58,12 @@ void Model_polygon::set_angular_velocity(double angular_velocity) {
 
 void Model_polygon::apply_force(double x_units, double y_units) {
 	b2Vec2 force(x_units, y_units);
-	this->body->ApplyForce(force,this->body->GetWorldCenter(),true);
+	this->body->ApplyForce(force, this->body->GetWorldCenter(), true);
 }
 
 void Model_polygon::apply_instant_force(double x_units, double y_units) {
 	b2Vec2 force(x_units, y_units);
-	this->body->ApplyLinearImpulse(force,this->body->GetWorldCenter(),true);
+	this->body->ApplyLinearImpulse(force, this->body->GetWorldCenter(), true);
 }
 
 void Model_polygon::create_body(b2BodyDef* body_definition,
