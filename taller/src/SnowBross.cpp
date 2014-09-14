@@ -11,6 +11,7 @@
 #include "engine/LibIncludes.h"
 #include "engine/ParticleEmiter.h"
 #include "engine/Image.h" //Provisional
+#include "Personaje.h"
 
 #include "World.h"
 #include "Resources.h"
@@ -48,15 +49,37 @@ void SnowBross::render(Graphics *g){
 	}
 	this->particleEmiter->render(g);
 
-	b2Vec2 playerPos = this->gameWorld->getCharacterPosition();
+	b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
 	playerPos = gameWorld->box2DToSDL(&playerPos);
 
-	g->drawAnimation(resources->getPlayerAnimationRight(), playerPos.x, playerPos.y);
+	g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources), playerPos.x, playerPos.y);
 
 
 }
 
 void SnowBross::keyEvent(SDL_Event e){
+	 if(e.type == SDL_KEYDOWN){
+		 switch( e.key.keysym.sym ){
+     	 	 case SDLK_LEFT:
+     	 		 this->gameWorld->getMainCharacter()->moveLeft();
+     	 		 break;
+
+     	 	 case SDLK_RIGHT:
+     	 		 this->gameWorld->getMainCharacter()->moveRight();
+     	 		 break;
+
+     	 	 case SDLK_UP:
+     	 		 this->gameWorld->getMainCharacter()->jump();
+     	 		 break;
+		 }
+		 return;
+	 }
+
+	 if(e.type == SDL_KEYUP){
+		 if(e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_RIGHT){
+			 this->gameWorld->getMainCharacter()->stop();
+		 }
+	 }
 
 }
 
@@ -64,6 +87,9 @@ void SnowBross::keyEvent(SDL_Event e){
 void SnowBross::update(unsigned int delta){
 	this->particleEmiter->update(delta);
 	this->gameWorld->worldStep(delta);
+	this->gameWorld->getMainCharacter()->update();
+
+	//
 }
 
 SnowBross::~SnowBross() {

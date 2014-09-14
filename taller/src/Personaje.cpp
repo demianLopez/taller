@@ -1,4 +1,77 @@
 #include "Personaje.h"
+#include "Resources.h"
+#include "engine/Animation.h"
+
+Personaje::Personaje(b2World * gameWorld){
+	//MAIN CHARACTER!
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(8.0f, 10.0f);
+
+	mainCharacterBody = gameWorld->CreateBody(&bodyDef);
+
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(1.0f, 1.0f);
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0;
+
+	mainCharacterBody->CreateFixture(&fixtureDef);
+
+	this->stopAtHit = false;
+}
+
+b2Body * Personaje::getBody(){
+	return this->mainCharacterBody;
+}
+
+void Personaje::moveLeft(){
+	b2Vec2 currentVel = this->mainCharacterBody->GetLinearVelocity();
+	this->mainCharacterBody->SetLinearVelocity(b2Vec2(-4, currentVel.y));
+}
+
+void Personaje::moveRight(){
+	b2Vec2 currentVel = this->mainCharacterBody->GetLinearVelocity();
+	this->mainCharacterBody->SetLinearVelocity(b2Vec2(4, currentVel.y));
+}
+
+bool Personaje::isOnAir(){
+	return (this->goingUp || this->goingDown || this->onTopJump);
+}
+void Personaje::jump(){
+	if(!this->isOnAir()){
+		b2Vec2 currentVel = this->mainCharacterBody->GetLinearVelocity();
+		this->mainCharacterBody->SetLinearVelocity(b2Vec2(currentVel.x, 8));
+		this->goingUp = true;
+	}
+}
+
+void Personaje::stop(){
+	b2Vec2 currentVel = this->mainCharacterBody->GetLinearVelocity();
+	if((currentVel.y < 1 && currentVel.y > -1) && !this->isOnAir()){
+		this->mainCharacterBody->SetLinearVelocity(b2Vec2(0, currentVel.y));
+	} else {
+		this->stopAtHit = true;
+	}
+}
+
+Animation * Personaje::getAnimation(Resources * resources){
+
+	if(this->mainCharacterBody->GetLinearVelocity().y < 0){
+		//return resources->getPlayerAnimationLeft(); caida libre
+	}
+
+	if(this->mainCharacterBody->GetLinearVelocity().x < -0.2f){
+		return resources->getPlayerAnimationLeft();
+	}
+
+	if(this->mainCharacterBody->GetLinearVelocity().x >= -0.2){
+		return resources->getPlayerAnimationRight();
+	}
+
+}
 
 // Limita velocidad de coordenada a velocidadMaxima.
 void Personaje::limitarVelocidad(float *coordenada, float velocidadMaxima){
@@ -8,6 +81,32 @@ void Personaje::limitarVelocidad(float *coordenada, float velocidadMaxima){
 	}else{
 		if(*coordenada < -velocidadMaxima){
 			*coordenada = -velocidadMaxima;
+		}
+	}
+}
+
+void Personaje::update(){
+	b2Vec2 currentVel = this->mainCharacterBody->GetLinearVelocity();
+	if(currentVel.y < 1 && currentVel.y > -1){
+		if(this->goingUp){
+			this->goingUp = false;
+			this->onTopJump = true;
+		}
+
+		if(this->goingDown){
+			this->goingDown = false;
+			if(stopAtHit){
+				this->stop();
+				this->stopAtHit = false;
+			}
+		}
+
+	}
+
+	if(currentVel.y < -1){
+		if(this->onTopJump){
+			this->onTopJump = false;
+			this->goingDown = true;
 		}
 	}
 }
@@ -22,6 +121,10 @@ void Personaje::acelerarPersonaje(float x, float y){
 
 	// Limite de velocidad en Y
 	limitarVelocidad(&velocidad.y, velocidadMaximaY);
+}
+
+Personaje::~Personaje(){
+	//delete this->mainCharacterBody;
 }
 
 

@@ -25,7 +25,9 @@ public:
 
 	void worldStep(int delta);
 
-	b2Vec2 getCharacterPosition();
+	Personaje * getMainCharacter();
+
+
 
 	virtual ~World();
 private:
@@ -41,9 +43,6 @@ private:
 
 	b2Vec2 * SDLWindowSize;
 	b2Vec2 * Box2DWorldSize;
-
-	b2Body * mainCharacterBody;
-
 };
 
 #endif /* WORLD_H_ */

@@ -1,7 +1,7 @@
 #include "Jugador.h"
 
 // Inicializa Jugador quieto en (x,y), (0,0) por defecto.
-Jugador::Jugador(float x, float y) {
+Jugador::Jugador(float x, float y) : Personaje(NULL) {
 	posicion.set(x,y);
 	velocidad.set(0,0);
 	velocidadMaximaX = VELOCIDAD_MAXIMA_DEFAULT_X;

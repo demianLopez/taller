@@ -11,11 +11,12 @@
 
 World::World(int width, int height) {
 	this->worldResources = new Resources();
-	this->mainCharacter = new Personaje();
+	this->mainCharacter = NULL;
 	this->SDLWindowSize = new b2Vec2(width, height);
 	this->box2DWorld = NULL;
 	this->gravity = NULL;
 	this->Box2DWorldSize = NULL;
+	this->mainCharacter = NULL;
 }
 
 void World::init(){
@@ -56,30 +57,16 @@ void World::worldStep(int delta){
 	this->box2DWorld->Step(timeStep, velocityIterations, positionIterations);
 }
 
-b2Vec2 World::getCharacterPosition(){
-	return this->mainCharacterBody->GetPosition();
+Personaje * World::getMainCharacter(){
+	return this->mainCharacter;
 }
 
 void World::generateWorld(){
 	//GENERAR BOX2D
 	this->box2DWorld = new b2World(*gravity);
 
-	//MAIN CHARACTER!
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(2.0f, 10.0f);
 
-	mainCharacterBody = box2DWorld->CreateBody(&bodyDef);
-
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(1.0f, 1.0f);
-
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.3f;
-
-	mainCharacterBody->CreateFixture(&fixtureDef);
+	this->mainCharacter = new Personaje(box2DWorld);
 
 	//WORLD!
 
