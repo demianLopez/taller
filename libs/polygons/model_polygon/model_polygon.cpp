@@ -18,13 +18,15 @@
  */
 #include "model_polygon.h"
 
-Model_polygon::Model_polygon() {
-	// TODO Auto-generated constructor stub
+Model_polygon::Model_polygon(int body_type) {
+	if (body_type == STATIC)
+	{
+
+	} else if (body_type == STATIC) {
+
+	}
 }
 
 Model_polygon::~Model_polygon() {
 	// TODO Auto-generated destructor stub
-}
-
-void Model_polygon::resize(float scale) {
 }

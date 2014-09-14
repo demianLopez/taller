@@ -20,12 +20,19 @@
 #define MODEL_POLYGON_H_
 
 class Model_polygon {
-public:
-	Model_polygon();
-	virtual ~Model_polygon();
 
 public:
-	void resize(float scale);
+	static const int STATIC = 0;
+	static const int DYNAMIC = 1;
+
+protected:
+	int body_type;
+	int scale;
+
+public:
+	Model_polygon(int body_type);
+	virtual ~Model_polygon();
+
 };
 
 #endif /* MODEL_POLYGON_H_ */

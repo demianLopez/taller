@@ -28,10 +28,16 @@ private:
 	virtual ~Model_polygon_factory() {}
 
 public:
-	static Model_polygon* get_regular_polygon(size_t edges, double scale);
-	static Model_polygon* get_rectangle(double height, double widht,
-			double scale);
-	static Model_polygon* get_circle(double diameter, double scale);
+	static Model_polygon* get_static_regular_polygon(size_t edges, double scale);
+	static Model_polygon* get_static_rectangle(double height, double widht, double scale);
+	static Model_polygon* get_static_circle(double diameter, double scale);
+	static Model_polygon* get_static_paralelogram();
+	static Model_polygon* get_static_trapezoid();
+	static Model_polygon* get_dynamic_regular_polygon(size_t edges, double scale);
+	static Model_polygon* get_dynamic_rectangle(double height, double widht, double scale);
+	static Model_polygon* get_dynamic_circle(double diameter, double scale);
+	static Model_polygon* get_dynamic_paralelogram();
+	static Model_polygon* get_dynamic_trapezoid();
 };
 
 #endif /* MODEL_POLYGON_FACTORY_H_ */

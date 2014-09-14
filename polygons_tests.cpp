@@ -25,7 +25,11 @@ int main() {
 	color.r = 3;
 	color.g = 4;
 	color.b = 66;
-	Polygon* pol = Polygon_factory::get_regular_polygon(4, 2, color);
+	auto world;
+	Polygon* pol1 = Polygon_factory::get_regular_polygon(4, 2, color,world,Polygon::STATIC);
+	Polygon* pol2 = Polygon_factory::get_regular_polygon(3, 2, color,world,Polygon::DYNAMIC);
+	Polygon* circle = Polygon_factory::get_circle(2,color,world,Polygon::DYNAMIC);
+
 
 	delete pol;
 	return 0;

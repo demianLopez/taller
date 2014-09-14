@@ -24,9 +24,17 @@
 
 class Polygon {
 public:
+	static const int STATIC = 0;
+	static const int DYNAMIC = 1;
+
+private:
+	int body_property;
+
+protected:
 	Polygon();
 	virtual ~Polygon();
 
+public:
 	virtual void draw() = 0;
 };
 
