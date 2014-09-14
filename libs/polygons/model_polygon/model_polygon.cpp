@@ -53,12 +53,12 @@ void Model_polygon::set_angular_velocity(double angular_velocity) {
 
 void Model_polygon::apply_force(double x_units, double y_units) {
 	b2Vec2 force(x_units, y_units);
-	this->body->ApplyForceToCenter()
+	this->body->ApplyForce(force,this->body->GetWorldCenter(),true);
 }
 
 void Model_polygon::apply_instant_force(double x_units, double y_units) {
 	b2Vec2 force(x_units, y_units);
-
+	this->body->ApplyLinearImpulse(force,this->body->GetWorldCenter(),true);
 }
 
 void Model_polygon::create_body(b2BodyDef* body_definition,

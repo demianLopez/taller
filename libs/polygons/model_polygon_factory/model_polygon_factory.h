@@ -35,7 +35,7 @@ private:
 	static Model_polygon* get_regular_polygon(size_t sides, double scale,
 			double density, int body_type, b2World& world);
 	static Model_polygon* get_rectangle(double height, double widht,
-			double scale, double density, int body_type, b2World& world);
+			double density, int body_type, b2World& world);
 	static Model_polygon* get_circle(double diameter, double scale,
 			double density, int body_type, b2World& world);
 	static Model_polygon* get_paralelogram(double density, int body_type,
@@ -47,7 +47,7 @@ public:
 	static Model_polygon* get_static_regular_polygon(size_t sides, double scale,
 			double density, b2World& world);
 	static Model_polygon* get_static_rectangle(double height, double widht,
-			double scale, double density, b2World& world);
+			double density, b2World& world);
 	static Model_polygon* get_static_circle(double diameter, double scale,
 			double density, b2World& world);
 	static Model_polygon* get_static_paralelogram(double density,
@@ -56,7 +56,7 @@ public:
 	static Model_polygon* get_dynamic_regular_polygon(size_t sides,
 			double scale, double density, b2World& world);
 	static Model_polygon* get_dynamic_rectangle(double height, double widht,
-			double scale, double density, b2World& world);
+			double density, b2World& world);
 	static Model_polygon* get_dynamic_circle(double diameter, double scale,
 			double density, b2World& world);
 	static Model_polygon* get_dynamic_paralelogram(double density,
