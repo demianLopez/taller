@@ -54,7 +54,7 @@ bool Personaje::isOnAir(){
 void Personaje::jump(){
 	if(!this->isOnAir()){
 		b2Vec2 currentVel = this->mainCharacterBody->GetLinearVelocity();
-		this->mainCharacterBody->SetLinearVelocity(b2Vec2(currentVel.x, 8));
+		this->mainCharacterBody->SetLinearVelocity(b2Vec2(currentVel.x, 6));
 		this->goingUp = true;
 	}
 }
