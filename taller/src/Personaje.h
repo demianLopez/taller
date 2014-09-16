@@ -14,6 +14,8 @@ class Personaje: public CosaConMovimiento {
 public:
 	Personaje(b2World * gameWorld);
 	virtual ~Personaje();
+
+	void jump();
 };
 
 #endif /* PERSONAJE_H_ */

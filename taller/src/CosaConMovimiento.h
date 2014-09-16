@@ -36,7 +36,7 @@ public:
 	Animation * getAnimation(Resources * resources);
 	void moveLeft();
 	void moveRight();
-	void jump();
+
 	void stop(bool stopX = true, bool stopY = true);
 
 	b2Body * getBody();

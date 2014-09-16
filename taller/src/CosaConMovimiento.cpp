@@ -57,16 +57,6 @@ bool CosaConMovimiento::isOnAir(){
 	return (this->goingUp || this->goingDown || this->onTopJump);
 }
 
-void CosaConMovimiento::jump(){
-	if(!this->isOnAir()){
-		b2Vec2 currentVel = this->body->GetLinearVelocity();
-		this->body->SetLinearVelocity(b2Vec2(currentVel.x, movementSpeedY));
-		this->goingUp = true;
-	}
-}
-
-
-
 Animation * CosaConMovimiento::getAnimation(Resources * resources){
 
 	//FIXME: deprecated, demi borralo si te parece.
