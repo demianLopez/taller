@@ -18,6 +18,7 @@ class Personaje: public CosaConMovimiento {
 private:
 	// Limita velocidad de coordenada a velocidadMaxima.
 	void limitarVelocidad(float *coordenada, float velocidadMaxima);
+	// Personaje en box2d
 	b2Body * mainCharacterBody;
 
 protected:
@@ -35,7 +36,7 @@ public:
 	void moveLeft();
 	void moveRight();
 	void jump();
-	void stop();
+	void stop(bool stopX = true, bool stopY = true);
 
 	b2Body * getBody();
 	// Acelera la velocidad del personaje en X e Y. Limitado

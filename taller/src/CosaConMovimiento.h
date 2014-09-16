@@ -4,15 +4,14 @@
 #include "VectorXY.h"
 
 class CosaConMovimiento {	// No puedo pensar un nombre mejor.
-private:
-	bool mirandoParaLaDerecha;
-
 protected:
 	// Punto (x,y) en donde esta
 	VectorXY posicion;
 
 	// Velocidad en ejes x e y
 	VectorXY velocidad;
+
+	bool mirandoParaLaDerecha;
 
 public:
 	// Inicializa cosa quieta en (x,y), (0,0) por defecto.

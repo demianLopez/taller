@@ -77,7 +77,7 @@ void SnowBross::keyEvent(SDL_Event e){
 
 	 if(e.type == SDL_KEYUP){
 		 if(e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_RIGHT){
-			 this->gameWorld->getMainCharacter()->stop();
+			 this->gameWorld->getMainCharacter()->stop(true, false);
 		 }
 	 }
 
@@ -88,8 +88,6 @@ void SnowBross::update(unsigned int delta){
 	this->particleEmiter->update(delta);
 	this->gameWorld->worldStep(delta);
 	this->gameWorld->getMainCharacter()->update();
-
-	//
 }
 
 SnowBross::~SnowBross() {
