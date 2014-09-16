@@ -1,7 +1,8 @@
 #include "BolaDeNieve.h"
 
 // Crea una BolaDeNieve con la direccion indicada.
-BolaDeNieve::BolaDeNieve(bool haciaLaDerecha, float x, float y) {
+/*BolaDeNieve::BolaDeNieve(bool haciaLaDerecha, float x, float y) {
+
 	posicion.set(x,y);
 	posicionOriginal = verPosicionActual();
 	if (haciaLaDerecha){
@@ -10,10 +11,11 @@ BolaDeNieve::BolaDeNieve(bool haciaLaDerecha, float x, float y) {
 		velocidad.set(-VELOCIDAD_EN_X, VELOCIDAD_EN_Y);
 	}
 	viva = true;
-}
 
+}
+*/
 // Crea una BolaDeNieve con la direccion indicada.
-BolaDeNieve::BolaDeNieve(bool haciaLaDerecha, VectorXY posicion) {
+/*BolaDeNieve::BolaDeNieve(bool haciaLaDerecha, VectorXY posicion) {
 	posicion.set(posicion.x, posicion.y);
 	posicionOriginal = verPosicionActual();
 	if (haciaLaDerecha){
@@ -23,3 +25,4 @@ BolaDeNieve::BolaDeNieve(bool haciaLaDerecha, VectorXY posicion) {
 	}
 	viva = true;
 }
+*/

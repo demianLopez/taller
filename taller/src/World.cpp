@@ -57,7 +57,7 @@ void World::worldStep(int delta){
 	this->box2DWorld->Step(timeStep, velocityIterations, positionIterations);
 }
 
-Personaje * World::getMainCharacter(){
+Jugador * World::getMainCharacter(){
 	return this->mainCharacter;
 }
 
@@ -66,7 +66,7 @@ void World::generateWorld(){
 	this->box2DWorld = new b2World(*gravity);
 
 
-	this->mainCharacter = new Personaje(box2DWorld);
+	this->mainCharacter = new Jugador(box2DWorld);
 
 	//WORLD!
 

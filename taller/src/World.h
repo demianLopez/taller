@@ -9,9 +9,10 @@
 #define WORLD_H_
 
 #include "Box2D/Box2D.h"
+#include "Jugador.h"
 
 class Resources;
-class Personaje;
+
 
 class World {
 public:
@@ -25,14 +26,14 @@ public:
 
 	void worldStep(int delta);
 
-	Personaje * getMainCharacter();
+	Jugador * getMainCharacter();
 
 
 
 	virtual ~World();
 private:
 	Resources * worldResources;
-	Personaje * mainCharacter;
+	Jugador * mainCharacter;
 
 	void loadWorld();
 	void generateWorld();
