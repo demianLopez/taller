@@ -4,6 +4,9 @@
 CosaConMovimiento::CosaConMovimiento(b2World * gameWorld) {
 	body = NULL; // DEBE SOBREESCRIBIRSE EN LA CLASE HIJA
 
+	this->movingLeft = false;
+	this->movingRight = false;
+
 	this->stopAtHit = false;
 
 	this->goingUp = false;
@@ -27,14 +30,6 @@ void CosaConMovimiento::stop(bool stopX, bool stopY){
 	if(stopY){
 		this->body->SetLinearVelocity(b2Vec2(currentVel.x, 0));
 	}
-	// TODO: ver que significaba esto, o que pretendia hacer la funcion.
-	/*
-	if((currentVel.y < 1 && currentVel.y > -1) && !this->isOnAir()){
-		this->mainCharacterBody->SetLinearVelocity(b2Vec2(0, currentVel.y));
-	} else {
-		this->stopAtHit = true;
-	}
-	*/
 }
 
 b2Body * CosaConMovimiento::getBody(){
@@ -42,15 +37,19 @@ b2Body * CosaConMovimiento::getBody(){
 }
 
 void CosaConMovimiento::moveLeft(){
-	b2Vec2 currentVel = this->body->GetLinearVelocity();
-	this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
-	mirandoParaLaDerecha = false;
+	movingLeft = true;
+}
+
+void CosaConMovimiento::stoppedMovingLeft(){
+	movingLeft = false;
 }
 
 void CosaConMovimiento::moveRight(){
-	b2Vec2 currentVel = this->body->GetLinearVelocity();
-	this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
-	mirandoParaLaDerecha = true;
+	movingRight = true;
+}
+
+void CosaConMovimiento::stoppedMovingRight(){
+	movingRight = false;
 }
 
 bool CosaConMovimiento::isOnAir(){
@@ -58,22 +57,6 @@ bool CosaConMovimiento::isOnAir(){
 }
 
 Animation * CosaConMovimiento::getAnimation(Resources * resources){
-
-	//FIXME: deprecated, demi borralo si te parece.
-	/*
-	if(this->mainCharacterBody->GetLinearVelocity().y < 0){
-		//return resources->getPlayerAnimationLeft(); caida libre
-	}
-
-	if(this->mainCharacterBody->GetLinearVelocity().x < 0){
-		return resources->getPlayerAnimationLeft();
-	}
-
-	if(this->mainCharacterBody->GetLinearVelocity().x > 0){
-		return resources->getPlayerAnimationRight();
-	}
-	*/
-
 	// FIXME: Mover esto a que sea definido por cada hijo de esta clase.
 	if(mirandoParaLaDerecha){
 		return resources->getPlayerAnimationRight();
@@ -89,7 +72,7 @@ bool CosaConMovimiento::estaMirandoParaLaDerecha(){
 
 void CosaConMovimiento::update(){
 	b2Vec2 currentVel = this->body->GetLinearVelocity();
-	if(currentVel.y < 1 && currentVel.y > -1){
+	if(currentVel.y < 1 && currentVel.y > -1){ // Quieto en Y
 		if(this->goingUp){
 			this->goingUp = false;
 			this->onTopJump = true;
@@ -105,12 +88,25 @@ void CosaConMovimiento::update(){
 
 	}
 
-	if(currentVel.y < -1){
+	if(currentVel.y < -1){ // Cayendo
 		if(this->onTopJump){
 			this->onTopJump = false;
 			this->goingDown = true;
 		}
 	}
+
+	if(movingLeft){
+		this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
+		mirandoParaLaDerecha = false;
+	}else{
+		if (movingRight){
+			mirandoParaLaDerecha = true;
+			this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
+		}else{
+			this->stop(true, false);
+		}
+	}
+
 }
 
 CosaConMovimiento::~CosaConMovimiento(){

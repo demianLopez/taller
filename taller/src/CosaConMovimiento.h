@@ -13,6 +13,10 @@ private:
 protected:
 	bool mirandoParaLaDerecha;
 
+	// Define si se esta moviendo.
+	bool movingLeft;
+	bool movingRight;
+
 	// Modulo de la velocidad.
 	float movementSpeedX;
 	float movementSpeedY;
@@ -35,7 +39,9 @@ public:
 
 	Animation * getAnimation(Resources * resources);
 	void moveLeft();
+	void stoppedMovingLeft();
 	void moveRight();
+	void stoppedMovingRight();
 
 	void stop(bool stopX = true, bool stopY = true);
 

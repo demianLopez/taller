@@ -57,29 +57,37 @@ void SnowBross::render(Graphics *g){
 
 }
 
-void SnowBross::keyEvent(SDL_Event e){
-	 if(e.type == SDL_KEYDOWN){
-		 switch( e.key.keysym.sym ){
-     	 	 case SDLK_LEFT:
-     	 		 this->gameWorld->getMainCharacter()->moveLeft();
-     	 		 break;
+void SnowBross::keyEvent(SDL_Event e) {
+	if (e.type == SDL_KEYDOWN) {
+		switch (e.key.keysym.sym) {
+			case SDLK_LEFT:
+				this->gameWorld->getMainCharacter()->moveLeft();
+				break;
 
-     	 	 case SDLK_RIGHT:
-     	 		 this->gameWorld->getMainCharacter()->moveRight();
-     	 		 break;
+			case SDLK_RIGHT:
+				this->gameWorld->getMainCharacter()->moveRight();
+				break;
 
-     	 	 case SDLK_UP:
-     	 		 this->gameWorld->getMainCharacter()->jump();
-     	 		 break;
-		 }
-		 return;
-	 }
+			case SDLK_UP:
+				this->gameWorld->getMainCharacter()->jump();
+				break;
+		}
+		return;
+	}
 
-	 if(e.type == SDL_KEYUP){
-		 if(e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_RIGHT){
-			 this->gameWorld->getMainCharacter()->stop(true, false);
-		 }
-	 }
+	if (e.type == SDL_KEYUP) {
+		switch (e.key.keysym.sym) {
+			case SDLK_LEFT:
+				this->gameWorld->getMainCharacter()->stoppedMovingLeft();
+				break;
+
+			case SDLK_RIGHT:
+				this->gameWorld->getMainCharacter()->stoppedMovingRight();
+				break;
+
+
+		}
+	}
 
 }
 
