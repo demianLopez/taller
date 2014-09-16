@@ -74,6 +74,7 @@ Animation * CosaConMovimiento::getAnimation(Resources * resources){
 	}
 	*/
 
+	// FIXME: Mover esto a que sea definido por cada hijo de esta clase.
 	if(mirandoParaLaDerecha){
 		return resources->getPlayerAnimationRight();
 	}
