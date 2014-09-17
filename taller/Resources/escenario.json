@@ -1,0 +1,74 @@
+{ 
+	"escenario": { 
+		"altopx": 768,
+		"anchopx": 1024,
+		"altoun": 100,
+		"anchoun": 50,
+		"imagen_fondo": "fondo1.png",
+		"personaje": {
+			"x": 100,
+			"y": 100
+		},
+		"objetos": [
+			{
+				"tipo": "rect",
+				"x": 5.0, 
+				"y": 90.0, 
+				"ancho": 1.0, 
+				"alto": 1.0, 
+				"color": "#00FF00", 
+				"rot": 45, 
+				"masa": 1.0, 
+				"estatico": true 
+			}, 
+			{ 
+				"tipo": "poli", 
+				"lados": 3, 
+				"x": 50.0, 
+				"y": 50.0, 
+				"radio": 3.5, 
+				"color": "#000000", 
+				"rot": 90, 
+				"masa": 2.0, 
+				"estatico": false 
+			}, 
+			{ 
+				"tipo": "circ", 
+				"radio": 1.0, 
+				"x": 50.0, 
+				"y": 50.0, 
+				"color": "#FF0000", 
+				"rot": 90, 
+				"masa": 2.0, 
+				"estatico": true 
+			}, 
+			{ 
+				"tipo": "paral",
+				"base": 2.0,
+				"altura": 5.0,
+				"angulo": 50,
+				"x": 50.0, 
+				"y": 50.0, 
+				"radio": 3.5, 
+				"color": "#FF0000", 
+				"rot": 90, 
+				"masa": 2.0, 
+				"estatico": false 
+			}, 
+			{ 
+				"tipo": "trap",
+				"base menor": 3.0,
+				"base mayor": 2.0,
+				"altura": 5.0,
+				"angulo": 50,
+				"x": 50.0, 
+				"y": 50.0, 
+				"escala": 3.5, 
+				"color": "#FF0000", 
+				"rot": 90, 
+				"masa": 2.0, 
+				"estatico": false 
+			} 
+		] 
+	} 
+}
