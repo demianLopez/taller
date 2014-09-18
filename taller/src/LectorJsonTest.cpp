@@ -7,7 +7,7 @@
 
 #include "LectorJsonTest.h"
 
-const char* ESCENARIO_DEFECTO = "Resources/escenario.json";
+const char* ESCENARIO_DEFECTO = "Resources/p1.json";
 
 LectorJsonTest::LectorJsonTest() {
 	// TODO Auto-generated constructor stub
@@ -21,9 +21,10 @@ LectorJsonTest::~LectorJsonTest() {
 void LectorJsonTest::imprimirXConsola(){
 	Value raiz;
 	Reader lector;
-	bool parseExitoso = lector.parse(ESCENARIO_DEFECTO,raiz,false);
+	bool parseExitoso = lector.parse(ESCENARIO_DEFECTO,raiz);
 	if(!parseExitoso){
-		cout << "Fallo el parseo del archivo" << endl;
+		cout << "Fallo el parseo del archivo" << lector.getFormatedErrorMessages()<< endl;
+		return;
 	}
 	Value escenario = raiz.get("escenario", "No existe");
 	if (escenario.isNull()){
