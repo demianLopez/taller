@@ -17,5 +17,10 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
+#include "libs/logger/logger.h"
 
-
+int main()
+{
+	Logger::log("","",Logger::ERROR,"");
+	return 0;
+}

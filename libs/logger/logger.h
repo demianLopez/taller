@@ -19,7 +19,21 @@
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
+#include <string>
+
+typedef char error_type_t;
+
 class Logger {
+
+public:
+	static const error_type_t INFO = 0;
+	static const error_type_t WARNING = 1;
+	static const error_type_t ERROR = 2;
+
+public:
+
+	static void log(std::string log_file, std::string caller,
+			error_type_t error_type, std::string error_message);
 };
 
 #endif /* LOGGER_H_ */
