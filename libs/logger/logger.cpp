@@ -97,15 +97,14 @@ exit 0
 */
 
 
-initializeLog() {
+void Logger::initialize_log(std::string log_file) {
+	fstream file_stream;
+	file_stream.open(log_file, fstream::out | fstream::app);
 
-        echo -e "Inicia ejecucion de Installer\n"
-        log $0 "INFO" "Inicia ejecucion de Installer"
-        echo -e "Log de instalacion: grupo07/conf/installer.log\n"
-        log $0 "INFO" "Log de instalacion: grupo07/conf/installer.log"
-        echo -e "Directorio de configuracion: grupo07/conf\n"
-        log $0 "INFO" "Directorio de configuracion: grupo07/conf"
+	file_stream << "--Inicio de ejecucion--" << endl;
+	file_stream << get_error_flag(INFO) << "- " << get_date() <<" -"<< get_error_flag(INFO)<<endl;
 
+	file_stream.close();
 }
 
 string Logger::get_error_flag(error_type_t error_level) {
@@ -131,4 +130,3 @@ void Logger::log(string log_file, string caller, error_type_t error_type,
 	file_stream << date << "-" << "User " << caller << " " << error_flag << ":"
 			<< error_message << endl;
 }
-

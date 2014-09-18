@@ -21,6 +21,11 @@
 
 int main()
 {
-	Logger::log("","",Logger::ERROR,"");
+	Logger::initialize_log("a.log");
+
+	Logger::log("a.log","Main.c",Logger::INFO,"Esto arranco bien");
+	Logger::log("a.log","Main.c",Logger::ERROR,"Esto no estaria funcionando");
+	Logger::log("a.log","Main.c",Logger::WARNING,"Esto se rompio");
+
 	return 0;
 }
