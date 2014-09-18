@@ -13,11 +13,16 @@
 #include "SnowBross.h"
 #include "pruebaEngine.h"
 #include "Jugador.h"
+#include "LectorJsonTest.h"
 using namespace std;
 
 
 int main(int argc, char *argv[]){
+	LectorJsonTest* lector = new LectorJsonTest();
 
+	lector->imprimirXConsola();
+	delete lector;
+	/*
 
 	SnowBross *pE = new SnowBross("Snow Bross");
 	//pruebaEngine *pE = new pruebaEngine("Il");
@@ -25,6 +30,7 @@ int main(int argc, char *argv[]){
 	pE->showFPS(true);
 	pE->start();
 	return 0;
+	*/
 }
 
 // This is a simple example of building and running a simulation

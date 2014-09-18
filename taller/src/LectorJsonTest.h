@@ -9,7 +9,7 @@
 #define LECTORJSONTEST_H_
 
 #include <iostream>
-#include "json.h"
+#include "json/json.h"
 #include <string>
 
 using namespace std;
