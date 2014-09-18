@@ -30,8 +30,11 @@ public:
 	static const error_type_t WARNING = 1;
 	static const error_type_t ERROR = 2;
 
-public:
+private:
+	static std::string get_error_flag(error_type_t error_level);
 
+public:
+	static void initialize_log(std::string log_file,);
 	static void log(std::string log_file, std::string caller,
 			error_type_t error_type, std::string error_message);
 };

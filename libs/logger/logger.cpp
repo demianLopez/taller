@@ -20,13 +20,17 @@
 #include "logger.h"
 
 #include <ctime>
-#include <sstream>
 #include <iomanip>
+#include <sstream>
+#include <fstream>
+
 
 using std::string;
 using std::stringstream;
 using std::setw;
 using std::setfill;
+using std::fstream;
+using std::endl;
 
 string get_date() {
     time_t t = time(0);
@@ -45,32 +49,8 @@ string get_date() {
 }
 
 /*
-
-#Inicializo archivo de log
-initializeLog() {
-
-        echo -e "Inicia ejecucion de Installer\n"
-        log $0 "INFO" "Inicia ejecucion de Installer"
-        echo -e "Log de instalacion: grupo07/conf/installer.log\n"
-        log $0 "INFO" "Log de instalacion: grupo07/conf/installer.log"
-        echo -e "Directorio de configuracion: grupo07/conf\n"
-        log $0 "INFO" "Directorio de configuracion: grupo07/conf"
-
-}
-
-
-GNU nano 2.2.6                                           Fichero: ../SisopEntrega/grupo07/exe/logging.sh
-
-#!/usr/bin/env bash
-
 CONF_FILE="$CONFDIR/installer.conf" #Hay que poner el que corresponda
 TRIM_LOG_SIZE=50
-
-# Receives the name of the env variable to get the value, returns it
-getEnvVarValue() {
-  VAR_NAME="$1"
-  grep "$VAR_NAME" "$CONF_FILE" | sed "s/^[^=]*=\([^=]*\)=.*\$/\1/"
-}
 
 # Gets the process calling the logger, returns the correspondant log file
 getFilePath() {
@@ -115,11 +95,40 @@ else
 fi
 exit 0
 */
-void Logger::log(string log_file,string caller, error_type_t error_type,string error_message)
-{
-	  string date = get_date();
 
-	  //FILE=$(getFilePath "$CALLER")
-	  //echo -e "$DATE - $USER $CALLER $TYPE:$MSG" >> "$FILE"
+
+initializeLog() {
+
+        echo -e "Inicia ejecucion de Installer\n"
+        log $0 "INFO" "Inicia ejecucion de Installer"
+        echo -e "Log de instalacion: grupo07/conf/installer.log\n"
+        log $0 "INFO" "Log de instalacion: grupo07/conf/installer.log"
+        echo -e "Directorio de configuracion: grupo07/conf\n"
+        log $0 "INFO" "Directorio de configuracion: grupo07/conf"
 
 }
+
+string Logger::get_error_flag(error_type_t error_level) {
+	switch (error_level) {
+	case ERROR:
+		return "ERR";
+	case WARNING:
+		return "WAR";
+	case INFO:
+	default:
+		return "INFO";
+	}
+}
+
+void Logger::log(string log_file, string caller, error_type_t error_type,
+		string error_message) {
+	fstream file_stream;
+	string error_flag = get_error_flag(error_type);
+	string date = get_date();
+
+	file_stream.open(log_file, fstream::out | fstream::app);
+
+	file_stream << date << "-" << "User " << caller << " " << error_flag << ":"
+			<< error_message << endl;
+}
+
