@@ -6,6 +6,8 @@
  */
 
 #include "LectorJsonTest.h"
+#include <iostream>
+#include <fstream>
 
 const char* ESCENARIO_DEFECTO = "Resources/p1.json";
 
@@ -21,9 +23,13 @@ LectorJsonTest::~LectorJsonTest() {
 void LectorJsonTest::imprimirXConsola(){
 	Value raiz;
 	Reader lector;
-	bool parseExitoso = lector.parse(ESCENARIO_DEFECTO,raiz);
+
+    std::ifstream test(ESCENARIO_DEFECTO, std::ifstream::binary);
+    bool parseExitoso = lector.parse( test, raiz, false );
+
+	//bool parseExitoso = lector.parse("Resources/p1.json",raiz);
 	if(!parseExitoso){
-		cout << "Fallo el parseo del archivo" << lector.getFormatedErrorMessages()<< endl;
+		cout << "Fallo el parseo del archivo: "<<ESCENARIO_DEFECTO<<" "<< lector.getFormatedErrorMessages()<< endl;
 		return;
 	}
 	Value escenario = raiz.get("escenario", "No existe");
