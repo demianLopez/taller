@@ -31,26 +31,26 @@ void define_vertex(size_t sides, b2Vec2* vertex) {
 	double segment_size = perimeter / sides;
 	double traveled_perimeter = 0;
 	double x = 0, y = 0;
-	for (size_t i; i < sides; i++) {
-		vertex[i].Set(x, y);
+	for (size_t i = 0; i < sides; i++) {
+		vertex[i] = b2Vec2(x, y);
 		traveled_perimeter += segment_size;
 		set_point(x, y, traveled_perimeter);
 	}
 }
 
 void scale_vertex(size_t sides, b2Vec2* vertex, double scale) {
-	for (size_t i; i < sides; i++) {
+	for (size_t i = 0; i < sides; i++) {
 		double x = vertex[i].x;
 		double y = vertex[i].y;
 		x *= scale;
 		y *= scale;
-		vertex[i].Set(x, y);
+		vertex[i] = b2Vec2(x, y);
 	}
 }
 
 Model_regular_polygon::Model_regular_polygon(size_t sides, double scale,
 		int body_type, double density, b2World& world) :
-		Model_polygon(body_type, density) {
+				Model_polygon(body_type, density) {
 
 	b2Vec2* vertex = new b2Vec2[sides];
 	define_vertex(sides, vertex);
