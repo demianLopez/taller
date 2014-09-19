@@ -12,10 +12,15 @@
 
 Graphics::Graphics(TTF_Font * font) {
 	this->currentFont = font;
+	this->dAtCenter = false;
 }
 
 void Graphics::drawImage(Image *image){
 	this->drawImage(image, 0, 0);
+}
+
+void Graphics::drawAtCenter(bool dAtCenter){
+	this->dAtCenter = dAtCenter;
 }
 
 void Graphics::drawText(int x, int y, const char * text){
@@ -32,6 +37,10 @@ void Graphics::drawText(int x, int y, const char * text){
 	SDL_DestroyTexture(textTexture);
 }
 
+void Graphics::resetGraphics(){
+	this->dAtCenter = false;
+}
+
 void Graphics::drawImage(Image *image, int xo, int yo, float rotation){
 	this->drawImage(image, xo, yo, image->getWidth(), image->getHeight(), rotation);
 }
@@ -41,11 +50,22 @@ void Graphics::drawImage(Image *image, int xo, int yo){
 }
 
 void Graphics::drawImage(Image *image, int xo, int yo, int dx, int dy, float rotation){
-	image->render(xo, yo, dx, dy, rotation);
+	int xOf = xo;
+	int yOf = yo;
+	if(this->dAtCenter){
+		xOf = xo - dx/2;
+		yOf = yo - dx/2;
+	}
+	image->render(xOf, yOf, dx, dy, rotation);
 }
 
 void Graphics::drawImage(Image *image, int xo, int yo, int dx, int dy){
 	this->drawImage(image, xo, yo, dx, dy, 0);
+}
+
+void Graphics::drawAnimation(Animation * animation, int xo, int yo, float rotation){
+	Image * animationImage = animation->getCurrentFrame()->getFrameImage();
+	this->drawImage(animationImage, xo, yo, rotation);
 }
 
 void Graphics::drawAnimation(Animation * animation, int xo, int yo){

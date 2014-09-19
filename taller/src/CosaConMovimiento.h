@@ -10,6 +10,7 @@ class CosaConMovimiento {	// No puedo pensar un nombre mejor.
 private:
 	const float MOVEMENT_SPEED_X_DEFAULT = 4;
 	const float MOVEMENT_SPEED_Y_DEFAULT = 6;
+	bool freezeRotation;
 protected:
 	bool mirandoParaLaDerecha;
 
@@ -37,6 +38,7 @@ public:
 
 	void update();
 
+	void setFreezeRotation(bool freezeRotation);
 	Animation * getAnimation(Resources * resources);
 	void moveLeft();
 	void stoppedMovingLeft();

@@ -71,13 +71,12 @@ void World::generateWorld(){
 	//WORLD!
 
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, 0.0f);
+	groundBodyDef.position.Set(5.0f, 0.0f);
 
 	b2Body* groundBody = box2DWorld->CreateBody(&groundBodyDef);
 
 	b2PolygonShape groundBox;
-	groundBox.SetAsBox(10, 1);
-
+	groundBox.SetAsBox(2.5f, 1);
 	groundBody->CreateFixture(&groundBox, 0.0f);
 
 
