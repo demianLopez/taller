@@ -38,10 +38,11 @@ public:
 	void update();
 
 	Animation * getAnimation(Resources * resources);
-	void moveLeft();
-	void stoppedMovingLeft();
-	void moveRight();
-	void stoppedMovingRight();
+
+	void setMovingLeft(bool movingLeft);
+	void setMovingRight(bool movingRight);
+	bool isMovingLeft();
+	bool isMovingRight();
 
 	void stop(bool stopX = true, bool stopY = true);
 

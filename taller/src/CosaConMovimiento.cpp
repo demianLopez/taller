@@ -36,20 +36,20 @@ b2Body * CosaConMovimiento::getBody(){
 	return this->body;
 }
 
-void CosaConMovimiento::moveLeft(){
-	movingLeft = true;
+void CosaConMovimiento::setMovingLeft(bool isMovingLeft){
+	movingLeft = isMovingLeft;
 }
 
-void CosaConMovimiento::stoppedMovingLeft(){
-	movingLeft = false;
+void CosaConMovimiento::setMovingRight(bool isMovingRight){
+	movingRight = isMovingRight;
 }
 
-void CosaConMovimiento::moveRight(){
-	movingRight = true;
+bool CosaConMovimiento::isMovingLeft(){
+	return movingLeft;
 }
 
-void CosaConMovimiento::stoppedMovingRight(){
-	movingRight = false;
+bool CosaConMovimiento::isMovingRight(){
+	return movingRight;
 }
 
 bool CosaConMovimiento::isOnAir(){

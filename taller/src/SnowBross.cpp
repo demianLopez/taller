@@ -61,11 +61,12 @@ void SnowBross::keyEvent(SDL_Event e) {
 	if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				this->gameWorld->getMainCharacter()->moveLeft();
+				if (this->gameWorld->getMainCharacter()->isMovingRight()) break; // ignoramos si ya se esta moviendo
+				this->gameWorld->getMainCharacter()->setMovingLeft(true);
 				break;
 
 			case SDLK_RIGHT:
-				this->gameWorld->getMainCharacter()->moveRight();
+				this->gameWorld->getMainCharacter()->setMovingRight(true);
 				break;
 
 			case SDLK_UP:
@@ -78,11 +79,11 @@ void SnowBross::keyEvent(SDL_Event e) {
 	if (e.type == SDL_KEYUP) {
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				this->gameWorld->getMainCharacter()->stoppedMovingLeft();
+				this->gameWorld->getMainCharacter()->setMovingLeft(false);
 				break;
 
 			case SDLK_RIGHT:
-				this->gameWorld->getMainCharacter()->stoppedMovingRight();
+				this->gameWorld->getMainCharacter()->setMovingRight(false);
 				break;
 
 
