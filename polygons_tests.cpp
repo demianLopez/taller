@@ -46,7 +46,8 @@ int main() {
 	Model_polygon* static_rectangle =
 			Model_polygon_factory::get_static_rectangle(4, 2, 1, *world);
 	Model_polygon* static_paralelogram = NULL; //Model_polygon_factory::get_static_paralelogram(4,2, 1, *world);
-	Model_polygon* static_trapezoid = NULL; //Model_polygon_factory::get_static_trapezoid(4,2, 1, *world);
+	Model_polygon* static_trapezoid =
+			Model_polygon_factory::get_static_trapezoid(2, 2, 1, 1, *world);
 
 	Model_polygon* dynamic_regular_1 =
 			Model_polygon_factory::get_dynamic_regular_polygon(3, 2, 1, *world);
@@ -57,7 +58,8 @@ int main() {
 	Model_polygon* dynamic_rectangle =
 			Model_polygon_factory::get_dynamic_rectangle(4, 2, 1, *world);
 	Model_polygon* dynamic_paralelogram = NULL; //Model_polygon_factory::get_static_paralelogram(4,2, 1, *world);
-	Model_polygon* dynamic_trapezoid = NULL; //Model_polygon_factory::get_static_trapezoid(4,2, 1, *world);
+	Model_polygon* dynamic_trapezoid =
+			Model_polygon_factory::get_dynamic_trapezoid(2, 2, 1, 1, *world);
 
 	std::cout << "Crear Poligono regular estatico de 4 "
 			<< (static_regular_1 ? "OK" : "ERROR") << std::endl;

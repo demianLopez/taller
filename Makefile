@@ -15,21 +15,10 @@ BOX_LDFLAGS = $(SDL_LDFLAGS) -lBox2D
 
 #ALL
 VIEW = polygon.o polygon_factory.o regular_polygon.o
-MODEL = model_polygon.o model_regular_polygon.o model_rectangle.o model_circle.o model_polygon_factory.o
+MODEL = model_polygon.o model_regular_polygon.o model_rectangle.o model_circle.o model_trapezoid.o model_paralelogram.o model_polygon_factory.o
 OBJECTS = $(MODEL) #$(VIEW)
 
 all: $(EXEC)
-
-#View
-
-polygon.o: libs/polygons/polygon/polygon.h libs/polygons/polygon/polygon.cpp
-	$(CC) $(SDL_CPPFLAGS) -c libs/polygons/polygon/polygon.cpp
-
-regular_polygon.o: libs/polygons/regular_polygon/regular_polygon.h libs/polygons/regular_polygon/regular_polygon.cpp
-	$(CC) $(SDL_CPPFLAGS) -c libs/polygons/regular_polygon/regular_polygon.cpp
-	
-polygon_factory.o: libs/polygons/polygon_factory/polygon_factory.h libs/polygons/polygon_factory/polygon_factory.cpp
-	$(CC) $(SDL_CPPFLAGS) -c libs/polygons/polygon_factory/polygon_factory.cpp
 	
 #Model
 	
@@ -41,6 +30,12 @@ model_regular_polygon.o: libs/polygons/model_regular_polygon/model_regular_polyg
 	
 model_rectangle.o: libs/polygons/model_rectangle/model_rectangle.h libs/polygons/model_rectangle/model_rectangle.cpp
 	$(CC) $(SDL_CPPFLAGS) -c libs/polygons/model_rectangle/model_rectangle.cpp
+
+model_trapezoid.o: libs/polygons/model_trapezoid/model_trapezoid.h libs/polygons/model_trapezoid/model_trapezoid.cpp
+	$(CC) $(SDL_CPPFLAGS) -c libs/polygons/model_trapezoid/model_trapezoid.cpp
+	
+model_paralelogram.o: libs/polygons/model_paralelogram/model_paralelogram.h libs/polygons/model_paralelogram/model_paralelogram.cpp
+	$(CC) $(SDL_CPPFLAGS) -c libs/polygons/model_paralelogram/model_paralelogram.cpp
 
 model_circle.o: libs/polygons/model_circle/model_circle.h libs/polygons/model_circle/model_circle.cpp
 	$(CC) $(SDL_CPPFLAGS) -c libs/polygons/model_circle/model_circle.cpp

@@ -21,6 +21,7 @@
 #include "../model_regular_polygon/model_regular_polygon.h"
 #include "../model_rectangle/model_rectangle.h"
 #include "../model_circle/model_circle.h"
+#include "../model_trapezoid/model_trapezoid.h"
 
 Model_polygon* Model_polygon_factory::get_regular_polygon(size_t sides,
 		double scale, double density, int body_type, b2World& world) {
@@ -42,6 +43,16 @@ Model_polygon* Model_polygon_factory::get_circle(double diameter,
 	return new Model_circle(diameter, density, body_type, world);
 }
 
+Model_polygon* Model_polygon_factory::get_paralelogram(double density,
+		int body_type, b2World& world) {
+	return NULL;
+}
+
+Model_polygon* Model_polygon_factory::get_trapezoid(double height, double base,
+		double top, double density, int body_type, b2World& world) {
+	return new Model_trapezoid(height, base, top, density, body_type, world);
+}
+
 Model_polygon* Model_polygon_factory::get_static_regular_polygon(size_t sides,
 		double scale, double density, b2World& world) {
 	return get_regular_polygon(sides, scale, density, Model_polygon::STATIC,
@@ -56,6 +67,12 @@ Model_polygon* Model_polygon_factory::get_static_rectangle(double height,
 Model_polygon* Model_polygon_factory::get_static_circle(double diameter,
 		double density, b2World& world) {
 	return get_circle(diameter, density, Model_polygon::STATIC, world);
+}
+
+Model_polygon* Model_polygon_factory::get_static_trapezoid(double height,
+		double base, double top, double density, b2World& world) {
+	return get_trapezoid(height, base, top, density, Model_polygon::STATIC,
+			world);
 }
 
 Model_polygon* Model_polygon_factory::get_dynamic_regular_polygon(size_t sides,
@@ -73,4 +90,11 @@ Model_polygon* Model_polygon_factory::get_dynamic_rectangle(double height,
 Model_polygon* Model_polygon_factory::get_dynamic_circle(double diameter,
 		double density, b2World& world) {
 	return get_circle(diameter, density, Model_polygon::DYNAMIC, world);
+}
+
+Model_polygon* Model_polygon_factory::get_dynamic_trapezoid(double height,
+		double base, double top, double density, b2World& world) {
+	return get_trapezoid(height, base, top, density, Model_polygon::DYNAMIC,
+			world);
+
 }

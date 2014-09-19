@@ -18,9 +18,9 @@
  */
 #include "model_trapezoid.h"
 
-Model_trapezoid::Model_trapezoid() {
-	// TODO Auto-generated constructor stub
-
+Model_trapezoid::Model_trapezoid(double height, double base, double top,
+		double density, int body_type, b2World& world) :
+		Model_polygon(body_type, density) {
 }
 
 Model_trapezoid::~Model_trapezoid() {

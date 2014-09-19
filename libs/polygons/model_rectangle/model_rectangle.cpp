@@ -18,11 +18,11 @@
  */
 #include "model_rectangle.h"
 
-Model_rectangle::Model_rectangle(double height, double widht, double density,
+Model_rectangle::Model_rectangle(double height, double width, double density,
 		int body_type, b2World& world):Model_polygon(body_type,density) {
 
 	b2PolygonShape box_shape;
-	box_shape.SetAsBox(1,1); //seteo los vertices del poligono
+	box_shape.SetAsBox(height,width); //seteo los vertices del poligono
 
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &box_shape;

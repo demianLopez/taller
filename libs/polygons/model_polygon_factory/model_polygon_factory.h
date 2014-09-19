@@ -26,8 +26,10 @@
 
 class Model_polygon_factory {
 private:
-	Model_polygon_factory() {}
-	virtual ~Model_polygon_factory() {}
+	Model_polygon_factory() {
+	}
+	virtual ~Model_polygon_factory() {
+	}
 
 private:
 	static Model_polygon* get_regular_polygon(size_t sides, double scale,
@@ -38,8 +40,8 @@ private:
 			int body_type, b2World& world);
 	static Model_polygon* get_paralelogram(double density, int body_type,
 			b2World& world);
-	static Model_polygon* get_trapezoid(double density, int body_type,
-			b2World& world);
+	static Model_polygon* get_trapezoid(double height, double base, double top,
+			double density, int body_type, b2World& world);
 
 public:
 	static Model_polygon* get_static_regular_polygon(size_t sides, double scale,
@@ -48,18 +50,20 @@ public:
 			double density, b2World& world);
 	static Model_polygon* get_static_circle(double diameter, double density,
 			b2World& world);
-	static Model_polygon* get_static_paralelogram(double density,
-			b2World& world);
-	static Model_polygon* get_static_trapezoid(double density, b2World& world);
+	static Model_polygon* get_static_paralelogram(double height, double base,
+			double top, double density, b2World& world);
+	static Model_polygon* get_static_trapezoid(double height, double base,
+			double top, double density, b2World& world);
 	static Model_polygon* get_dynamic_regular_polygon(size_t sides,
 			double scale, double density, b2World& world);
 	static Model_polygon* get_dynamic_rectangle(double height, double widht,
 			double density, b2World& world);
 	static Model_polygon* get_dynamic_circle(double diameter, double density,
 			b2World& world);
-	static Model_polygon* get_dynamic_paralelogram(double density,
-			b2World& world);
-	static Model_polygon* get_dynamic_trapezoid(double density, b2World& world);
+	static Model_polygon* get_dynamic_paralelogram(double height, double base,
+			double top, double density, b2World& world);
+	static Model_polygon* get_dynamic_trapezoid(double height, double base,
+			double top, double density, b2World& world);
 };
 
 #endif /* MODEL_POLYGON_FACTORY_H_ */

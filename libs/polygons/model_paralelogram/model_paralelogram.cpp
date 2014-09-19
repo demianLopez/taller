@@ -18,7 +18,7 @@
  */
 #include "model_paralelogram.h"
 
-Model_paralelogram::Model_paralelogram() {
+Model_paralelogram::Model_paralelogram():Model_polygon(1,1) {
 	// TODO Auto-generated constructor stub
 
 }

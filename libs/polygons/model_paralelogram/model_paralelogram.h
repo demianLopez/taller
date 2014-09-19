@@ -19,6 +19,9 @@
 #ifndef MODEL_PARALELOGRAM_H_
 #define MODEL_PARALELOGRAM_H_
 
+#include "../model_polygon/model_polygon.h"
+#include <Box2D/Box2D.h>
+
 class Model_paralelogram: public Model_polygon {
 public:
 	Model_paralelogram();

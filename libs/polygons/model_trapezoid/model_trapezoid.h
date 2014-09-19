@@ -19,9 +19,13 @@
 #ifndef MODEL_TRAPEZOID_H_
 #define MODEL_TRAPEZOID_H_
 
+#include "../model_polygon/model_polygon.h"
+#include <Box2D/Box2D.h>
+
 class Model_trapezoid: public Model_polygon {
 public:
-	Model_trapezoid();
+	Model_trapezoid(double height, double base, double top, double density,
+			int body_type, b2World& world);
 	virtual ~Model_trapezoid();
 };
 
