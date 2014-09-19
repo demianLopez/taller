@@ -54,4 +54,4 @@ $(EXEC): polygons_tests.cpp $(OBJECTS)
 	$(CC) $(BOX_LDFLAGS) $(OBJECTS) polygons_tests.cpp -o $(EXEC)
 
 clean:
-	rm -r *.o *.save *~ $(EXEC)
+	rm -f -r *.o *.save *~ $(EXEC) *.gcno *.gcda
