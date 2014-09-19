@@ -38,7 +38,7 @@ private:
 			double density, int body_type, b2World& world);
 	static Model_polygon* get_circle(double diameter, double density,
 			int body_type, b2World& world);
-	static Model_polygon* get_paralelogram(double density, int body_type,
+	static Model_polygon* get_parallelogram(double density, int body_type,
 			b2World& world);
 	static Model_polygon* get_trapezoid(double height, double base, double top,
 			double density, int body_type, b2World& world);
@@ -50,7 +50,7 @@ public:
 			double density, b2World& world);
 	static Model_polygon* get_static_circle(double diameter, double density,
 			b2World& world);
-	static Model_polygon* get_static_paralelogram(double height, double base,
+	static Model_polygon* get_static_parallelogram(double height, double base,
 			double top, double density, b2World& world);
 	static Model_polygon* get_static_trapezoid(double height, double base,
 			double top, double density, b2World& world);
@@ -60,7 +60,7 @@ public:
 			double density, b2World& world);
 	static Model_polygon* get_dynamic_circle(double diameter, double density,
 			b2World& world);
-	static Model_polygon* get_dynamic_paralelogram(double height, double base,
+	static Model_polygon* get_dynamic_parallelogram(double height, double base,
 			double top, double density, b2World& world);
 	static Model_polygon* get_dynamic_trapezoid(double height, double base,
 			double top, double density, b2World& world);

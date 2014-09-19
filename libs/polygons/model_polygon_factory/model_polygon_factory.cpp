@@ -43,7 +43,7 @@ Model_polygon* Model_polygon_factory::get_circle(double diameter,
 	return new Model_circle(diameter, density, body_type, world);
 }
 
-Model_polygon* Model_polygon_factory::get_paralelogram(double density,
+Model_polygon* Model_polygon_factory::get_parallelogram(double density,
 		int body_type, b2World& world) {
 	return NULL;
 }

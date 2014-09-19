@@ -1,5 +1,5 @@
 /**
- model_paralelogram.h
+ model_parallelogram.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,16 +16,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef MODEL_PARALELOGRAM_H_
-#define MODEL_PARALELOGRAM_H_
+#include "model_parallelogram.h"
 
-#include "../model_polygon/model_polygon.h"
-#include <Box2D/Box2D.h>
+Model_parallelogram::Model_parallelogram():Model_polygon(1,1) {
+	// TODO Auto-generated constructor stub
 
-class Model_paralelogram: public Model_polygon {
-public:
-	Model_paralelogram();
-	virtual ~Model_paralelogram();
-};
+}
 
-#endif /* MODEL_PARALELOGRAM_H_ */
+Model_parallelogram::~Model_parallelogram() {
+	// TODO Auto-generated destructor stub
+}
+
