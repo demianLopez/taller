@@ -20,6 +20,7 @@
 #define MODEL_RECTANGLE_H_
 
 #include "../model_polygon/model_polygon.h"
+#include <Box2D/Box2D.h>
 
 class Model_rectangle: public Model_polygon {
 public:

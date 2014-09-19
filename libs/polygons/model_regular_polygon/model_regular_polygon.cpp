@@ -31,7 +31,7 @@ void define_vertex(size_t sides, b2Vec2* vertex) {
 	double segment_size = perimeter / sides;
 	double traveled_perimeter = 0;
 	double x = 0, y = 0;
-	for (int i; i < sides; i++) {
+	for (size_t i; i < sides; i++) {
 		vertex[i].Set(x, y);
 		traveled_perimeter += segment_size;
 		set_point(x, y, traveled_perimeter);
@@ -39,7 +39,7 @@ void define_vertex(size_t sides, b2Vec2* vertex) {
 }
 
 void scale_vertex(size_t sides, b2Vec2* vertex, double scale) {
-	for (int i; i < sides; i++) {
+	for (size_t i; i < sides; i++) {
 		double x = vertex[i].x;
 		double y = vertex[i].y;
 		x *= scale;

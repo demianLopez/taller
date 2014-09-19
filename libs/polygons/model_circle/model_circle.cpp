@@ -27,8 +27,10 @@ Model_circle::Model_circle(double diameter, double density, int body_type,
 		Model_polygon(body_type, density) {
 
 	b2CircleShape circle_shape;
-	circle_shape.m_p.Set(0, 0); //position, relative to body position
-	circle_shape.m_radius = diameter / 2; //radius
+	circle_shape.m_p.Set(0, 0);
+
+	float32 radius = diameter/2;
+	circle_shape.m_radius = radius;
 
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &circle_shape;
