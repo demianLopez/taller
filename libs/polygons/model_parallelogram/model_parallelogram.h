@@ -24,7 +24,8 @@
 
 class Model_parallelogram: public Model_polygon {
 public:
-	Model_parallelogram();
+	Model_parallelogram(double height, double base, double angle,
+			double density, int body_type, b2World& world);
 	virtual ~Model_parallelogram();
 };
 

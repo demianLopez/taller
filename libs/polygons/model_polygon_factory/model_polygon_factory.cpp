@@ -21,6 +21,7 @@
 #include "../model_regular_polygon/model_regular_polygon.h"
 #include "../model_rectangle/model_rectangle.h"
 #include "../model_circle/model_circle.h"
+#include "../model_parallelogram/model_parallelogram.h"
 #include "../model_trapezoid/model_trapezoid.h"
 
 Model_polygon* Model_polygon_factory::get_regular_polygon(size_t sides,
@@ -43,14 +44,16 @@ Model_polygon* Model_polygon_factory::get_circle(double diameter,
 	return new Model_circle(diameter, density, body_type, world);
 }
 
-Model_polygon* Model_polygon_factory::get_parallelogram(double density,
-		int body_type, b2World& world) {
-	return NULL;
+Model_polygon* Model_polygon_factory::get_trapezoid(double height, double base,
+		double angle, double density, int body_type, b2World& world) {
+	return new Model_trapezoid(height, base, angle, density, body_type, world);
 }
 
-Model_polygon* Model_polygon_factory::get_trapezoid(double height, double base,
-		double top, double density, int body_type, b2World& world) {
-	return new Model_trapezoid(height, base, top, density, body_type, world);
+Model_polygon* Model_polygon_factory::get_parallelogram(double height,
+		double base, double angle, double density, int body_type,
+		b2World& world) {
+	return new Model_parallelogram(height, base, angle, density, body_type,
+			world);
 }
 
 Model_polygon* Model_polygon_factory::get_static_regular_polygon(size_t sides,
@@ -75,6 +78,12 @@ Model_polygon* Model_polygon_factory::get_static_trapezoid(double height,
 			world);
 }
 
+Model_polygon* Model_polygon_factory::get_static_parallelogram(double height,
+		double base, double angle, double density, b2World& world) {
+	return get_parallelogram(height, base, angle, density,
+			Model_polygon::STATIC, world);
+}
+
 Model_polygon* Model_polygon_factory::get_dynamic_regular_polygon(size_t sides,
 		double scale, double density, b2World& world) {
 	return get_regular_polygon(sides, scale, density, Model_polygon::DYNAMIC,
@@ -97,4 +106,10 @@ Model_polygon* Model_polygon_factory::get_dynamic_trapezoid(double height,
 	return get_trapezoid(height, base, top, density, Model_polygon::DYNAMIC,
 			world);
 
+}
+
+Model_polygon* Model_polygon_factory::get_dynamic_parallelogram(double height,
+		double base, double angle, double density, b2World& world) {
+	return get_parallelogram(height, base, angle, density,
+			Model_polygon::DYNAMIC, world);
 }

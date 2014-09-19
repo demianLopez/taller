@@ -18,7 +18,9 @@
  */
 #include "model_parallelogram.h"
 
-Model_parallelogram::Model_parallelogram():Model_polygon(1,1) {
+Model_parallelogram::Model_parallelogram(double height, double base,
+		double angle, double density, int body_type, b2World& world) :
+		Model_polygon(body_type, density) {
 	// TODO Auto-generated constructor stub
 
 }

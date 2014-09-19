@@ -73,3 +73,19 @@ void Model_polygon::create_body(b2BodyDef* body_definition,
 
 	this->body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 }
+
+b2Vec2 Model_polygon::get_velocity() {
+	return this->body->GetLinearVelocity();
+}
+
+double Model_polygon::get_angular_velocity() {
+	return this->body->GetAngularVelocity();
+}
+
+double Model_polygon::get_rotation() {
+	return this->body->GetAngle();
+}
+
+b2Vec2 Model_polygon::get_position() {
+	return this->body->GetPosition();
+}

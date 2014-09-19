@@ -27,13 +27,12 @@
 using std::cout;
 using std::endl;
 
-int main() {
+void test_create() {
 	b2Vec2 gravity(0, 9.8);
 	b2World* world = new b2World(gravity);
 
 	Model_polygon* invalid_1 =
 			Model_polygon_factory::get_dynamic_regular_polygon(2, 2, 1, *world);
-
 	std::cout << "Crear Poligono regular dinamico de 2 "
 			<< (invalid_1 ? "ERROR" : "OK") << std::endl;
 
@@ -45,7 +44,7 @@ int main() {
 			1, *world);
 	Model_polygon* static_rectangle =
 			Model_polygon_factory::get_static_rectangle(4, 2, 1, *world);
-	Model_polygon* static_paralelogram = NULL; //Model_polygon_factory::get_static_paralelogram(4,2, 1, *world);
+	Model_polygon* static_paralelogram = NULL;
 	Model_polygon* static_trapezoid =
 			Model_polygon_factory::get_static_trapezoid(2, 2, 1, 1, *world);
 
@@ -57,9 +56,11 @@ int main() {
 			1, *world);
 	Model_polygon* dynamic_rectangle =
 			Model_polygon_factory::get_dynamic_rectangle(4, 2, 1, *world);
-	Model_polygon* dynamic_paralelogram = NULL; //Model_polygon_factory::get_static_paralelogram(4,2, 1, *world);
+	Model_polygon* dynamic_paralelogram = NULL;
 	Model_polygon* dynamic_trapezoid =
 			Model_polygon_factory::get_dynamic_trapezoid(2, 2, 1, 1, *world);
+
+	/*Test create*/
 
 	std::cout << "Crear Poligono regular estatico de 4 "
 			<< (static_regular_1 ? "OK" : "ERROR") << std::endl;
@@ -87,6 +88,48 @@ int main() {
 	std::cout << "Crear Trapezoide dinamico "
 			<< (dynamic_trapezoid ? "OK" : "ERROR") << std::endl;
 
+	/*Test initial position*/
+
+	b2Vec2 origin = b2Vec2(0, 0);
+
+	std::cout << "Poligono regular estatico de 4 en posicion 0,0 "
+			<< (static_regular_1->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+	std::cout << "Poligono regular estatico de 6 en posicion 0,0 "
+			<< (static_regular_2->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+	std::cout << "Circulo estatico de 2 en posicion 0,0 "
+			<< (static_circle->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+	std::cout << "Rectangulo estatico de 4x2 en posicion 0,0 "
+			<< (static_rectangle->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+	/*std::cout << "Paralelogramo estatico en posicion 0,0 "
+			<< (static_paralelogram->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;*/
+	std::cout << "Trapezoide estatico en posicion 0,0 "
+			<< (static_trapezoid->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+
+	std::cout << "Poligono regular dinamico de 3 en posicion 0,0 "
+			<< (dynamic_regular_1->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+	std::cout << "Poligono regular dinamico de 6 en posicion 0,0 "
+			<< (dynamic_regular_2->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+	std::cout << "Circulo dinamico de 2 en posicion 0,0 "
+			<< (dynamic_circle->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+	std::cout << "Rectangulo dinamico de 4x2 en posicion 0,0 "
+			<< (dynamic_rectangle->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+	/*std::cout << "Paralelogramo dinamico en posicion 0,0 "
+			<< (dynamic_paralelogram->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;*/
+	std::cout << "Trapezoide dinamico en posicion 0,0 "
+			<< (dynamic_trapezoid->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+
 	delete static_regular_1;
 	delete static_regular_2;
 	delete static_circle;
@@ -100,7 +143,44 @@ int main() {
 	delete dynamic_rectangle;
 	delete dynamic_paralelogram;
 	delete dynamic_trapezoid;
+	delete world;
+}
+
+void test_fall() {
+	b2Vec2 gravity(0, 9.8);
+	b2World* world = new b2World(gravity);
+
+	Model_polygon* static_regular_1 =
+			Model_polygon_factory::get_static_regular_polygon(4, 2, 1, *world);
+	Model_polygon* static_regular_2 =
+			Model_polygon_factory::get_static_regular_polygon(6, 2, 1, *world);
+
+	Model_polygon* dynamic_regular_1 =
+			Model_polygon_factory::get_dynamic_regular_polygon(4, 2, 1, *world);
+	Model_polygon* dynamic_regular_2 =
+			Model_polygon_factory::get_dynamic_regular_polygon(6, 2, 1, *world);
+
+	std::cout << "Crear Poligono regular estatico de 4 "
+			<< (static_regular_1 ? "OK" : "ERROR") << std::endl;
+	std::cout << "Crear Poligono regular estatico de 6 "
+			<< (static_regular_2 ? "OK" : "ERROR") << std::endl;
+
+	std::cout << "Crear Poligono regular dinamico de 3 "
+			<< (dynamic_regular_1 ? "OK" : "ERROR") << std::endl;
+	std::cout << "Crear Poligono regular dinamico de 6 "
+			<< (dynamic_regular_2 ? "OK" : "ERROR") << std::endl;
+
+	delete static_regular_1;
+	delete static_regular_2;
+
+	delete dynamic_regular_1;
+	delete dynamic_regular_2;
 
 	delete world;
+}
+
+int main() {
+	test_create();
+	test_fall();
 	return 0;
 }

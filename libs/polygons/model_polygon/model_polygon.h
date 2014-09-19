@@ -40,12 +40,20 @@ public:
 	Model_polygon(int body_type,double density);
 	virtual ~Model_polygon();
 
-	void rotate(double angle);
-	void move(double x_units, double y_units);
-	void set_velocity(double x_units, double y_units);
-	void set_angular_velocity(double angular_velocity);
-	void apply_force(double x_units, double y_units);
-	void apply_instant_force(double x_units, double y_units);
+	virtual void rotate(double angle);
+	virtual double get_rotation();
+
+	virtual void move(double x_units, double y_units);
+	virtual b2Vec2 get_position();
+
+	virtual void apply_force(double x_units, double y_units);
+	virtual void apply_instant_force(double x_units, double y_units);
+
+	virtual void set_velocity(double x_units, double y_units);
+	virtual b2Vec2 get_velocity();
+
+	virtual void set_angular_velocity(double angular_velocity);
+	virtual double get_angular_velocity();
 };
 
 #endif /* MODEL_POLYGON_H_ */
