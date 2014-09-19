@@ -1,8 +1,8 @@
 #Project Builder
 #General
 CC = gcc -std=c++11 -g
-CPPFLAGS = -Wall -Wextra -g -pedantic
-CPPLDFLAGS = -lm -lstdc++
+CPPFLAGS = -Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage
+CPPLDFLAGS = -lm -lstdc++ -lgcov -coverage
 
 EXEC = polygons_test
 
