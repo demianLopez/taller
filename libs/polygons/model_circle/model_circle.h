@@ -19,9 +19,13 @@
 #ifndef MODEL_CIRCLE_H_
 #define MODEL_CIRCLE_H_
 
+#include "../model_polygon/model_polygon.h"
+#include <Box2D/Box2D.h>
+
 class Model_circle: public Model_polygon {
 public:
-	Model_circle();
+	Model_circle(double diameter, double density, int body_type,
+			b2World& world);
 	virtual ~Model_circle();
 };
 

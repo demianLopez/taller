@@ -26,18 +26,16 @@
 
 class Model_polygon_factory {
 private:
-	Model_polygon_factory() {
-	}
-	virtual ~Model_polygon_factory() {
-	}
+	Model_polygon_factory() {}
+	virtual ~Model_polygon_factory() {}
 
 private:
 	static Model_polygon* get_regular_polygon(size_t sides, double scale,
 			double density, int body_type, b2World& world);
 	static Model_polygon* get_rectangle(double height, double widht,
 			double density, int body_type, b2World& world);
-	static Model_polygon* get_circle(double diameter, double scale,
-			double density, int body_type, b2World& world);
+	static Model_polygon* get_circle(double diameter, double density,
+			int body_type, b2World& world);
 	static Model_polygon* get_paralelogram(double density, int body_type,
 			b2World& world);
 	static Model_polygon* get_trapezoid(double density, int body_type,
@@ -48,8 +46,8 @@ public:
 			double density, b2World& world);
 	static Model_polygon* get_static_rectangle(double height, double widht,
 			double density, b2World& world);
-	static Model_polygon* get_static_circle(double diameter, double scale,
-			double density, b2World& world);
+	static Model_polygon* get_static_circle(double diameter, double density,
+			b2World& world);
 	static Model_polygon* get_static_paralelogram(double density,
 			b2World& world);
 	static Model_polygon* get_static_trapezoid(double density, b2World& world);
@@ -57,8 +55,8 @@ public:
 			double scale, double density, b2World& world);
 	static Model_polygon* get_dynamic_rectangle(double height, double widht,
 			double density, b2World& world);
-	static Model_polygon* get_dynamic_circle(double diameter, double scale,
-			double density, b2World& world);
+	static Model_polygon* get_dynamic_circle(double diameter, double density,
+			b2World& world);
 	static Model_polygon* get_dynamic_paralelogram(double density,
 			b2World& world);
 	static Model_polygon* get_dynamic_trapezoid(double density, b2World& world);

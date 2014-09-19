@@ -37,7 +37,7 @@ int main() {
 			2, 1, *world);
 	Model_polygon* pol3 = Model_polygon_factory::get_dynamic_regular_polygon(3,
 			2, 1, *world);
-	Model_polygon* circle = Model_polygon_factory::get_dynamic_circle(2, 1, 1,
+	Model_polygon* circle = Model_polygon_factory::get_dynamic_circle(2, 1,
 			*world);
 	Model_polygon* rectangle = Model_polygon_factory::get_static_rectangle(4, 2,
 			1, *world);
