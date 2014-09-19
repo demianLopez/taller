@@ -36,7 +36,7 @@ Model_polygon::~Model_polygon() {
 }
 
 void Model_polygon::rotate(double angle) {
-	double new_angle = this->body->GetAngle();
+	double new_angle = this->body->GetAngle() + angle;
 	b2Vec2 position = this->body->GetPosition();
 	this->body->SetTransform(position, new_angle);
 }
