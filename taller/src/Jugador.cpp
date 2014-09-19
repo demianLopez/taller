@@ -12,7 +12,7 @@ Jugador::Jugador(b2World * gameWorld) : Personaje(gameWorld) {
 	body = gameWorld->CreateBody(&bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(0.44f, 0.6f); //TODO: mejorar medidas.
+	dynamicBox.SetAsBox(0.2f, 0.6f); //TODO: mejorar medidas.
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;

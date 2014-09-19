@@ -67,6 +67,7 @@ void World::generateWorld(){
 
 
 	this->mainCharacter = new Jugador(box2DWorld);
+	this->mainCharacter->setFreezeRotation(true);
 
 	//WORLD!
 
