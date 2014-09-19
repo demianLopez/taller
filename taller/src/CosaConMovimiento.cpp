@@ -13,6 +13,8 @@ CosaConMovimiento::CosaConMovimiento(b2World * gameWorld) {
 	this->goingDown = true;
 	this->onTopJump = true;
 
+	this->freezeRotation = false;
+
 	// Esto puede redefinirse en cada hijo, por defecto vale esto.
 	this->movementSpeedX = MOVEMENT_SPEED_X_DEFAULT;
 	this->movementSpeedY = MOVEMENT_SPEED_Y_DEFAULT;
@@ -20,6 +22,9 @@ CosaConMovimiento::CosaConMovimiento(b2World * gameWorld) {
 	this->mirandoParaLaDerecha = true;
 }
 
+void CosaConMovimiento::setFreezeRotation(bool freezeRotation){
+	this->body->SetFixedRotation(!freezeRotation);
+}
 
 // Frena la cosa en X y/o Y
 void CosaConMovimiento::stop(bool stopX, bool stopY){

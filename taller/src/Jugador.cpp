@@ -7,12 +7,12 @@ Jugador::Jugador(b2World * gameWorld) : Personaje(gameWorld) {
 	// TODO: permitir ponerlo en una posicion especifica.
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(8.0f, 10.0f);
+	bodyDef.position.Set(5.0f, 10.0f);
 
 	body = gameWorld->CreateBody(&bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(1.0f, 1.0f); //TODO: mejorar medidas.
+	dynamicBox.SetAsBox(0.44f, 0.6f); //TODO: mejorar medidas.
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;

@@ -29,6 +29,7 @@ public:
 	void drawImage(Image *image, int xo, int yo, float rotation);
 
 	void drawAnimation(Animation * animation, int xo, int yo);
+	void drawAnimation(Animation * animation, int xo, int yo, float rotation);
 
 	//Dibuja un rectamgulo lleno (pintado interiormente)
 	void drawFillRect(int xo, int yo, int dx, int dy);
@@ -44,11 +45,16 @@ public:
 
 	void drawText(int x, int y, const char* text);
 
+	void drawAtCenter(bool dAtCenter);
+
+	void resetGraphics();
+
 	//Setea el color
 	void setColor(unsigned char red, unsigned char green, unsigned char blue);
 	void setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
 private:
 	TTF_Font *currentFont;
+	bool dAtCenter;
 };
 
 #endif /* GRAPHICS_H_ */

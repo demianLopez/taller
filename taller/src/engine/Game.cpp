@@ -142,6 +142,8 @@ void Game::gameCicle(){
 			}
 		}
 
+		g->resetGraphics();
+
 		int delta = SDL_GetTicks() - this->lastUpdateTime;
 		this->update(delta);
 		this->lastUpdateTime = SDL_GetTicks();
