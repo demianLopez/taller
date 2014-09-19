@@ -18,9 +18,36 @@
  */
 #include "model_trapezoid.h"
 
+void define_vertex(double height, double base, double top, b2Vec2* vertex) {
+	double y_height = height / 2;
+	double x_top = top / 2;
+	double x_base = base / 2;
+	vertex[0] = b2Vec2(-x_base, -y_height);
+	vertex[1] = b2Vec2(x_base, -y_height);
+	vertex[2] = b2Vec2(x_top, y_height);
+	vertex[3] = b2Vec2(-x_top, y_height);
+}
+
 Model_trapezoid::Model_trapezoid(double height, double base, double top,
 		double density, int body_type, b2World& world) :
-		Model_polygon(body_type, density) {
+				Model_polygon(body_type, density) {
+
+	b2Vec2* vertex = new b2Vec2[4];
+	define_vertex(height, base, top, vertex);
+
+	b2PolygonShape polygon_shape;
+	polygon_shape.Set(vertex, 4); //seteo los vertices del poligono
+
+	b2FixtureDef body_fixture;
+	body_fixture.shape = &polygon_shape;
+
+	b2BodyDef body_definition;
+	body_definition.position.Set(0, 0); //seteo posicion base
+
+	Model_polygon::create_body(&body_definition, &body_fixture, world);
+
+	delete[] vertex;
+
 }
 
 Model_trapezoid::~Model_trapezoid() {
