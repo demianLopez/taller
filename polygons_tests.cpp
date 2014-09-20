@@ -105,8 +105,8 @@ void test_create() {
 			<< (static_rectangle->get_position() == origin ? "OK" : "ERROR")
 			<< std::endl;
 	/*std::cout << "Paralelogramo estatico en posicion 0,0 "
-			<< (static_paralelogram->get_position() == origin ? "OK" : "ERROR")
-			<< std::endl;*/
+	 << (static_paralelogram->get_position() == origin ? "OK" : "ERROR")
+	 << std::endl;*/
 	std::cout << "Trapezoide estatico en posicion 0,0 "
 			<< (static_trapezoid->get_position() == origin ? "OK" : "ERROR")
 			<< std::endl;
@@ -124,8 +124,8 @@ void test_create() {
 			<< (dynamic_rectangle->get_position() == origin ? "OK" : "ERROR")
 			<< std::endl;
 	/*std::cout << "Paralelogramo dinamico en posicion 0,0 "
-			<< (dynamic_paralelogram->get_position() == origin ? "OK" : "ERROR")
-			<< std::endl;*/
+	 << (dynamic_paralelogram->get_position() == origin ? "OK" : "ERROR")
+	 << std::endl;*/
 	std::cout << "Trapezoide dinamico en posicion 0,0 "
 			<< (dynamic_trapezoid->get_position() == origin ? "OK" : "ERROR")
 			<< std::endl;
@@ -147,8 +147,9 @@ void test_create() {
 }
 
 void test_fall() {
-	b2Vec2 gravity(0, 9.8);
+	b2Vec2 gravity(0, -200);
 	b2World* world = new b2World(gravity);
+	world->SetGravity(gravity);
 
 	Model_polygon* static_regular_1 =
 			Model_polygon_factory::get_static_regular_polygon(4, 2, 1, *world);
@@ -160,15 +161,78 @@ void test_fall() {
 	Model_polygon* dynamic_regular_2 =
 			Model_polygon_factory::get_dynamic_regular_polygon(6, 2, 1, *world);
 
-	std::cout << "Crear Poligono regular estatico de 4 "
-			<< (static_regular_1 ? "OK" : "ERROR") << std::endl;
-	std::cout << "Crear Poligono regular estatico de 6 "
-			<< (static_regular_2 ? "OK" : "ERROR") << std::endl;
+	float32 timeStep = 2;      //the length of time passed to simulate (seconds)
+	int32 velocityIterations = 8;   //how strongly to correct velocity
+	int32 positionIterations = 3;   //how strongly to correct position
 
-	std::cout << "Crear Poligono regular dinamico de 3 "
-			<< (dynamic_regular_1 ? "OK" : "ERROR") << std::endl;
-	std::cout << "Crear Poligono regular dinamico de 6 "
-			<< (dynamic_regular_2 ? "OK" : "ERROR") << std::endl;
+	b2Vec2 origin = b2Vec2(0, 0);
+
+	world->Step(timeStep, velocityIterations, positionIterations);
+
+	std::cout << "Poligono regular estatico de 4 cae de la posicion 0,0 "
+			<< (static_regular_1->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+	std::cout << "Poligono regular estatico de 6 cae de la posicion 0,0 "
+			<< (static_regular_2->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+
+	std::cout << "Poligono regular dinamico de 3 cae de la posicion 0,0 "
+			<< (dynamic_regular_1->get_position() == origin ? "ERROR" : "OK")
+			<< std::endl;
+	std::cout << "Poligono regular dinamico de 6 cae de la posicion 0,0 "
+			<< (dynamic_regular_2->get_position() == origin ? "ERROR" : "OK")
+			<< std::endl;
+
+	delete static_regular_1;
+	delete static_regular_2;
+
+	delete dynamic_regular_1;
+	delete dynamic_regular_2;
+
+	delete world;
+}
+
+void test_move() {
+	b2Vec2 gravity(0, 0);
+	b2World* world = new b2World(gravity);
+	world->SetGravity(gravity);
+
+	Model_polygon* static_regular_1 =
+			Model_polygon_factory::get_static_regular_polygon(4, 2, 1, *world);
+	Model_polygon* static_regular_2 =
+			Model_polygon_factory::get_static_regular_polygon(6, 2, 1, *world);
+
+	Model_polygon* dynamic_regular_1 =
+			Model_polygon_factory::get_dynamic_regular_polygon(4, 2, 1, *world);
+	Model_polygon* dynamic_regular_2 =
+			Model_polygon_factory::get_dynamic_regular_polygon(6, 2, 1, *world);
+
+	float32 timeStep = 2;      //the length of time passed to simulate (seconds)
+	int32 velocityIterations = 8;   //how strongly to correct velocity
+	int32 positionIterations = 3;   //how strongly to correct position
+
+	b2Vec2 origin = b2Vec2(0, 0);
+
+	static_regular_1->set_velocity(200, 200);
+	static_regular_2->set_velocity(200, 200);
+	dynamic_regular_1->set_velocity(200, 200);
+	dynamic_regular_2->set_velocity(200, 200);
+
+	world->Step(timeStep, velocityIterations, positionIterations);
+
+	std::cout << "Poligono regular estatico de 4 se mueve de la posicion 0,0 "
+			<< (static_regular_1->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+	std::cout << "Poligono regular estatico de 6 se mueve de la posicion 0,0 "
+			<< (static_regular_2->get_position() == origin ? "OK" : "ERROR")
+			<< std::endl;
+
+	std::cout << "Poligono regular dinamico de 3 se mueve de la posicion 0,0 "
+			<< (dynamic_regular_1->get_position() == origin ? "ERROR" : "OK")
+			<< std::endl;
+	std::cout << "Poligono regular dinamico de 6 se mueve de la posicion 0,0 "
+			<< (dynamic_regular_2->get_position() == origin ? "ERROR" : "OK")
+			<< std::endl;
 
 	delete static_regular_1;
 	delete static_regular_2;
@@ -182,5 +246,6 @@ void test_fall() {
 int main() {
 	test_create();
 	test_fall();
+	test_move();
 	return 0;
 }

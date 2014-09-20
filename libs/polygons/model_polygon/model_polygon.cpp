@@ -70,7 +70,6 @@ void Model_polygon::create_body(b2BodyDef* body_definition,
 		b2FixtureDef* body_fixture, b2World& world) {
 	this->body = world.CreateBody(body_definition);
 	this->body->CreateFixture(body_fixture);
-
 	this->body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 }
 
