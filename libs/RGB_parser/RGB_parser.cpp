@@ -72,3 +72,7 @@ int RGB_Parser::decode_base_16(std::string& encoded) {
 
 	return x_decoded + y_decoded;
 }
+
+bool RGB_Parser::is_valid_color(std::tuple<int, int, int>& color) {
+	return (color[0]>=0 && color[1]>=0 && color[2]>=0);
+}
