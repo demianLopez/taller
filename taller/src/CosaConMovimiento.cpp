@@ -18,6 +18,7 @@ CosaConMovimiento::CosaConMovimiento(b2World * gameWorld) {
 	this->movementSpeedY = MOVEMENT_SPEED_Y_DEFAULT;
 
 	this->mirandoParaLaDerecha = true;
+	this->wasMovingLeftFirst = false;
 }
 
 void CosaConMovimiento::setFreezeRotation(bool freezeRotation){
@@ -40,10 +41,20 @@ b2Body * CosaConMovimiento::getBody(){
 }
 
 void CosaConMovimiento::setMovingLeft(bool isMovingLeft){
+	if (isMovingLeft){
+		if ( !isMovingRight() ) wasMovingLeftFirst = true;
+	}else{
+		if ( isMovingRight() ) wasMovingLeftFirst = false;
+	}
 	movingLeft = isMovingLeft;
 }
 
 void CosaConMovimiento::setMovingRight(bool isMovingRight){
+	if (isMovingRight){
+		if ( !isMovingLeft() ) wasMovingLeftFirst = false;
+	}else{
+		if ( isMovingLeft() ) wasMovingLeftFirst = true;
+	}
 	movingRight = isMovingRight;
 }
 
@@ -98,6 +109,24 @@ void CosaConMovimiento::update(){
 		}
 	}
 
+	//Movimiento hacia los lados
+	if (movingRight){
+		if( !movingLeft || !wasMovingLeftFirst ){
+			this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
+			mirandoParaLaDerecha = true;
+			return;
+		}
+	}
+	if (movingLeft){
+		if( !movingRight || wasMovingLeftFirst ){
+			this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
+			mirandoParaLaDerecha = false;
+			return;
+		}
+	}
+
+	stop(true,false);
+/*
 	if(movingLeft){
 		this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
 		mirandoParaLaDerecha = false;
@@ -109,7 +138,7 @@ void CosaConMovimiento::update(){
 			this->stop(true, false);
 		}
 	}
-
+*/
 }
 
 CosaConMovimiento::~CosaConMovimiento(){

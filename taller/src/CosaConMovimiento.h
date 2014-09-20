@@ -16,6 +16,7 @@ protected:
 	// Define si se esta moviendo.
 	bool movingLeft;
 	bool movingRight;
+	bool wasMovingLeftFirst;
 
 	// Modulo de la velocidad.
 	float movementSpeedX;

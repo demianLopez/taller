@@ -67,7 +67,6 @@ void SnowBross::keyEvent(SDL_Event e) {
 	if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				if (this->gameWorld->getMainCharacter()->isMovingRight()) break; // ignoramos si ya se esta moviendo
 				this->gameWorld->getMainCharacter()->setMovingLeft(true);
 				break;
 
