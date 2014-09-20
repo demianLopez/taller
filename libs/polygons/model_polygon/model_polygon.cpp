@@ -32,7 +32,7 @@ Model_polygon::Model_polygon(int body_type, double density) {
 }
 
 Model_polygon::~Model_polygon() {
-	// TODO Auto-generated destructor stub
+	delete[] this->vertex;
 }
 
 void Model_polygon::rotate(double angle) {
@@ -87,4 +87,12 @@ double Model_polygon::get_rotation() {
 
 b2Vec2 Model_polygon::get_position() {
 	return this->body->GetPosition();
+}
+
+b2Vec2* Model_polygon::get_vertex() {
+	return this->vertex;
+}
+
+void Model_polygon::set_vertex(b2Vec2* vertex) {
+	this->vertex = vertex;
 }

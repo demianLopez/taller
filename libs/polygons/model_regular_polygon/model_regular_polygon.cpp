@@ -66,9 +66,8 @@ Model_regular_polygon::Model_regular_polygon(size_t sides, double scale,
 	b2BodyDef body_definition;
 	body_definition.position.Set(0, 0); //seteo posicion base
 
-	Model_polygon::create_body(&body_definition, &body_fixture, world);
-
-	delete[] vertex;
+	this->create_body(&body_definition, &body_fixture, world);
+	this->set_vertex(vertex);
 }
 
 Model_regular_polygon::~Model_regular_polygon() {

@@ -31,13 +31,15 @@ protected:
 	int body_type;
 	double density;
 	b2Body* body;
+	b2Vec2* vertex=NULL;
 
 protected:
 	void create_body(b2BodyDef* body_definition, b2FixtureDef* body_fixture,
 			b2World& world);
+	void set_vertex(b2Vec2* vertex);
 
 public:
-	Model_polygon(int body_type,double density);
+	Model_polygon(int body_type, double density);
 	virtual ~Model_polygon();
 
 	virtual void rotate(double angle);
@@ -54,6 +56,8 @@ public:
 
 	virtual void set_angular_velocity(double angular_velocity);
 	virtual double get_angular_velocity();
+
+	virtual b2Vec2* get_vertex();
 };
 
 #endif /* MODEL_POLYGON_H_ */

@@ -44,9 +44,9 @@ Model_trapezoid::Model_trapezoid(double height, double base, double top,
 	b2BodyDef body_definition;
 	body_definition.position.Set(0, 0); //seteo posicion base
 
-	Model_polygon::create_body(&body_definition, &body_fixture, world);
+	this->create_body(&body_definition, &body_fixture, world);
 
-	delete[] vertex;
+	this->set_vertex(vertex);
 
 }
 
