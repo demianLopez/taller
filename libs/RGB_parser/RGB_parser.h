@@ -23,11 +23,13 @@
 #include <tuple>
 
 class RGB_Parser {
-public:
-	static std::tuple<int, int, int> decode(std::string &encoded);
-
 private:
 	static int decode_base_16(std::string &encoded);
+
+public:
+	static bool is_valid_color(std::tuple<int, int, int>& color);
+	static std::tuple<int, int, int> decode(std::string &encoded);
+
 };
 
 #endif /* RGB_PARSER_H_ */
