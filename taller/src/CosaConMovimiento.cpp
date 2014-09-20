@@ -41,15 +41,16 @@ b2Body * CosaConMovimiento::getBody(){
 }
 
 void CosaConMovimiento::setMovingLeft(bool isMovingLeft){
-	if (isMovingLeft){
-		if ( !isMovingRight() ) wasMovingLeftFirst = true;
-	}else{
-		if ( isMovingRight() ) wasMovingLeftFirst = false;
+	if (isMovingLeft){	// Se quiere setear movingLeft true
+		if ( !isMovingRight() ) wasMovingLeftFirst = true; // Se empezo a mover a la izq primero
+	}else{	// Se quiere setear movingLeft false
+		if ( isMovingRight() ) wasMovingLeftFirst = false; // De ahora en mas se empezo a mover a la der primero
 	}
-	movingLeft = isMovingLeft;
+	movingLeft = isMovingLeft;	// seteo.
 }
 
 void CosaConMovimiento::setMovingRight(bool isMovingRight){
+	// Para explicacion ver setMovingLeft()
 	if (isMovingRight){
 		if ( !isMovingLeft() ) wasMovingLeftFirst = false;
 	}else{
@@ -126,19 +127,6 @@ void CosaConMovimiento::update(){
 	}
 
 	stop(true,false);
-/*
-	if(movingLeft){
-		this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
-		mirandoParaLaDerecha = false;
-	}else{
-		if (movingRight){
-			mirandoParaLaDerecha = true;
-			this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
-		}else{
-			this->stop(true, false);
-		}
-	}
-*/
 }
 
 CosaConMovimiento::~CosaConMovimiento(){
