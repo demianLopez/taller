@@ -8,6 +8,7 @@
 #ifndef GESTORESCENARIO_H_
 #define GESTORESCENARIO_H_
 
+#include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
@@ -39,11 +40,12 @@ public:
 	GestorEscenario();
 	virtual ~GestorEscenario();
 	escenario* getEscenario();
+	void imprimirXConsola();
 	void configurarEscenerio(int altopx,int anchopx,int altoun,int anchoun,string imagen_fondo,int personajeX,int personajeY);
 	void agregarObjeto(string tipo,int lados,int posX,int posY,float radio,string color,float rot, float masa, bool estado);
 private:
-	escenario * elEscenario;
-	vector<objeto> * objetos;
+	escenario elEscenario;
+	vector<objeto> objetos;
 
 };
 

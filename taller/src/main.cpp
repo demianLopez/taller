@@ -12,17 +12,15 @@
 #include <stdio.h>
 #include "SnowBross.h"
 #include "Jugador.h"
-#include "LectorJsonTest.h"
+#include "LectorJson.h"
 using namespace std;
 
 
 int main(int argc, char *argv[]){
-	/*
-	LectorJsonTest* lector = new LectorJsonTest();
+	LectorJson* lector = new LectorJson();
 
-	lector->imprimirXConsola();
+	lector->cargarEscenario("asf");
 	delete lector;
-	*/
 
 	SnowBross *pE = new SnowBross("Snow Bross");
 	//pruebaEngine *pE = new pruebaEngine("Il");

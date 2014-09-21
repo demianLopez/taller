@@ -126,7 +126,7 @@ string LectorJson::validarImagen(string miembro,Value raiz, string valorDefecto)
 	ifstream imagenFondo(imagen.asString(), std::ifstream::binary);
 	if(!imagenFondo.good()){
 		if( imagen.asString() == valorDefecto){
-			logger->reportarProblema("No existe imagen por defecto, debe crear una.", ERROR);
+			logger->reportarProblema("No existe imagen por defecto, debe crear una.", FATAL);
 			exit(0);
 		}
 		else{
@@ -163,6 +163,7 @@ void LectorJson::obtenerEscenario(Value raiz){
 			y = validarInt("y",personaje,POSY_D);
 		}
 		this->elEscenario->configurarEscenerio(altopx,anchopx,altoun,anchoun,imagen,x,y);
+		this->elEscenario->imprimirXConsola();
 	}
 
 }
@@ -179,7 +180,7 @@ void LectorJson::cargarEscenario(const char* rutaArchivo){
 	this->logger->setearFecha();
 	ifstream archivoJson(rutaArchivo, std::ifstream::binary);
 	if(!archivoJson.good()){
-		if( strcmp(rutaArchivo,ESCENARIO_X_DEFECTO)){
+		if( !strcmp(rutaArchivo,ESCENARIO_X_DEFECTO)){
 			logger->reportarProblema("Escenario por defecto no existe. Debe crear un mapa por defecto.", FATAL);
 			exit(0);
 		}
