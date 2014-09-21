@@ -49,6 +49,9 @@ public:
 
 	void resetGraphics();
 
+	void drawFillCircle(int x, int y, int rad, int r, int g, int b);
+	void drawFillPolygon(short int* vx, short int* vy, int n, int r, int g, int b);
+
 	//Setea el color
 	void setColor(unsigned char red, unsigned char green, unsigned char blue);
 	void setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);

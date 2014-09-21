@@ -9,6 +9,7 @@
 #include "Image.h"
 #include "Animation.h"
 #include "AnimationFrame.h"
+#include "SdlGfx/SDL2_gfxPrimitives.h"
 
 Graphics::Graphics(TTF_Font * font) {
 	this->currentFont = font;
@@ -18,6 +19,7 @@ Graphics::Graphics(TTF_Font * font) {
 void Graphics::drawImage(Image *image){
 	this->drawImage(image, 0, 0);
 }
+
 
 void Graphics::drawAtCenter(bool dAtCenter){
 	this->dAtCenter = dAtCenter;
@@ -97,8 +99,16 @@ void Graphics::setColor(unsigned char red, unsigned char green, unsigned char bl
 	this->setColor(red, green, blue, 255);
 }
 
+void Graphics::drawFillCircle(int x, int y, int rad, int r, int g, int b){
+	filledCircleRGBA(GameElements::gRenderer, x, y, rad, r, g, b, 255);
+}
+
 void Graphics::setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha){
 	SDL_SetRenderDrawColor(GameElements::gRenderer, red, green, blue, alpha);
+}
+
+void Graphics::drawFillPolygon(short int* vx, short int* vy, int n, int r, int g, int b){
+	filledPolygonRGBA(GameElements::gRenderer, vx, vy, n, r, g, b, 255);
 }
 
 Graphics::~Graphics() {

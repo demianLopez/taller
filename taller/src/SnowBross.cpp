@@ -19,6 +19,19 @@
 SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
 	this->gameWorld = NULL;
 	this->particleEmiter = NULL;
+	vx = new short int[4];
+	vy = new short int[4];
+
+	vx[0] = 30;
+	vx[1] = 40;
+	vx[2] = 55;
+	vx[3] = 35;
+
+	vy[0] = 200;
+	vy[1] = 180;
+	vy[2] = 220;
+	vy[3] = 300;
+
 }
 
 void SnowBross::init(){
@@ -60,6 +73,7 @@ void SnowBross::render(Graphics *g){
 
 	g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources), playerPos.x, playerPos.y, -this->gameWorld->getMainCharacter()->getBody()->GetAngle() * 57);
 
+	g->drawFillPolygon(vx, vy, 4, 0, 255, 0);
 
 }
 

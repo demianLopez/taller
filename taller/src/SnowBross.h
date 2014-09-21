@@ -28,6 +28,9 @@ private:
 	World * gameWorld;
 	ParticleEmiter * particleEmiter;
 
+	short int *vx;
+	short int *vy;
+
 };
 
 #endif /* SNOWBROSS_H_ */
