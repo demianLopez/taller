@@ -8,6 +8,7 @@
 #include "Game.h"
 #include "Image.h"
 #include "Graphics.h"
+#include "Logger.h"
 #include <stdio.h>
 
 
@@ -62,18 +63,24 @@ unsigned int Game::getElapsedTime(){
 
 bool Game::start(){
 	bool success = true;
+
+	Logger::customLog("Game.cpp", Logger::INFO, "Initializing SDL Components");
+
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
-		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+		Logger::customLog("Game.cpp", Logger::ERROR, "SDL could not initialize! SDL_Error: ");
 		success = false;
 	} else {
+		Logger::customLog("Game.cpp", Logger::INFO, "SDL Initialize: OK");
 		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
+
 		if(gWindow == NULL)
 		{
-			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+			Logger::customLog("Game.cpp", Logger::ERROR, "Window could not be created! SDL_Error: "); //SDL_GetError()
 			success = false;
 		}
 		else
 		{
+			Logger::customLog("Game.cpp", Logger::INFO, "Window created: OK");
 			//Get window surface
 			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 
@@ -82,14 +89,16 @@ bool Game::start(){
             int imgFlags = IMG_INIT_PNG;
             if( !( IMG_Init( imgFlags ) & imgFlags ) )
             {
-                printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+            	Logger::customLog("Game.cpp", Logger::ERROR, "SDL_image could not initialize! SDL_Image_Error: ");
                 success = false;
             } else {
-
+            	Logger::customLog("Game.cpp", Logger::INFO, "SDL Image Initialize: OK");
                 if(TTF_Init() == -1) {
-                       printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+                	   Logger::customLog("Game.cpp", Logger::ERROR, "SDL_ttf could not initialize! TTF_Error: ");
+
                        success = false;
                 } else {
+                	Logger::customLog("Game.cpp", Logger::INFO, "SDL TTF Initialize: OK");
                 	this->gFont = TTF_OpenFont( "Resources/font.ttf", 28 );
                 }
 
@@ -100,7 +109,7 @@ bool Game::start(){
             	GameElements::gRenderer = this->gRenderer;
 
 
-
+            	Logger::customLog("Game.cpp", Logger::INFO, "SDL All components initialized!");
             	//Arrancamos el gameCicle
             	this->gameCicle();
 
@@ -117,12 +126,24 @@ void Game::endGame(){
 
 void Game::gameCicle(){
 
+	Logger::customLog("Game.cpp", Logger::INFO, "Starting Game Cicle");
+	if(this->sfps){
+		std::stringstream asd;
+		asd.str("");
+		asd<<"Max FPS set at: "<<this->maxFPS;
+
+		Logger::customLog("Game.cpp", Logger::INFO, asd.str().c_str());
+		asd.clear();
+	}
+
 	Graphics *g = new Graphics(this->gFont);
 
 	SDL_Event e;
 
 	//Antes de arrancar el ciclo, llamamos a la funcion init
+	Logger::customLog("Game.cpp", Logger::INFO, "Calling Init function");
 	this->init();
+	Logger::customLog("Game.cpp", Logger::INFO, "Init function called succesfull");
 
 	while(!this->quit) {
 		while( SDL_PollEvent( &e ) != 0 ){
@@ -174,23 +195,34 @@ void Game::gameCicle(){
 
 	}
 
+	Logger::customLog("Game.cpp", Logger::INFO, "Ending game cicle");
+	Logger::customLog("Game.cpp", Logger::INFO, "Calling exit function");
 	this->exit();
+	Logger::customLog("Game.cpp", Logger::INFO, "exit function called succesfull");
+	Logger::customLog("Game.cpp", Logger::INFO, "Closing SDL Components");
 	this->gameClose();
 }
 
 
 void Game::gameClose(){
+
 	SDL_DestroyWindow(this->gWindow);
+	Logger::customLog("Game.cpp", Logger::INFO, "Window destroyed!");
 	SDL_DestroyRenderer(this->gRenderer);
+	Logger::customLog("Game.cpp", Logger::INFO, "Render destroyed!");
 	TTF_CloseFont(gFont);
+	Logger::customLog("Game.cpp", Logger::INFO, "Font closed!");
 
 	this->gWindow = NULL;
 	this->gRenderer = NULL;
 
 	//Quit SDL subsystems
 	SDL_Quit();
+	Logger::customLog("Game.cpp", Logger::INFO, "SDL close: OK");
 	IMG_Quit();
+	Logger::customLog("Game.cpp", Logger::INFO, "SDL Image close: OK");
 	TTF_Quit();
+	Logger::customLog("Game.cpp", Logger::INFO, "SDL TTF close: OK");
 }
 
 Game::~Game() {

@@ -12,5 +12,7 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 
+#include "Logger.h"
+
 
 #endif /* LIBINCLUDES_H_ */

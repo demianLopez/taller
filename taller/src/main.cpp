@@ -13,6 +13,8 @@
 #include "SnowBross.h"
 #include "Jugador.h"
 #include "LectorJsonTest.h"
+#include "engine/Logger.h"
+
 using namespace std;
 
 
@@ -24,8 +26,9 @@ int main(int argc, char *argv[]){
 	delete lector;
 	*/
 
+	Logger::initializeCustomLogs();
+
 	SnowBross *pE = new SnowBross("Snow Bross");
-	//pruebaEngine *pE = new pruebaEngine("Il");
 	pE->setMaxFPS(50);
 	pE->showFPS(true);
 	pE->start();
