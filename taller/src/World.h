@@ -10,8 +10,11 @@
 
 #include "Box2D/Box2D.h"
 #include "Jugador.h"
+#include <vector>
+#include "polygons/Polygon.h"
 
 class Resources;
+class Polygon;
 
 
 class World {
@@ -24,9 +27,17 @@ public:
 	b2Vec2 box2DToSDL(b2Vec2 * box2DCoord);
 	b2Vec2 SDLToBox2D(b2Vec2 * SDLCoord);
 
+	b2Vec2 * getWindowSize();
+
 	void worldStep(int delta);
 
+	void addPolygon(Polygon * polygon);
+
 	Jugador * getMainCharacter();
+
+	b2World * getBox2DWorld();
+
+	vector<Polygon *> getPolygonList();
 
 
 
@@ -37,6 +48,8 @@ private:
 
 	void loadWorld();
 	void generateWorld();
+
+	vector<Polygon*> polygonList;
 
 	//BOX 2D
 	b2World * box2DWorld;

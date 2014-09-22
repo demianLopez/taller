@@ -168,12 +168,57 @@ void LectorJson::obtenerEscenario(Value raiz){
 
 }
 
-void LectorJson::obtenerObjetos(Value raiz){
+void LectorJson::armarRectangulo(Value raiz){
 
 }
 
-void LectorJson::crearObjeto(Value raiz){
+void LectorJson::armarPoligon(Value raiz){
 
+}
+
+void LectorJson::armarCirculo(Value raiz){
+
+}
+
+void LectorJson::armarParalelogramo(Value raiz){
+
+}
+
+void LectorJson::armarTrapecio(Value raiz){
+
+}
+
+void LectorJson::obtenerObjetos(Value raiz){
+	Value objetos = raiz["objetos"];
+	if(objetos.isNull()){
+		logger->reportarProblema("El Escenario no contiene objetos.", WARNING);
+		return;
+	}
+	for(unsigned int i = 0; i < objetos.size(); i++){
+		crearObjeto(objetos[i]);
+	}
+}
+
+void LectorJson::crearObjeto(Value raiz){
+	Value tipo = raiz["tipo"];
+	if(tipo.isNull()){
+		logger->reportarProblema("El Tipo del objeto no esta definido, no se puede crear", WARNING);
+	}
+	else{
+		string tipo_s = tipo.asString();
+		if (tipo_s=="rect")
+			this->armarRectangulo(raiz);
+		else if (tipo_s == "poli")
+				this->armarPoligon(raiz);
+		else if (tipo_s == "circ")
+				this->armarCirculo(raiz);
+		else if (tipo_s == "paral")
+			this->armarParalelogramo(raiz);
+		else if (tipo_s == "trap")
+			this->armarTrapecio(raiz);
+		else
+			logger->reportarProblema("Tipo de objeto "+tipo.asString()+" no esta definido, no se puede crear", WARNING);
+		}
 }
 
 void LectorJson::cargarEscenario(const char* rutaArchivo){
@@ -201,6 +246,7 @@ void LectorJson::cargarEscenario(const char* rutaArchivo){
 		}
 		else{
 			this->obtenerEscenario(raiz);
+			this->obtenerObjetos(raiz);
 		}
 	}
 }

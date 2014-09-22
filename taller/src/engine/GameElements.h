@@ -19,6 +19,7 @@ public:
 	static SDL_Renderer* gRenderer;
 
 	virtual ~GameElements();
+
 };
 
 #endif /* GAMEELEMENTS_H_ */

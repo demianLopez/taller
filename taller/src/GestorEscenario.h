@@ -26,12 +26,15 @@ struct escenario{
 struct objeto{
 	string tipo;
 	int lados;
+	double alto;
+	double ancho;
 	int posX ;
 	int posY ;
-	float radio;
+	double base;
+	double radio;
 	string color;
-	float rot;
-	float masa;
+	double rot;
+	double masa;
 	bool estatico;
 };
 

@@ -28,6 +28,11 @@ private:
 	void obtenerEscenario(Value raiz);
 	void obtenerObjetos(Value raiz);
 	void crearObjeto(Value raiz);
+	void armarRectangulo(Value raiz);
+	void armarPoligon(Value raiz);
+	void armarCirculo(Value raiz);
+	void armarParalelogramo(Value raiz);
+	void armarTrapecio(Value raiz);
 
 	LogManager* logger;
 	GestorEscenario * elEscenario;
