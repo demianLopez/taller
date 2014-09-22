@@ -1,5 +1,5 @@
 /**
- model_polygon.h
+ model_trapezoid.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,36 +16,19 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef MODEL_POLYGON_H_
-#define MODEL_POLYGON_H_
+#ifndef MODEL_TRAPEZOID_H_
+#define MODEL_TRAPEZOID_H_
 
+#include "Polygon.h"
 #include <Box2D/Box2D.h>
 
-class Model_polygon {
-
+class Trapezoid: public Polygon {
 public:
-	static const int STATIC = 0;
-	static const int DYNAMIC = 1;
-
-protected:
-	int body_type;
-	double density;
-	b2Body* body;
-
-protected:
-	void create_body(b2BodyDef* body_definition, b2FixtureDef* body_fixture,
-			b2World& world);
-
-public:
-	Model_polygon(int body_type,double density);
-	virtual ~Model_polygon();
-
-	void rotate(double angle);
-	void move(double x_units, double y_units);
-	void set_velocity(double x_units, double y_units);
-	void set_angular_velocity(double angular_velocity);
-	void apply_force(double x_units, double y_units);
-	void apply_instant_force(double x_units, double y_units);
+	Trapezoid(double height, double base, double top, double posX, double posY, double density,
+			int body_type, World * world);
+	virtual ~Trapezoid();
+private:
+	void setVertex(b2Vec2 * vertex);
 };
 
-#endif /* MODEL_POLYGON_H_ */
+#endif /* MODEL_TRAPEZOID_H_ */

@@ -26,10 +26,8 @@ private:
 	virtual void exit();
 
 	World * gameWorld;
-	ParticleEmiter * particleEmiter;
-
-	short int *vx;
-	short int *vy;
+	ParticleEmiter * backParticleEmiter;
+	ParticleEmiter * frontParticleEmiter;
 
 };
 

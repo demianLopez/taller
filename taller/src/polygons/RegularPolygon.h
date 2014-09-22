@@ -1,5 +1,5 @@
 /**
- model_rectangle.h
+ model_regular_polygon.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,16 +16,21 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef MODEL_RECTANGLE_H_
-#define MODEL_RECTANGLE_H_
+#ifndef MODEL_REGULAR_POLYGON_H_
+#define MODEL_REGULAR_POLYGON_H_
 
-#include "../model_polygon/model_polygon.h"
+#include <stddef.h>
+#include <Box2D/Box2D.h>
 
-class Model_rectangle: public Model_polygon {
+#include "Polygon.h"
+
+class RegularPolygon: public Polygon {
 public:
-	Model_rectangle(double height, double widht,
-			double density, int body_type, b2World& world);
-	virtual ~Model_rectangle();
+	RegularPolygon(size_t edges, double scale, double posX, double posY, int body_type,
+			double density, World * world);
+	virtual ~RegularPolygon();
+private:
+	void setSDLVertex(size_t sides, b2Vec2* vertex);
 };
 
-#endif /* MODEL_RECTANGLE_H_ */
+#endif /* MODEL_REGULAR_POLYGON_H_ */

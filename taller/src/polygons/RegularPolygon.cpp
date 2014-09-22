@@ -1,5 +1,5 @@
 /**
- model_regular_polygon.cpp
+ RegularPolygon.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -19,27 +19,18 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-#include "model_regular_polygon.h"
-
-void set_point(double& x, double& y, double radians) {
-	x = cos(radians);
-	y = sin(radians);
-}
+#include "RegularPolygon.h"
 
 void define_vertex(size_t sides, b2Vec2* vertex) {
 	double perimeter = 2 * 3.14f;
-	double segment_size = perimeter / sides;
-	double traveled_perimeter = 0;
-	double x = 0, y = 0;
-	for (int i; i < sides; i++) {
-		vertex[i].Set(x, y);
-		traveled_perimeter += segment_size;
-		set_point(x, y, traveled_perimeter);
+	for (size_t i = 0; i < sides; i++) {
+		double angle = perimeter/sides * i;
+		vertex[i].Set(cos(angle), sin(angle));
 	}
 }
 
 void scale_vertex(size_t sides, b2Vec2* vertex, double scale) {
-	for (int i; i < sides; i++) {
+	for (size_t i = 0; i < sides; i++) {
 		double x = vertex[i].x;
 		double y = vertex[i].y;
 		x *= scale;
@@ -48,14 +39,14 @@ void scale_vertex(size_t sides, b2Vec2* vertex, double scale) {
 	}
 }
 
-Model_regular_polygon::Model_regular_polygon(size_t sides, double scale,
-		int body_type, double density, b2World& world) :
-		Model_polygon(body_type, density) {
+RegularPolygon::RegularPolygon(size_t sides, double scale, double posX, double posY,
+		int body_type, double density, World * world) :
+		Polygon(body_type) {
 
 	b2Vec2* vertex = new b2Vec2[sides];
 	define_vertex(sides, vertex);
 
-	scale_vertex(sides, vertex, scale);
+	//scale_vertex(sides, vertex, scale);
 
 	b2PolygonShape polygon_shape;
 	polygon_shape.Set(vertex, sides); //seteo los vertices del poligono
@@ -64,13 +55,24 @@ Model_regular_polygon::Model_regular_polygon(size_t sides, double scale,
 	body_fixture.shape = &polygon_shape;
 
 	b2BodyDef body_definition;
-	body_definition.position.Set(0, 0); //seteo posicion base
+	body_definition.position.Set(posX, posY); //seteo posicion base
 
-	Model_polygon::create_body(&body_definition, &body_fixture, world);
+	Polygon::create_body(&body_definition, &body_fixture, world);
+
+	//SDL
+
+	this->setSDLVertex(sides, vertex);
+	this->createSDLPoints();
 
 	delete[] vertex;
 }
 
-Model_regular_polygon::~Model_regular_polygon() {
+void RegularPolygon::setSDLVertex(size_t sides, b2Vec2 * vertex){
+	for (size_t i = 0; i < sides; i++) {
+		this->addB2DPoint(vertex[i].x, vertex[i].y);
+	}
+}
+
+RegularPolygon::~RegularPolygon() {
 }
 

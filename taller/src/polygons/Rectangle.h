@@ -1,5 +1,5 @@
 /**
- model_rectangle.cpp
+ model_rectangle.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,24 +16,19 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#include "model_rectangle.h"
+#ifndef MODEL_RECTANGLE_H_
+#define MODEL_RECTANGLE_H_
 
-Model_rectangle::Model_rectangle(double height, double widht, double density,
-		int body_type, b2World& world):Model_polygon(body_type,density) {
+#include "Polygon.h"
 
-	b2PolygonShape box_shape;
-	box_shape.SetAsBox(1,1); //seteo los vertices del poligono
+class Rectangle: public Polygon {
+public:
+	Rectangle(double width, double height, double posX, double posY,
+			double density, int body_type,  World * world);
 
-	b2FixtureDef body_fixture;
-	body_fixture.shape = &box_shape;
+	virtual ~Rectangle();
+private:
+	b2Vec2 * size;
+};
 
-	b2BodyDef body_definition;
-	body_definition.position.Set(0, 0); //seteo posicion base
-
-	Model_polygon::create_body(&body_definition, &body_fixture, world);
-}
-
-Model_rectangle::~Model_rectangle() {
-	// TODO Auto-generated destructor stub
-}
-
+#endif /* MODEL_RECTANGLE_H_ */

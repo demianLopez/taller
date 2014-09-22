@@ -18,20 +18,8 @@
 
 SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
 	this->gameWorld = NULL;
-	this->particleEmiter = NULL;
-	vx = new short int[4];
-	vy = new short int[4];
-
-	vx[0] = 30;
-	vx[1] = 40;
-	vx[2] = 55;
-	vx[3] = 35;
-
-	vy[0] = 200;
-	vy[1] = 180;
-	vy[2] = 220;
-	vy[3] = 300;
-
+	this->backParticleEmiter = NULL;
+	this->frontParticleEmiter = NULL;
 }
 
 void SnowBross::init(){
@@ -43,13 +31,17 @@ void SnowBross::init(){
 
 	//ADICIONALES!
 	//Estos son extras, despues hay que cambiarlos!
-	this->particleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
-	this->particleEmiter->setMaxParticles(20);
+	this->backParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
+	this->backParticleEmiter->setMaxParticles(20);
+
+	this->frontParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
+	this->frontParticleEmiter->setMaxParticles(20);
 }
 
 void SnowBross::exit(){
 	delete this->gameWorld;
-	delete this->particleEmiter;
+	delete this->backParticleEmiter;
+	delete this->frontParticleEmiter;
 }
 
 void SnowBross::render(Graphics *g){
@@ -60,21 +52,20 @@ void SnowBross::render(Graphics *g){
 	if(backImage != NULL){
 		g->drawImage(backImage, 0, 0, this->getScreenWidth(), this->getScreenHeight());
 	}
-	this->particleEmiter->render(g);
 
+	this->backParticleEmiter->render(g);
 
-	g->drawFillRect(200, 540, 400, 60);
-
+	vector<Polygon *> polList = this->gameWorld->getPolygonList();
+	for(auto *polygon : polList){
+		polygon->render(g);
+	}
 
 	g->drawAtCenter(true);
 	b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
-
 	playerPos = gameWorld->box2DToSDL(&playerPos);
-
 	g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources), playerPos.x, playerPos.y, -this->gameWorld->getMainCharacter()->getBody()->GetAngle() * 57);
 
-	g->drawFillPolygon(vx, vy, 4, 0, 255, 0);
-
+	this->frontParticleEmiter->render(g);
 }
 
 void SnowBross::keyEvent(SDL_Event e) {
@@ -113,7 +104,8 @@ void SnowBross::keyEvent(SDL_Event e) {
 
 
 void SnowBross::update(unsigned int delta){
-	this->particleEmiter->update(delta);
+	this->backParticleEmiter->update(delta);
+	this->frontParticleEmiter->update(delta);
 	this->gameWorld->worldStep(delta);
 	this->gameWorld->getMainCharacter()->update();
 }

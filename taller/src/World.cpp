@@ -8,7 +8,8 @@
 #include "World.h"
 #include "Resources.h"
 #include "Personaje.h"
-#include "polygons/model_polygon_factory.h"
+#include "polygons/PolygonFactory.h"
+#include "polygons/Polygon.h"
 
 World::World(int width, int height) {
 	this->worldResources = new Resources();
@@ -18,6 +19,10 @@ World::World(int width, int height) {
 	this->gravity = NULL;
 	this->Box2DWorldSize = NULL;
 	this->mainCharacter = NULL;
+}
+
+b2World * World::getBox2DWorld(){
+	return this->box2DWorld;
 }
 
 void World::init(){
@@ -36,7 +41,7 @@ void World::loadWorld(){
 	this->Box2DWorldSize = new b2Vec2(10, 10);
 }
 
-void World::addPolygon(Model_polygon * polygon){
+void World::addPolygon(Polygon * polygon){
 	this->polygonList.push_back(polygon);
 }
 
@@ -76,21 +81,30 @@ void World::generateWorld(){
 
 	//WORLD!
 
-	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(5.0f, 0.0f);
+	Polygon * newPolygon = PolygonFactory::get_static_rectangle(5, 1, 5, 1, 0.1f, this);
+	this->addPolygon(newPolygon);
 
-	b2Body* groundBody = box2DWorld->CreateBody(&groundBodyDef);
+	Polygon * newPolygon2 = PolygonFactory::get_static_rectangle(5, 1, 5, 4, 0.1f, this);
+	this->addPolygon(newPolygon2);
 
-	b2PolygonShape groundBox;
-	groundBox.SetAsBox(2.5f, 1);
-	groundBody->CreateFixture(&groundBox, 0.0f);
+	Polygon * newPolygon3 = PolygonFactory::get_static_regular_polygon(6, 1, 2, 4, 0.1f, this);
+	this->addPolygon(newPolygon3);
 
-	Model_polygon * mp = Model_polygon_factory::get_static_rectangle(100, 20, 0.5f, *this->box2DWorld);
-	mp->
+	Polygon * newPolygon4 = PolygonFactory::get_static_trapezoid(1, 3, 1, 8, 6, 0.1f, this);
+	this->addPolygon(newPolygon4);
 
 
+	Polygon * newPolygon5 = PolygonFactory::get_static_circle(1, 3,8, 0.1f, this);
+	this->addPolygon(newPolygon5);
 }
 
+b2Vec2 * World::getWindowSize(){
+	return this->SDLWindowSize;
+}
+
+vector<Polygon *> World::getPolygonList(){
+	return this->polygonList;
+}
 
 Resources * World::getResources(){
 	return this->worldResources;
@@ -103,5 +117,11 @@ World::~World() {
 	delete this->gravity;
 	delete this->box2DWorld;
 	delete this->SDLWindowSize;
+
+	for(auto *polygon : polygonList){
+		delete polygon;
+	}
+
+	polygonList.clear();
 }
 

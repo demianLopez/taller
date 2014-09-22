@@ -1,5 +1,5 @@
 /**
- model_regular_polygon.h
+ model_circle.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,19 +16,22 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef MODEL_REGULAR_POLYGON_H_
-#define MODEL_REGULAR_POLYGON_H_
+#ifndef MODEL_CIRCLE_H_
+#define MODEL_CIRCLE_H_
 
-#include <stddef.h>
+#include "Polygon.h"
 #include <Box2D/Box2D.h>
+#include <engine/Image.h>
 
-#include "../model_polygon/model_polygon.h"
-
-class Model_regular_polygon: public Model_polygon {
+class Circle: public Polygon {
 public:
-	Model_regular_polygon(size_t edges, double scale, int body_type,
-			double density, b2World& world);
-	virtual ~Model_regular_polygon();
+	Circle(double diameter, double posX, double posY, double density, int body_type,
+			World * world);
+	virtual ~Circle();
+
+	virtual void render(Graphics * g);
+private:
+	Image * circleImage;
 };
 
-#endif /* MODEL_REGULAR_POLYGON_H_ */
+#endif /* MODEL_CIRCLE_H_ */
