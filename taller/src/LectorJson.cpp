@@ -81,6 +81,21 @@ double LectorJson::validarDouble(string miembro, Value raiz, double valorDefecto
 	return (clave.asDouble());
 }
 
+bool LectorJson::validarBool(string miembro,Value raiz, bool valorDefecto){
+	Value boolean = raiz[miembro];
+	if( boolean.isNull()){
+		logger->reportarProblema("No existe el miembro "+miembro+ " en " + raiz.asString()+
+					". Cargo booleano por defecto.",WARNING);
+		return valorDefecto;
+		}
+	if (!boolean.isBool()){
+		logger->reportarProblema("El miembro "+miembro+ "no es booleano. Cargo booleano por defecto." ,WARNING);
+		return valorDefecto;
+		}
+	return (boolean.asBool());
+}
+
+
 string LectorJson::validarColor(string miembro,Value raiz, string valorDefecto){
 	Value color = raiz[miembro];
 	if(color.isNull()){
@@ -168,23 +183,34 @@ void LectorJson::obtenerEscenario(Value raiz){
 
 }
 
-void LectorJson::armarRectangulo(Value raiz){
+void LectorJson::validarComunes(Value objeto,double *posx,double *posy,double *rot,double *masa,string color,bool *estado){
+	Value valor = objeto["x"];
+	if(valor.isNull()){
+		logger->reportarProblema("No se declara la posicion en x para el objeto. Se genera una.",WARNING);
+
+	}
+}
+
+void LectorJson::armarRectangulo(Value objeto){
+	double posx,posy,rot,masa;
+	string color;
+	bool estado;
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&estado);
+}
+
+void LectorJson::armarPoligon(Value objeto){
 
 }
 
-void LectorJson::armarPoligon(Value raiz){
+void LectorJson::armarCirculo(Value objeto){
 
 }
 
-void LectorJson::armarCirculo(Value raiz){
+void LectorJson::armarParalelogramo(Value objeto){
 
 }
 
-void LectorJson::armarParalelogramo(Value raiz){
-
-}
-
-void LectorJson::armarTrapecio(Value raiz){
+void LectorJson::armarTrapecio(Value objeto){
 
 }
 
@@ -199,23 +225,23 @@ void LectorJson::obtenerObjetos(Value raiz){
 	}
 }
 
-void LectorJson::crearObjeto(Value raiz){
-	Value tipo = raiz["tipo"];
+void LectorJson::crearObjeto(Value objeto){
+	Value tipo = objeto["tipo"];
 	if(tipo.isNull()){
 		logger->reportarProblema("El Tipo del objeto no esta definido, no se puede crear", WARNING);
 	}
 	else{
 		string tipo_s = tipo.asString();
 		if (tipo_s=="rect")
-			this->armarRectangulo(raiz);
+			this->armarRectangulo(objeto);
 		else if (tipo_s == "poli")
-				this->armarPoligon(raiz);
+				this->armarPoligon(objeto);
 		else if (tipo_s == "circ")
-				this->armarCirculo(raiz);
+				this->armarCirculo(objeto);
 		else if (tipo_s == "paral")
-			this->armarParalelogramo(raiz);
+			this->armarParalelogramo(objeto);
 		else if (tipo_s == "trap")
-			this->armarTrapecio(raiz);
+			this->armarTrapecio(objeto);
 		else
 			logger->reportarProblema("Tipo de objeto "+tipo.asString()+" no esta definido, no se puede crear", WARNING);
 		}
