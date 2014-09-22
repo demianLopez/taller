@@ -8,6 +8,7 @@
 #include "World.h"
 #include "Resources.h"
 #include "Personaje.h"
+#include "polygons/model_polygon_factory.h"
 
 World::World(int width, int height) {
 	this->worldResources = new Resources();
@@ -33,6 +34,10 @@ void World::loadWorld(){
 	//world init!!! ACA ARMAR EL PARSEADO U LLAMAR AL OBJETO QUE PARSEA!
 	this->gravity = new b2Vec2(0, - 10);
 	this->Box2DWorldSize = new b2Vec2(10, 10);
+}
+
+void World::addPolygon(Model_polygon * polygon){
+	this->polygonList.push_back(polygon);
 }
 
 b2Vec2 World::box2DToSDL(b2Vec2 * box2DCoord){
@@ -79,6 +84,9 @@ void World::generateWorld(){
 	b2PolygonShape groundBox;
 	groundBox.SetAsBox(2.5f, 1);
 	groundBody->CreateFixture(&groundBox, 0.0f);
+
+	Model_polygon * mp = Model_polygon_factory::get_static_rectangle(100, 20, 0.5f, *this->box2DWorld);
+	mp->
 
 
 }

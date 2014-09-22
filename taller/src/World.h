@@ -10,6 +10,8 @@
 
 #include "Box2D/Box2D.h"
 #include "Jugador.h"
+#include <vector>
+#include "polygons/model_polygon/model_polygon.h"
 
 class Resources;
 
@@ -26,6 +28,8 @@ public:
 
 	void worldStep(int delta);
 
+	void addPolygon(Model_polygon * polygon);
+
 	Jugador * getMainCharacter();
 
 
@@ -37,6 +41,8 @@ private:
 
 	void loadWorld();
 	void generateWorld();
+
+	vector<Model_polygon*> polygonList;
 
 	//BOX 2D
 	b2World * box2DWorld;
