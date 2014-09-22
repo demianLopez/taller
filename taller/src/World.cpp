@@ -37,7 +37,7 @@ void World::loadResources(){
 
 void World::loadWorld(){
 	//world init!!! ACA ARMAR EL PARSEADO U LLAMAR AL OBJETO QUE PARSEA!
-	this->gravity = new b2Vec2(0, - 10);
+	this->gravity = new b2Vec2(0, - 30);
 	this->Box2DWorldSize = new b2Vec2(10, 10);
 }
 

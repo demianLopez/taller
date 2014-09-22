@@ -16,8 +16,8 @@ Jugador::Jugador(b2World * gameWorld) : Personaje(gameWorld) {
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0;
+	fixtureDef.density = 3.0f;
+	fixtureDef.friction = 0.03;
 
 	body->CreateFixture(&fixtureDef);
 

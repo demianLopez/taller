@@ -113,14 +113,14 @@ void CosaConMovimiento::update(){
 	//Movimiento hacia los lados
 	if (movingRight){
 		if( !movingLeft || !wasMovingLeftFirst ){
-			this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
+			body->ApplyLinearImpulse(b2Vec2(5-body->GetLinearVelocity().x,0), body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
 			mirandoParaLaDerecha = true;
 			return;
 		}
 	}
 	if (movingLeft){
 		if( !movingRight || wasMovingLeftFirst ){
-			this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
+			body->ApplyLinearImpulse(b2Vec2(-5-body->GetLinearVelocity().x,0), body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
 			mirandoParaLaDerecha = false;
 			return;
 		}
