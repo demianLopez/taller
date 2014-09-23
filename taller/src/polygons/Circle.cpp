@@ -63,6 +63,6 @@ void Circle::render(Graphics * g){
 	b2Vec2 SDLsize = this->world->box2DToSDL(&size);
 
 	g->drawAtCenter(true);
-	g->drawImage(this->circleImage, SDLPos.x, SDLPos.y, SDLsize.x, SDLsize.y - this->world->getWindowSize()->y, -this->body->GetAngle() * 360);
+	g->drawImage(this->circleImage, SDLPos.x, SDLPos.y, SDLsize.x, SDLsize.y - this->world->getWindowSize()->y, -this->body->GetAngle() * 57);
 	g->drawAtCenter(false);
 }

@@ -100,8 +100,8 @@ void World::generateWorld(){
 
 	Polygon * newPolygon4 = PolygonFactory::get_dynamic_trapezoid(2, 4, 3, 12, 8, 5, this);
 	this->addPolygon(newPolygon4);
-
-	Polygon * newPolygon5 = PolygonFactory::get_dynamic_circle(3, 3, 8, 0.1f, this);
+	this->addPolygon(PolygonFactory::get_static_trapezoid(10, 20, 5, 15, 3,5,this));
+	Polygon * newPolygon5 = PolygonFactory::get_dynamic_circle(3, 6, 8, 0.1f, this);
 	this->addPolygon(newPolygon5);
 
 	Polygon * newPolygon6 = PolygonFactory::get_static_paralelogram(1.5, 0.5f, 3.14f/4, 1, 8, 0.1f, this);
