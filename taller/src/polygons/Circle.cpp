@@ -52,6 +52,10 @@ Circle::Circle(double diameter, double posX, double posY, double density, int bo
 }
 
 void Circle::render(Graphics * g){
+	if(!this->shouldIRender()){
+		return; //Evitamos gastar recursos renderizando algo que no esta en pantalla
+	}
+
 	b2Vec2 pos = this->body->GetPosition();
 	b2Vec2 SDLPos = this->world->box2DToSDL(&pos);
 

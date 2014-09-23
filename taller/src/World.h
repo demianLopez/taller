@@ -39,6 +39,7 @@ public:
 
 	vector<Polygon *> getPolygonList();
 
+	bool isOutOfWorld(b2Vec2 position);
 
 
 	virtual ~World();

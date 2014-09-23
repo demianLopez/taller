@@ -104,6 +104,13 @@ b2Vec2 * World::getWindowSize(){
 	return this->SDLWindowSize;
 }
 
+bool World::isOutOfWorld(b2Vec2 position){
+	return ((position.x <= (-2*this->Box2DWorldSize->x)) ||
+			(position.y <= (-2*this->Box2DWorldSize->y)) ||
+			(position.x >= (2*this->Box2DWorldSize->x)) ||
+			(position.y >= (2*this->Box2DWorldSize->y)));
+}
+
 vector<Polygon *> World::getPolygonList(){
 	return this->polygonList;
 }

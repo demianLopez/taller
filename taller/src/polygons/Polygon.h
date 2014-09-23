@@ -51,6 +51,7 @@ protected:
 
 	void addB2DPoint(double x, double y);
 	void createSDLPoints();
+	bool shouldIRender();
 
 private:
 	vector<b2Vec2 *> pointList;

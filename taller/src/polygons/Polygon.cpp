@@ -100,6 +100,10 @@ Polygon::~Polygon() {
 }
 
 void Polygon::render(Graphics * g){
+	if(!this->shouldIRender()){
+		return; //Evitamos gastar recursos renderizando algo que no esta en pantalla
+	}
+
 	if(this->body_def == Polygon::DYNAMIC){
 		this->createSDLPoints();
 	}
@@ -107,6 +111,10 @@ void Polygon::render(Graphics * g){
 	if(pointSize != 0){
 		g->drawFillPolygon(vX, vY, pointSize, this->r, this->g, this->b);
 	}
+}
+
+bool Polygon::shouldIRender(){
+	return !this->world->isOutOfWorld(this->body->GetPosition());
 }
 
 b2Vec2 * Polygon::getPosition(){
