@@ -13,6 +13,8 @@ const char* ESCENARIO_X_DEFECTO = "Resources/escenario.json";
 //Valores por defecto escenario
 const int ALTOPX_D = 720;
 const int ANCHOPX_D = 1024;
+const int ALTOPX_MIN_D = 600;
+const int ANCHOPX_MIN_D = 800;
 const int ALTOUN_D = 100;
 const int ANCHOUN_D = 50;
 const string IMAGEN_FONDO_D = "Resources/font1.png";
@@ -27,11 +29,15 @@ const double POSY_OBJ_D = 90.0;
 const double ANCHO_OBJ_D = 1.0;
 const double ALTO_OBJ_D = 1.0;
 const int LADOS_OBJ_D = 3;
-const double RADIO_OBJ_D = 3.0;
+const double RADIO_OBJ_D = 1.0;
 const double BASE_OBJ_D = 2.0;
 const string COLOR_OBJ_D = "#00FF00";
-const double ROT_OBJ_D = 45;
+const double ROT_OBJ_D = 60;
 const double MASA_OBJ_D = 1.0;
+const double ESCALA_OBJ_D = 1.0;
+const double ANGULO_OBJ_D = 45;
+const double BASE_MAYOR_OBJ_D = 4;
+const double BASE_MENOR_OBJ_D = 2;
 const bool EST_OBJ_D = true;
 
 //Tipo de problemas
@@ -161,7 +167,15 @@ void LectorJson::obtenerEscenario(Value raiz){
 	}
 	else{
 		int altopx = validarInt("altopx",escenario,ALTOPX_D);
+		if (altopx < ALTOPX_MIN_D){
+			logger->reportarProblema("No se permite altura de ventana menor a 600. Se carga tamano por defecto.",WARNING);
+			altopx = ALTOPX_MIN_D;
+		}
 		int anchopx = validarInt("anchopx",escenario,ALTOPX_D);
+		if (altopx < ANCHOPX_MIN_D){
+				logger->reportarProblema("No se permite ancho de ventana menor a 800. Se carga tamano por defecto.",WARNING);
+				altopx = ANCHOPX_MIN_D;
+		}
 		int altoun = validarInt("altoun",escenario,ALTOPX_D);
 		int anchoun = validarInt("anchoun",escenario,ALTOPX_D);
 		string imagen = validarImagen("imagen_fondo",escenario,IMAGEN_FONDO_D);
@@ -183,35 +197,138 @@ void LectorJson::obtenerEscenario(Value raiz){
 
 }
 
-void LectorJson::validarComunes(Value objeto,double *posx,double *posy,double *rot,double *masa,string color,bool *estado){
-	Value valor = objeto["x"];
-	if(valor.isNull()){
-		logger->reportarProblema("No se declara la posicion en x para el objeto. Se genera una.",WARNING);
-
+void LectorJson::validarComunes(Value objeto,double *posx,double *posy,double *rot,double *masa,string color,double *escala,bool *estado){
+	double x = this->validarDouble("x",objeto,elEscenario->datos().anchopx/2.0);
+	if ( x >= elEscenario->datos().anchopx || x < ANCHOPX_MIN_D){
+		logger->reportarProblema("Posicion del objeto en x no se permite. Se genera una.",WARNING);
+		x= elEscenario->datos().anchopx/2.0; // Pongo el objeto en el medio en caso de que este mal.
 	}
+	double y = this->validarDouble("y",objeto,elEscenario->datos().altopx/2.0);
+	if ( y >= elEscenario->datos().altopx || y < ALTOPX_MIN_D){
+		logger->reportarProblema("Posicion del objeto en y no se permite. Se genera una.",WARNING);
+		y = elEscenario->datos().altopx/2.0;
+	}
+	double rotacion = this->validarDouble("rot",objeto,ROT_OBJ_D);
+	if (rotacion < 0 || rotacion >360){
+		logger->reportarProblema("La rotacion requerida no se permite. Se establece rotacion por defecto.",WARNING);
+		rotacion = ROT_OBJ_D;
+	}
+	double mass = this->validarDouble("masa",objeto,MASA_OBJ_D);
+	if(mass < 0){
+		logger->reportarProblema("La masa es negativa. Se establece masa por defecto.",WARNING);
+		mass = MASA_OBJ_D;
+	}
+	string col = this->validarColor("color",objeto,COLOR_OBJ_D);
+	double scale = this->validarDouble("escala",objeto,ESCALA_OBJ_D);
+	if (scale <= 0){
+		logger->reportarProblema("La escala es negativa. Se establece escala por defecto.",WARNING);
+		scale = ESCALA_OBJ_D;
+	}
+	bool state = this->validarBool("estado",objeto,EST_OBJ_D);
+	*posx = x;
+	*posy = y;
+	*rot = rotacion;
+	*masa = mass;
+	color = col;
+	*escala = scale;
+	*estado = state;
 }
 
 void LectorJson::armarRectangulo(Value objeto){
-	double posx,posy,rot,masa;
+	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&estado);
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&escala,&estado);
+
+	double alto = this->validarDouble("alto",objeto,ALTO_OBJ_D);
+	if (alto < 1){
+		logger->reportarProblema("La altura del rectangulo no puede ser menor a 1. Se establece altura por defecto.",WARNING);
+		alto = ALTO_OBJ_D;
+	}
+	double ancho = this->validarDouble("ancho",objeto,ANCHO_OBJ_D);
+	if (ancho < 1){
+			logger->reportarProblema("El ancho del rectangulo no puede ser menor a 1. Se establece ancho por defecto.",WARNING);
+			ancho = ALTO_OBJ_D;
+		}
+	elEscenario->agregarObjeto("rect",posx,posy,color,rot,masa,escala,estado,alto,ancho,0,0,0,0,0,0);
 }
 
 void LectorJson::armarPoligon(Value objeto){
-
+	double posx,posy,rot,masa,escala;
+	string color;
+	bool estado;
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&escala,&estado);
+	int lados = this->validarInt("lados",objeto,LADOS_OBJ_D);
+	if (lados < 3 || lados > 6){
+		logger->reportarProblema("La cantidad de lados es invalida. Se carga defecto", WARNING);
+		lados = LADOS_OBJ_D;
+	}
+	elEscenario->agregarObjeto("poli",posx,posy,color,rot,masa,escala,estado,0,0,lados,0,0,0,0,0);
 }
 
 void LectorJson::armarCirculo(Value objeto){
-
+	double posx,posy,rot,masa,escala;
+	string color;
+	bool estado;
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&escala,&estado);
+	int radio = this->validarDouble("lados",objeto,RADIO_OBJ_D);
+	if (radio <= 0){
+		logger->reportarProblema("La cantidad de lados es invalida. Se carga defecto", WARNING);
+		radio = RADIO_OBJ_D;
+	}
+	elEscenario->agregarObjeto("circ",posx,posy,color,rot,masa,escala,estado,0,0,0,radio,0,0,0,0);
 }
 
 void LectorJson::armarParalelogramo(Value objeto){
-
+	double posx,posy,rot,masa,escala;
+	string color;
+	bool estado;
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&escala,&estado);
+	int baseParal = this->validarDouble("lados",objeto,BASE_OBJ_D);
+	if (baseParal <= 0){
+		logger->reportarProblema("La base del paralelogramo es negativa. Se carga defecto", WARNING);
+		baseParal = BASE_OBJ_D;
+	}
+	double alto = this->validarDouble("alto",objeto,ALTO_OBJ_D);
+	if (alto < 1){
+		logger->reportarProblema("La altura del paralelogramo no puede ser menor a 1. Se establece altura por defecto.",WARNING);
+		alto = ALTO_OBJ_D;
+	}
+	int angulo = this->validarDouble("angulo",objeto,ANGULO_OBJ_D);
+	if(angulo < 0 || angulo >180){
+		logger->reportarProblema("El angulo para le paralelogramo es invalido. Se carga defecto", WARNING);
+		angulo = ANGULO_OBJ_D;
+	}
+	elEscenario->agregarObjeto("paral",posx,posy,color,rot,masa,escala,estado,alto,0,0,0,baseParal,angulo,0,0);
 }
 
 void LectorJson::armarTrapecio(Value objeto){
-
+	double posx,posy,rot,masa,escala;
+	string color;
+	bool estado;
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&escala,&estado);
+	double baseMayor = this->validarDouble("base_mayor",objeto,BASE_MAYOR_OBJ_D);
+	if(baseMayor <= 0){
+		logger->reportarProblema("La base mayor del trapecio es invalida. Se carga defecto", WARNING);
+		baseMayor = BASE_MAYOR_OBJ_D;
+	}
+	double baseMenor = this->validarDouble("base_menor",objeto,BASE_MENOR_OBJ_D);
+	if(baseMenor <= 0){
+		logger->reportarProblema("La base menor del trapecio es invalida. Se carga defecto", WARNING);
+		baseMayor = BASE_MENOR_OBJ_D;
+	}
+	if (baseMenor > baseMayor){
+		logger->reportarProblema("La base menor es mayor a la menor. Se invierten las bases", WARNING);
+		double auxbase = baseMayor;
+		baseMayor = baseMenor;
+		baseMenor = auxbase;
+	}
+	int angulo = this->validarDouble("angulo",objeto,ANGULO_OBJ_D);
+	if(angulo < 0 || angulo >180){
+		logger->reportarProblema("El angulo para le paralelogramo es invalido. Se carga defecto", WARNING);
+		angulo = ANGULO_OBJ_D;
+	}
+	elEscenario->agregarObjeto("paral",posx,posy,color,rot,masa,escala,estado,0,0,0,0,0,angulo,baseMayor,baseMenor);
 }
 
 void LectorJson::obtenerObjetos(Value raiz){
@@ -272,7 +389,7 @@ void LectorJson::cargarEscenario(const char* rutaArchivo){
 		}
 		else{
 			this->obtenerEscenario(raiz);
-			this->obtenerObjetos(raiz);
+			//this->obtenerObjetos(raiz);
 		}
 	}
 }
