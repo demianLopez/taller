@@ -14,10 +14,10 @@ void Personaje::jump(){
 
 		//body->ApplyLinearImpulse(b2Vec2(0,body->GetMass() * 8), body->GetWorldCenter(), true);
 		//body->ApplyForceToCenter(b2Vec2(0,1006), true);
-
 		this->goingUp = true;
 	}
 }
+
 
 Personaje::~Personaje(){
 	//delete this->mainCharacterBody;

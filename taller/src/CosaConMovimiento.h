@@ -10,6 +10,9 @@ class CosaConMovimiento {	// No puedo pensar un nombre mejor.
 private:
 	const float MOVEMENT_SPEED_X_DEFAULT = 4;
 	const float MOVEMENT_SPEED_Y_DEFAULT = 6;
+
+	b2Vec2 lastVelocity;
+
 protected:
 	bool mirandoParaLaDerecha;
 
@@ -33,10 +36,14 @@ public:
 	// Frena la cosa en X y/o Y
 	void frenar(bool frenarEnX, bool frenarEnY);
 
+	bool isGoingUp();
+	bool isGoingDown();
+
+
 	// Devuelve true si esta mirando para la derecha.
 	bool estaMirandoParaLaDerecha();
 
-	void update();
+	virtual void update();
 
 	void setFreezeRotation(bool freezeRotation);
 	Animation * getAnimation(Resources * resources);

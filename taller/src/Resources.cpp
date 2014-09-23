@@ -29,6 +29,8 @@ Resources::Resources() {
 	this->characterJump = NULL;
 	this->characterAirLeft = NULL;
 	this->characterAirRight = NULL;
+	this->topJumpLeft = NULL;
+	this->topJumpRight = NULL;
 }
 
 void Resources::loadBackground(const char *bPath){
@@ -80,11 +82,27 @@ void Resources::loadAnimations(){
 	this->characterAirLeft = new Animation();
 	this->characterAirRight = new Animation();
 
+	this->topJumpLeft = new Animation();
+	this->topJumpRight = new Animation();
+
 	this->characterStaticLeft->addFrame(this->characterJump->getSubImage(1, 0), 1000);
 	this->characterStaticRight->addFrame(this->characterJump->getSubImage(6, 1), 1000);
 
 	this->characterAirLeft->addFrame(this->characterJump->getSubImage(0, 0), 1000);
 	this->characterAirRight->addFrame(this->characterJump->getSubImage(7, 1), 1000);
+
+	this->topJumpLeft->addFrame(this->characterJump->getSubImage(3, 0), 75);
+	this->topJumpLeft->addFrame(this->characterJump->getSubImage(4, 0), 75);
+	this->topJumpLeft->addFrame(this->characterJump->getSubImage(5, 0), 75);
+	this->topJumpLeft->addFrame(this->characterJump->getSubImage(6, 0), 75);
+	this->topJumpLeft->addFrame(this->characterJump->getSubImage(7, 0), 75);
+
+	this->topJumpRight->addFrame(this->characterJump->getSubImage(4, 1), 50);
+	this->topJumpRight->addFrame(this->characterJump->getSubImage(3, 1), 50);
+	this->topJumpRight->addFrame(this->characterJump->getSubImage(2, 1), 50);
+	this->topJumpRight->addFrame(this->characterJump->getSubImage(1, 1), 50);
+	this->topJumpRight->addFrame(this->characterJump->getSubImage(0, 1), 50);
+
 }
 
 Image * Resources::getBackground(){
@@ -115,6 +133,14 @@ Animation * Resources::getPlayerAirRight(){
 	return this->characterAirRight;
 }
 
+Animation * Resources::getTopJumpLeft(){
+	return this->topJumpLeft;
+}
+
+Animation * Resources::getTopJumpRight(){
+	return this->topJumpRight;
+}
+
 Resources::~Resources() {
 	if(this->backgroundImage != NULL){
 		delete backgroundImage;
@@ -133,6 +159,9 @@ Resources::~Resources() {
 	delete this->characterStaticRight;
 	delete this->characterAirLeft;
 	delete this->characterAirRight;
+
+	delete this->topJumpLeft;
+	delete this->topJumpRight;
 
 	delete this->characterJump;
 
