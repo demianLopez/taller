@@ -18,7 +18,7 @@
  */
 #include "Trapezoid.h"
 
-void define_vertex(double height, double base, double top, b2Vec2* vertex) {
+void Trapezoid::define_vertex(double height, double base, double top, b2Vec2* vertex) {
 	double y_height = height / 2;
 	double x_top = top / 2;
 	double x_base = base / 2;
@@ -33,15 +33,24 @@ Trapezoid::Trapezoid(double height, double base, double top,  double posX, doubl
 				Polygon(body_type) {
 
 	b2Vec2* vertex = new b2Vec2[4];
-	define_vertex(height, base, top, vertex);
+	this->define_vertex(height, base, top, vertex);
 
 	b2PolygonShape polygon_shape;
 	polygon_shape.Set(vertex, 4); //seteo los vertices del poligono
 
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &polygon_shape;
+	body_fixture.density = density;
+	body_fixture.friction = 0.1f;
 
 	b2BodyDef body_definition;
+
+	if(body_type == Polygon::STATIC){
+		body_definition.type = b2_staticBody;
+	} else {
+		body_definition.type = b2_dynamicBody;
+	}
+
 	body_definition.position.Set(posX, posY); //seteo posicion base
 
 	this->create_body(&body_definition, &body_fixture, world);

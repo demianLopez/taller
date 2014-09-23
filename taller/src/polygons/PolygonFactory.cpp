@@ -22,19 +22,11 @@
 #include "Rectangle.h"
 #include "Trapezoid.h"
 #include "Circle.h"
+#include "Paralelogram.h"
 
 Polygon* PolygonFactory::get_regular_polygon(size_t sides, double scale, double posX, double posY,
 		double density, int body_type, World * world) {
-
-	/*
-	if (sides < 3) //No es un poligono valido
-		return NULL;
-	if (sides == 4) //Devuelvo un rectangulo de 1x1
-		return get_rectangle(scale, scale, 0, 0, density, body_type, world);
-
-	*/
-
-	return new RegularPolygon(sides, scale, posX, posY, density, body_type, world);
+	return new RegularPolygon(sides, scale, posX, posY, body_type, density, world);
 }
 
 Polygon* PolygonFactory::get_rectangle(double height, double widht, double posX, double posY,
@@ -47,6 +39,17 @@ Polygon* PolygonFactory::get_circle(double diameter, double posX, double posY,
 	return new Circle(diameter, posX, posY, density, body_type, world);
 
 }
+
+Polygon * PolygonFactory::get_trapezoid(double height, double base, double top, double posX, double posY,
+		double density, int body_type, World * world){
+	return new Trapezoid(height, base, top, posX, posY, density, body_type, world);
+}
+
+Polygon * PolygonFactory::get_paralelogram(double base, double height, double angle, double posX,
+		double posY, double density, int body_type,	World * world){
+	return new Paralelogram(base, height, angle, posX, posY, density, body_type, world);
+}
+//STATIC --------------------------------------
 
 Polygon* PolygonFactory::get_static_regular_polygon(size_t sides, double scale, double posX, double posY,
 		double density, World * world) {
@@ -64,32 +67,40 @@ Polygon* PolygonFactory::get_static_circle(double diameter,
 
 }
 
-Polygon * PolygonFactory::get_trapezoid(double height, double base, double top, double posX, double posY,
-		double density, int body_type, World * world){
-
-	return new Trapezoid(height, base, top, posX, posY, density, body_type, world);
-}
-
 Polygon* PolygonFactory::get_static_trapezoid(double height, double base,
 		double top, double posX, double posY, double density, World* world){
 	return get_trapezoid(height, base, top, posX, posY, density, Polygon::STATIC, world);
 }
 
+Polygon* PolygonFactory::get_static_paralelogram(double base, double height, double angle, double posX,
+			double posY, double density, World * world){
+	return get_paralelogram(base, height, angle, posX, posY, density, Polygon::STATIC, world);
+}
+//Dynamic-------------------------------------------------
 
-Polygon* PolygonFactory::get_dynamic_regular_polygon(size_t sides,
-		double scale, double density, World * world) {
-	return NULL;
+Polygon* PolygonFactory::get_dynamic_regular_polygon(size_t sides, double scale, double posX, double posY,
+		double density, World * world) {
+	return get_regular_polygon(sides, scale, posX, posY, density, Polygon::DYNAMIC, world);
 
 }
 
 Polygon* PolygonFactory::get_dynamic_rectangle(double height,
-		double widht, double density, World * world) {
-	return NULL;
-
+		double widht, double posX, double posY, double density, World * world) {
+	return get_rectangle(height, widht, posX, posY, density, Polygon::DYNAMIC, world);
 }
 
 Polygon* PolygonFactory::get_dynamic_circle(double diameter,
-		double scale, double density, World * world) {
-	return NULL;
+		double posX, double posY, double density, World * world){
+	return get_circle(diameter, posX, posY, density, Polygon::DYNAMIC, world);
+}
+
+Polygon * PolygonFactory::get_dynamic_trapezoid(double height, double base,
+		double top, double posX, double posY, double density, World * world){
+	return get_trapezoid(height, base, top, posX, posY, density, Polygon::DYNAMIC, world);
+}
+
+Polygon * PolygonFactory::get_dynamic_paralelogram(double base, double height, double angle, double posX,
+		double posY, double density, World * world){
+	return get_paralelogram(base, height, angle, posX, posY, density, Polygon::DYNAMIC, world);
 
 }

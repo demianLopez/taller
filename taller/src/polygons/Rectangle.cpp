@@ -30,8 +30,17 @@ Rectangle::Rectangle(double width, double height, double density, double posX, d
 
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &box_shape;
+	body_fixture.density = density;
+	body_fixture.friction = 0.1f;
 
 	b2BodyDef body_definition;
+
+	if(body_type == Polygon::STATIC){
+		body_definition.type = b2_staticBody;
+	} else {
+		body_definition.type = b2_dynamicBody;
+	}
+
 	body_definition.position.Set(posX, posY); //seteo posicion base
 
 	Polygon::create_body(&body_definition, &body_fixture, world);

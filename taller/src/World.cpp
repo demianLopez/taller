@@ -87,15 +87,17 @@ void World::generateWorld(){
 	Polygon * newPolygon2 = PolygonFactory::get_static_rectangle(5, 1, 5, 4, 0.1f, this);
 	this->addPolygon(newPolygon2);
 
-	Polygon * newPolygon3 = PolygonFactory::get_static_regular_polygon(6, 1, 2, 4, 0.1f, this);
+	Polygon * newPolygon3 = PolygonFactory::get_static_regular_polygon(6, 1, 3, 4, 0.1f, this);
 	this->addPolygon(newPolygon3);
 
-	Polygon * newPolygon4 = PolygonFactory::get_static_trapezoid(1, 3, 1, 8, 6, 0.1f, this);
+	Polygon * newPolygon4 = PolygonFactory::get_dynamic_trapezoid(1, 3, 1, 7, 6, 0.1f, this);
 	this->addPolygon(newPolygon4);
-
 
 	Polygon * newPolygon5 = PolygonFactory::get_static_circle(1, 3,8, 0.1f, this);
 	this->addPolygon(newPolygon5);
+
+	Polygon * newPolygon6 = PolygonFactory::get_static_paralelogram(1.5, 0.5f, 3.14f/4, 1, 8, 0.1f, this);
+	this->addPolygon(newPolygon6);
 }
 
 b2Vec2 * World::getWindowSize(){

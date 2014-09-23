@@ -29,6 +29,7 @@ public:
 	virtual ~Trapezoid();
 private:
 	void setVertex(b2Vec2 * vertex);
+	void define_vertex(double height, double base, double top, b2Vec2* vertex);
 };
 
 #endif /* MODEL_TRAPEZOID_H_ */

@@ -23,19 +23,27 @@ Circle::~Circle() {
 }
 
 Circle::Circle(double diameter, double posX, double posY, double density, int body_type,
-		World * world) :
-		Polygon(body_type) {
+		World * world) : Polygon(body_type) {
 
 	b2CircleShape circle_shape;
-	circle_shape.m_p.Set(0, 0);
-
+	//circle_shape.m_p.Set(0, 0);
+	this->diameter = diameter;
 	float32 radius = diameter/2;
 	circle_shape.m_radius = radius;
 
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &circle_shape;
+	body_fixture.density = density;
+	body_fixture.friction = 0.1f;
 
 	b2BodyDef body_definition;
+
+	if(body_type == Polygon::STATIC){
+		body_definition.type = b2_staticBody;
+	} else {
+		body_definition.type = b2_dynamicBody;
+	}
+
 	body_definition.position.Set(posX, posY); //seteo posicion base
 
 	Polygon::create_body(&body_definition, &body_fixture, world);
@@ -46,6 +54,8 @@ Circle::Circle(double diameter, double posX, double posY, double density, int bo
 void Circle::render(Graphics * g){
 	b2Vec2 pos = this->body->GetPosition();
 	b2Vec2 SDLPos = this->world->box2DToSDL(&pos);
+
+	b2Vec2 size = b2Vec2(this->diameter, this->diameter);
 
 	g->drawImage(this->circleImage, SDLPos.x, SDLPos.y, this->body->GetAngle() * 360);
 

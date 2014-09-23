@@ -31,6 +31,7 @@ public:
 
 	virtual void render(Graphics * g);
 private:
+	double diameter;
 	Image * circleImage;
 };
 

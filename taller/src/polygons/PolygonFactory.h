@@ -39,8 +39,8 @@ private:
 			double density, int body_type, World * world);
 	static Polygon* get_circle(double diameter, double posX, double posY,
 			double density, int body_type, World * world);
-	static Polygon* get_paralelogram(double density, int body_type,
-			World * world);
+	static Polygon* get_paralelogram(double base, double height, double angle, double posX,
+			double posY, double density, int body_type,	World * world);
 	static Polygon* get_trapezoid(double height, double base, double top, double posX, double posY,
 			double density, int body_type, World * world);
 
@@ -51,19 +51,22 @@ public:
 			double density, World * world);
 	static Polygon* get_static_circle(double diameter, double posX, double posY,
 			double density, World * world);
-	static Polygon* get_static_paralelogram(double density,
-			World * world);
+	static Polygon* get_static_paralelogram(double base, double height, double angle, double posX,
+			double posY, double density, World * world);
 	static Polygon* get_static_trapezoid(double height, double base,
-				double top, double posX, double posY, double density, World * world);
-	static Polygon* get_dynamic_regular_polygon(size_t sides,
-			double scale, double density, World * world);
-	static Polygon* get_dynamic_rectangle(double height, double widht,
+			double top, double posX, double posY, double density, World * world);
+
+
+	static Polygon* get_dynamic_regular_polygon(size_t sides, double scale, double posX, double posY,
 			double density, World * world);
-	static Polygon* get_dynamic_circle(double diameter, double scale,
+	static Polygon* get_dynamic_rectangle(double height, double widht, double posX, double posY,
 			double density, World * world);
-	static Polygon* get_dynamic_paralelogram(double density,
-			World * world);
-	static Polygon* get_dynamic_trapezoid(double density, World * world);
+	static Polygon* get_dynamic_circle(double diameter, double posX, double posY,
+			double density, World * world);
+	static Polygon* get_dynamic_paralelogram(double base, double height, double angle, double posX,
+			double posY, double density, World * world);
+	static Polygon* get_dynamic_trapezoid(double height, double base,
+			double top, double posX, double posY, double density, World * world);
 };
 
 #endif /* Polygon_FACTORY_H_ */

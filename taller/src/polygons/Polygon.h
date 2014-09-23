@@ -32,7 +32,7 @@ public:
 	static const int STATIC = 0;
 	static const int DYNAMIC = 1;
 
-	Polygon(int body_type);
+	Polygon(int body_def);
 	virtual ~Polygon();
 
 	b2Vec2 * getPosition();
@@ -41,7 +41,6 @@ public:
 	void setColor(int r, int g, int b);
 
 protected:
-	int body_type;
 
 	b2Body* body;
 	World * world;
@@ -55,6 +54,8 @@ protected:
 
 private:
 	vector<b2Vec2 *> pointList;
+
+	int body_def;
 
 	short int * vX;
 	short int * vY;
