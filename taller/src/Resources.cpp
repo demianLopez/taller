@@ -71,7 +71,7 @@ void Resources::loadAnimations(){
 	this->characterStaticRight = new Animation();
 
 	this->characterStaticLeft->addFrame(this->characterWalk->getSubImage(0, 0), 1000);
-	this->characterStaticRight->addFrame(this->characterWalk->getSubImage(0, 1), 1000);
+	this->characterStaticRight->addFrame(this->characterWalk->getSubImage(1, 1), 1000);
 }
 
 Image * Resources::getBackground(){
