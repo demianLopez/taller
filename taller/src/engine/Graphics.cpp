@@ -56,7 +56,7 @@ void Graphics::drawImage(Image *image, int xo, int yo, int dx, int dy, float rot
 	int yOf = yo;
 	if(this->dAtCenter){
 		xOf = xo - dx/2;
-		yOf = yo - dx/2;
+		yOf = yo - dy/2;
 	}
 	image->render(xOf, yOf, dx, dy, rotation);
 }
