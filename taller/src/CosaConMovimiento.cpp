@@ -106,6 +106,7 @@ bool CosaConMovimiento::estaMirandoParaLaDerecha(){
 
 void CosaConMovimiento::update(){
 	b2Vec2 currentVel = this->body->GetLinearVelocity();
+
 	if(currentVel.y < 1 && currentVel.y > -1){ // Quieto en Y
 		if(this->goingUp){
 			this->goingUp = false;
