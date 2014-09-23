@@ -54,7 +54,7 @@ RegularPolygon::RegularPolygon(size_t sides, double scale, double posX, double p
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &polygon_shape;
 	body_fixture.density = density;
-	body_fixture.friction = 0.1f;
+	body_fixture.friction = friction;
 
 	b2BodyDef body_definition;
 

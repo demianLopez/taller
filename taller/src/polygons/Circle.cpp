@@ -34,7 +34,7 @@ Circle::Circle(double diameter, double posX, double posY, double density, int bo
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &circle_shape;
 	body_fixture.density = density;
-	body_fixture.friction = 0.1f;
+	body_fixture.friction = friction;
 
 	b2BodyDef body_definition;
 

@@ -13,16 +13,16 @@ Jugador::Jugador(b2World * gameWorld) : Personaje(gameWorld) {
 
 	b2PolygonShape dynamicBox;
 
-	double longX = 0.2f;
+	double longX = 1.4f;
 	double longY = 1.8f;
 
 	dynamicBox.SetAsBox(longX, longY); //TODO: mejorar medidas.
-	this->size = b2Vec2(longX * 2, longY * 2);
+	this->size = b2Vec2(longX * 2.5, longY * 2);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 3.0f;
-	fixtureDef.friction = 0.03;
+	fixtureDef.density = 0.4;
+	fixtureDef.friction = 0.2;
 
 	body->CreateFixture(&fixtureDef);
 

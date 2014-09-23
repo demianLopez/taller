@@ -37,8 +37,8 @@ void World::loadResources(){
 
 void World::loadWorld(){
 	//world init!!! ACA ARMAR EL PARSEADO U LLAMAR AL OBJETO QUE PARSEA!
-	this->gravity = new b2Vec2(0, - 30);
-	this->Box2DWorldSize = new b2Vec2(25, 25);
+	this->gravity = new b2Vec2(0, - 9.8);
+	this->Box2DWorldSize = new b2Vec2(26, 20);
 }
 
 void World::addPolygon(Polygon * polygon){
@@ -88,20 +88,20 @@ void World::generateWorld(){
 
 	//WORLD!
 
-	Polygon * newPolygon = PolygonFactory::get_static_rectangle(5, 1, 5, 1, 0.1f, this);
+	Polygon * newPolygon = PolygonFactory::get_static_rectangle(20, 1, 12, 1, 0.1f, this);
 	newPolygon->setColor(200, 20, 40);
 	this->addPolygon(newPolygon);
 
-	Polygon * newPolygon2 = PolygonFactory::get_static_rectangle(5, 1, 5, 4, 0.1f, this);
-	this->addPolygon(newPolygon2);
+	//Polygon * newPolygon2 = PolygonFactory::get_static_rectangle(5, 1, 5, 4, 0.1f, this);
+	//this->addPolygon(newPolygon2);
 
-	Polygon * newPolygon3 = PolygonFactory::get_static_regular_polygon(6, 1, 3, 4, 0.1f, this);
-	this->addPolygon(newPolygon3);
+	//Polygon * newPolygon3 = PolygonFactory::get_static_regular_polygon(6, 10, 8, 8, 0.4f, this);
+	//this->addPolygon(newPolygon3);
 
-	Polygon * newPolygon4 = PolygonFactory::get_dynamic_trapezoid(1, 3, 1, 7, 6, 0.1f, this);
+	Polygon * newPolygon4 = PolygonFactory::get_dynamic_trapezoid(2, 4, 3, 12, 8, 5, this);
 	this->addPolygon(newPolygon4);
 
-	Polygon * newPolygon5 = PolygonFactory::get_dynamic_circle(1, 3,8, 0.1f, this);
+	Polygon * newPolygon5 = PolygonFactory::get_dynamic_circle(3, 3, 8, 0.1f, this);
 	this->addPolygon(newPolygon5);
 
 	Polygon * newPolygon6 = PolygonFactory::get_static_paralelogram(1.5, 0.5f, 3.14f/4, 1, 8, 0.1f, this);

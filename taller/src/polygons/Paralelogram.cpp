@@ -31,7 +31,7 @@ Paralelogram::Paralelogram(double base, double height, double angle, double posX
 		b2FixtureDef body_fixture;
 		body_fixture.shape = &polygon_shape;
 		body_fixture.density = density;
-		body_fixture.friction = 0.1f;
+		body_fixture.friction = friction;
 
 		b2BodyDef body_definition;
 
