@@ -74,10 +74,10 @@ bool CosaConMovimiento::isOnAir(){
 Animation * CosaConMovimiento::getAnimation(Resources * resources){
 	// FIXME: Mover esto a que sea definido por cada hijo de esta clase.
 	if(mirandoParaLaDerecha){
-		return resources->getPlayerAnimationRight();
+		return resources->getPlayerWalkRight();
 	}
 	//else: Esta mirando para la izquierda
-	return resources->getPlayerAnimationLeft();
+	return resources->getPlayerWalkLeft();
 }
 
 // Devuelve true si esta mirando para la derecha.

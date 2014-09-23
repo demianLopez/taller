@@ -11,12 +11,17 @@
 #include "engine/SpriteSheet.h"
 
 static const char * PLAYER_ANIM_PATH = "Resources/mainChar.png";
+static const char * PLAYER_WALK_PATH = "Resources/mainCharWalk.png";
 
 Resources::Resources() {
 	this->backgroundImage = NULL;
 	this->characterSpriteSheet = NULL;
+	this->characterWalk = NULL;
+
 	this->characterAnimationLeft = NULL;
 	this->characterAnimationRight = NULL;
+	this->characterWalkRight = NULL;
+	this->characterWalkLeft = NULL;
 }
 
 void Resources::loadBackground(const char *bPath){
@@ -45,11 +50,34 @@ void Resources::loadAnimations(){
 	this->characterAnimationRight->addFrame(this->characterSpriteSheet->getSubImage(1,1), 75);
 	this->characterAnimationRight->addFrame(this->characterSpriteSheet->getSubImage(2,1), 75);
 	this->characterAnimationRight->addFrame(this->characterSpriteSheet->getSubImage(3,1), 75);
+
+	this->characterWalk = new SpriteSheet(PLAYER_WALK_PATH, 46, 78);
+	this->characterWalkRight = new Animation();
+	this->characterWalkLeft = new Animation();
+
+	this->characterWalkRight->addFrame(this->characterWalk->getSubImage(0, 1), 75);
+	this->characterWalkRight->addFrame(this->characterWalk->getSubImage(1, 1), 75);
+	this->characterWalkRight->addFrame(this->characterWalk->getSubImage(2, 1), 75);
+	this->characterWalkRight->addFrame(this->characterWalk->getSubImage(3, 1), 75);
+
+	this->characterWalkLeft->addFrame(this->characterWalk->getSubImage(0, 0), 75);
+	this->characterWalkLeft->addFrame(this->characterWalk->getSubImage(1, 0), 75);
+	this->characterWalkLeft->addFrame(this->characterWalk->getSubImage(2, 0), 75);
+	this->characterWalkLeft->addFrame(this->characterWalk->getSubImage(3, 0), 75);
 }
 
 Image * Resources::getBackground(){
 	return this->backgroundImage;
 }
+
+Animation * Resources::getPlayerWalkLeft(){
+	return this->characterWalkLeft;
+}
+
+Animation * Resources::getPlayerWalkRight(){
+	return this->characterWalkRight;
+}
+
 
 Resources::~Resources() {
 	if(this->backgroundImage != NULL){
@@ -59,5 +87,9 @@ Resources::~Resources() {
 	delete this->characterAnimationLeft;
 	delete this->characterAnimationRight;
 	delete this->characterSpriteSheet;
+
+	delete this->characterWalkLeft;
+	delete this->characterWalkRight;
+	delete this->characterWalk;
 }
 

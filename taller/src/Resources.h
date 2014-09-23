@@ -23,6 +23,8 @@ public:
 
 	Animation * getPlayerAnimationLeft();
 	Animation * getPlayerAnimationRight();
+	Animation * getPlayerWalkLeft();
+	Animation * getPlayerWalkRight();
 
 	Image * getBackground();
 
@@ -33,6 +35,10 @@ private:
 	SpriteSheet * characterSpriteSheet;
 	Animation * characterAnimationLeft;
 	Animation * characterAnimationRight;
+
+	SpriteSheet * characterWalk;
+	Animation * characterWalkRight;
+	Animation * characterWalkLeft;
 };
 
 #endif /* RESOURCES_H_ */
