@@ -70,9 +70,18 @@ void Graphics::drawAnimation(Animation * animation, int xo, int yo, float rotati
 	this->drawImage(animationImage, xo, yo, rotation);
 }
 
+void Graphics::drawAnimation(Animation * animation, int xo, int yo, int dx, int dy){
+	this->drawAnimation(animation, xo, yo, dx, dy, 0);
+}
+
 void Graphics::drawAnimation(Animation * animation, int xo, int yo){
 	Image * animationImage = animation->getCurrentFrame()->getFrameImage();
 	this->drawImage(animationImage, xo, yo);
+}
+
+void Graphics::drawAnimation(Animation * animation, int xo, int yo, int dx, int dy, float rotation){
+	Image * animationImage = animation->getCurrentFrame()->getFrameImage();
+	this->drawImage(animationImage, xo, yo, dx, dy, rotation);
 }
 
 void Graphics::drawFillRect(int xo, int yo, int dx, int dy){

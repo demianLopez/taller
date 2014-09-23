@@ -63,7 +63,11 @@ void SnowBross::render(Graphics *g){
 	g->drawAtCenter(true);
 	b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
 	playerPos = gameWorld->box2DToSDL(&playerPos);
-	g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources), playerPos.x, playerPos.y, -this->gameWorld->getMainCharacter()->getBody()->GetAngle() * 57);
+
+	b2Vec2 playerSize = this->gameWorld->getMainCharacter()->getSize();
+	playerSize =  this->gameWorld->box2DToSDLSize(&playerSize);
+
+	g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources), playerPos.x, playerPos.y, playerSize.x, playerSize.y);
 
 	this->frontParticleEmiter->render(g);
 }

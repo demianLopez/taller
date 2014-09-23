@@ -38,7 +38,7 @@ void World::loadResources(){
 void World::loadWorld(){
 	//world init!!! ACA ARMAR EL PARSEADO U LLAMAR AL OBJETO QUE PARSEA!
 	this->gravity = new b2Vec2(0, - 30);
-	this->Box2DWorldSize = new b2Vec2(10, 10);
+	this->Box2DWorldSize = new b2Vec2(25, 25);
 }
 
 void World::addPolygon(Polygon * polygon){
@@ -48,6 +48,13 @@ void World::addPolygon(Polygon * polygon){
 b2Vec2 World::box2DToSDL(b2Vec2 * box2DCoord){
 	float sdlX = box2DCoord->x/Box2DWorldSize->x * SDLWindowSize->x;
 	float sdlY = SDLWindowSize->y - box2DCoord->y/Box2DWorldSize->y * SDLWindowSize->y;
+	b2Vec2 sdlCoord(sdlX, sdlY);
+	return sdlCoord;
+}
+
+b2Vec2 World::box2DToSDLSize(b2Vec2 * box2DCoord){
+	float sdlX = box2DCoord->x/Box2DWorldSize->x * SDLWindowSize->x;
+	float sdlY = box2DCoord->y/Box2DWorldSize->y * SDLWindowSize->y;
 	b2Vec2 sdlCoord(sdlX, sdlY);
 	return sdlCoord;
 }
@@ -82,6 +89,7 @@ void World::generateWorld(){
 	//WORLD!
 
 	Polygon * newPolygon = PolygonFactory::get_static_rectangle(5, 1, 5, 1, 0.1f, this);
+	newPolygon->setColor(200, 20, 40);
 	this->addPolygon(newPolygon);
 
 	Polygon * newPolygon2 = PolygonFactory::get_static_rectangle(5, 1, 5, 4, 0.1f, this);

@@ -12,7 +12,12 @@ Jugador::Jugador(b2World * gameWorld) : Personaje(gameWorld) {
 	body = gameWorld->CreateBody(&bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(0.2f, 0.6f); //TODO: mejorar medidas.
+
+	double longX = 0.2f;
+	double longY = 1.8f;
+
+	dynamicBox.SetAsBox(longX, longY); //TODO: mejorar medidas.
+	this->size = b2Vec2(longX * 2, longY * 2);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
@@ -26,6 +31,10 @@ Jugador::Jugador(b2World * gameWorld) : Personaje(gameWorld) {
 	movementSpeedY = MOVEMENT_SPEED_Y;
 
 	//buffVelocidad = false;
+}
+
+b2Vec2 Jugador::getSize(){
+	return this->size;
 }
 
 // Devuelve true si tiene buff de velocidad.

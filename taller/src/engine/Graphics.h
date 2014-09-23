@@ -30,6 +30,8 @@ public:
 
 	void drawAnimation(Animation * animation, int xo, int yo);
 	void drawAnimation(Animation * animation, int xo, int yo, float rotation);
+	void drawAnimation(Animation * animation, int xo, int yo, int dx, int dy);
+	void drawAnimation(Animation * animation, int xo, int yo, int dx, int dy, float rotation);
 
 	//Dibuja un rectamgulo lleno (pintado interiormente)
 	void drawFillRect(int xo, int yo, int dx, int dy);

@@ -13,12 +13,15 @@ private:
 	// Velocidades (modulo) maximas por defecto.
 	const float MOVEMENT_SPEED_X = 4;
 	const float MOVEMENT_SPEED_Y = 6;
+
+	b2Vec2 size;
 	/*
 	const float VELOCIDAD_MAXIMA_BUFF_X = VELOCIDAD_MAXIMA_DEFAULT_X * 1.5;
 	*/
 
 public:
 	// Inicializa Jugador.
+	b2Vec2 getSize();
 	Jugador(b2World * gameWorld);
 	//virtual ~Jugador();
 
