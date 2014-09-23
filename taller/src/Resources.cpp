@@ -22,6 +22,8 @@ Resources::Resources() {
 	this->characterAnimationRight = NULL;
 	this->characterWalkRight = NULL;
 	this->characterWalkLeft = NULL;
+	this->characterStaticLeft = NULL;
+	this->characterStaticRight = NULL;
 }
 
 void Resources::loadBackground(const char *bPath){
@@ -64,10 +66,24 @@ void Resources::loadAnimations(){
 	this->characterWalkLeft->addFrame(this->characterWalk->getSubImage(1, 0), 75);
 	this->characterWalkLeft->addFrame(this->characterWalk->getSubImage(2, 0), 75);
 	this->characterWalkLeft->addFrame(this->characterWalk->getSubImage(3, 0), 75);
+
+	this->characterStaticLeft = new Animation();
+	this->characterStaticRight = new Animation();
+
+	this->characterStaticLeft->addFrame(this->characterWalk->getSubImage(0, 0), 1000);
+	this->characterStaticRight->addFrame(this->characterWalk->getSubImage(0, 1), 1000);
 }
 
 Image * Resources::getBackground(){
 	return this->backgroundImage;
+}
+
+Animation * Resources::getPlayerStaticLeft(){
+	return this->characterStaticLeft;
+}
+
+Animation * Resources::getPlayerStaticRight(){
+	return this->characterStaticRight;
 }
 
 Animation * Resources::getPlayerWalkLeft(){
@@ -90,6 +106,11 @@ Resources::~Resources() {
 
 	delete this->characterWalkLeft;
 	delete this->characterWalkRight;
+
+	delete this->characterStaticLeft;
+	delete this->characterStaticRight;
+
 	delete this->characterWalk;
+
 }
 
