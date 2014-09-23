@@ -29,6 +29,9 @@ public:
 	Animation * getPlayerStaticLeft();
 	Animation * getPlayerStaticRight();
 
+	Animation * getPlayerAirLeft();
+	Animation * getPlayerAirRight();
+
 	Image * getBackground();
 
 	virtual ~Resources();
@@ -43,8 +46,12 @@ private:
 	Animation * characterWalkRight;
 	Animation * characterWalkLeft;
 
+
+	SpriteSheet * characterJump;
 	Animation * characterStaticLeft;
 	Animation * characterStaticRight;
+	Animation * characterAirLeft;
+	Animation * characterAirRight;
 };
 
 #endif /* RESOURCES_H_ */
