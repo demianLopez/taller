@@ -41,6 +41,7 @@ void GestorEscenario::agregarObjeto(string tipo,double posX,double posY,string c
 	nuevoObjeto.posX = posX;
 	nuevoObjeto.posY = posY;
 	nuevoObjeto.color = color;
+	nuevoObjeto.colRGB = this->obtenerRGB(color);
 	nuevoObjeto.rot = rot;
 	nuevoObjeto.masa = masa;
 	nuevoObjeto.escala = escala;
@@ -66,6 +67,7 @@ void GestorEscenario::imprimirXConsola(){
 	cout << "Descripcion personaje:"<< endl;
 	cout<< "x = " << elEscenario.personajeX << endl;
 	cout<< "y = " << elEscenario.personajeY << endl;
+	this->obtenerObjetos();
 }
 
 void GestorEscenario::obtenerObjetos(){
@@ -87,11 +89,19 @@ void GestorEscenario::obtenerObjetos(){
 	}
 }
 
+void imprimirRGB(objeto figura){
+	cout << "Color en RGB:" << endl;
+	cout << "Rojo:" << figura.colRGB.red << endl;
+	cout << "Verde:" << figura.colRGB.green << endl;
+	cout << "Azul:" << figura.colRGB.blue << endl;
+}
+
 void GestorEscenario::colocarRect(objeto figura){
 	cout << "\n Datos Rectangulo" << endl;
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
 	cout <<"Color: " << figura.color << endl;
+	imprimirRGB(figura);
 	cout <<"Rotacion: " << figura.rot << endl;
 	cout <<"Masa: " << figura.masa << endl;
 	cout <<"Escala: " << figura.escala << endl;
@@ -106,6 +116,7 @@ void GestorEscenario::colocarPoli(objeto figura){
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
 	cout <<"Color: " << figura.color << endl;
+	imprimirRGB(figura);
 	cout <<"Rotacion: " << figura.rot << endl;
 	cout <<"Masa: " << figura.masa << endl;
 	cout <<"Escala: " << figura.escala << endl;
@@ -119,6 +130,7 @@ void GestorEscenario::colocarCirc(objeto figura){
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
 	cout <<"Color: " << figura.color << endl;
+	imprimirRGB(figura);
 	cout <<"Rotacion: " << figura.rot << endl;
 	cout <<"Masa: " << figura.masa << endl;
 	cout <<"Escala: " << figura.escala << endl;
@@ -132,6 +144,7 @@ void GestorEscenario::colocarParal(objeto figura){
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
 	cout <<"Color: " << figura.color << endl;
+	imprimirRGB(figura);
 	cout <<"Rotacion: " << figura.rot << endl;
 	cout <<"Masa: " << figura.masa << endl;
 	cout <<"Escala: " << figura.escala << endl;
@@ -147,6 +160,7 @@ void GestorEscenario::colocarTrap(objeto figura){
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
 	cout <<"Color: " << figura.color << endl;
+	imprimirRGB(figura);
 	cout <<"Rotacion: " << figura.rot << endl;
 	cout <<"Masa: " << figura.masa << endl;
 	cout <<"Escala: " << figura.escala << endl;
@@ -155,5 +169,26 @@ void GestorEscenario::colocarTrap(objeto figura){
 	cout << "Base Mayor: " << figura.base_mayor << endl;
 	cout << "Base Menor: " << figura.base_menor << endl;
 	cout << "Angulo: " << figura.angulo << endl;
+}
+
+int GestorEscenario::calcularColor(char col1, char col2){
+	int color = 0;
+	if((int(col2) >= 48) && (int(col2) <= 57))
+		color = color + (int(col2)-48);
+	else
+		color = color + (int(col2)-55);
+	if ((int(col1) >= 48) && (int(col1) <= 57))
+		color = color + ((int(col1)-48)*16);
+	else
+		color = color + ((int(col1)-55)*16);
+	return color;
+}
+
+rgb GestorEscenario::obtenerRGB(string color){
+	rgb colores;
+	colores.red = this->calcularColor(color[1],color[2]);
+	colores.green = this->calcularColor(color[3],color[4]);
+	colores.blue = this->calcularColor(color[5],color[6]);
+	return colores;
 }
 

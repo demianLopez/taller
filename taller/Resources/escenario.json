@@ -12,62 +12,62 @@
 		"objetos": [
 			{
 				"tipo": "rect",
-				"x": 5.0, 
-				"y": 90.0, 
-				"ancho": 1.0, 
-				"alto": 1.0, 
+				"x": 10.0, 
+				"y": 100.0, 
 				"color": "#00FF00", 
 				"rot": 45, 
 				"masa": 1.0, 
-				"estatico": true 
+				"estatico": true,
+				"ancho": 1.0,
+				"alto": 1.0 
 			}, 
 			{ 
 				"tipo": "poli", 
-				"lados": 3, 
-				"x": 50.0, 
-				"y": 50.0, 
+				"x": 100.0, 
+				"y": 100.0, 
 				"radio": 3.5, 
-				"color": "#000000", 
+				"color": "#FF00FF", 
 				"rot": 90, 
 				"masa": 2.0, 
-				"estatico": false 
+				"estatico": true,
+				"lados": 3 
 			}, 
 			{ 
 				"tipo": "circ", 
-				"radio": 1.0, 
-				"x": 50.0, 
-				"y": 50.0, 
+				"x": 150.0, 
+				"y": 300.0, 
 				"color": "#FF0000", 
 				"rot": 90, 
 				"masa": 2.0, 
-				"estatico": true 
+				"estatico": false,
+				"radio": 1.0
 			}, 
 			{ 
 				"tipo": "paral",
-				"base": 2.0,
-				"altura": 5.0,
-				"angulo": 50,
-				"x": 50.0, 
+				"x": 400.0, 
 				"y": 50.0, 
 				"radio": 3.5, 
 				"color": "#FF0000", 
 				"rot": 90, 
 				"masa": 2.0, 
-				"estatico": false 
+				"estatico": true, 
+				"base": 3.0,
+				"alto": 6.0,
+				"angulo": 70.0
 			}, 
 			{ 
 				"tipo": "trap",
-				"base_menor": 3.0,
-				"base_mayor": 2.0,
-				"altura": 5.0,
-				"angulo": 50,
-				"x": 50.0, 
-				"y": 50.0, 
-				"escala": 3.5, 
-				"color": "#FF0000", 
-				"rot": 90, 
+				"x": 400.0, 
+				"y": 200.0, 
+				"escala": 1.5, 
+				"color": "#F0000F", 
+				"rot": 60.0, 
 				"masa": 2.0, 
-				"estatico": false 
+				"estatico": false,
+				"base_menor": 2.0,
+				"base_mayor": 4.0,
+				"altura": 4.0,
+				"angulo": 45.0 
 			} 
 		] 
 	} 
