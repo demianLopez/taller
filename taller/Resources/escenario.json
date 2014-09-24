@@ -1,9 +1,9 @@
 { 
 	"escenario": { 
-		"altopx": 768,
-		"anchopx": 1024,
-		"altoun": 100,
-		"anchoun": 50,
+		"altopx": 600,
+		"anchopx": 800,
+		"altoun": 30,
+		"anchoun": 40,
 		"imagen_fondo": "fondo1.png",
 		"personaje": {
 			"x": 100,
@@ -12,19 +12,19 @@
 		"objetos": [
 			{
 				"tipo": "rect",
-				"x": 10.0, 
-				"y": 100.0, 
+				"x": 15.0, 
+				"y": 0.0, 
 				"color": "#F0F0F0",
 				"rot": 45, 
 				"masa": 1.0, 
 				"estatico": true,
-				"ancho": 1.0,
-				"alto": 1.0 
+				"ancho": 50.0,
+				"alto": 2.0 
 			}, 
 			{ 
 				"tipo": "poli", 
-				"x": 100.0, 
-				"y": 100.0, 
+				"x": 12.0, 
+				"y": 14.0, 
 				"radio": 3.5, 
 				"color": "#FF00FF", 
 				"rot": 90, 
@@ -34,8 +34,8 @@
 			}, 
 			{ 
 				"tipo": "circ", 
-				"x": 150.0, 
-				"y": 300.0, 
+				"x": 10.0, 
+				"y": 20.0, 
 				"color": "#FF0000", 
 				"rot": 90, 
 				"masa": 2.0, 
@@ -44,8 +44,8 @@
 			}, 
 			{ 
 				"tipo": "paral",
-				"x": 400.0, 
-				"y": 50.0, 
+				"x": 2.0, 
+				"y": 12.0, 
 				"radio": 3.5, 
 				"color": "#FF0000", 
 				"rot": 90, 
@@ -57,8 +57,8 @@
 			}, 
 			{ 
 				"tipo": "trap",
-				"x": 400.0, 
-				"y": 200.0, 
+				"x": 20.0, 
+				"y": 20.0, 
 				"escala": 1.5, 
 				"color": "#F0000F", 
 				"rot": 60.0, 

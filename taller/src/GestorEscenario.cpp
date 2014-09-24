@@ -6,6 +6,8 @@
  */
 
 #include "GestorEscenario.h"
+#include <Box2D/Box2D.h>
+#include <polygons/PolygonFactory.h>
 
 GestorEscenario::GestorEscenario() {
 	// TODO Auto-generated constructor stub
@@ -96,8 +98,46 @@ void imprimirRGB(objeto figura){
 	cout << "Azul:" << figura.colRGB.blue << endl;
 }
 
-void GestorEscenario::colocarRect(objeto figura){
-	cout << "\n Datos Rectangulo" << endl;
+
+World * GestorEscenario::obtenerMundo(){
+	world = new World(new b2Vec2(0, -20));
+	world->setUnits(elEscenario.anchoun, elEscenario.altoun, elEscenario.anchopx,elEscenario.altopx);
+	world->setMainCharacter(new Jugador(world->getBox2DWorld()));
+
+	for(auto objeto : objetos){
+
+		string tipo = objeto.tipo;
+		Polygon * nuevoPoligono;
+
+		if (tipo == "rect"){
+			nuevoPoligono = this->colocarRect(objeto);
+		}else if (tipo == "poli"){
+			nuevoPoligono = this->colocarPoli(objeto);
+		}else if (tipo == "circ"){
+			nuevoPoligono = this->colocarCirc(objeto);
+		}else if (tipo == "paral"){
+			nuevoPoligono = this->colocarParal(objeto);
+		}else if (tipo == "trap"){
+			nuevoPoligono = this->colocarTrap(objeto);
+		}
+
+		nuevoPoligono->setColor(objeto.colRGB.red,objeto.colRGB.green, objeto.colRGB.blue);
+		if(nuevoPoligono) world->addPolygon(nuevoPoligono);
+
+	}
+
+	return world;
+
+}
+
+Polygon * GestorEscenario::colocarRect(objeto figura){
+	if(figura.estatico){
+		return PolygonFactory::get_static_rectangle(figura.alto, figura.ancho, figura.posX,
+				figura.posY, figura.masa, world);
+	}
+	return PolygonFactory::get_dynamic_rectangle(figura.alto, figura.ancho, figura.posX,
+			figura.posY, figura.masa, world);
+	/*cout << "\n Datos Rectangulo" << endl;
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
 	cout <<"Color: " << figura.color << endl;
@@ -109,9 +149,18 @@ void GestorEscenario::colocarRect(objeto figura){
 
 	cout <<"Alto: " << figura.alto << endl;
 	cout <<"Ancho: " << figura.ancho << endl;
+	*/
 }
 
-void GestorEscenario::colocarPoli(objeto figura){
+Polygon * GestorEscenario::colocarPoli(objeto figura){
+	if(figura.estatico){
+		return PolygonFactory::get_static_regular_polygon(figura.lados, figura.escala, figura.posX,
+				figura.posY, figura.masa, world);
+	}
+	return PolygonFactory::get_dynamic_regular_polygon(figura.lados, figura.escala, figura.posX,
+			figura.posY, figura.masa, world);
+
+	/*
 	cout << "\n Datos Poligono" << endl;
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
@@ -123,9 +172,15 @@ void GestorEscenario::colocarPoli(objeto figura){
 	cout <<"Estatico: " << figura.estatico << endl;
 
 	cout << "Lados: " << figura.lados << endl;
+	*/
 }
 
-void GestorEscenario::colocarCirc(objeto figura){
+Polygon * GestorEscenario::colocarCirc(objeto figura){
+	if(figura.estatico){
+		return PolygonFactory::get_static_circle(figura.radio*2, figura.posX, figura.posY, figura.masa, world);
+	}
+	return PolygonFactory::get_dynamic_circle(2, 4, 4, 2, world);
+	/*
 	cout << "\n Datos Circulo" << endl;
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
@@ -137,9 +192,15 @@ void GestorEscenario::colocarCirc(objeto figura){
 	cout <<"Estatico: " << figura.estatico << endl;
 
 	cout << "Radio: " << figura.radio << endl;
+	*/
 }
 
-void GestorEscenario::colocarParal(objeto figura){
+Polygon * GestorEscenario::colocarParal(objeto figura){
+	if(figura.estatico){
+		return PolygonFactory::get_static_paralelogram(figura.baseParal, figura.alto, figura.angulo, figura.posX, figura.posY, figura.masa, world);
+	}
+	return PolygonFactory::get_dynamic_paralelogram(figura.baseParal, figura.alto, figura.angulo, figura.posX, figura.posY, figura.masa, world);
+	/*
 	cout << "\n Datos Paralelogramo" << endl;
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
@@ -153,9 +214,15 @@ void GestorEscenario::colocarParal(objeto figura){
 	cout << "Base: " << figura.baseParal << endl;
 	cout << "Angulo: " << figura.angulo << endl;
 	cout << "Alto: " << figura.alto << endl;
+	*/
 }
 
-void GestorEscenario::colocarTrap(objeto figura){
+Polygon * GestorEscenario::colocarTrap(objeto figura){
+	if(figura.estatico){
+		return PolygonFactory::get_static_trapezoid(figura.alto, figura.base_menor, figura.base_mayor, figura.posX, figura.posY, figura.masa, world);
+	}
+	return PolygonFactory::get_dynamic_trapezoid(figura.alto, figura.base_menor, figura.base_mayor, figura.posX, figura.posY, figura.masa, world);
+	/*
 	cout << "\n Datos Trapecio" << endl;
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
@@ -169,6 +236,7 @@ void GestorEscenario::colocarTrap(objeto figura){
 	cout << "Base Mayor: " << figura.base_mayor << endl;
 	cout << "Base Menor: " << figura.base_menor << endl;
 	cout << "Angulo: " << figura.angulo << endl;
+	*/
 }
 
 int GestorEscenario::calcularColor(char col1, char col2){

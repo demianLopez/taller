@@ -20,13 +20,16 @@ class Polygon;
 
 class World {
 public:
-	World(int width, int height);
-	void init();
+	World(b2Vec2 * gravity);
+
 	void loadResources();
 	Resources * getResources();
 
 	b2Vec2 box2DToSDL(b2Vec2 * box2DCoord);
 	b2Vec2 SDLToBox2D(b2Vec2 * SDLCoord);
+
+	void setUnits(int wU, int hU, int wP, int hP);
+	void setMainCharacter(Jugador * mainCharacter);
 
 	//
 	b2Vec2 box2DToSDLSize(b2Vec2 * box2DCoord);
@@ -46,14 +49,12 @@ public:
 	bool isOutOfWorld(b2Vec2 position);
 
 	int getNumberOfMainCharacterContacts();
+
 	virtual ~World();
 private:
 	Resources * worldResources;
 	ContactListener *contactListener;
 	Jugador * mainCharacter;
-
-	void loadWorld();
-	void generateWorld();
 
 	vector<Polygon*> polygonList;
 

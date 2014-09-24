@@ -31,7 +31,7 @@ Polygon* PolygonFactory::get_regular_polygon(size_t sides, double scale, double 
 
 Polygon* PolygonFactory::get_rectangle(double height, double widht, double posX, double posY,
 		double density, int body_type, World * world) {
-	return new Rectangle(height, widht, density, posX, posY, body_type, world);
+	return new Rectangle(widht, height, density, posX, posY, body_type, world);
 }
 
 Polygon* PolygonFactory::get_circle(double diameter, double posX, double posY,

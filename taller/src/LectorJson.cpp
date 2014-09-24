@@ -98,6 +98,9 @@ bool LectorJson::validarBool(string miembro,Value raiz, bool valorDefecto){
 	return (boolean.asBool());
 }
 
+GestorEscenario * LectorJson::obtenerGestorEscenario(){
+	return this->elEscenario;
+}
 
 string LectorJson::validarColor(string miembro,Value raiz, string valorDefecto){
 	Value color = raiz[miembro];
@@ -316,7 +319,12 @@ void LectorJson::armarTrapecio(Value objeto){
 		logger->reportarProblema("El angulo para le trapecio es invalido. Se carga defecto", WARNING);
 		angulo = ANGULO_OBJ_D;
 	}
-	elEscenario->agregarObjeto("trap",posx,posy,color,rot,masa,escala,estado,0,0,0,0,0,angulo,baseMayor,baseMenor);
+	double alto = this->validarDouble("alto",objeto,ALTO_OBJ_D);
+	if (alto <= 0){
+		logger->reportarProblema("La altura del trapecio no puede ser menor a 0. Se establece altura por defecto.",WARNING);
+		alto = ALTO_OBJ_D;
+	}
+	elEscenario->agregarObjeto("trap",posx,posy,color,rot,masa,escala,estado,alto,0,0,0,0,angulo,baseMayor,baseMenor);
 }
 
 void LectorJson::obtenerObjetos(Value raiz){
@@ -377,7 +385,7 @@ void LectorJson::cargarEscenario(const char* rutaArchivo){
 		}
 		else{
 			this->obtenerEscenario(raiz);
-			this->elEscenario->imprimirXConsola();
+			//this->elEscenario->imprimirXConsola();
 		}
 	}
 }

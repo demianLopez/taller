@@ -11,13 +11,14 @@
 #include "polygons/PolygonFactory.h"
 #include "polygons/Polygon.h"
 
-World::World(int width, int height) {
+World::World(b2Vec2 * gravity) {
+	this->gravity = gravity;
 	this->contactListener = new ContactListener();
 	this->worldResources = new Resources();
 	this->mainCharacter = NULL;
-	this->SDLWindowSize = new b2Vec2(width, height);
-	this->box2DWorld = NULL;
-	this->gravity = NULL;
+	this->Box2DWorldSize = new b2Vec2(0, 0);
+	this->SDLWindowSize = new b2Vec2(0, 0);
+	this->box2DWorld = new b2World(*gravity);
 	this->Box2DWorldSize = NULL;
 	this->mainCharacter = NULL;
 }
@@ -26,9 +27,9 @@ b2World * World::getBox2DWorld(){
 	return this->box2DWorld;
 }
 
-void World::init(){
-	this->loadWorld();
-	this->generateWorld();
+void World::setUnits(int wU, int hU, int wP, int hP){
+	this->Box2DWorldSize = new b2Vec2(wU, hU);
+	this->SDLWindowSize = new b2Vec2(wP, hP);
 }
 
 void World::loadResources(){
@@ -36,11 +37,6 @@ void World::loadResources(){
 	this->worldResources->loadAnimations();
 }
 
-void World::loadWorld(){
-	//world init!!! ACA ARMAR EL PARSEADO U LLAMAR AL OBJETO QUE PARSEA!
-	this->gravity = new b2Vec2(0, - 20);
-	this->Box2DWorldSize = new b2Vec2(26, 20);
-}
 
 void World::addPolygon(Polygon * polygon){
 	this->polygonList.push_back(polygon);
@@ -83,14 +79,20 @@ int World::getNumberOfMainCharacterContacts(){
 	return contactListener->getNumberOfContacts();
 }
 
+void World::setMainCharacter(Jugador * mainCharacter){
+	this->mainCharacter = mainCharacter;
+	box2DWorld->SetContactListener(contactListener);
+}
+
+/*
 void World::generateWorld(){
 	//GENERAR BOX2D
-	this->box2DWorld = new b2World(*gravity);
 
-	this->mainCharacter = new Jugador(box2DWorld);
-	box2DWorld->SetContactListener(contactListener);
+
+
 
 	//WORLD!
+	/*
 
 	Polygon * piso = PolygonFactory::get_static_rectangle(25, 1, 13, 1, 0.1f, this);
 	piso->setColor(200, 20, 40);
@@ -136,10 +138,11 @@ void World::generateWorld(){
 	this->addPolygon(PolygonFactory::get_static_trapezoid(7, 20, 3, 13, 3, 5,this));
 	Polygon * newPolygon5 = PolygonFactory::get_dynamic_circle(3, 16, 8, 0.1f, this);
 	this->addPolygon(newPolygon5);
-	*/
+
 	//Polygon * newPolygon6 = PolygonFactory::get_static_paralelogram(1.5, 0.5f, 3.14f/4, 1, 8, 0.1f, this);
 	//this->addPolygon(newPolygon6);
 }
+*/
 
 b2Vec2 * World::getWindowSize(){
 	return this->SDLWindowSize;

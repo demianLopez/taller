@@ -23,9 +23,6 @@ SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
 }
 
 void SnowBross::init(){
-	this->gameWorld = new World(this->getScreenWidth(), this->getScreenHeight());
-
-	this->gameWorld->init();
 	this->gameWorld->loadResources();
 
 
@@ -36,6 +33,10 @@ void SnowBross::init(){
 
 	this->frontParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
 	this->frontParticleEmiter->setMaxParticles(20);
+}
+
+void SnowBross::setWorld(World * world){
+	this->gameWorld = world;
 }
 
 void SnowBross::exit(){
@@ -59,6 +60,7 @@ void SnowBross::render(Graphics *g){
 	for(auto *polygon : polList){
 		polygon->render(g);
 	}
+
 
 	g->drawAtCenter(true);
 	b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
@@ -110,10 +112,12 @@ void SnowBross::keyEvent(SDL_Event e) {
 
 
 void SnowBross::update(unsigned int delta){
+
 	this->backParticleEmiter->update(delta);
 	this->frontParticleEmiter->update(delta);
 	this->gameWorld->worldStep(delta);
 	this->gameWorld->getMainCharacter()->update();
+
 }
 
 SnowBross::~SnowBross() {

@@ -17,6 +17,7 @@ class ParticleEmiter;
 class SnowBross : public Game {
 public:
 	SnowBross( const char *pTitle);
+	void setWorld(World * world);
 	virtual ~SnowBross();
 private:
 	virtual void update(unsigned int delta);
@@ -24,6 +25,7 @@ private:
 	virtual void keyEvent(SDL_Event e);
 	virtual void init();
 	virtual void exit();
+
 
 	World * gameWorld;
 	ParticleEmiter * backParticleEmiter;

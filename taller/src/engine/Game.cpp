@@ -61,7 +61,11 @@ unsigned int Game::getElapsedTime(){
 	return SDL_GetTicks();
 }
 
-bool Game::start(){
+void Game::start(){
+	this->gameCicle();
+}
+
+bool Game::instantiate(){
 	bool success = true;
 
 	Logger::customLog("Game.cpp", Logger::INFO, "Initializing SDL Components");
@@ -111,7 +115,7 @@ bool Game::start(){
 
             	Logger::customLog("Game.cpp", Logger::INFO, "SDL All components initialized!");
             	//Arrancamos el gameCicle
-            	this->gameCicle();
+
 
             }
 		}

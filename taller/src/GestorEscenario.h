@@ -11,6 +11,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <polygons/Polygon.h>
+#include "World.h"
+
 using namespace std;
 
 struct escenario{
@@ -64,16 +67,19 @@ public:
 			double baseParal,double angulo,
 			double base_mayor,double base_menor);
 	void obtenerObjetos();
-	void colocarRect(objeto figura);
-	void colocarPoli(objeto figura);
-	void colocarCirc(objeto figura);
-	void colocarParal(objeto figura);
-	void colocarTrap(objeto figura);
+	Polygon * colocarRect(objeto figura);
+	Polygon * colocarPoli(objeto figura);
+	Polygon * colocarCirc(objeto figura);
+	Polygon * colocarParal(objeto figura);
+	Polygon * colocarTrap(objeto figura);
 	rgb obtenerRGB(string color);
 	int calcularColor(char col1, char col2);
+
+	World * obtenerMundo();
 private:
 	escenario elEscenario;
 	vector<objeto> objetos;
+	World * world;
 
 };
 

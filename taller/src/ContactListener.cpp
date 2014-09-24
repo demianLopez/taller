@@ -6,25 +6,26 @@ ContactListener::ContactListener(){
 
 
 void ContactListener::BeginContact(b2Contact* contact){
-	void* data = contact->GetFixtureA()->GetUserData();
-	if( (int) data == 2){
+	size_t data  = (size_t) contact->GetFixtureA()->GetUserData();
+
+	if( data == 2){
 		numberOfContacts++;
 	}
 
-	data = contact->GetFixtureB()->GetUserData();
-	if( (int) data == 2){
+	data = (size_t) contact->GetFixtureB()->GetUserData();
+	if( data == 2){
 		numberOfContacts++;
 	}
 }
 
 void ContactListener::EndContact(b2Contact* contact){
-	void* data = contact->GetFixtureA()->GetUserData();
-	if( (int) data == 2){
+	size_t data =(size_t) contact->GetFixtureA()->GetUserData();
+	if( data == 2){
 		numberOfContacts--;
 	}
 
-	data = contact->GetFixtureB()->GetUserData();
-	if( (int) data == 2){
+	data =(size_t) contact->GetFixtureB()->GetUserData();
+	if( data == 2){
 		numberOfContacts--;
 	}
 }

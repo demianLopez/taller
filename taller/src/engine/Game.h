@@ -24,7 +24,8 @@ public:
 	unsigned int getElapsedTime();
 	void setMaxFPS(int maxFPS);
 
-	bool start();
+	void start();
+	bool instantiate();
 	void endGame();
 
 	int getScreenHeight();

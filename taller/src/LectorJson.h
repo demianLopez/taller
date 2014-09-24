@@ -40,6 +40,8 @@ private:
 	GestorEscenario * elEscenario;
 public:
 	void cargarEscenario(const char* rutaArchivo);
+	GestorEscenario * obtenerGestorEscenario();
+
 	LectorJson();
 	virtual ~LectorJson();
 };
