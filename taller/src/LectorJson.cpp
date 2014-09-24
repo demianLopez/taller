@@ -75,7 +75,7 @@ int LectorJson::validarInt(string miembro, Value raiz, int valorDefecto){
 double LectorJson::validarDouble(string miembro, Value raiz, double valorDefecto){
 	Value clave = raiz[miembro];
 	if( clave.isNull()){
-		logger->reportarProblema("No existe el miembro "+miembro+ " en. Cargo double por defecto.",WARNING);
+		logger->reportarProblema("No existe el miembro "+miembro+ ". Cargo double por defecto.",WARNING);
 		return valorDefecto;
 	}
 	if (!clave.isDouble()){
@@ -120,9 +120,8 @@ string LectorJson::validarColor(string miembro,Value raiz, string valorDefecto){
 		if(!((int(col[i]) >= 48 && int(col[i]) <= 57) || (int(col[i]) >= 65 && int(col[i]) <= 70))){
 			string e1 = "Valor<";
 			e1 += col[i];
-			e1 += "> en posicion ";
-			e1 += char(i);
-			logger->reportarProblema(e1+" no es valido. Se coloca por defecto F",WARNING);
+			e1 += "> para definir color no es valido. Se coloca por defecto F";
+			logger->reportarProblema(e1,WARNING);
 			col[i] = 'F';
 		}
 	}

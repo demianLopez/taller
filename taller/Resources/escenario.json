@@ -14,7 +14,7 @@
 				"tipo": "rect",
 				"x": 10.0, 
 				"y": 100.0, 
-				"color": "#00FF00", 
+				"color": "#F0F0F0",
 				"rot": 45, 
 				"masa": 1.0, 
 				"estatico": true,
