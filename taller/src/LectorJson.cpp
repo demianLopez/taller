@@ -32,12 +32,12 @@ const int LADOS_OBJ_D = 3;
 const double RADIO_OBJ_D = 1.0;
 const double BASE_OBJ_D = 2.0;
 const string COLOR_OBJ_D = "#00FF00";
-const double ROT_OBJ_D = 60;
+const double ROT_OBJ_D = 45.0;
 const double MASA_OBJ_D = 1.0;
 const double ESCALA_OBJ_D = 1.0;
-const double ANGULO_OBJ_D = 45;
-const double BASE_MAYOR_OBJ_D = 4;
-const double BASE_MENOR_OBJ_D = 2;
+const double ANGULO_OBJ_D = 45.0;
+const double BASE_MAYOR_OBJ_D = 4.0;
+const double BASE_MENOR_OBJ_D = 2.0;
 const bool EST_OBJ_D = true;
 
 //Tipo de problemas
@@ -62,12 +62,11 @@ LectorJson::~LectorJson() {
 int LectorJson::validarInt(string miembro, Value raiz, int valorDefecto){
 	Value clave = raiz[miembro];
 	if( clave.isNull()){
-		logger->reportarProblema("No existe el miembro "+miembro+ " en " + raiz.asString()+
-				". Cargo entero por defecto.",WARNING);
+		logger->reportarProblema("No existe el miembro "+miembro+ ". Cargo entero por defecto.",WARNING);
 		return valorDefecto;
 	}
 	if (!clave.isInt()){
-		logger->reportarProblema("El miembro "+miembro+ " no es entero. "+". Cargo entero por defecto." ,WARNING);
+		logger->reportarProblema("El miembro "+miembro+ " no es entero. Cargo entero por defecto." ,WARNING);
 		return valorDefecto;
 		}
 	return (clave.asInt());
@@ -76,12 +75,11 @@ int LectorJson::validarInt(string miembro, Value raiz, int valorDefecto){
 double LectorJson::validarDouble(string miembro, Value raiz, double valorDefecto){
 	Value clave = raiz[miembro];
 	if( clave.isNull()){
-		logger->reportarProblema("No existe el miembro "+miembro+ " en " + raiz.asString()+
-				". Cargo double por defecto.",WARNING);
+		logger->reportarProblema("No existe el miembro "+miembro+ ". Cargo double por defecto.",WARNING);
 		return valorDefecto;
 	}
 	if (!clave.isDouble()){
-		logger->reportarProblema("El miembro "+miembro+ " no es double. "+". Cargo double por defecto." ,WARNING);
+		logger->reportarProblema("El miembro "+miembro+ " no es double. Cargo double por defecto." ,WARNING);
 		return valorDefecto;
 		}
 	return (clave.asDouble());
@@ -90,8 +88,7 @@ double LectorJson::validarDouble(string miembro, Value raiz, double valorDefecto
 bool LectorJson::validarBool(string miembro,Value raiz, bool valorDefecto){
 	Value boolean = raiz[miembro];
 	if( boolean.isNull()){
-		logger->reportarProblema("No existe el miembro "+miembro+ " en " + raiz.asString()+
-					". Cargo booleano por defecto.",WARNING);
+		logger->reportarProblema("No existe el miembro "+miembro+ ". Cargo booleano por defecto.",WARNING);
 		return valorDefecto;
 		}
 	if (!boolean.isBool()){
@@ -105,8 +102,7 @@ bool LectorJson::validarBool(string miembro,Value raiz, bool valorDefecto){
 string LectorJson::validarColor(string miembro,Value raiz, string valorDefecto){
 	Value color = raiz[miembro];
 	if(color.isNull()){
-		logger->reportarProblema("No existe el miembro "+miembro+ " en " + raiz.asString()+
-						". Cargo color por defecto.",WARNING);
+		logger->reportarProblema("No existe el miembro "+miembro+ ". Cargo color por defecto.",WARNING);
 		return valorDefecto;
 	}
 	if (!color.isString()){
@@ -124,9 +120,8 @@ string LectorJson::validarColor(string miembro,Value raiz, string valorDefecto){
 		if(!((int(col[i]) >= 48 && int(col[i]) <= 57) || (int(col[i]) >= 65 && int(col[i]) <= 70))){
 			string e1 = "Valor<";
 			e1 += col[i];
-			e1 += "> en posicion ";
-			e1 += char(i);
-			logger->reportarProblema(e1+" no es valido. Se coloca por defecto F",WARNING);
+			e1 += "> para definir color no es valido. Se coloca por defecto F";
+			logger->reportarProblema(e1,WARNING);
 			col[i] = 'F';
 		}
 	}
@@ -136,8 +131,7 @@ string LectorJson::validarColor(string miembro,Value raiz, string valorDefecto){
 string LectorJson::validarImagen(string miembro,Value raiz, string valorDefecto){
 	Value imagen = raiz[miembro];
 	if(imagen.isNull()){
-		logger->reportarProblema("No existe el miembro "+miembro+ " en " + raiz.asString()+
-							". Cargo imagen por defecto.",WARNING);
+		logger->reportarProblema("No existe el miembro "+miembro+ ". Cargo imagen por defecto.",WARNING);
 		return valorDefecto;
 	}
 	if (!imagen.isString()){
@@ -172,7 +166,7 @@ void LectorJson::obtenerEscenario(Value raiz){
 			altopx = ALTOPX_MIN_D;
 		}
 		int anchopx = validarInt("anchopx",escenario,ALTOPX_D);
-		if (altopx < ANCHOPX_MIN_D){
+		if (anchopx < ANCHOPX_MIN_D){
 				logger->reportarProblema("No se permite ancho de ventana menor a 800. Se carga tamano por defecto.",WARNING);
 				altopx = ANCHOPX_MIN_D;
 		}
@@ -192,19 +186,19 @@ void LectorJson::obtenerEscenario(Value raiz){
 			y = validarInt("y",personaje,POSY_D);
 		}
 		this->elEscenario->configurarEscenerio(altopx,anchopx,altoun,anchoun,imagen,x,y);
-		this->elEscenario->imprimirXConsola();
+		this->obtenerObjetos(escenario);
 	}
 
 }
 
-void LectorJson::validarComunes(Value objeto,double *posx,double *posy,double *rot,double *masa,string color,double *escala,bool *estado){
+void LectorJson::validarComunes(Value objeto,double *posx,double *posy,double *rot,double *masa,string *color,double *escala,bool *estado){
 	double x = this->validarDouble("x",objeto,elEscenario->datos().anchopx/2.0);
-	if ( x >= elEscenario->datos().anchopx || x < ANCHOPX_MIN_D){
+	if ( x >= elEscenario->datos().anchopx ){
 		logger->reportarProblema("Posicion del objeto en x no se permite. Se genera una.",WARNING);
 		x= elEscenario->datos().anchopx/2.0; // Pongo el objeto en el medio en caso de que este mal.
 	}
 	double y = this->validarDouble("y",objeto,elEscenario->datos().altopx/2.0);
-	if ( y >= elEscenario->datos().altopx || y < ALTOPX_MIN_D){
+	if ( y >= elEscenario->datos().altopx){
 		logger->reportarProblema("Posicion del objeto en y no se permite. Se genera una.",WARNING);
 		y = elEscenario->datos().altopx/2.0;
 	}
@@ -224,12 +218,12 @@ void LectorJson::validarComunes(Value objeto,double *posx,double *posy,double *r
 		logger->reportarProblema("La escala es negativa. Se establece escala por defecto.",WARNING);
 		scale = ESCALA_OBJ_D;
 	}
-	bool state = this->validarBool("estado",objeto,EST_OBJ_D);
+	bool state = this->validarBool("estatico",objeto,EST_OBJ_D);
 	*posx = x;
 	*posy = y;
 	*rot = rotacion;
 	*masa = mass;
-	color = col;
+	*color = col;
 	*escala = scale;
 	*estado = state;
 }
@@ -238,7 +232,7 @@ void LectorJson::armarRectangulo(Value objeto){
 	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&escala,&estado);
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado);
 
 	double alto = this->validarDouble("alto",objeto,ALTO_OBJ_D);
 	if (alto < 1){
@@ -257,7 +251,7 @@ void LectorJson::armarPoligon(Value objeto){
 	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&escala,&estado);
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado);
 	int lados = this->validarInt("lados",objeto,LADOS_OBJ_D);
 	if (lados < 3 || lados > 6){
 		logger->reportarProblema("La cantidad de lados es invalida. Se carga defecto", WARNING);
@@ -270,7 +264,7 @@ void LectorJson::armarCirculo(Value objeto){
 	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&escala,&estado);
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado);
 	int radio = this->validarDouble("lados",objeto,RADIO_OBJ_D);
 	if (radio <= 0){
 		logger->reportarProblema("La cantidad de lados es invalida. Se carga defecto", WARNING);
@@ -283,8 +277,8 @@ void LectorJson::armarParalelogramo(Value objeto){
 	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&escala,&estado);
-	int baseParal = this->validarDouble("lados",objeto,BASE_OBJ_D);
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado);
+	int baseParal = this->validarDouble("base",objeto,BASE_OBJ_D);
 	if (baseParal <= 0){
 		logger->reportarProblema("La base del paralelogramo es negativa. Se carga defecto", WARNING);
 		baseParal = BASE_OBJ_D;
@@ -306,7 +300,7 @@ void LectorJson::armarTrapecio(Value objeto){
 	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,color,&escala,&estado);
+	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado);
 	double baseMayor = this->validarDouble("base_mayor",objeto,BASE_MAYOR_OBJ_D);
 	if(baseMayor <= 0){
 		logger->reportarProblema("La base mayor del trapecio es invalida. Se carga defecto", WARNING);
@@ -317,18 +311,12 @@ void LectorJson::armarTrapecio(Value objeto){
 		logger->reportarProblema("La base menor del trapecio es invalida. Se carga defecto", WARNING);
 		baseMayor = BASE_MENOR_OBJ_D;
 	}
-	if (baseMenor > baseMayor){
-		logger->reportarProblema("La base menor es mayor a la menor. Se invierten las bases", WARNING);
-		double auxbase = baseMayor;
-		baseMayor = baseMenor;
-		baseMenor = auxbase;
-	}
 	int angulo = this->validarDouble("angulo",objeto,ANGULO_OBJ_D);
 	if(angulo < 0 || angulo >180){
-		logger->reportarProblema("El angulo para le paralelogramo es invalido. Se carga defecto", WARNING);
+		logger->reportarProblema("El angulo para le trapecio es invalido. Se carga defecto", WARNING);
 		angulo = ANGULO_OBJ_D;
 	}
-	elEscenario->agregarObjeto("paral",posx,posy,color,rot,masa,escala,estado,0,0,0,0,0,angulo,baseMayor,baseMenor);
+	elEscenario->agregarObjeto("trap",posx,posy,color,rot,masa,escala,estado,0,0,0,0,0,angulo,baseMayor,baseMenor);
 }
 
 void LectorJson::obtenerObjetos(Value raiz){
@@ -389,7 +377,7 @@ void LectorJson::cargarEscenario(const char* rutaArchivo){
 		}
 		else{
 			this->obtenerEscenario(raiz);
-			//this->obtenerObjetos(raiz);
+			this->elEscenario->imprimirXConsola();
 		}
 	}
 }

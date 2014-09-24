@@ -23,6 +23,12 @@ struct escenario{
 	int personajeY;
 };
 
+struct rgb{
+	int red;
+	int green;
+	int blue;
+};
+
 struct objeto{
 	string tipo;
 	int lados = 0;
@@ -36,6 +42,7 @@ struct objeto{
 	double angulo = 0;
 	double radio = 0;
 	string color = "#FF00FF";
+	rgb colRGB;
 	double rot = 0;
 	double masa = 0;
 	double escala = 0;
@@ -62,6 +69,8 @@ public:
 	void colocarCirc(objeto figura);
 	void colocarParal(objeto figura);
 	void colocarTrap(objeto figura);
+	rgb obtenerRGB(string color);
+	int calcularColor(char col1, char col2);
 private:
 	escenario elEscenario;
 	vector<objeto> objetos;
