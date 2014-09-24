@@ -126,7 +126,9 @@ void Polygon::create_body(b2BodyDef* body_definition,
 	this->world = world;
 	b2World * bWorld = world->getBox2DWorld();
 	this->body = bWorld->CreateBody(body_definition);
-	this->body->CreateFixture(body_fixture);
+	b2Fixture *fixture = this->body->CreateFixture(body_fixture);
+
+	fixture->SetUserData( (void*) 1); // Le ponemos a los poligonos el tag "1". (Para detectar colisiones)
 
 	this->body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 }

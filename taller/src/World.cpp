@@ -12,6 +12,7 @@
 #include "polygons/Polygon.h"
 
 World::World(int width, int height) {
+	this->contactListener = new ContactListener();
 	this->worldResources = new Resources();
 	this->mainCharacter = NULL;
 	this->SDLWindowSize = new b2Vec2(width, height);
@@ -78,13 +79,16 @@ Jugador * World::getMainCharacter(){
 	return this->mainCharacter;
 }
 
+int World::getNumberOfMainCharacterContacts(){
+	return contactListener->getNumberOfContacts();
+}
+
 void World::generateWorld(){
 	//GENERAR BOX2D
 	this->box2DWorld = new b2World(*gravity);
 
-
 	this->mainCharacter = new Jugador(box2DWorld);
-	this->mainCharacter->setFreezeRotation(true);
+	box2DWorld->SetContactListener(contactListener);
 
 	//WORLD!
 
@@ -158,6 +162,7 @@ Resources * World::getResources(){
 
 World::~World() {
 	delete this->worldResources;
+	delete this->contactListener;
 	delete this->mainCharacter;
 
 	delete this->gravity;

@@ -84,7 +84,9 @@ void SnowBross::keyEvent(SDL_Event e) {
 				break;
 
 			case SDLK_UP:
-				this->gameWorld->getMainCharacter()->jump();
+				if(this->gameWorld->getNumberOfMainCharacterContacts() > 0){
+					this->gameWorld->getMainCharacter()->jump();
+				}
 				break;
 		}
 		return;

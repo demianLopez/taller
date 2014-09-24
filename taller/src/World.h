@@ -12,6 +12,7 @@
 #include "Jugador.h"
 #include <vector>
 #include "polygons/Polygon.h"
+#include "ContactListener.h"
 
 class Resources;
 class Polygon;
@@ -44,10 +45,11 @@ public:
 
 	bool isOutOfWorld(b2Vec2 position);
 
-
+	int getNumberOfMainCharacterContacts();
 	virtual ~World();
 private:
 	Resources * worldResources;
+	ContactListener *contactListener;
 	Jugador * mainCharacter;
 
 	void loadWorld();

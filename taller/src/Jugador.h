@@ -12,7 +12,8 @@ private:
 
 	// Velocidades (modulo) maximas por defecto.
 	const float MOVEMENT_SPEED_X = 4;
-	const float MOVEMENT_SPEED_Y = 12;
+	const float MOVEMENT_SPEED_Y = 13;
+
 
 	b2Vec2 size;
 	/*
