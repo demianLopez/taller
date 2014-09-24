@@ -68,3 +68,92 @@ void GestorEscenario::imprimirXConsola(){
 	cout<< "y = " << elEscenario.personajeY << endl;
 }
 
+void GestorEscenario::obtenerObjetos(){
+	for (unsigned int i = 0 ; i < objetos.size() ; i++){
+		string tipo = objetos[i].tipo;
+		if (tipo == "rect"){
+			this->colocarRect(objetos[i]);
+		}else if (tipo == "poli"){
+			this->colocarPoli(objetos[i]);
+		}else if (tipo == "circ"){
+			this->colocarCirc(objetos[i]);
+		}else if (tipo == "paral"){
+			this->colocarParal(objetos[i]);
+		}else if (tipo == "trap"){
+			this->colocarTrap(objetos[i]);
+		}else{
+			return;
+		}
+	}
+}
+
+void GestorEscenario::colocarRect(objeto figura){
+	cout << "\n Datos Rectangulo" << endl;
+	cout <<"PosX: " << figura.posX << endl;
+	cout <<"PosY: " << figura.posY << endl;
+	cout <<"Color: " << figura.color << endl;
+	cout <<"Rotacion: " << figura.rot << endl;
+	cout <<"Masa: " << figura.masa << endl;
+	cout <<"Escala: " << figura.escala << endl;
+	cout <<"Estatico: " << figura.estatico << endl;
+
+	cout <<"Alto: " << figura.alto << endl;
+	cout <<"Ancho: " << figura.ancho << endl;
+}
+
+void GestorEscenario::colocarPoli(objeto figura){
+	cout << "\n Datos Poligono" << endl;
+	cout <<"PosX: " << figura.posX << endl;
+	cout <<"PosY: " << figura.posY << endl;
+	cout <<"Color: " << figura.color << endl;
+	cout <<"Rotacion: " << figura.rot << endl;
+	cout <<"Masa: " << figura.masa << endl;
+	cout <<"Escala: " << figura.escala << endl;
+	cout <<"Estatico: " << figura.estatico << endl;
+
+	cout << "Lados: " << figura.lados << endl;
+}
+
+void GestorEscenario::colocarCirc(objeto figura){
+	cout << "\n Datos Circulo" << endl;
+	cout <<"PosX: " << figura.posX << endl;
+	cout <<"PosY: " << figura.posY << endl;
+	cout <<"Color: " << figura.color << endl;
+	cout <<"Rotacion: " << figura.rot << endl;
+	cout <<"Masa: " << figura.masa << endl;
+	cout <<"Escala: " << figura.escala << endl;
+	cout <<"Estatico: " << figura.estatico << endl;
+
+	cout << "Radio: " << figura.radio << endl;
+}
+
+void GestorEscenario::colocarParal(objeto figura){
+	cout << "\n Datos Paralelogramo" << endl;
+	cout <<"PosX: " << figura.posX << endl;
+	cout <<"PosY: " << figura.posY << endl;
+	cout <<"Color: " << figura.color << endl;
+	cout <<"Rotacion: " << figura.rot << endl;
+	cout <<"Masa: " << figura.masa << endl;
+	cout <<"Escala: " << figura.escala << endl;
+	cout <<"Estatico: " << figura.estatico << endl;
+
+	cout << "Base: " << figura.baseParal << endl;
+	cout << "Angulo: " << figura.angulo << endl;
+	cout << "Alto: " << figura.alto << endl;
+}
+
+void GestorEscenario::colocarTrap(objeto figura){
+	cout << "\n Datos Trapecio" << endl;
+	cout <<"PosX: " << figura.posX << endl;
+	cout <<"PosY: " << figura.posY << endl;
+	cout <<"Color: " << figura.color << endl;
+	cout <<"Rotacion: " << figura.rot << endl;
+	cout <<"Masa: " << figura.masa << endl;
+	cout <<"Escala: " << figura.escala << endl;
+	cout <<"Estatico: " << figura.estatico << endl;
+
+	cout << "Base Mayor: " << figura.base_mayor << endl;
+	cout << "Base Menor: " << figura.base_menor << endl;
+	cout << "Angulo: " << figura.angulo << endl;
+}
+

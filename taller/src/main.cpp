@@ -8,11 +8,10 @@
 using namespace std;
 	int main(int argc, char *argv[]){
 
-	/*
 	LectorJson* lector = new LectorJson();
 	lector->cargarEscenario("asf");
 	delete lector;
-	*/
+
 	SnowBross *pE = new SnowBross("Snow Bross");
 	//pruebaEngine *pE = new pruebaEngine("Il");
 	pE->setMaxFPS(50);
