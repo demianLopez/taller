@@ -37,9 +37,7 @@ Polygon::Polygon(int body_def) {
 	this->g = 0;
 }
 
-void Polygon::rotate(double angle){
-	//this->body->
-}
+
 
 void Polygon::setColor(int r, int g, int b){
 	this->r = r;

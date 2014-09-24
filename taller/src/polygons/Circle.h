@@ -25,7 +25,7 @@
 
 class Circle: public Polygon {
 public:
-	Circle(double diameter, double posX, double posY, double density, int body_type,
+	Circle(double diameter, double posX, double posY, double density, double angle, int body_type,
 			World * world);
 	virtual ~Circle();
 

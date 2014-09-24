@@ -40,7 +40,7 @@ void scale_vertex(size_t sides, b2Vec2* vertex, double scale) {
 }
 
 RegularPolygon::RegularPolygon(size_t sides, double scale, double posX, double posY,
-		int body_type, double density, World * world) :
+		int body_type, double density, double angle, World * world) :
 		Polygon(body_type) {
 
 	b2Vec2* vertex = new b2Vec2[sides];
@@ -51,12 +51,15 @@ RegularPolygon::RegularPolygon(size_t sides, double scale, double posX, double p
 	b2PolygonShape polygon_shape;
 	polygon_shape.Set(vertex, sides); //seteo los vertices del poligono
 
+
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &polygon_shape;
 	body_fixture.density = density;
 	body_fixture.friction = friction;
 
+
 	b2BodyDef body_definition;
+	body_definition.angle = angle;
 
 	if(body_type == Polygon::STATIC){
 		body_definition.type = b2_staticBody;

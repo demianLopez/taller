@@ -122,6 +122,7 @@ World * GestorEscenario::obtenerMundo(){
 		}
 
 		nuevoPoligono->setColor(objeto.colRGB.red,objeto.colRGB.green, objeto.colRGB.blue);
+
 		if(nuevoPoligono) world->addPolygon(nuevoPoligono);
 
 	}
@@ -133,10 +134,10 @@ World * GestorEscenario::obtenerMundo(){
 Polygon * GestorEscenario::colocarRect(objeto figura){
 	if(figura.estatico){
 		return PolygonFactory::get_static_rectangle(figura.alto, figura.ancho, figura.posX,
-				figura.posY, figura.masa, world);
+				figura.posY, figura.masa, figura.rot / 57,  world);
 	}
 	return PolygonFactory::get_dynamic_rectangle(figura.alto, figura.ancho, figura.posX,
-			figura.posY, figura.masa, world);
+			figura.posY, figura.masa,  figura.rot / 57, world);
 	/*cout << "\n Datos Rectangulo" << endl;
 	cout <<"PosX: " << figura.posX << endl;
 	cout <<"PosY: " << figura.posY << endl;
@@ -155,10 +156,10 @@ Polygon * GestorEscenario::colocarRect(objeto figura){
 Polygon * GestorEscenario::colocarPoli(objeto figura){
 	if(figura.estatico){
 		return PolygonFactory::get_static_regular_polygon(figura.lados, figura.escala, figura.posX,
-				figura.posY, figura.masa, world);
+				figura.posY, figura.masa,  figura.rot / 57, world);
 	}
 	return PolygonFactory::get_dynamic_regular_polygon(figura.lados, figura.escala, figura.posX,
-			figura.posY, figura.masa, world);
+			figura.posY, figura.masa,  figura.rot / 57, world);
 
 	/*
 	cout << "\n Datos Poligono" << endl;
@@ -177,9 +178,9 @@ Polygon * GestorEscenario::colocarPoli(objeto figura){
 
 Polygon * GestorEscenario::colocarCirc(objeto figura){
 	if(figura.estatico){
-		return PolygonFactory::get_static_circle(figura.radio*2, figura.posX, figura.posY, figura.masa, world);
+		return PolygonFactory::get_static_circle(figura.radio*2, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	}
-	return PolygonFactory::get_dynamic_circle(2, 4, 4, 2, world);
+	return PolygonFactory::get_dynamic_circle(2, 4, 4, 2, 0, world);
 	/*
 	cout << "\n Datos Circulo" << endl;
 	cout <<"PosX: " << figura.posX << endl;
@@ -197,9 +198,9 @@ Polygon * GestorEscenario::colocarCirc(objeto figura){
 
 Polygon * GestorEscenario::colocarParal(objeto figura){
 	if(figura.estatico){
-		return PolygonFactory::get_static_paralelogram(figura.baseParal, figura.alto, figura.angulo, figura.posX, figura.posY, figura.masa, world);
+		return PolygonFactory::get_static_paralelogram(figura.baseParal, figura.alto, figura.angulo, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	}
-	return PolygonFactory::get_dynamic_paralelogram(figura.baseParal, figura.alto, figura.angulo, figura.posX, figura.posY, figura.masa, world);
+	return PolygonFactory::get_dynamic_paralelogram(figura.baseParal, figura.alto, figura.angulo, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	/*
 	cout << "\n Datos Paralelogramo" << endl;
 	cout <<"PosX: " << figura.posX << endl;
@@ -219,9 +220,9 @@ Polygon * GestorEscenario::colocarParal(objeto figura){
 
 Polygon * GestorEscenario::colocarTrap(objeto figura){
 	if(figura.estatico){
-		return PolygonFactory::get_static_trapezoid(figura.alto, figura.base_menor, figura.base_mayor, figura.posX, figura.posY, figura.masa, world);
+		return PolygonFactory::get_static_trapezoid(figura.alto, figura.base_menor, figura.base_mayor, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	}
-	return PolygonFactory::get_dynamic_trapezoid(figura.alto, figura.base_menor, figura.base_mayor, figura.posX, figura.posY, figura.masa, world);
+	return PolygonFactory::get_dynamic_trapezoid(figura.alto, figura.base_menor, figura.base_mayor, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	/*
 	cout << "\n Datos Trapecio" << endl;
 	cout <<"PosX: " << figura.posX << endl;

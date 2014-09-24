@@ -38,7 +38,7 @@ public:
 	b2Vec2 * getPosition();
 
 	virtual void render(Graphics * g);
-	void rotate(double angle);
+
 	void setColor(int r, int g, int b);
 
 protected:

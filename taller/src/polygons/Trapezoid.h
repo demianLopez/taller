@@ -24,7 +24,7 @@
 
 class Trapezoid: public Polygon {
 public:
-	Trapezoid(double height, double base, double top, double posX, double posY, double density,
+	Trapezoid(double height, double base, double top, double posX, double posY, double density, double angle,
 			int body_type, World * world);
 	virtual ~Trapezoid();
 private:

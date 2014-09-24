@@ -14,12 +14,23 @@
 				"tipo": "rect",
 				"x": 15.0, 
 				"y": 0.0, 
-				"color": "#F0F0F0",
-				"rot": 45, 
+				"color": "#FF0000",
+				"rot": 0.0, 
 				"masa": 1.0, 
 				"estatico": true,
 				"ancho": 50.0,
 				"alto": 2.0 
+			}, 
+			{
+				"tipo": "rect",
+				"x": 30.0, 
+				"y": 25.0, 
+				"color": "#FF0000",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 2.0,
+				"alto": 8.0 
 			}, 
 			{ 
 				"tipo": "poli", 
@@ -66,8 +77,8 @@
 				"estatico": false,
 				"base_menor": 2.0,
 				"base_mayor": 4.0,
-				"altura": 4.0,
-				"angulo": 45.0 
+				"alto": 4.0,
+				"angulo": 45.0 			
 			} 
 		] 
 	} 

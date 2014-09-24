@@ -20,7 +20,7 @@ void Paralelogram::define_vertex(double base, double height, double angle, b2Vec
 }
 
 Paralelogram::Paralelogram(double base, double height, double angle, double posX,
-		double posY, double density, int body_type, World * world) : Polygon(body_type){
+		double posY, double density, double rotation, int body_type, World * world) : Polygon(body_type){
 
 		b2Vec2* vertex = new b2Vec2[4];
 		this->define_vertex(base, height, angle, vertex);
@@ -34,6 +34,7 @@ Paralelogram::Paralelogram(double base, double height, double angle, double posX
 		body_fixture.friction = friction;
 
 		b2BodyDef body_definition;
+		body_definition.angle = rotation;
 
 		if(body_type == Polygon::STATIC){
 			body_definition.type = b2_staticBody;

@@ -29,7 +29,7 @@ void Trapezoid::define_vertex(double height, double base, double top, b2Vec2* ve
 }
 
 Trapezoid::Trapezoid(double height, double base, double top,  double posX, double posY,
-		double density, int body_type, World * world) :
+		double density,double angle, int body_type, World * world) :
 				Polygon(body_type) {
 
 	b2Vec2* vertex = new b2Vec2[4];
@@ -44,6 +44,7 @@ Trapezoid::Trapezoid(double height, double base, double top,  double posX, doubl
 	body_fixture.friction = friction;
 
 	b2BodyDef body_definition;
+	body_definition.angle = angle;
 
 	if(body_type == Polygon::STATIC){
 		body_definition.type = b2_staticBody;

@@ -22,7 +22,7 @@ Circle::~Circle() {
 	delete this->circleImage;
 }
 
-Circle::Circle(double diameter, double posX, double posY, double density, int body_type,
+Circle::Circle(double diameter, double posX, double posY, double density,double angle, int body_type,
 		World * world) : Polygon(body_type) {
 
 	b2CircleShape circle_shape;
@@ -37,6 +37,7 @@ Circle::Circle(double diameter, double posX, double posY, double density, int bo
 	body_fixture.friction = friction;
 
 	b2BodyDef body_definition;
+	body_definition.angle = angle;
 
 	if(body_type == Polygon::STATIC){
 		body_definition.type = b2_staticBody;

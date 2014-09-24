@@ -14,7 +14,7 @@
 class Paralelogram: public Polygon {
 public:
 	Paralelogram(double base, double height, double angle, double posX,
-			double posY, double density, int body_type, World * world);
+			double posY, double density,double rotation, int body_type, World * world);
 
 	virtual ~Paralelogram();
 private:

@@ -20,7 +20,7 @@
 
 
 
-Rectangle::Rectangle(double width, double height, double density, double posX, double posY,
+Rectangle::Rectangle(double width, double height, double density, double posX, double posY, double angle,
 		int body_type, World * world):Polygon(body_type) {
 
 	this->size = new b2Vec2(width, height);
@@ -34,6 +34,7 @@ Rectangle::Rectangle(double width, double height, double density, double posX, d
 	body_fixture.friction = friction;
 
 	b2BodyDef body_definition;
+	body_definition.angle = angle;
 
 	if(body_type == Polygon::STATIC){
 		body_definition.type = b2_staticBody;
