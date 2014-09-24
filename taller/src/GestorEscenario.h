@@ -56,6 +56,12 @@ public:
 			double radio,
 			double baseParal,double angulo,
 			double base_mayor,double base_menor);
+	void obtenerObjetos();
+	void colocarRect(objeto figura);
+	void colocarPoli(objeto figura);
+	void colocarCirc(objeto figura);
+	void colocarParal(objeto figura);
+	void colocarTrap(objeto figura);
 private:
 	escenario elEscenario;
 	vector<objeto> objetos;

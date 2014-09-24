@@ -28,9 +28,9 @@ void LogManager::reportarProblema(string descripcionError, int nivel){
 		if(nivel == ERROR)
 			log << "\nERROR: " << descripcionError;
 		if(nivel == WARNING)
-			log << "\WARNING: " << descripcionError;
+			log << "\nWARNING: " << descripcionError;
 		if(nivel == FATAL_ERROR)
-			log << "\FATAL_ERROR: " << descripcionError;
+			log << "\nFATAL_ERROR: " << descripcionError;
 	}
 	log.close();
 }
