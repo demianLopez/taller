@@ -17,7 +17,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 #include "Polygon.h"
-#include <math.h>
 
 #include <Box2D/Box2D.h>
 
@@ -25,12 +24,9 @@ Polygon::Polygon(int body_def) {
 
 	this->body_def = body_def;
 	this->body = NULL;
-	this->vX = NULL;
-	this->vY = NULL;
 	this->world = NULL;
 
-	this->pointSize = 0;
-
+	this->polygonImage = NULL;
 
 	this->r = 0;
 	this->b = 0;
@@ -43,6 +39,8 @@ void Polygon::setColor(int r, int g, int b){
 	this->r = r;
 	this->g = g;
 	this->b = b;
+
+	this->createSDLPoints();
 }
 
 void Polygon::addB2DPoint(double x, double y){
@@ -51,69 +49,95 @@ void Polygon::addB2DPoint(double x, double y){
 
 void Polygon::createSDLPoints(){
 
-	float rotation = this->body->GetAngle();
-
-	float sinAngle = sin(rotation);
-	float cosAngle = cos(rotation);
-
-	this->pointSize = pointList.size();
-
-	if(this->vX == NULL){
-		vX = new short int[pointSize];
-	}
-
-	if(this->vY == NULL){
-		vY = new short int[pointSize];
-	}
-
-	short int c = 0;
-
-	b2Vec2 polPos = this->body->GetPosition();
-
-	b2Vec2 SDLTranslation = this->world->box2DToSDL(&polPos);
+	//Buscamos el ancho y largo maximo!!
+	double xMaxPos = 0;
+	double xMaxNeg = 0;
+	double yMaxPos = 0;
+	double yMaxNeg = 0;
 
 	for(auto *point : pointList){
-		b2Vec2 rotatedPoint = b2Vec2(point->x * cosAngle - point->y * sinAngle,
-				point->x * sinAngle + point->y * cosAngle);
-		b2Vec2 sdlPos = this->world->box2DToSDL(&rotatedPoint);
-		vX[c] = sdlPos.x + SDLTranslation.x;
-		vY[c] = sdlPos.y + SDLTranslation.y - this->world->getWindowSize()->y;
+		if(point->x < 0){
+			if(point->x < xMaxNeg){
+				xMaxNeg = point->x;
+			}
+		} else {
+			if(point->x > xMaxPos){
+				xMaxPos = point->x;
+			}
+		}
 
+		if(point->y < 0){
+			if(point->y < yMaxNeg){
+				yMaxNeg = point->y;
+			}
+		} else {
+			if(point->y > yMaxPos){
+				yMaxPos = point->y;
+			}
+		}
+	}
+
+	b2Vec2 b2DSize = b2Vec2(xMaxPos - xMaxNeg, yMaxPos - yMaxNeg);
+
+	if(this->polygonImage != NULL){
+		delete this->polygonImage;
+	}
+
+	short int * vX;
+	short int * vY;
+	short int pointSize = pointList.size();
+
+	vX = new short int[pointSize];
+	vY = new short int[pointSize];
+
+	short int c = 0;
+	b2Vec2 sdlSize = this->world->box2DToSDLSize(&b2DSize);
+
+	if(((int) sdlSize.x)%2 == 0){
+		sdlSize.x++;
+	}
+
+	if(((int) sdlSize.y%2) == 0){
+		sdlSize.y++;
+	}
+
+	int centerX = sdlSize.x / 2;
+	int centerY = sdlSize.y / 2;
+
+	for(auto *point : pointList){
+		b2Vec2 sdlPos = this->world->box2DToSDLSize(point);
+		vX[c] = sdlPos.x + centerX;
+		vY[c] = sdlSize.y - (sdlPos.y + centerY);
 		c++;
 	}
+
+	this->polygonImage = new Image(sdlSize.x, sdlSize.y);
+	Graphics * g = this->polygonImage->getGraphics();
+	SDL_SetRenderTarget(GameElements::gRenderer, this->polygonImage->getImageTexture());
+	g->drawFillPolygon(vX, vY, pointSize, this->r, this->g, this->b);
+
+	delete[] vX;
+	delete[] vY;
 }
 
 Polygon::~Polygon() {
-
-	if(this->vX != NULL){
-		delete[] vX;
-	}
-
-	if(this->vY != NULL){
-		delete[] vY;
-	}
-
-
 	for(auto *point : pointList){
 		delete point;
 	}
-
 	pointList.clear();
 
+	if(this->polygonImage != NULL){
+		delete this->polygonImage;
+	}
 }
 
 void Polygon::render(Graphics * g){
-	if(!this->shouldIRender()){
-		return; //Evitamos gastar recursos renderizando algo que no esta en pantalla
-	}
+	b2Vec2 b2DPos = this->body->GetPosition();
+	b2Vec2 sdlPos = this->world->box2DToSDL(&b2DPos);
 
-	if(this->body_def == Polygon::DYNAMIC){
-		this->createSDLPoints();
-	}
-
-	if(pointSize != 0){
-		g->drawFillPolygon(vX, vY, pointSize, this->r, this->g, this->b);
-	}
+	g->drawAtCenter(true);
+	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y,  - this->body->GetAngle() * 57);
+	g->drawAtCenter(false);
 }
 
 bool Polygon::shouldIRender(){

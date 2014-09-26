@@ -25,10 +25,10 @@
 				"tipo": "rect",
 				"x": 30.0, 
 				"y": 25.0, 
-				"color": "#FF0000",
+				"color": "#00FF00",
 				"rot": 0.0, 
 				"masa": 1.0, 
-				"estatico": true,
+				"estatico": false,
 				"ancho": 2.0,
 				"alto": 8.0 
 			}, 

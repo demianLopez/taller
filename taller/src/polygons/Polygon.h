@@ -23,6 +23,7 @@
 #include <engine/Graphics.h>
 #include "../World.h"
 #include <vector>
+#include <engine/Image.h>
 
 class World;
 
@@ -60,9 +61,7 @@ private:
 
 	int body_def;
 
-	short int * vX;
-	short int * vY;
-	int pointSize;
+	Image * polygonImage;
 
 	int r;
 	int g;

@@ -18,6 +18,22 @@ Image::Image(const char* pFile) {
 	this->centerRotation = NULL;
 }
 
+Image::Image(int width, int height){
+	this->gImage = NULL;
+	this->gImageTexture = SDL_CreateTexture(GameElements::gRenderer, SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET, width, height);
+	SDL_SetTextureBlendMode(this->gImageTexture, SDL_BLENDMODE_BLEND);
+
+	this->height = height;
+	this->width = width;
+
+	this->centerRotation = NULL;
+}
+
+Graphics * Image::getGraphics(){
+	SDL_SetRenderTarget(GameElements::gRenderer, this->gImageTexture);
+	return new Graphics(GameElements::gFont);
+}
+
 Image::Image(){
 	this->gImage = NULL;
 	this->gImageTexture = NULL;
@@ -103,7 +119,13 @@ int Image::getWidth(){
 }
 
 Image::~Image() {
-	SDL_DestroyTexture(this->gImageTexture);
-	SDL_FreeSurface(this->gImage);
+	if(this->gImage != NULL){
+		SDL_FreeSurface(this->gImage);
+	}
+
+	if(this->gImageTexture != NULL){
+		SDL_DestroyTexture(this->gImageTexture);
+	}
+
 }
 

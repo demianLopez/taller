@@ -104,6 +104,7 @@ bool Game::instantiate(){
                 } else {
                 	Logger::customLog("Game.cpp", Logger::INFO, "SDL TTF Initialize: OK");
                 	this->gFont = TTF_OpenFont( "Resources/font.ttf", 28 );
+                	GameElements::gFont = this->gFont;
                 }
 
             	this->gScreenSurface = SDL_GetWindowSurface(gWindow);

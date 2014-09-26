@@ -21,12 +21,14 @@
 
 #include "Polygon.h"
 #include <Box2D/Box2D.h>
+#include "engine/LibIncludes.h"
 
 class Trapezoid: public Polygon {
 public:
 	Trapezoid(double height, double base, double top, double posX, double posY, double density, double angle,
 			int body_type, World * world);
 	virtual ~Trapezoid();
+
 private:
 	void setVertex(b2Vec2 * vertex);
 	void define_vertex(double height, double base, double top, b2Vec2* vertex);

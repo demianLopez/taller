@@ -9,13 +9,15 @@
 #define IMAGE_H_
 #include "LibIncludes.h"
 #include "GameElements.h"
+#include "Graphics.h"
 
 #include <iostream>
 
 class Image {
 public:
-	Image(const char* pFile,int r, int g, int b);
+
 	Image(const char* pFile);
+	Image(int width, int height);
 
 	virtual ~Image();
 
@@ -35,6 +37,8 @@ public:
 	int getWidth();
 
 	void setRotationPoint(int x, int y);
+
+	Graphics * getGraphics();
 
 private:
 	SDL_Surface *loadSurface(const char* pFile);

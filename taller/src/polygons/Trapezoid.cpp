@@ -17,6 +17,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 #include "Trapezoid.h"
+#include "engine/GameElements.h"
+#include <engine/SdlGfx/SDL2_gfxPrimitives.h>
 
 void Trapezoid::define_vertex(double height, double base, double top, b2Vec2* vertex) {
 	double y_height = height / 2;
@@ -59,16 +61,43 @@ Trapezoid::Trapezoid(double height, double base, double top,  double posX, doubl
 	this->setVertex(vertex);
 	this->createSDLPoints();
 
+
+	//Armado!
+
+/*
+	this->text = SDL_CreateTexture(GameElements::gRenderer, SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET, 200, 200);
+	SDL_SetTextureBlendMode(text, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderTarget(GameElements::gRenderer, text);
+	short int *vX = new short int[3];
+	short int *vY = new short int[3];
+	vX[0] = 10;
+	vX[1] = 100;
+	vX[2] = 180;
+
+	vY[0] = 10;
+	vY[1] = 180;
+	vY[2] = 100;
+	filledPolygonRGBA(GameElements::gRenderer, vX, vY, 3, 255, g, b, 255);
+	SDL_SetRenderTarget(GameElements::gRenderer, NULL);
+	*/
+
 	delete[] vertex;
 }
 
+/*
+void Trapezoid::render(Graphics *g){
+	SDL_Rect imageData = {20, 20, 200, 200};
+	SDL_RenderCopy(GameElements::gRenderer, text, NULL, &imageData);
+
+}
+*/
 void Trapezoid::setVertex(b2Vec2 * vertex){
 	for(size_t i = 0; i < 4; i++){
 		this->addB2DPoint(vertex[i].x, vertex[i].y);
 	}
 }
 
-Trapezoid::~Trapezoid() {
-	// TODO Auto-generated destructor stub
+Trapezoid::~Trapezoid(){
+
 }
 

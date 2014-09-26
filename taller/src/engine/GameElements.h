@@ -17,6 +17,7 @@ public:
 
 	static SDL_Surface *gScreenSurface;
 	static SDL_Renderer* gRenderer;
+	static TTF_Font *gFont;
 
 	virtual ~GameElements();
 

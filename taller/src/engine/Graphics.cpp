@@ -35,12 +35,14 @@ void Graphics::drawText(int x, int y, const char * text){
 	SDL_Rect textData = {x, y, textSurface->w, textSurface->h};
 	SDL_RenderCopy(GameElements::gRenderer, textTexture, NULL, &textData);
 
+
 	SDL_FreeSurface(textSurface);
 	SDL_DestroyTexture(textTexture);
 }
 
 void Graphics::resetGraphics(){
 	this->dAtCenter = false;
+	SDL_SetRenderTarget(GameElements::gRenderer, NULL);
 }
 
 void Graphics::drawImage(Image *image, int xo, int yo, float rotation){

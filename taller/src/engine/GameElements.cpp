@@ -9,6 +9,7 @@
 
 SDL_Surface * GameElements::gScreenSurface = NULL;
 SDL_Renderer * GameElements::gRenderer = NULL;
+TTF_Font * GameElements::gFont = NULL;
 
 GameElements::GameElements() {
 	// TODO Auto-generated constructor stub
