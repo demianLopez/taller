@@ -33,7 +33,6 @@ void World::setUnits(int wU, int hU, int wP, int hP){
 }
 
 void World::loadResources(){
-	this->worldResources->loadBackground("Resources/font1.png");
 	this->worldResources->loadAnimations();
 }
 
@@ -54,6 +53,13 @@ b2Vec2 World::box2DToSDLSize(b2Vec2 * box2DCoord){
 	float sdlY = box2DCoord->y/Box2DWorldSize->y * SDLWindowSize->y;
 	b2Vec2 sdlCoord(sdlX, sdlY);
 	return sdlCoord;
+}
+
+b2Vec2 World::SDLToBox2DSize(b2Vec2 * SDLCoord){
+	float b2DX = SDLCoord->x/SDLWindowSize->x * Box2DWorldSize->x;
+	float b2DY = SDLCoord->y/SDLWindowSize->y * Box2DWorldSize->y;
+	b2Vec2 box2DCoord(b2DX, b2DY);
+	return box2DCoord;
 }
 
 b2Vec2 World::SDLToBox2D(b2Vec2 * SDLCoord){

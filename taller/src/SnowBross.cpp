@@ -23,9 +23,6 @@ SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
 }
 
 void SnowBross::init(){
-	this->gameWorld->loadResources();
-
-
 	//ADICIONALES!
 	//Estos son extras, despues hay que cambiarlos!
 	this->backParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);

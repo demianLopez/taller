@@ -102,7 +102,14 @@ void imprimirRGB(objeto figura){
 World * GestorEscenario::obtenerMundo(){
 	world = new World(new b2Vec2(0, -20));
 	world->setUnits(elEscenario.anchoun, elEscenario.altoun, elEscenario.anchopx,elEscenario.altopx);
-	world->setMainCharacter(new Jugador(world->getBox2DWorld()));
+
+	world->loadResources();
+	world->getResources()->loadBackground(elEscenario.imagen_fondo.c_str());
+
+
+	b2Vec2 SDLCharPos = b2Vec2(elEscenario.personajeX, elEscenario.personajeY);
+	b2Vec2 B2DCharPos = world->SDLToBox2DSize(&SDLCharPos);
+	world->setMainCharacter(new Jugador(world->getBox2DWorld(), B2DCharPos.x, B2DCharPos.y));
 
 	for(auto objeto : objetos){
 

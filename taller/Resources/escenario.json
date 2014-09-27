@@ -4,10 +4,10 @@
 		"anchopx": 800,
 		"altoun": 30,
 		"anchoun": 40,
-		"imagen_fondo": "fondo1.png",
+		"imagen_fondo": "font1gh.png",
 		"personaje": {
-			"x": 100,
-			"y": 100
+			"x": 500,
+			"y": 500
 		},
 		"objetos": [
 			{

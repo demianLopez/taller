@@ -23,7 +23,7 @@ private:
 public:
 	// Inicializa Jugador.
 	b2Vec2 getSize();
-	Jugador(b2World * gameWorld);
+	Jugador(b2World * gameWorld, double posX, double posY);
 	//virtual ~Jugador();
 
 	// Devuelve true si tiene buff de velocidad.

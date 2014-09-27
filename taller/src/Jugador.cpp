@@ -3,14 +3,14 @@
 #include <iostream>
 
 // Inicializa Jugador.
-Jugador::Jugador(b2World * gameWorld) : Personaje(gameWorld) {
+Jugador::Jugador(b2World * gameWorld, double posX, double posY) : Personaje(gameWorld) {
 	//Defino forma, posicion y tamanyo del body para el Personaje.
 
 	// TODO: permitir ponerlo en una posicion especifica.
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(5.0f, 10.0f);
+	bodyDef.position.Set(posX, posY);
 	bodyDef.fixedRotation = true;
 
 	body = gameWorld->CreateBody(&bodyDef);
