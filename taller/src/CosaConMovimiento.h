@@ -46,7 +46,7 @@ public:
 	virtual void update();
 
 	void setFreezeRotation(bool freezeRotation);
-	Animation * getAnimation(Resources * resources);
+	virtual Animation * getAnimation(Resources * resources);
 
 	void setMovingLeft(bool movingLeft);
 	void setMovingRight(bool movingRight);

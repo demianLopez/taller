@@ -83,7 +83,7 @@ void SnowBross::keyEvent(SDL_Event e) {
 				break;
 
 			case SDLK_UP:
-				if(this->gameWorld->getNumberOfMainCharacterContacts() > 0){
+				if(this->gameWorld->isMainCharacterTouchingGround()){
 					this->gameWorld->getMainCharacter()->jump();
 				}
 				break;

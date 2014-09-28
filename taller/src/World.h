@@ -49,7 +49,7 @@ public:
 
 	bool isOutOfWorld(b2Vec2 position);
 
-	int getNumberOfMainCharacterContacts();
+	bool isMainCharacterTouchingGround();
 
 	virtual ~World();
 private:

@@ -81,12 +81,13 @@ Jugador * World::getMainCharacter(){
 	return this->mainCharacter;
 }
 
-int World::getNumberOfMainCharacterContacts(){
-	return contactListener->getNumberOfContacts();
+bool World::isMainCharacterTouchingGround(){
+	return contactListener->getNumberOfContacts() > 0;
 }
 
 void World::setMainCharacter(Jugador * mainCharacter){
 	this->mainCharacter = mainCharacter;
+	this->mainCharacter->setListenerTouchingGround(contactListener);
 	box2DWorld->SetContactListener(contactListener);
 }
 

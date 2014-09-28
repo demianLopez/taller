@@ -128,39 +128,14 @@ bool CosaConMovimiento::isOnAir(){
 	return (this->goingUp || this->goingDown || this->onTopJump);
 }
 
-Animation * CosaConMovimiento::getAnimation(Resources * resources){
-	// FIXME: Mover esto a que sea definido por cada hijo de esta clase.
-	if(this->isOnAir()){
-		if(mirandoParaLaDerecha){
-			return resources->getPlayerAirRight();
-		} else {
-			return resources->getPlayerAirLeft();
-		}
-	}
-
-
-	if(mirandoParaLaDerecha){
-		if(this->movingRight){
-			return resources->getPlayerWalkRight();
-		} else {
-			return resources->getPlayerStaticRight();
-		}
-	} else {
-		if(this->movingLeft){
-			return resources->getPlayerWalkLeft();
-		} else {
-			return resources->getPlayerStaticLeft();
-		}
-	}
-
-
-}
-
 // Devuelve true si esta mirando para la derecha.
 bool CosaConMovimiento::estaMirandoParaLaDerecha(){
 	return mirandoParaLaDerecha;
 }
 
+Animation * CosaConMovimiento::getAnimation(Resources *resources){
+	return NULL;
+}
 
 CosaConMovimiento::~CosaConMovimiento(){
 
