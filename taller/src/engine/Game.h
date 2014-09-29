@@ -24,7 +24,7 @@ public:
 	unsigned int getElapsedTime();
 	void setMaxFPS(int maxFPS);
 
-	void start();
+	bool start();
 	bool instantiate();
 	void endGame();
 
@@ -46,7 +46,7 @@ private:
 	SDL_Renderer* gRenderer;
 	TTF_Font *gFont;
 
-	void gameCicle();
+	bool gameCicle();
 	void gameClose();
 
 	int fps;

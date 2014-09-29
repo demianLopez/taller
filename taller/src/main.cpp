@@ -6,21 +6,26 @@
 #include "Jugador.h"
 #include "LectorJson.h"
 using namespace std;
-	int main(int argc, char *argv[]){
 
-	LectorJson* lector = new LectorJson();
-	lector->cargarEscenario("asf");
-	GestorEscenario * gE = lector->obtenerGestorEscenario();
+int main(int argc, char *argv[]){
+	bool continues = true;
+	while(continues){
+		LectorJson* lector = new LectorJson();
+		lector->cargarEscenario("asf");
+		GestorEscenario * gE = lector->obtenerGestorEscenario();
 
-	SnowBross *pE = new SnowBross("Snow Bross");
-	pE->setScreenSize(gE->datos().anchopx, gE->datos().altopx);
-	pE->instantiate();
-	pE->setWorld(gE->obtenerMundo());
+		SnowBross *pE = new SnowBross("Snow Bross");
+		pE->setScreenSize(gE->datos().anchopx, gE->datos().altopx);
+		pE->instantiate();
+		pE->setWorld(gE->obtenerMundo());
 
-	delete lector;
+		delete lector;
 
-	pE->setMaxFPS(50);
-	pE->showFPS(true);
-	pE->start();
+		pE->setMaxFPS(50);
+		pE->showFPS(true);
+		continues = pE->start();
+		delete pE;
+		//delete lector;
+	}
 	return 0;
 }

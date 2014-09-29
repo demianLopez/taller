@@ -61,8 +61,8 @@ unsigned int Game::getElapsedTime(){
 	return SDL_GetTicks();
 }
 
-void Game::start(){
-	this->gameCicle();
+bool Game::start(){
+	return this->gameCicle();
 }
 
 bool Game::instantiate(){
@@ -129,8 +129,8 @@ void Game::endGame(){
 	this->quit = true;
 }
 
-void Game::gameCicle(){
-
+bool Game::gameCicle(){
+	bool continues = false;
 	Logger::customLog("Game.cpp", Logger::INFO, "Starting Game Cicle");
 	if(this->sfps){
 		std::stringstream asd;
@@ -156,7 +156,12 @@ void Game::gameCicle(){
 			if( e.type == SDL_QUIT ){
 				this->endGame();
 			} else {
-				this->keyEvent(e);
+				if (e.key.keysym.sym == SDLK_r){
+					continues = true;
+					this->endGame();
+				}else{
+					this->keyEvent(e);
+				}
 			}
 		}
 
@@ -206,6 +211,7 @@ void Game::gameCicle(){
 	Logger::customLog("Game.cpp", Logger::INFO, "exit function called succesfull");
 	Logger::customLog("Game.cpp", Logger::INFO, "Closing SDL Components");
 	this->gameClose();
+	return continues;
 }
 
 
