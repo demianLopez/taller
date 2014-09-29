@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
 		pE->showFPS(true);
 		continues = pE->start();
 		delete pE;
-		//delete lector;
+		//delete lector; //estamos perdiendo memoria con esto, pero falla si lo descomento..
 	}
 	return 0;
 }
