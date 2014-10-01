@@ -6,6 +6,7 @@
  */
 
 #include "LogManager.h"
+#include <Logger.h>
 
 const char* RUTA_LOG = "Resources/log.txt";
 
@@ -23,25 +24,11 @@ LogManager::~LogManager() {
 }
 
 void LogManager::reportarProblema(string descripcionError, int nivel){
-	ofstream log(RUTA_LOG, ios::out | ios::app);
-	if (log.is_open()){
-		if(nivel == ERROR)
-			log << "\nERROR: " << descripcionError;
-		if(nivel == WARNING)
-			log << "\nWARNING: " << descripcionError;
-		if(nivel == FATAL_ERROR)
-			log << "\nFATAL_ERROR: " << descripcionError;
-	}
-	log.close();
-}
+	if(nivel == ERROR)
+		Logger::customLog("JSonParser",Logger::ERROR, descripcionError);
+	if(nivel == WARNING)
+		Logger::customLog("JSonParser",Logger::WARNING, descripcionError);
+	if(nivel == FATAL_ERROR)
+		Logger::customLog("JSonParser",Logger::ERROR, descripcionError);
 
-void LogManager::setearFecha(){
-	time_t rawtime;
-	struct tm * timeinfo;
-	ofstream log(RUTA_LOG, ios::out | ios::app);
-	time ( &rawtime );
-	timeinfo = localtime ( &rawtime );
-	log << "\n************************NUEVO LOG***************************\n";//La hora solo se coloca para un nuevo log
-	log << "Fecha: " <<  asctime (timeinfo);
-	log.close();
 }

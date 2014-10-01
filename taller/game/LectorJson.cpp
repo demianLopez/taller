@@ -361,7 +361,6 @@ void LectorJson::crearObjeto(Value objeto){
 }
 
 void LectorJson::cargarEscenario(const char* rutaArchivo){
-	this->logger->setearFecha();
 	ifstream archivoJson(rutaArchivo, std::ifstream::binary);
 	if(!archivoJson.good()){
 		if( !strcmp(rutaArchivo,ESCENARIO_X_DEFECTO)){

@@ -20,7 +20,7 @@ public:
 	LogManager();
 	virtual ~LogManager();
 	void reportarProblema(string descripcionError, int nivel);
-	void setearFecha();
+
 };
 
 #endif /* LOGMANAGER_H_ */

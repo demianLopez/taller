@@ -5,11 +5,14 @@
 #include "SnowBross.h"
 #include "Jugador.h"
 #include "LectorJson.h"
+#include <Logger.h>
 using namespace std;
 
 int main(int argc, char *argv[]){
 	bool continues = true;
 	while(continues){
+		Logger::initializeCustomLogs();
+
 		LectorJson* lector = new LectorJson();
 		lector->cargarEscenario("asf");
 		GestorEscenario * gE = lector->obtenerGestorEscenario();
