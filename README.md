@@ -1,11 +1,11 @@
 Taller de programacion 1
 TP Nº1 2C 2014 
 
-Nombres ap pad
-Nombres ap pad
-Nombres ap pad
-Nombres ap pad
-Nombres ap pad
+Maximiliano Peña      93198
+Elisa       Perisset  95404
+Demian      Lopez     93720
+Agustin     Blanco    94945
+Gaston      Martinez  91383
 
 Probado en Windows 7
 
