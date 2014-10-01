@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
 		Logger::initializeCustomLogs();
 
 		LectorJson* lector = new LectorJson();
-		lector->cargarEscenario("asf");
+		lector->cargarEscenario("Resources/tp0.json");
 		GestorEscenario * gE = lector->obtenerGestorEscenario();
 
 		SnowBross *pE = new SnowBross("Snow Bross");

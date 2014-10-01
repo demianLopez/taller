@@ -1,0 +1,93 @@
+{ 
+	"escenario": { 
+		"altopx": 600,
+		"anchopx": 800,
+		"altoun": 50,
+		"anchoun": 70,
+		"imagen_fondo": "font1.png",
+		"personaje": {
+			"x": 500,
+			"y": 600
+		},
+		"objetos": [
+			{
+				"tipo": "rect",
+				"x": 4.0, 
+				"y": 10.0, 
+				"color": "#FF00FF",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": false,
+				"ancho": 4.0,
+				"alto": 2.0 
+			}, 
+			{
+				"tipo": "rect",
+				"x": 18.4, 
+				"y": 9.5, 
+				"color": "#000033",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 15.0,
+				"alto": 3.0 
+			},
+			{ 
+				"tipo": "paral",
+				"x": 31.0, 
+				"y": 14.3,
+				"color": "#000033", 
+				"rot": 270.0, 
+				"masa": 2.0, 
+				"estatico": true, 
+				"base": 2.8,
+				"alto": 10.0,
+				"angulo": -45.0
+			}, 
+			{
+				"tipo": "rect",
+				"x": 43.5, 
+				"y": 19.35, 
+				"color": "#000033",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 15.0,
+				"alto": 3.0
+			}, 
+			{ 
+				"tipo": "circ", 
+				"x": 40.0, 
+				"y": 40.0, 
+				"color": "#FF0000", 
+				"rot": 90.0, 
+				"masa": 2.0, 
+				"estatico": false,
+				"radio": 1.0
+			}, 
+			{
+				"tipo": "rect",
+				"x": 63.5, 
+				"y": 19.35, 
+				"color": "#000033",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 10.0,
+				"alto": 3.0 
+			}, 
+			{ 
+				"tipo": "poli", 
+				"x": 12.0, 
+				"y": 40.0, 
+				"radio": 3.5, 
+				"escala": 3.0,
+				"color": "#FF00FF", 
+				"rot": 0.0, 
+				"masa": 2.0, 
+				"estatico": false,
+				"lados": 6 
+			}		
+		] 
+	} 
+}

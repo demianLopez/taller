@@ -46,7 +46,7 @@ RegularPolygon::RegularPolygon(size_t sides, double scale, double posX, double p
 	b2Vec2* vertex = new b2Vec2[sides];
 	define_vertex(sides, vertex);
 
-	//scale_vertex(sides, vertex, scale);
+	scale_vertex(sides, vertex, scale);
 
 	b2PolygonShape polygon_shape;
 	polygon_shape.Set(vertex, sides); //seteo los vertices del poligono

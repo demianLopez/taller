@@ -41,7 +41,7 @@ private:
 			double density, double rotation,  int body_type, World * world);
 	static Polygon* get_paralelogram(double base, double height, double angle, double posX,
 			double posY, double density, double rotation, int body_type,	World * world);
-	static Polygon* get_trapezoid(double height, double base, double top, double posX, double posY,
+	static Polygon* get_trapezoid(double height, double base, double top, double angle, double posX, double posY,
 			double density, double rotation, int body_type, World * world);
 
 public:
@@ -54,7 +54,7 @@ public:
 	static Polygon* get_static_paralelogram(double base, double height, double angle, double posX,
 			double posY, double density, double rotation, World * world);
 	static Polygon* get_static_trapezoid(double height, double base,
-			double top, double posX, double posY, double density, double rotation, World * world);
+			double top, double angle, double posX, double posY, double density, double rotation, World * world);
 
 
 	static Polygon* get_dynamic_regular_polygon(size_t sides, double scale, double posX, double posY,
@@ -66,7 +66,7 @@ public:
 	static Polygon* get_dynamic_paralelogram(double base, double height, double angle, double posX,
 			double posY, double density, double rotation, World * world);
 	static Polygon* get_dynamic_trapezoid(double height, double base,
-			double top, double posX, double posY, double density, double rotation, World * world);
+			double top, double angle, double posX, double posY, double density, double rotation, World * world);
 };
 
 #endif /* Polygon_FACTORY_H_ */

@@ -9,9 +9,20 @@
 #include <math.h>
 
 void Paralelogram::define_vertex(double base, double height, double angle, b2Vec2* vertex) {
-	double y_height = height / 2;
-	double x_def = height/tan(angle);
-	double x_base = (base + x_def) / 2;
+
+	double y_height;
+	double x_def;
+	double x_base;
+
+	if(angle == 0){
+		x_base = base/2;
+		y_height = height/2;
+		x_def = 0;
+	} else {
+		y_height = height / 2;
+		x_def = height/tan(angle);
+		x_base = (base + x_def) / 2;
+	}
 
 	vertex[0] = b2Vec2(-x_base, -y_height);
 	vertex[1] = b2Vec2(base - x_base, -y_height);

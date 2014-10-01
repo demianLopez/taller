@@ -8,6 +8,7 @@
 #include "GestorEscenario.h"
 #include <Box2D/Box2D.h>
 #include <polygons/PolygonFactory.h>
+#include <Logger.h>
 
 GestorEscenario::GestorEscenario() {
 	// TODO Auto-generated constructor stub
@@ -129,8 +130,23 @@ World * GestorEscenario::obtenerMundo(){
 		}
 
 		nuevoPoligono->setColor(objeto.colRGB.red,objeto.colRGB.green, objeto.colRGB.blue);
-
-		if(nuevoPoligono) world->addPolygon(nuevoPoligono);
+		bool todoOk = true;
+		for (auto * alreadyAddedPolygon : world->getPolygonList()){
+			//nuevoPoligono->body->GetFixtureList()->GetShape()
+			b2Shape * shapeNew = (b2Shape*) nuevoPoligono->getBody()->GetFixtureList()->GetShape();
+			b2Shape * shapeAlreadyAdded = (b2Shape*) alreadyAddedPolygon->getBody()->GetFixtureList()->GetShape();
+			if (b2TestOverlap(shapeNew, 0, shapeAlreadyAdded, 0, nuevoPoligono->getBody()->GetTransform(), alreadyAddedPolygon->getBody()->GetTransform())){
+				todoOk = false;
+			}
+		}
+		todoOk = true; //FIXME: kjlhkj
+		if(nuevoPoligono && todoOk){
+			world->addPolygon(nuevoPoligono);
+		}else{
+			world->getBox2DWorld()->DestroyBody(nuevoPoligono->getBody());
+			delete nuevoPoligono;
+			Logger::customLog("GestorEscenario.cpp", Logger::WARNING, "Objetos superpuestos, se elimina el segundo");
+		}
 
 	}
 
@@ -187,7 +203,7 @@ Polygon * GestorEscenario::colocarCirc(objeto figura){
 	if(figura.estatico){
 		return PolygonFactory::get_static_circle(figura.radio*2, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	}
-	return PolygonFactory::get_dynamic_circle(2, 4, 4, 2, 0, world);
+	return PolygonFactory::get_dynamic_circle(figura.radio*2, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	/*
 	cout << "\n Datos Circulo" << endl;
 	cout <<"PosX: " << figura.posX << endl;
@@ -227,9 +243,9 @@ Polygon * GestorEscenario::colocarParal(objeto figura){
 
 Polygon * GestorEscenario::colocarTrap(objeto figura){
 	if(figura.estatico){
-		return PolygonFactory::get_static_trapezoid(figura.alto, figura.base_inferior, figura.base_superior, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
+		return PolygonFactory::get_static_trapezoid(figura.alto, figura.base_inferior, figura.base_superior, figura.angulo, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	}
-	return PolygonFactory::get_dynamic_trapezoid(figura.alto, figura.base_inferior, figura.base_superior, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
+	return PolygonFactory::get_dynamic_trapezoid(figura.alto, figura.base_inferior, figura.base_superior, figura.angulo, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	/*
 	cout << "\n Datos Trapecio" << endl;
 	cout <<"PosX: " << figura.posX << endl;

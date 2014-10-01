@@ -43,6 +43,10 @@ void Polygon::setColor(int r, int g, int b){
 	this->createSDLPoints();
 }
 
+b2Body * Polygon::getBody(){
+	return body;
+}
+
 void Polygon::addB2DPoint(double x, double y){
 	this->pointList.push_back(new b2Vec2(x, y));
 }
@@ -127,6 +131,7 @@ Polygon::~Polygon() {
 	pointList.clear();
 
 	if(this->polygonImage != NULL){
+
 		delete this->polygonImage;
 	}
 }
@@ -136,7 +141,7 @@ void Polygon::render(Graphics * g){
 	b2Vec2 sdlPos = this->world->box2DToSDL(&b2DPos);
 
 	g->drawAtCenter(true);
-	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y,  - this->body->GetAngle() * 57);
+	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y,  - this->body->GetAngle() * 57.2957);
 	g->drawAtCenter(false);
 }
 

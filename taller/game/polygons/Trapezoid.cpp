@@ -20,22 +20,47 @@
 #include "engine/GameElements.h"
 #include <engine/SdlGfx/SDL2_gfxPrimitives.h>
 
-void Trapezoid::define_vertex(double height, double base, double top, b2Vec2* vertex) {
-	double y_height = height / 2;
-	double x_top = top / 2;
-	double x_base = base / 2;
-	vertex[0] = b2Vec2(-x_base, -y_height);
-	vertex[1] = b2Vec2(x_base, -y_height);
-	vertex[2] = b2Vec2(x_top, y_height);
-	vertex[3] = b2Vec2(-x_top, y_height);
+b2Vec2 * Trapezoid::define_vertex(double angle, double height, double base, double top) {
+	 /* if (base>top)
+	    {
+	        if (!(angle <= 3.14/2 )) return NULL;
+	    }
+
+	    else
+	    {
+	        if (!(angle >= 3.14/2 )) return NULL;
+	    }
+	    */
+
+	double a = top;
+	double b = base;
+	double c = height / sin(angle);
+	double secondTriangleBase = base - top - height/tan(angle);
+	double d = sqrt(pow(secondTriangleBase, 2) + pow(height, 2));
+
+	double centerX = (b/2 + ((2*a + b)*(c*c-d*d))/(6*(b*b-a*a)));
+	double centerY = height * 0.5;
+			//((2*a + b) * sqrt((a-b+c+d)*(a-b-c+d)*(a-b+c+d)*(-a+b+c+d))) / (6 * (b*b-a*a));
+
+	double ady = height/tan(angle);
+
+	b2Vec2 * vertex = new b2Vec2[4];
+
+	vertex[0].Set(-centerX,-centerY);
+
+	vertex[1].Set(ady - centerX,height - centerY);
+	ady += top;
+	vertex[2].Set(ady - centerX,height - centerY);
+	vertex[3].Set(base - centerX,-centerY);
+
+	return vertex;
 }
 
-Trapezoid::Trapezoid(double height, double base, double top,  double posX, double posY,
-		double density,double angle, int body_type, World * world) :
+Trapezoid::Trapezoid(double height, double base, double top, double angle,  double posX, double posY,
+		double density, double rotation, int body_type, World * world) :
 				Polygon(body_type) {
 
-	b2Vec2* vertex = new b2Vec2[4];
-	this->define_vertex(height, base, top, vertex);
+	b2Vec2* vertex = this->define_vertex(angle, height, base, top);
 
 	b2PolygonShape polygon_shape;
 	polygon_shape.Set(vertex, 4); //seteo los vertices del poligono
@@ -46,7 +71,7 @@ Trapezoid::Trapezoid(double height, double base, double top,  double posX, doubl
 	body_fixture.friction = friction;
 
 	b2BodyDef body_definition;
-	body_definition.angle = angle;
+	body_definition.angle = rotation;
 
 	if(body_type == Polygon::STATIC){
 		body_definition.type = b2_staticBody;
@@ -58,28 +83,14 @@ Trapezoid::Trapezoid(double height, double base, double top,  double posX, doubl
 
 	this->create_body(&body_definition, &body_fixture, world);
 
+
+
+
 	this->setVertex(vertex);
 	this->createSDLPoints();
 
 
-	//Armado!
 
-/*
-	this->text = SDL_CreateTexture(GameElements::gRenderer, SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET, 200, 200);
-	SDL_SetTextureBlendMode(text, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderTarget(GameElements::gRenderer, text);
-	short int *vX = new short int[3];
-	short int *vY = new short int[3];
-	vX[0] = 10;
-	vX[1] = 100;
-	vX[2] = 180;
-
-	vY[0] = 10;
-	vY[1] = 180;
-	vY[2] = 100;
-	filledPolygonRGBA(GameElements::gRenderer, vX, vY, 3, 255, g, b, 255);
-	SDL_SetRenderTarget(GameElements::gRenderer, NULL);
-	*/
 
 	delete[] vertex;
 }

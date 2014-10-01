@@ -37,6 +37,7 @@ public:
 	virtual ~Polygon();
 
 	b2Vec2 * getPosition();
+	b2Body * getBody();
 
 	virtual void render(Graphics * g);
 

@@ -40,9 +40,9 @@ Polygon* PolygonFactory::get_circle(double diameter, double posX, double posY,
 
 }
 
-Polygon * PolygonFactory::get_trapezoid(double height, double base, double top, double posX, double posY,
+Polygon * PolygonFactory::get_trapezoid(double height, double base, double top, double angle, double posX, double posY,
 		double density, double rotation, int body_type, World * world){
-	return new Trapezoid(height, base, top, posX, posY, density, rotation, body_type, world);
+	return new Trapezoid(height, base, top, angle, posX, posY, density, rotation, body_type, world);
 }
 
 Polygon * PolygonFactory::get_paralelogram(double base, double height, double angle, double posX,
@@ -68,8 +68,8 @@ Polygon* PolygonFactory::get_static_circle(double diameter,
 }
 
 Polygon* PolygonFactory::get_static_trapezoid(double height, double base,
-		double top, double posX, double posY, double density, double rotation, World* world){
-	return get_trapezoid(height, base, top, posX, posY, density, rotation, Polygon::STATIC, world);
+		double top, double angle, double posX, double posY, double density, double rotation, World* world){
+	return get_trapezoid(height, base, top, angle, posX, posY, density, rotation, Polygon::STATIC, world);
 }
 
 Polygon* PolygonFactory::get_static_paralelogram(double base, double height, double angle, double posX,
@@ -95,8 +95,8 @@ Polygon* PolygonFactory::get_dynamic_circle(double diameter,
 }
 
 Polygon * PolygonFactory::get_dynamic_trapezoid(double height, double base,
-		double top, double posX, double posY, double density, double rotation, World * world){
-	return get_trapezoid(height, base, top, posX, posY, density, rotation, Polygon::DYNAMIC, world);
+		double top, double angle, double posX, double posY, double density, double rotation, World * world){
+	return get_trapezoid(height, base, top, angle, posX, posY, density, rotation, Polygon::DYNAMIC, world);
 }
 
 Polygon * PolygonFactory::get_dynamic_paralelogram(double base, double height, double angle, double posX,
