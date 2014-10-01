@@ -40,8 +40,8 @@ struct objeto{
 	double posX = 0 ;
 	double posY = 0 ;
 	double baseParal = 0;
-	double base_menor = 0;
-	double base_mayor = 0;
+	double base_inferior = 0;
+	double base_superior = 0;
 	double angulo = 0;
 	double radio = 0;
 	string color = "#FF00FF";
@@ -65,7 +65,7 @@ public:
 			int lados,
 			double radio,
 			double baseParal,double angulo,
-			double base_mayor,double base_menor);
+			double base_superior,double base_inferior);
 	void obtenerObjetos();
 	Polygon * colocarRect(objeto figura);
 	Polygon * colocarPoli(objeto figura);

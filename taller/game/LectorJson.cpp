@@ -36,8 +36,8 @@ const double ROT_OBJ_D = 0;
 const double MASA_OBJ_D = 1.0;
 const double ESCALA_OBJ_D = 1.0;
 const double ANGULO_OBJ_D = 45.0;
-const double BASE_MAYOR_OBJ_D = 4.0;
-const double BASE_MENOR_OBJ_D = 2.0;
+const double BASE_SUPERIOR_OBJ_D = 4.0;
+const double BASE_INFERIOR_OBJ_D = 2.0;
 const bool EST_OBJ_D = true;
 
 //Tipo de problemas
@@ -304,15 +304,15 @@ void LectorJson::armarTrapecio(Value objeto){
 	string color;
 	bool estado;
 	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado);
-	double baseMayor = this->validarDouble("base_mayor",objeto,BASE_MAYOR_OBJ_D);
+	double baseMayor = this->validarDouble("base_superior",objeto,BASE_SUPERIOR_OBJ_D);
 	if(baseMayor <= 0){
 		logger->reportarProblema("La base mayor del trapecio es invalida. Se carga defecto", WARNING);
-		baseMayor = BASE_MAYOR_OBJ_D;
+		baseMayor = BASE_SUPERIOR_OBJ_D;
 	}
-	double baseMenor = this->validarDouble("base_menor",objeto,BASE_MENOR_OBJ_D);
+	double baseMenor = this->validarDouble("base_inferior",objeto,BASE_INFERIOR_OBJ_D);
 	if(baseMenor <= 0){
 		logger->reportarProblema("La base menor del trapecio es invalida. Se carga defecto", WARNING);
-		baseMayor = BASE_MENOR_OBJ_D;
+		baseMayor = BASE_INFERIOR_OBJ_D;
 	}
 	int angulo = this->validarDouble("angulo",objeto,ANGULO_OBJ_D);
 	if(angulo < 0 || angulo >180){

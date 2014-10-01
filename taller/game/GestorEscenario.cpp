@@ -37,7 +37,7 @@ void GestorEscenario::agregarObjeto(string tipo,double posX,double posY,string c
 			int lados,
 			double radio,
 			double baseParal,double angulo,
-			double base_mayor,double base_menor){
+			double base_superior,double base_inferior){
 	objeto nuevoObjeto;
 	nuevoObjeto.tipo = tipo;
 	nuevoObjeto.posX = posX;
@@ -54,8 +54,8 @@ void GestorEscenario::agregarObjeto(string tipo,double posX,double posY,string c
 	nuevoObjeto.radio = radio;
 	nuevoObjeto.baseParal = baseParal;
 	nuevoObjeto.angulo = angulo;
-	nuevoObjeto.base_mayor = base_mayor;
-	nuevoObjeto.base_menor = base_menor;
+	nuevoObjeto.base_superior = base_superior;
+	nuevoObjeto.base_inferior = base_inferior;
 	this->objetos.push_back(nuevoObjeto);
 }
 
@@ -227,9 +227,9 @@ Polygon * GestorEscenario::colocarParal(objeto figura){
 
 Polygon * GestorEscenario::colocarTrap(objeto figura){
 	if(figura.estatico){
-		return PolygonFactory::get_static_trapezoid(figura.alto, figura.base_menor, figura.base_mayor, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
+		return PolygonFactory::get_static_trapezoid(figura.alto, figura.base_inferior, figura.base_superior, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	}
-	return PolygonFactory::get_dynamic_trapezoid(figura.alto, figura.base_menor, figura.base_mayor, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
+	return PolygonFactory::get_dynamic_trapezoid(figura.alto, figura.base_inferior, figura.base_superior, figura.posX, figura.posY, figura.masa,  figura.rot / 57, world);
 	/*
 	cout << "\n Datos Trapecio" << endl;
 	cout <<"PosX: " << figura.posX << endl;
@@ -241,8 +241,8 @@ Polygon * GestorEscenario::colocarTrap(objeto figura){
 	cout <<"Escala: " << figura.escala << endl;
 	cout <<"Estatico: " << figura.estatico << endl;
 
-	cout << "Base Mayor: " << figura.base_mayor << endl;
-	cout << "Base Menor: " << figura.base_menor << endl;
+	cout << "Base Mayor: " << figura.base_superior << endl;
+	cout << "Base Menor: " << figura.base_inferior << endl;
 	cout << "Angulo: " << figura.angulo << endl;
 	*/
 }

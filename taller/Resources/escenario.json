@@ -75,8 +75,8 @@
 				"rot": 60.0, 
 				"masa": 2.0, 
 				"estatico": false,
-				"base_menor": 2.0,
-				"base_mayor": 4.0,
+				"base_inferior": 2.0,
+				"base_superior": 4.0,
 				"alto": 4.0,
 				"angulo": 45.0 			
 			} 
