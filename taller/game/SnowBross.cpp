@@ -48,7 +48,7 @@ void SnowBross::render(Graphics *g){
 	//Dibujamos fondo!
 	Image * backImage = resources->getBackground();
 	if(backImage != NULL){
-		g->drawImage(backImage, 0, 0, this->getScreenWidth(), this->getScreenHeight());
+		g->drawImage(backImage, 0, 0, this->getFrapImageWidth(), this->getFrapImageHeight());
 	}
 
 	this->backParticleEmiter->render(g);

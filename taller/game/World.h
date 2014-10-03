@@ -28,7 +28,7 @@ public:
 	b2Vec2 box2DToSDL(b2Vec2 * box2DCoord);
 	b2Vec2 SDLToBox2D(b2Vec2 * SDLCoord);
 
-	void setUnits(int wU, int hU, int wP, int hP);
+	void setUnits(int wU, int hU);
 	void setMainCharacter(Jugador * mainCharacter);
 
 	//

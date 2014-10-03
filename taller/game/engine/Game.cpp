@@ -16,6 +16,8 @@ Game::Game(const char *title) {
 	//Seteo por default
 	this->height = 600;
 	this->width = 800;
+	this->frapImageWidth = 800;
+	this->frapImageHeight = 600;
 	this->gWindow = NULL;
 	this->gScreenSurface = NULL;
 	this->gRenderer = NULL;
@@ -48,6 +50,12 @@ void Game::setMaxFPS(int maxFPS){
 	this->maxFPS = maxFPS;
 }
 
+void Game::setFrapImageSize(int width, int height){
+	this->frapImageWidth = width;
+	this->frapImageHeight = height;
+}
+
+
 void Game::setScreenSize(int width, int height){
 	this->height = height;
 	this->width = width;
@@ -55,6 +63,14 @@ void Game::setScreenSize(int width, int height){
 
 unsigned int Game::getFPS(){
 	return this->fps;
+}
+
+int Game::getFrapImageHeight(){
+	return this->frapImageHeight;
+}
+
+int Game::getFrapImageWidth(){
+	return this->frapImageWidth;
 }
 
 unsigned int Game::getElapsedTime(){
@@ -142,6 +158,7 @@ bool Game::gameCicle(){
 	}
 
 	Graphics *g = new Graphics(this->gFont);
+	Image * frapImage = new Image(this->frapImageWidth, this->frapImageHeight);
 
 	SDL_Event e;
 
@@ -181,17 +198,11 @@ bool Game::gameCicle(){
 
 		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
 		SDL_RenderClear(gRenderer);
-
+		SDL_SetRenderTarget(GameElements::gRenderer, frapImage->getImageTexture());
+		SDL_RenderClear(gRenderer);
 
 		this->render(g);
 		this->lastRenderTime = SDL_GetTicks();
-
-		if(this->sfps){
-			fpsText.clear();
-			fpsText.str("");
-			fpsText<<this->getFPS()<< " FPS";
-			g->drawText(10, 10, fpsText.str().c_str());
-		}
 
 		this->renderCount++;
 
@@ -199,6 +210,16 @@ bool Game::gameCicle(){
 			this->fps = this->renderCount;
 			this->renderCount = 0;
 			this->lastFPSUpdateTime = SDL_GetTicks();
+		}
+
+		SDL_SetRenderTarget(GameElements::gRenderer, NULL);
+		frapImage->render(0, 0, this->width, this->height);
+
+		if(this->sfps){
+			fpsText.clear();
+			fpsText.str("");
+			fpsText<<this->getFPS()<< " FPS";
+			g->drawText(10, 10, fpsText.str().c_str());
 		}
 
 		SDL_RenderPresent(gRenderer);
@@ -211,6 +232,7 @@ bool Game::gameCicle(){
 	Logger::customLog("Game.cpp", Logger::INFO, "Funcion de cierre finalizada");
 	Logger::customLog("Game.cpp", Logger::INFO, "Cerrando componentes de SDL");
 	this->gameClose();
+	delete frapImage;
 	return continues;
 }
 

@@ -102,7 +102,7 @@ void imprimirRGB(objeto figura){
 
 World * GestorEscenario::obtenerMundo(){
 	world = new World(new b2Vec2(0, -20));
-	world->setUnits(elEscenario.anchoun, elEscenario.altoun, elEscenario.anchopx,elEscenario.altopx);
+	world->setUnits(elEscenario.anchoun, elEscenario.altoun);
 
 	world->loadResources();
 	world->getResources()->loadBackground(elEscenario.imagen_fondo.c_str());

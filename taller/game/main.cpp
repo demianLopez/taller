@@ -19,6 +19,7 @@ int main(int argc, char *argv[]){
 
 		SnowBross *pE = new SnowBross("Snow Bross");
 		pE->setScreenSize(gE->datos().anchopx, gE->datos().altopx);
+		pE->setFrapImageSize(gE->datos().anchoun * 20, gE->datos().altoun * 20);
 		pE->instantiate();
 		pE->setWorld(gE->obtenerMundo());
 
