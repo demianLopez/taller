@@ -96,6 +96,8 @@ void Polygon::createSDLPoints(){
 
 	short int c = 0;
 	b2Vec2 sdlSize = this->world->box2DToSDLSize(&b2DSize);
+	sdlSize.x *= 1.5;
+	sdlSize.y *= 1.5;
 
 	if(((int) sdlSize.x)%2 == 0){
 		sdlSize.x++;

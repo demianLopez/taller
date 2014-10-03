@@ -86,7 +86,7 @@
 				"rot": 0.0, 
 				"masa": 2.0, 
 				"estatico": false,
-				"lados": 6 
+				"lados": 3
 			}		
 		] 
 	} 
