@@ -19,18 +19,18 @@
 				"masa": 1.0, 
 				"estatico": false,
 				"ancho": 8.0,
-				"alto": 3.0 
+				"alto": 2.8 
 			}, 
 			{
 				"tipo": "rect",
-				"x": 23.4, 
-				"y": 19.5, 
+				"x": 23.5, 
+				"y": 19.3, 
 				"color": "#000033",
 				"rot": 0.0, 
 				"masa": 1.0, 
 				"estatico": true,
 				"ancho": 15.0,
-				"alto": 3.0 
+				"alto": 2.8 
 			},
 			{ 
 				"tipo": "paral",
@@ -46,14 +46,14 @@
 			}, 
 			{
 				"tipo": "rect",
-				"x": 48.5, 
-				"y": 29.35, 
+				"x": 48.4, 
+				"y": 29.5, 
 				"color": "#000033",
 				"rot": 0.0, 
 				"masa": 1.0, 
 				"estatico": true,
 				"ancho": 15.0,
-				"alto": 3.0
+				"alto": 2.8
 			}, 
 			{ 
 				"tipo": "circ", 
@@ -74,7 +74,7 @@
 				"masa": 1.0, 
 				"estatico": true,
 				"ancho": 10.0,
-				"alto": 3.0 
+				"alto": 2.8 
 			},
 			{
 				"tipo": "rect",

@@ -13,8 +13,8 @@ const char* ESCENARIO_X_DEFECTO = "Resources/escenario.json";
 //Valores por defecto escenario
 const int ALTOPX_D = 720;
 const int ANCHOPX_D = 1024;
-const int ALTOPX_MIN_D = 600;
-const int ANCHOPX_MIN_D = 800;
+const int ALTOPX_MIN_D = 50;
+const int ANCHOPX_MIN_D = 50;
 const int ALTOUN_D = 100;
 const int ANCHOUN_D = 50;
 const string IMAGEN_FONDO_D = "Resources/font1.png";
@@ -166,12 +166,12 @@ void LectorJson::obtenerEscenario(Value raiz){
 	else{
 		int altopx = validarInt("altopx",escenario,ALTOPX_D, "escenario");
 		if (altopx < ALTOPX_MIN_D){
-			logger->reportarProblema("No se permite altura de ventana menor a 600. Se carga tamano por defecto.",WARNING);
+			logger->reportarProblema("No se permite altura de ventana menor a 50. Se carga tamano por defecto.",WARNING);
 			altopx = ALTOPX_MIN_D;
 		}
 		int anchopx = validarInt("anchopx",escenario,ALTOPX_D, "escenario");
 		if (anchopx < ANCHOPX_MIN_D){
-				logger->reportarProblema("No se permite ancho de ventana menor a 800. Se carga tamano por defecto.",WARNING);
+				logger->reportarProblema("No se permite ancho de ventana menor a 50. Se carga tamano por defecto.",WARNING);
 				altopx = ANCHOPX_MIN_D;
 		}
 		int altoun = validarInt("altoun",escenario,ALTOPX_D, "escenario");
