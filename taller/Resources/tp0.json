@@ -12,7 +12,7 @@
 		"objetos": [
 			{
 				"tipo": "rect",
-				"x": 5.0, 
+				"x": 5, 
 				"y": 20.0, 
 				"color": "#FF00FF",
 				"rot": 0.0, 

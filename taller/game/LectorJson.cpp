@@ -80,9 +80,13 @@ double LectorJson::validarDouble(string miembro, Value raiz, double valorDefecto
 		return valorDefecto;
 	}
 	if (!clave.isDouble()){
-		logger->reportarProblema("El miembro '"+miembro+ "' no es double en objeto: "  +codigoObjeto+ ". Cargo double por defecto." ,WARNING);
-		return valorDefecto;
+		if(clave.isInt())
+			return (clave.asDouble());
+		else{
+			logger->reportarProblema("El miembro '"+miembro+ "' no es un valor valido en objeto: "  +codigoObjeto+ ". Cargo double por defecto." ,WARNING);
+			return valorDefecto;
 		}
+	}
 	return (clave.asDouble());
 }
 
