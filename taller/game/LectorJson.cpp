@@ -234,13 +234,13 @@ void LectorJson::armarRectangulo(Value objeto){
 	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "rectangulo");
 
 	double alto = this->validarDouble("alto",objeto,ALTO_OBJ_D, "rectangulo");
-	if (alto < 1){
-		logger->reportarProblema("La altura del rectangulo no puede ser menor a 1. Se establece altura por defecto.",WARNING);
+	if (alto <= 0){
+		logger->reportarProblema("La altura del rectangulo no puede ser menor o igual a 0. Se establece altura por defecto.",WARNING);
 		alto = ALTO_OBJ_D;
 	}
 	double ancho = this->validarDouble("ancho",objeto,ANCHO_OBJ_D, "rectangulo");
-	if (ancho < 1){
-			logger->reportarProblema("El ancho del rectangulo no puede ser menor a 1. Se establece ancho por defecto.",WARNING);
+	if (ancho <= 0){
+			logger->reportarProblema("El ancho del rectangulo no puede ser menor o igual a 0. Se establece ancho por defecto.",WARNING);
 			ancho = ALTO_OBJ_D;
 		}
 	elEscenario->agregarObjeto("rect",posx,posy,color,rot,masa,escala,estado,alto,ancho,0,0,0,0,0,0);
@@ -288,8 +288,8 @@ void LectorJson::armarParalelogramo(Value objeto){
 		baseParal = BASE_OBJ_D;
 	}
 	double alto = this->validarDouble("alto",objeto,ALTO_OBJ_D, "paralelogramo");
-	if (alto < 1){
-		logger->reportarProblema("La altura del paralelogramo no puede ser menor a 1. Se establece altura por defecto.",WARNING);
+	if (alto <= 0){
+		logger->reportarProblema("La altura del paralelogramo no puede ser menor o igual a 0. Se establece altura por defecto.",WARNING);
 		alto = ALTO_OBJ_D;
 	}
 	double angulo = this->validarDouble("angulo",objeto,ANGULO_OBJ_D, "paralelogramo");
@@ -388,6 +388,7 @@ void LectorJson::cargarEscenario(const char* rutaArchivo){
 		Value raiz;
 		bool parseExitoso = lector.parse(archivoJson, raiz, false );
 		if (!parseExitoso){
+			string errores = lector.getFormatedErrorMessages();
 			logger->reportarProblema("Error de parseo. Carga Escenario por defecto", ERROR);
 			this->cargarEscenario(ESCENARIO_X_DEFECTO);
 			return;

@@ -4,7 +4,7 @@
 		"anchopx": 800,
 		"altoun": 60,
 		"anchoun": 80,
-		"imagen_fondo": "font1.png",
+		"imagen_fondo": "Resources/font1.png",
 		"personaje": {
 			"x": 500,
 			"y": 600
@@ -79,7 +79,7 @@
 			{
 				"tipo": "rect",
 				"x": 0.0, 
-				"y": -0.4, 
+				"y": 0.0, 
 				"color": "#000033",
 				"rot": 0.0, 
 				"masa": 1.0, 
@@ -89,7 +89,7 @@
 			},
 			{
 				"tipo": "rect",
-				"x": -0.5, 
+				"x": -0.1, 
 				"y": 0.0, 
 				"color": "#FFFFFF",
 				"rot": 90.0, 
@@ -100,7 +100,7 @@
 			},
 			{
 				"tipo": "rect",
-				"x": 80.5, 
+				"x": 80.1, 
 				"y": 0.0, 
 				"color": "#FFFFFF",
 				"rot": 90.0, 
