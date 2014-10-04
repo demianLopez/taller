@@ -378,6 +378,11 @@ void LectorJson::cargarEscenario(const char* rutaArchivo){
 		}
 	}
 	else{
+		if(archivoJson.get() != '{'){
+			this->cargarEscenario(ESCENARIO_X_DEFECTO);
+			return;
+		}
+		archivoJson.unget();
 		Reader lector;
 		Value raiz;
 		bool parseExitoso = lector.parse(archivoJson, raiz, false );
