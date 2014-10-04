@@ -379,6 +379,7 @@ void LectorJson::cargarEscenario(const char* rutaArchivo){
 	}
 	else{
 		if(archivoJson.get() != '{'){
+			logger->reportarProblema("El escenario que se quiere cargar esta corrupto en el origen. Carga Escenario por defecto.", ERROR);
 			this->cargarEscenario(ESCENARIO_X_DEFECTO);
 			return;
 		}
