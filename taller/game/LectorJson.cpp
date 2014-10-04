@@ -389,7 +389,7 @@ void LectorJson::cargarEscenario(const char* rutaArchivo){
 		bool parseExitoso = lector.parse(archivoJson, raiz, false );
 		if (!parseExitoso){
 			string errores = lector.getFormatedErrorMessages();
-			logger->reportarProblema("Error de parseo. Carga Escenario por defecto", ERROR);
+			logger->reportarProblema("Error de parseo en:"+errores+"Carga Escenario por defecto", ERROR);
 			this->cargarEscenario(ESCENARIO_X_DEFECTO);
 			return;
 		}
