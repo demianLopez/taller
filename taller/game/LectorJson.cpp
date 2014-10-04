@@ -24,8 +24,7 @@ const int POSX_D = 100;
 const int POSY_D = 100;
 
 //Valores por defecto objeto
-const double POSX_OBJ_D = 5.0;
-const double POSY_OBJ_D = 90.0;
+const double POS_OBJ_INV = -1.111;
 const double ANCHO_OBJ_D = 1.0;
 const double ALTO_OBJ_D = 1.0;
 const int LADOS_OBJ_D = 3;
@@ -44,6 +43,8 @@ const bool EST_OBJ_D = true;
 const int ERROR = 1;
 const int WARNING = 2;
 const int FATAL = 3;
+const int INVALIDO = -1;
+const int OK = 0;
 
 
 LectorJson::LectorJson() {
@@ -199,16 +200,18 @@ void LectorJson::obtenerEscenario(Value raiz){
 
 }
 
-void LectorJson::validarComunes(Value objeto,double *posx,double *posy,double *rot,double *masa,string *color,double *escala,bool *estado, string codigoObjeto){
-	double x = this->validarDouble("x",objeto,elEscenario->datos().anchopx/2.0, codigoObjeto);
-	if ( x >= elEscenario->datos().anchopx ){
-		logger->reportarProblema("Posicion del objeto en x no se permite. Se genera una.",WARNING);
-		x= elEscenario->datos().anchopx/2.0; // Pongo el objeto en el medio en caso de que este mal.
-	}
-	double y = this->validarDouble("y",objeto,elEscenario->datos().altopx/2.0, codigoObjeto);
-	if ( y >= elEscenario->datos().altopx){
-		logger->reportarProblema("Posicion del objeto en y no se permite. Se genera una.",WARNING);
-		y = elEscenario->datos().altopx/2.0;
+int genRand(int max){
+	time_t seconds;
+	time(&seconds);
+	srand( (unsigned int) seconds);
+	return (rand()%max);
+}
+
+int LectorJson::validarComunes(Value objeto,double *posx,double *posy,double *rot,double *masa,string *color,double *escala,bool *estado, string codigoObjeto){
+	double x = this->validarDouble("x",objeto,POS_OBJ_INV, codigoObjeto);
+	double y = this->validarDouble("y",objeto,POS_OBJ_INV, codigoObjeto);
+	if (x==POS_OBJ_INV || y == POS_OBJ_INV){
+		return INVALIDO;
 	}
 	double rotacion = this->validarDouble("rot",objeto,ROT_OBJ_D, codigoObjeto);
 	if (rotacion < 0 || rotacion >360){
@@ -229,13 +232,17 @@ void LectorJson::validarComunes(Value objeto,double *posx,double *posy,double *r
 	*masa = mass;
 	*color = col;
 	*estado = state;
+	return OK;
 }
 
 void LectorJson::armarRectangulo(Value objeto){
 	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "rectangulo");
+	if( INVALIDO == this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "rectangulo")){
+		logger->reportarProblema("La posicion es invalida, no se puede colocar el objeto rectangulo.",WARNING);
+		return;
+	}
 
 	double alto = this->validarDouble("alto",objeto,ALTO_OBJ_D, "rectangulo");
 	if (alto <= 0){
@@ -254,7 +261,10 @@ void LectorJson::armarPoligon(Value objeto){
 	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "poligono");
+	if(INVALIDO == this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "poligono")){
+		logger->reportarProblema("La posicion es invalida, no se puede colocar el objeto poligono.",WARNING);
+		return;
+	}
 	int lados = this->validarInt("lados",objeto,LADOS_OBJ_D, "poligono");
 	if (lados < 3 || lados > 6){
 		logger->reportarProblema("La cantidad de lados es invalida. Se carga defecto", WARNING);
@@ -272,7 +282,10 @@ void LectorJson::armarCirculo(Value objeto){
 	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "circulo");
+	if(INVALIDO == this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "circulo")){
+		logger->reportarProblema("La posicion es invalida, no se puede colocar el objeto circulo.",WARNING);
+		return;
+	}
 	double radio = this->validarDouble("radio",objeto,RADIO_OBJ_D, "circulo");
 	if (radio <= 0){
 		logger->reportarProblema("El radio es invalido. Se carga el radio por defecto", WARNING);
@@ -285,7 +298,10 @@ void LectorJson::armarParalelogramo(Value objeto){
 	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "paralelogramo");
+	if(INVALIDO == this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "paralelogramo")){
+		logger->reportarProblema("La posicion es invalida, no se puede colocar el objeto paralelogramo.",WARNING);
+		return;
+	}
 	double baseParal = this->validarDouble("base",objeto,BASE_OBJ_D, "paralelogramo");
 	if (baseParal <= 0){
 		logger->reportarProblema("La base del paralelogramo es negativa. Se carga defecto", WARNING);
@@ -309,15 +325,18 @@ void LectorJson::armarTrapecio(Value objeto){
 	double posx,posy,rot,masa,escala;
 	string color;
 	bool estado;
-	this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "trapecio");
+	if(INVALIDO == this->validarComunes(objeto,&posx,&posy,&rot,&masa,&color,&escala,&estado, "trapecio")){
+		logger->reportarProblema("La posicion es invalida, no se puede colocar el objeto trapecio.",WARNING);
+		return;
+	}
 	double baseMayor = this->validarDouble("base_superior",objeto,BASE_SUPERIOR_OBJ_D, "trapecio");
 	if(baseMayor <= 0){
-		logger->reportarProblema("La base mayor del trapecio es invalida. Se carga defecto", WARNING);
+		logger->reportarProblema("La base superior del trapecio es invalida. Se carga defecto", WARNING);
 		baseMayor = BASE_SUPERIOR_OBJ_D;
 	}
 	double baseMenor = this->validarDouble("base_inferior",objeto,BASE_INFERIOR_OBJ_D, "trapecio");
 	if(baseMenor <= 0){
-		logger->reportarProblema("La base menor del trapecio es invalida. Se carga defecto", WARNING);
+		logger->reportarProblema("La base inferior del trapecio es invalida. Se carga defecto", WARNING);
 		baseMayor = BASE_INFERIOR_OBJ_D;
 	}
 	double angulo = this->validarDouble("angulo",objeto,ANGULO_OBJ_D, "trapecio");
@@ -349,7 +368,7 @@ void LectorJson::obtenerObjetos(Value raiz){
 void LectorJson::crearObjeto(Value objeto){
 	Value tipo = objeto["tipo"];
 	if(tipo.isNull()){
-		logger->reportarProblema("El Tipo del objeto no esta definido, no se puede crear", WARNING);
+		logger->reportarProblema("El Tipo del objeto no esta definido, no se puede crear.", WARNING);
 	}
 	else{
 		string tipo_s = tipo.asString();
@@ -364,7 +383,7 @@ void LectorJson::crearObjeto(Value objeto){
 		else if (tipo_s == "trap")
 			this->armarTrapecio(objeto);
 		else
-			logger->reportarProblema("Tipo de objeto "+tipo.asString()+" no esta definido, no se puede crear", WARNING);
+			logger->reportarProblema("Tipo de objeto '"+tipo.asString()+"' no esta definido, no se puede crear.", WARNING);
 		}
 }
 

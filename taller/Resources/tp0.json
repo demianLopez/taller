@@ -108,7 +108,7 @@
 				"estatico": true,
 				"ancho": 180.0,
 				"alto": 0.01 
-			},     
+			}, 		 		     
 			{ 
 				"tipo": "poli", 
 				"x": 17.0, 

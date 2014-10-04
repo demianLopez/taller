@@ -26,7 +26,7 @@ private:
 	string validarColor(string miembro,Value raiz, string valorDefecto, string codigoObjeto);
 	string validarImagen(string miembro,Value raiz, string valorDefecto, string codigoObjeto);
 	bool validarBool(string miembro,Value raiz, bool valorDefecto, string codigoObjeto);
-	void validarComunes(Value objeto,double *posx,double *posy,double *rot,double *masa,string *color,double *escala,bool *estado, string codigoObjeto);
+	int validarComunes(Value objeto,double *posx,double *posy,double *rot,double *masa,string *color,double *escala,bool *estado, string codigoObjeto);
 	void obtenerEscenario(Value raiz);
 	void obtenerObjetos(Value raiz);
 	void crearObjeto(Value objeto);
