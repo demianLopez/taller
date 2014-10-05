@@ -8,7 +8,7 @@
 #include "Game.h"
 #include "Image.h"
 #include "Graphics.h"
-#include <Logger.h>
+#include "../../common/Logger.h"
 #include <stdio.h>
 
 

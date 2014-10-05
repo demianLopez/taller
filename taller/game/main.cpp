@@ -5,7 +5,9 @@
 #include "SnowBross.h"
 #include "Jugador.h"
 #include "LectorJson.h"
-#include <Logger.h>
+#include "../common/Logger.h"
+#include "engine/game.h"
+
 using namespace std;
 
 int main(int argc, char *argv[]){
