@@ -43,6 +43,8 @@ public:
 
 	void setColor(int r, int g, int b);
 
+	bool isStatic();
+
 protected:
 
 	b2Body* body;

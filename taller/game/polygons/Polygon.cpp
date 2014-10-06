@@ -151,6 +151,10 @@ bool Polygon::shouldIRender(){
 	return !this->world->isOutOfWorld(this->body->GetPosition());
 }
 
+bool Polygon::isStatic(){
+	return body->GetType() == b2_staticBody;
+}
+
 b2Vec2 * Polygon::getPosition(){
 	return (b2Vec2*)&this->body->GetPosition();
 }

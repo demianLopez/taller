@@ -8,7 +8,7 @@
 #include "GestorEscenario.h"
 #include <Box2D/Box2D.h>
 #include <polygons/PolygonFactory.h>
-#include <Logger.h>
+#include "../common/Logger.h"
 
 GestorEscenario::GestorEscenario() {
 	// TODO Auto-generated constructor stub
@@ -99,7 +99,6 @@ void imprimirRGB(objeto figura){
 	cout << "Azul:" << figura.colRGB.blue << endl;
 }
 
-
 World * GestorEscenario::obtenerMundo(){
 	world = new World(new b2Vec2(0, -20));
 	world->setUnits(elEscenario.anchoun, elEscenario.altoun);
@@ -132,14 +131,13 @@ World * GestorEscenario::obtenerMundo(){
 		nuevoPoligono->setColor(objeto.colRGB.red,objeto.colRGB.green, objeto.colRGB.blue);
 		bool todoOk = true;
 		for (auto * alreadyAddedPolygon : world->getPolygonList()){
-			//nuevoPoligono->body->GetFixtureList()->GetShape()
 			b2Shape * shapeNew = (b2Shape*) nuevoPoligono->getBody()->GetFixtureList()->GetShape();
 			b2Shape * shapeAlreadyAdded = (b2Shape*) alreadyAddedPolygon->getBody()->GetFixtureList()->GetShape();
-			if (b2TestOverlap(shapeNew, 0, shapeAlreadyAdded, 0, nuevoPoligono->getBody()->GetTransform(), alreadyAddedPolygon->getBody()->GetTransform())){
+			if (!bothStatic(alreadyAddedPolygon, nuevoPoligono) &&
+				b2TestOverlap(shapeNew, 0, shapeAlreadyAdded, 0, nuevoPoligono->getBody()->GetTransform(), alreadyAddedPolygon->getBody()->GetTransform())){
 				todoOk = false;
 			}
 		}
-		todoOk = true; //FIXME: kjlhkj
 		if(nuevoPoligono && todoOk){
 			world->addPolygon(nuevoPoligono);
 		}else{
@@ -282,5 +280,9 @@ rgb GestorEscenario::obtenerRGB(string color){
 	colores.green = this->calcularColor(color[3],color[4]);
 	colores.blue = this->calcularColor(color[5],color[6]);
 	return colores;
+}
+
+bool GestorEscenario::bothStatic(Polygon * aPolygon, Polygon * anotherPolygon){
+	return aPolygon->isStatic() && anotherPolygon->isStatic();
 }
 

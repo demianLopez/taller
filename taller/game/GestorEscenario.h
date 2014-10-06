@@ -81,6 +81,8 @@ private:
 	vector<objeto> objetos;
 	World * world;
 
+	bool bothStatic(Polygon * aPolygon, Polygon * anotherPolygon);
+
 };
 
 #endif /* GESTORESCENARIO_H_ */
