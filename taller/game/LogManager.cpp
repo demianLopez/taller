@@ -6,7 +6,7 @@
  */
 
 #include "LogManager.h"
-#include <Logger.h>
+#include "../common/Logger.h"
 
 const char* RUTA_LOG = "Resources/log.txt";
 
