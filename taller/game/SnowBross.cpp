@@ -45,10 +45,15 @@ void SnowBross::init(){
 	float xMax = ((float)wSize->x * 20)/this->getScreenWidth();
 	float yMax = ((float)wSize->y * 20)/this->getScreenHeight();
 
+	Resources * resources = this->gameWorld->getResources();
+	Image * backImage = resources->getBackground();
+
 	if(xMax > yMax){
 		this->maxZoomScale = yMax;
+		this->zoomFontConv =  (float)(backImage->getHeight()) / (wSize->y * 20);
 	} else {
 		this->maxZoomScale = xMax;
+		this->zoomFontConv =  (float)(backImage->getWidth())  / (wSize->x * 20);
 	}
 }
 
@@ -64,14 +69,40 @@ void SnowBross::exit(){
 }
 
 void SnowBross::render(Graphics *g){
-	//PRE RENDERING!
+	//CALCULOS PREVIOS A RENDER!
 	Resources * resources = this->gameWorld->getResources();
-
-
-	//Dibujamos fondo!
 	Image * backImage = resources->getBackground();
+
+	b2Vec2 * box2dWorld = gameWorld->getBox2DWorldSize();
+	b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
+
+	b2Vec2 fontPlayerPos(playerPos.x/box2dWorld->x * backImage->getWidth(),
+			backImage->getHeight() - playerPos.y/box2dWorld->y * backImage->getHeight());
+
+	playerPos = gameWorld->box2DToSDL(&playerPos);
+
+	int screenW = this->getScreenWidth();
+	int screenH = this->getScreenHeight();
+	int tdX = screenW * this->zoomScale;
+	int tdY = screenH * this->zoomScale;
+	int tXo = playerPos.x - tdX/2;
+	int tYo = playerPos.y - tdY/2;
+
+	if((tXo + tdX) > worldImage->getWidth()){
+		tXo = worldImage->getWidth() - tdX;
+	}if(tXo < 0){
+		tXo = 0;
+	}if((tYo + tdY) > worldImage->getHeight()){
+		tYo = worldImage->getHeight() - tdY;
+	}if(tYo < 0){
+		tYo = 0;
+	}
+
+	float pX = (float)(backImage->getWidth() - screenW)/(float)(worldImage->getWidth() - screenW);
+	float pY = (float)(backImage->getHeight() - screenH)/(float)(worldImage->getHeight() - screenH);
+
 	if(backImage != NULL){
-		g->drawImage(backImage, 0, 0, this->getScreenWidth(), this->getScreenHeight());
+		g->drawImage(backImage, 0, 0,pX * tXo,pY * tYo, tdX * this->zoomFontConv, tdY * this->zoomFontConv, screenW, screenH);
 	}
 
 	this->backParticleEmiter->render(g);
@@ -91,8 +122,6 @@ void SnowBross::render(Graphics *g){
 
 
 	g->drawAtCenter(true);
-	b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
-	playerPos = gameWorld->box2DToSDL(&playerPos);
 
 	b2Vec2 playerSize = this->gameWorld->getMainCharacter()->getSize();
 	playerSize =  this->gameWorld->box2DToSDLSize(&playerSize);
@@ -104,30 +133,7 @@ void SnowBross::render(Graphics *g){
 
 	g->drawAtCenter(false);
 
-	int dX = this->getScreenWidth();
-	int dY = this->getScreenHeight();
-	int tdX = this->getScreenWidth() * this->zoomScale;
-	int tdY = this->getScreenHeight() * this->zoomScale;
-	int fXo = playerPos.x - tdX/2;
-	int fYo = playerPos.y - tdY/2;
-
-	if((fXo + tdX) > worldImage->getWidth()){
-		fXo = worldImage->getWidth() - tdX;
-	}
-
-	if(fXo < 0){
-		fXo = 0;
-	}
-
-	if((fYo + tdY) > worldImage->getHeight()){
-		fYo = worldImage->getHeight() - tdY;
-	}
-
-	if(fYo < 0){
-		fYo = 0;
-	}
-
-	g->drawImage(this->worldImage, 0, 0, fXo, fYo,tdX, tdY, dX, dY);
+	g->drawImage(this->worldImage, 0, 0, tXo, tYo,tdX, tdY, screenW, screenH);
 
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
@@ -151,13 +157,13 @@ void SnowBross::keyEvent(SDL_Event e) {
 					this->gameWorld->getMainCharacter()->jump();
 				}
 				break;
-			case SDLK_KP_PLUS:
+			case SDLK_KP_MINUS:
 				this->zoomScale += ZOOM_INCREMENT;
 				if(this->zoomScale > this->maxZoomScale){
 					this->zoomScale = this->maxZoomScale;
 				}
 				break;
-			case SDLK_KP_MINUS:
+			case SDLK_KP_PLUS:
 				this->zoomScale -= ZOOM_INCREMENT;
 				if(this->zoomScale < this->minZoomScale){
 					this->zoomScale = this->minZoomScale;

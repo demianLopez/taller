@@ -38,6 +38,8 @@ private:
 	float maxZoomScale;
 	float minZoomScale;
 
+	float zoomFontConv;
+
 };
 
 #endif /* SNOWBROSS_H_ */
