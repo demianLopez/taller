@@ -10,11 +10,13 @@
 
 #include <iostream>
 #include "LibIncludes.h"
+#include "Graphics.h"
 
 class GameElements {
 public:
 	GameElements();
 
+	static Graphics * getGraphicsInstance();
 	static SDL_Surface *gScreenSurface;
 	static SDL_Renderer* gRenderer;
 	static TTF_Font *gFont;

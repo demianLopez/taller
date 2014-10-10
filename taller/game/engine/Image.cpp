@@ -29,11 +29,6 @@ Image::Image(int width, int height){
 	this->centerRotation = NULL;
 }
 
-Graphics * Image::getGraphics(){
-	SDL_SetRenderTarget(GameElements::gRenderer, this->gImageTexture);
-	return new Graphics(GameElements::gFont);
-}
-
 Image::Image(){
 	this->gImage = NULL;
 	this->gImageTexture = NULL;

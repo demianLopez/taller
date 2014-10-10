@@ -16,6 +16,10 @@ Graphics::Graphics(TTF_Font * font) {
 	this->dAtCenter = false;
 }
 
+void Graphics::setRendererObject(Image *image){
+	SDL_SetRenderTarget(GameElements::gRenderer, image->getImageTexture());
+}
+
 void Graphics::drawImage(Image *image){
 	this->drawImage(image, 0, 0);
 }

@@ -37,9 +37,6 @@ public:
 	int getWidth();
 
 	void setRotationPoint(int x, int y);
-
-	Graphics * getGraphics();
-
 private:
 	SDL_Surface *loadSurface(const char* pFile);
 	SDL_Point* centerRotation;

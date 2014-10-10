@@ -16,6 +16,10 @@ GameElements::GameElements() {
 
 }
 
+Graphics * GameElements::getGraphicsInstance(){
+	return new Graphics(GameElements::gFont);
+}
+
 GameElements::~GameElements() {
 	// TODO Auto-generated destructor stub
 }

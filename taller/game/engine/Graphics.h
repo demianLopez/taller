@@ -17,6 +17,9 @@ class Graphics {
 public:
 	Graphics(TTF_Font * font);
 	virtual ~Graphics();
+
+	void setRendererObject(Image * image);
+
 	//Renderiza en pantalla la imagen "image"
 	void drawImage(Image *image);
 	//Renderiza en la pantalla una imagen comenzada a dibujar desde x, y

@@ -118,12 +118,13 @@ void Polygon::createSDLPoints(){
 	}
 
 	this->polygonImage = new Image(sdlSize.x, sdlSize.y);
-	Graphics * g = this->polygonImage->getGraphics();
-	SDL_SetRenderTarget(GameElements::gRenderer, this->polygonImage->getImageTexture());
+	Graphics * g = new Graphics(GameElements::gFont);
+	g->setRendererObject(this->polygonImage);
 	g->drawFillPolygon(vX, vY, pointSize, this->r, this->g, this->b);
 
 	delete[] vX;
 	delete[] vY;
+	delete g;
 }
 
 Polygon::~Polygon() {

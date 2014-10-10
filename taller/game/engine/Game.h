@@ -20,7 +20,6 @@ class Game {
 public:
 	Game(const char* title);
 	void setScreenSize(int width, int height);
-	void setFrapImageSize(int width, int height);
 	unsigned int getFPS();
 	unsigned int getElapsedTime();
 	void setMaxFPS(int maxFPS);
@@ -32,20 +31,12 @@ public:
 	int getScreenHeight();
 	int getScreenWidth();
 
-	int getFrapImageHeight();
-	int getFrapImageWidth();
-
-
-
 	void showFPS(bool showFPS);
 
 	virtual ~Game();
 private:
 	int height;
 	int width;
-
-	int frapImageWidth;
-	int frapImageHeight;
 
 	const char* title;
 
