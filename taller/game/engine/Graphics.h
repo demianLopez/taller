@@ -31,7 +31,7 @@ public:
 	void drawImage(Image *image, int xo, int yo, int dx, int dy, float rotation);
 
 	void drawImage(Image *image, int xo, int yo, float rotation);
-	void drawImage(Image * image, int xo, int yo, int txo, int tyo, int dx, int dy);
+	void drawImage(Image * image, int xo, int yo, int txo, int tyo, int tdx, int tdy, int dx, int dy);
 
 	void drawAnimation(Animation * animation, int xo, int yo);
 	void drawAnimation(Animation * animation, int xo, int yo, float rotation);

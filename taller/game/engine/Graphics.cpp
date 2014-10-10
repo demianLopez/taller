@@ -28,12 +28,8 @@ void Graphics::setRendererObject(Image *image){
 	}
 }
 
-void Graphics::drawImage(Image * image, int xo, int yo, int txo, int tyo, int dx, int dy){
-	if(this->dAtCenter){
-		image->render(xo, yo, txo - dx/2, tyo - dy/2, dx, dy);
-	} else {
-		image->render(xo, yo, txo, tyo, dx, dy);
-	}
+void Graphics::drawImage(Image * image, int xo, int yo, int txo, int tyo, int tdx, int tdy, int dx, int dy){
+	image->render(xo, yo, txo, tyo, tdx, tdy, dx, dy);
 }
 
 void Graphics::drawImage(Image *image){

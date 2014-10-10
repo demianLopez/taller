@@ -49,9 +49,9 @@ void Image::render(int xo, int yo, int dx, int dy){
 	this->render(xo, yo, dx, dy, 0);
 }
 
-void Image::render(int xo, int yo, int txo, int tyo, int dx, int dy){
+void Image::render(int xo, int yo, int txo, int tyo, int tdx, int tdy, int dx, int dy){
 	SDL_Rect imageData = {xo, yo, dx, dy};
-	SDL_Rect imagePortion = {txo, tyo, dx, dy};
+	SDL_Rect imagePortion = {txo, tyo, tdx, tdy};
 	SDL_RenderCopyEx(GameElements::gRenderer, this->gImageTexture, &imagePortion, &imageData, 0, this->centerRotation, SDL_FLIP_NONE);
 }
 

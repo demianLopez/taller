@@ -16,11 +16,17 @@
 #include "World.h"
 #include "Resources.h"
 
+const float ZOOM_INCREMENT = 0.02;
 SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
 	this->gameWorld = NULL;
 	this->backParticleEmiter = NULL;
 	this->frontParticleEmiter = NULL;
 	this->worldImage = NULL;
+	this->zoomScale = 1;
+	this->minZoomScale = 1;
+
+	//Se recalcula despues, sabiendo los datos del mundo y la pantalla
+	this->maxZoomScale = 1;
 }
 
 void SnowBross::init(){
@@ -34,6 +40,16 @@ void SnowBross::init(){
 
 	b2Vec2 * wSize = this->gameWorld->getBox2DWorldSize();
 	this->worldImage = new Image(wSize->x * 20, wSize->y * 20);
+
+	//Recalculamos con datos
+	float xMax = ((float)wSize->x * 20)/this->getScreenWidth();
+	float yMax = ((float)wSize->y * 20)/this->getScreenHeight();
+
+	if(xMax > yMax){
+		this->maxZoomScale = yMax;
+	} else {
+		this->maxZoomScale = xMax;
+	}
 }
 
 void SnowBross::setWorld(World * world){
@@ -90,26 +106,28 @@ void SnowBross::render(Graphics *g){
 
 	int dX = this->getScreenWidth();
 	int dY = this->getScreenHeight();
-	int fXo = playerPos.x - dX/2;
-	int fYo = playerPos.y - dY/2;
+	int tdX = this->getScreenWidth() * this->zoomScale;
+	int tdY = this->getScreenHeight() * this->zoomScale;
+	int fXo = playerPos.x - tdX/2;
+	int fYo = playerPos.y - tdY/2;
 
-	if((fXo + dX) > worldImage->getWidth()){
-		fXo = worldImage->getWidth() - dX;
+	if((fXo + tdX) > worldImage->getWidth()){
+		fXo = worldImage->getWidth() - tdX;
 	}
 
 	if(fXo < 0){
 		fXo = 0;
 	}
 
-	if((fYo + dY) > worldImage->getHeight()){
-		fYo = worldImage->getHeight() - dY;
+	if((fYo + tdY) > worldImage->getHeight()){
+		fYo = worldImage->getHeight() - tdY;
 	}
 
 	if(fYo < 0){
 		fYo = 0;
 	}
 
-	g->drawImage(this->worldImage, 0, 0, fXo, fYo, dX, dY);
+	g->drawImage(this->worldImage, 0, 0, fXo, fYo,tdX, tdY, dX, dY);
 
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
@@ -132,6 +150,19 @@ void SnowBross::keyEvent(SDL_Event e) {
 				if(this->gameWorld->isMainCharacterTouchingGround()){
 					this->gameWorld->getMainCharacter()->jump();
 				}
+				break;
+			case SDLK_KP_PLUS:
+				this->zoomScale += ZOOM_INCREMENT;
+				if(this->zoomScale > this->maxZoomScale){
+					this->zoomScale = this->maxZoomScale;
+				}
+				break;
+			case SDLK_KP_MINUS:
+				this->zoomScale -= ZOOM_INCREMENT;
+				if(this->zoomScale < this->minZoomScale){
+					this->zoomScale = this->minZoomScale;
+				}
+
 				break;
 		}
 		return;

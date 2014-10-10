@@ -34,6 +34,10 @@ private:
 	ParticleEmiter * backParticleEmiter;
 	ParticleEmiter * frontParticleEmiter;
 
+	float zoomScale;
+	float maxZoomScale;
+	float minZoomScale;
+
 };
 
 #endif /* SNOWBROSS_H_ */
