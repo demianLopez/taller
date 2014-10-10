@@ -29,6 +29,8 @@ Image::Image(int width, int height){
 	this->centerRotation = NULL;
 }
 
+
+
 Image::Image(){
 	this->gImage = NULL;
 	this->gImageTexture = NULL;
@@ -45,6 +47,12 @@ int Image::setAlpha(unsigned char alpha){
 
 void Image::render(int xo, int yo, int dx, int dy){
 	this->render(xo, yo, dx, dy, 0);
+}
+
+void Image::render(int xo, int yo, int txo, int tyo, int dx, int dy){
+	SDL_Rect imageData = {xo, yo, dx, dy};
+	SDL_Rect imagePortion = {txo, tyo, dx, dy};
+	SDL_RenderCopyEx(GameElements::gRenderer, this->gImageTexture, &imagePortion, &imageData, 0, this->centerRotation, SDL_FLIP_NONE);
 }
 
 void Image::render(int xo, int yo, int dx, int dy, float rotation){

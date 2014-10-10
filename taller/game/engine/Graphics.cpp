@@ -16,8 +16,24 @@ Graphics::Graphics(TTF_Font * font) {
 	this->dAtCenter = false;
 }
 
+void Graphics::clearRenderObject(){
+	SDL_RenderClear(GameElements::gRenderer);
+}
+
 void Graphics::setRendererObject(Image *image){
-	SDL_SetRenderTarget(GameElements::gRenderer, image->getImageTexture());
+	if(image == NULL){
+		SDL_SetRenderTarget(GameElements::gRenderer, NULL);
+	} else {
+		SDL_SetRenderTarget(GameElements::gRenderer, image->getImageTexture());
+	}
+}
+
+void Graphics::drawImage(Image * image, int xo, int yo, int txo, int tyo, int dx, int dy){
+	if(this->dAtCenter){
+		image->render(xo, yo, txo - dx/2, tyo - dy/2, dx, dy);
+	} else {
+		image->render(xo, yo, txo, tyo, dx, dy);
+	}
 }
 
 void Graphics::drawImage(Image *image){

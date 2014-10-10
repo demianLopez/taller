@@ -27,6 +27,10 @@ b2World * World::getBox2DWorld(){
 	return this->box2DWorld;
 }
 
+b2Vec2 * World::getBox2DWorldSize(){
+	return this->Box2DWorldSize;
+}
+
 void World::setUnits(int wU, int hU){
 	this->Box2DWorldSize = new b2Vec2(wU, hU);
 	int sizeX = wU * 20;

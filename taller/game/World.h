@@ -36,6 +36,7 @@ public:
 	b2Vec2 SDLToBox2DSize(b2Vec2 * SDLCoord);
 
 	b2Vec2 * getWindowSize();
+	b2Vec2 * getBox2DWorldSize();
 
 	void worldStep(int delta);
 

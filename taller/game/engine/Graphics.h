@@ -19,6 +19,7 @@ public:
 	virtual ~Graphics();
 
 	void setRendererObject(Image * image);
+	void clearRenderObject();
 
 	//Renderiza en pantalla la imagen "image"
 	void drawImage(Image *image);
@@ -30,6 +31,7 @@ public:
 	void drawImage(Image *image, int xo, int yo, int dx, int dy, float rotation);
 
 	void drawImage(Image *image, int xo, int yo, float rotation);
+	void drawImage(Image * image, int xo, int yo, int txo, int tyo, int dx, int dy);
 
 	void drawAnimation(Animation * animation, int xo, int yo);
 	void drawAnimation(Animation * animation, int xo, int yo, float rotation);

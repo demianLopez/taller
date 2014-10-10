@@ -20,6 +20,7 @@ SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
 	this->gameWorld = NULL;
 	this->backParticleEmiter = NULL;
 	this->frontParticleEmiter = NULL;
+	this->worldImage = NULL;
 }
 
 void SnowBross::init(){
@@ -30,6 +31,9 @@ void SnowBross::init(){
 
 	this->frontParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
 	this->frontParticleEmiter->setMaxParticles(20);
+
+	b2Vec2 * wSize = this->gameWorld->getBox2DWorldSize();
+	this->worldImage = new Image(wSize->x * 20, wSize->y * 20);
 }
 
 void SnowBross::setWorld(World * world){
@@ -40,10 +44,13 @@ void SnowBross::exit(){
 	delete this->gameWorld;
 	delete this->backParticleEmiter;
 	delete this->frontParticleEmiter;
+	delete this->worldImage;
 }
 
 void SnowBross::render(Graphics *g){
+	//PRE RENDERING!
 	Resources * resources = this->gameWorld->getResources();
+
 
 	//Dibujamos fondo!
 	Image * backImage = resources->getBackground();
@@ -51,8 +58,15 @@ void SnowBross::render(Graphics *g){
 		g->drawImage(backImage, 0, 0, this->getScreenWidth(), this->getScreenHeight());
 	}
 
-
 	this->backParticleEmiter->render(g);
+
+
+	//ALL THE MAP RENDERING!
+	//--------------------------------------------------------------------
+	g->setRendererObject(this->worldImage);
+	g->setColor(0, 0, 0, 0);
+	g->clearRenderObject();
+	g->setColor(0, 0, 0, 255);
 
 	vector<Polygon *> polList = this->gameWorld->getPolygonList();
 	for(auto *polygon : polList){
@@ -69,7 +83,38 @@ void SnowBross::render(Graphics *g){
 
 	g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources), playerPos.x, playerPos.y, playerSize.x, playerSize.y);
 
+
+	g->setRendererObject(NULL);
+
+	g->drawAtCenter(false);
+
+	int dX = this->getScreenWidth();
+	int dY = this->getScreenHeight();
+	int fXo = playerPos.x - dX/2;
+	int fYo = playerPos.y - dY/2;
+
+	if((fXo + dX) > worldImage->getWidth()){
+		fXo = worldImage->getWidth() - dX;
+	}
+
+	if(fXo < 0){
+		fXo = 0;
+	}
+
+	if((fYo + dY) > worldImage->getHeight()){
+		fYo = worldImage->getHeight() - dY;
+	}
+
+	if(fYo < 0){
+		fYo = 0;
+	}
+
+	g->drawImage(this->worldImage, 0, 0, fXo, fYo, dX, dY);
+
+	//POST RENDERING!!!
+	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
+
 }
 
 void SnowBross::keyEvent(SDL_Event e) {

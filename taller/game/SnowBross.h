@@ -9,6 +9,7 @@
 #define SNOWBROSS_H_
 
 #include "engine/Game.h"
+#include "engine/Image.h"
 
 class Graphics;
 class World;
@@ -27,7 +28,7 @@ private:
 	virtual void exit();
 
 
-
+	Image * worldImage;
 
 	World * gameWorld;
 	ParticleEmiter * backParticleEmiter;

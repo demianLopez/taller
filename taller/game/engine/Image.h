@@ -23,6 +23,7 @@ public:
 
 	void render(int xo, int yo, int dx, int dy);
 	void render(int xo, int yo, int dx, int dy, float rotation);
+	void render(int xo, int yo, int txo, int tyo, int dx, int dy);
 
 
 	//Return 0 if succes, or negative error code on faliure!
