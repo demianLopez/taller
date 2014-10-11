@@ -10,6 +10,8 @@
 
 #include "engine/Game.h"
 #include "engine/Image.h"
+#include "engine/SpriteSheet.h"
+#include "engine/Animation.h"
 
 class Graphics;
 class World;
@@ -34,12 +36,13 @@ private:
 	ParticleEmiter * backParticleEmiter;
 	ParticleEmiter * frontParticleEmiter;
 
+	Animation * lightAnimation;
+	SpriteSheet * spriteLightAnimation;
+	int lightAnimationX;
+
 	float zoomScale;
 	float maxZoomScale;
 	float minZoomScale;
-
-	float zoomFontConv;
-
 };
 
 #endif /* SNOWBROSS_H_ */
