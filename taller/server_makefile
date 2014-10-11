@@ -1,0 +1,28 @@
+#Project Builder
+#General
+CC = gcc -std=c++11 -g
+CPPFLAGS = -Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage
+CPPLDFLAGS = -lm -lstdc++ -lgcov -coverage -lpthread -pthread
+
+#ALL
+COMMON_O = mutex.o thread.o socket.o
+SERVER_O = $(COMMON_O)
+CLIENT_O = $(COMMON_O)
+
+all: $(EXEC)
+
+server: $(SERVER_O)
+
+client: $(CLIENT_O)
+
+mutex.o: common/Mutex.h common/Mutex.cpp
+	$(CC) $(CPPLDFLAGS) -c common/Mutex.cpp
+
+thread.o: common/Thread.h common/Thread.cpp
+	$(CC) $(CPPLDFLAGS) -c common/Thread.cpp
+	
+socket.o: common/Socket.h common/Socket.cpp
+	$(CC) $(CPPLDFLAGS) -c common/Socket.cpp
+
+clean:
+	rm -f *.o *.gcno *~
