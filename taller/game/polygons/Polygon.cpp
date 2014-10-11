@@ -19,6 +19,7 @@
 #include "Polygon.h"
 
 #include <Box2D/Box2D.h>
+#include <math.h>
 
 Polygon::Polygon(int body_def) {
 
@@ -118,13 +119,15 @@ void Polygon::createSDLPoints(){
 	}
 
 	this->polygonImage = new Image(sdlSize.x, sdlSize.y);
-	Graphics * g = new Graphics(GameElements::gFont);
+	Image * borderImage = new Image("Resources/border.png");
+	Graphics * g = GameElements::getGraphicsInstance();
 	g->setRendererObject(this->polygonImage);
 	g->drawFillPolygon(vX, vY, pointSize, this->r, this->g, this->b);
 
 	delete[] vX;
 	delete[] vY;
 	delete g;
+	delete borderImage;
 }
 
 Polygon::~Polygon() {

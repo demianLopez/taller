@@ -3,7 +3,7 @@
 		"altopx": 600,
 		"anchopx": 800,
 		"altoun": 60,
-		"anchoun": 80,
+		"anchoun": 160,
 		"imagen_fondo": "Resources/font1.png",
 		"personaje": {
 			"x": 500,

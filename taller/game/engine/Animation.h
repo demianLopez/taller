@@ -26,12 +26,19 @@ public:
 	AnimationFrame* getFrame(int index);
 	AnimationFrame* getCurrentFrame();
 
+	void reset();
+	void setOneDraw();
+	bool isFinished();
+	void setFinished(bool finished);
 	virtual ~Animation();
 private:
 	vector<AnimationFrame*> frameList;
 	bool drawed;
 	unsigned int lastTimeDrawed;
 	unsigned int lastDrawedFrame;
+
+	bool drawOneTime;
+	bool cicleFinish;
 };
 
 #endif /* ANIMATION_H_ */

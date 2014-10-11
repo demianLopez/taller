@@ -24,7 +24,7 @@ SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
 	this->worldImage = NULL;
 	this->zoomScale = 1;
 	this->minZoomScale = 1;
-
+	this->lightAnimationX = 0;
 	//Se recalcula despues, sabiendo los datos del mundo y la pantalla
 	this->maxZoomScale = 1;
 }
@@ -38,6 +38,14 @@ void SnowBross::init(){
 	this->frontParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
 	this->frontParticleEmiter->setMaxParticles(20);
 
+	this->spriteLightAnimation = new SpriteSheet("Resources/luz.png", 128,512);
+	this->lightAnimation = new Animation();
+	this->lightAnimation->setOneDraw();
+	this->lightAnimation->setFinished(true);
+	for(int i = 0; i<8; i++){
+		this->lightAnimation->addFrame(this->spriteLightAnimation->getSubImage(i, 0), 25);
+	}
+
 	b2Vec2 * wSize = this->gameWorld->getBox2DWorldSize();
 	this->worldImage = new Image(wSize->x * 20, wSize->y * 20);
 
@@ -45,15 +53,10 @@ void SnowBross::init(){
 	float xMax = ((float)wSize->x * 20)/this->getScreenWidth();
 	float yMax = ((float)wSize->y * 20)/this->getScreenHeight();
 
-	Resources * resources = this->gameWorld->getResources();
-	Image * backImage = resources->getBackground();
-
 	if(xMax > yMax){
 		this->maxZoomScale = yMax;
-		this->zoomFontConv =  (float)(backImage->getHeight()) / (wSize->y * 20);
 	} else {
 		this->maxZoomScale = xMax;
-		this->zoomFontConv =  (float)(backImage->getWidth())  / (wSize->x * 20);
 	}
 }
 
@@ -62,6 +65,9 @@ void SnowBross::setWorld(World * world){
 }
 
 void SnowBross::exit(){
+
+	delete this->lightAnimation;
+	delete this->spriteLightAnimation;
 	delete this->gameWorld;
 	delete this->backParticleEmiter;
 	delete this->frontParticleEmiter;
@@ -98,13 +104,13 @@ void SnowBross::render(Graphics *g){
 		tYo = 0;
 	}
 
-	float pX = (float)(backImage->getWidth() - screenW)/(float)(worldImage->getWidth() - screenW);
-	float pY = (float)(backImage->getHeight() - screenH)/(float)(worldImage->getHeight() - screenH);
-
 	if(backImage != NULL){
-		g->drawImage(backImage, 0, 0,pX * tXo,pY * tYo, tdX * this->zoomFontConv, tdY * this->zoomFontConv, screenW, screenH);
+		g->drawImage(backImage, 0, 0,0,0, screenW, screenH, screenW, screenH);
 	}
 
+	if(!this->lightAnimation->isFinished()){
+		g->drawAnimation(this->lightAnimation, this->lightAnimationX, 0);
+	}
 	this->backParticleEmiter->render(g);
 
 
@@ -119,6 +125,7 @@ void SnowBross::render(Graphics *g){
 	for(auto *polygon : polList){
 		polygon->render(g);
 	}
+
 
 
 	g->drawAtCenter(true);
@@ -197,6 +204,14 @@ void SnowBross::update(unsigned int delta){
 	this->frontParticleEmiter->update(delta);
 	this->gameWorld->worldStep(delta);
 	this->gameWorld->getMainCharacter()->update();
+
+	if(this->lightAnimation->isFinished()){
+		int rN = ((float) rand())/RAND_MAX * 5001;
+		if(rN >= 4995){
+			this->lightAnimation->reset();
+			this->lightAnimationX = ((float) rand())/RAND_MAX * this->getScreenWidth();
+		}
+	}
 
 }
 

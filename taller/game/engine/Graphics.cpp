@@ -84,6 +84,9 @@ void Graphics::drawImage(Image *image, int xo, int yo, int dx, int dy){
 }
 
 void Graphics::drawAnimation(Animation * animation, int xo, int yo, float rotation){
+	if(animation == NULL){
+		return;
+	}
 	Image * animationImage = animation->getCurrentFrame()->getFrameImage();
 	this->drawImage(animationImage, xo, yo, rotation);
 }
@@ -93,11 +96,17 @@ void Graphics::drawAnimation(Animation * animation, int xo, int yo, int dx, int 
 }
 
 void Graphics::drawAnimation(Animation * animation, int xo, int yo){
+	if(animation == NULL){
+		return;
+	}
 	Image * animationImage = animation->getCurrentFrame()->getFrameImage();
 	this->drawImage(animationImage, xo, yo);
 }
 
 void Graphics::drawAnimation(Animation * animation, int xo, int yo, int dx, int dy, float rotation){
+	if(animation == NULL){
+		return;
+	}
 	Image * animationImage = animation->getCurrentFrame()->getFrameImage();
 	this->drawImage(animationImage, xo, yo, dx, dy, rotation);
 }

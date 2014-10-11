@@ -13,10 +13,31 @@ Animation::Animation() {
 	this->drawed = false;
 	this->lastTimeDrawed = 0;
 	this->lastDrawedFrame = 0;
+	this->drawOneTime = false;
+	this->cicleFinish = false;
 }
 
 AnimationFrame * Animation::getFrame(int index){
 	return this->frameList[index];
+}
+
+void Animation::setOneDraw(){
+	this->drawOneTime = true;
+}
+
+void Animation::setFinished(bool finished){
+	this->cicleFinish = finished;
+}
+
+bool Animation::isFinished(){
+	return this->cicleFinish;
+}
+
+void Animation::reset(){
+	this->drawed = false;
+	this->lastTimeDrawed = 0;
+	this->lastDrawedFrame = 0;
+	this->cicleFinish = false;
 }
 
 AnimationFrame * Animation::getCurrentFrame(){
@@ -45,6 +66,9 @@ AnimationFrame * Animation::getCurrentFrame(){
 			currentFrame++;
 			lastTimeDrawed += frame->getFrameTime();
 			this->lastTimeDrawed += frame->getFrameTime();
+			if((currentFrame / this->frameList.size()) >= 1 && this->drawOneTime) {
+				this->cicleFinish = true;
+			}
 			currentFrame = currentFrame % this->frameList.size();
 		}
 	}
