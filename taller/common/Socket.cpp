@@ -37,6 +37,10 @@ void _socket::close_port() {
 	close(this->sockfd);
 }
 
+bool _socket::is_valid() {
+	return (this->sockfd != -1);
+}
+
 Socket::Socket(int sockfd,sockaddr_in_s address)
 {
     this->sockfd = sockfd;
@@ -69,6 +73,10 @@ Socket::Socket(int port,const string& host)
     if (res == -1) return; //TODO: LOGUEAR error
 
     this->_port = port;
+}
+
+Socket::Socket() {
+	this->sockfd = -1;
 }
 
 int Socket::send_message(const char* message, size_t message_len)

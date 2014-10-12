@@ -2,27 +2,35 @@
 #General
 CC = gcc -std=c++11 -g
 CPPFLAGS = -Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage
-CPPLDFLAGS = -lm -lstdc++ -lgcov -coverage -lpthread -pthread
+CPPLDFLAGS = -lm -lstdc++ -lgcov -coverage #-lpthread -pthread
 
 #ALL
-COMMON_O = mutex.o thread.o socket.o
-SERVER_O = $(COMMON_O)
+COMMON_O = Socket.o #mutex.o thread.o 
+SERVER_O = $(COMMON_O) accept_queue.o client_handler.o
 CLIENT_O = $(COMMON_O)
 
-all: $(EXEC)
+all: Server Client
 
-server: $(SERVER_O)
-
-client: $(CLIENT_O)
-
-mutex.o: common/Mutex.h common/Mutex.cpp
+Server: $(SERVER_O)
+	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(SERVER_O) example_server.cpp -o Server
+	
+Client: $(CLIENT_O)
+	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(CLIENT_O) example_client.cpp -o Client
+	
+Mutex.o: common/Mutex.h common/Mutex.cpp
 	$(CC) $(CPPLDFLAGS) -c common/Mutex.cpp
 
-thread.o: common/Thread.h common/Thread.cpp
+Thread.o: common/Thread.h common/Thread.cpp
 	$(CC) $(CPPLDFLAGS) -c common/Thread.cpp
 	
-socket.o: common/Socket.h common/Socket.cpp
+Socket.o: common/Socket.h common/Socket.cpp
 	$(CC) $(CPPLDFLAGS) -c common/Socket.cpp
 
+accept_queue.o: server/accept_queue.h server/accept_queue.cpp
+	$(CC) $(CPPLDFLAGS) -c server/accept_queue.cpp
+	
+client_handler.o: server/client_handler.h server/client_handler.cpp
+	$(CC) $(CPPLDFLAGS) -c server/client_handler.cpp
+	
 clean:
-	rm -f *.o *.gcno *~
+	rm -f *.o *.gcno *.gcda  *~

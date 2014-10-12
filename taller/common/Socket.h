@@ -36,18 +36,20 @@ protected:
 	sockaddr_in_s _address; //Direccion de conexion
 
 protected:
-	_socket();
+	_socket(){};
 
 public:
 	void close_port();
 	void shutdown_socket();
 	int get_port();
+	bool is_valid();
 };
 
 class Socket: public _socket {
 
 public:
 
+	Socket(); //dummy
 	Socket(int port, const std::string& host = "127.0.0.1");
 	Socket(int sockfd, sockaddr_in_s direccion);
 
