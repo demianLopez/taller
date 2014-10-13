@@ -32,7 +32,7 @@ public:
 
 public:
 	void initialize(){};
-	Client_handler accept_client();
+	Client_handler* accept_client();
 
 };
 

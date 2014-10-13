@@ -20,17 +20,18 @@
 
 #include <iostream>
 #include <thread>
+#include <chrono>
 
 Client_handler::Client_handler() {
-	this->_is_active=false;
+	this->_is_active = false;
 }
 
 Client_handler::~Client_handler() {
-	// TODO Auto-generated destructor stub
 }
 
 bool Client_handler::is_valid() {
-	return this->socket.is_valid();//TODO: agregar mas condiciones
+	return true;
+	//return this->socket.is_valid(); //TODO: agregar mas condiciones
 }
 
 bool Client_handler::is_active() {
@@ -38,15 +39,25 @@ bool Client_handler::is_active() {
 }
 
 void Client_handler::run() {
-	std::cout << "Printing from thread: "<< std::this_thread::get_id() << std::endl;
+	while (this->_is_active) {
+		std::cout << "Printing from thread: " << std::this_thread::get_id()
+				<< std::endl;
+		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+	}
 }
 
 void Client_handler::recicle() {
+	std::cout << "Stop" << std::endl;
 	this->socket.close_port();
 }
 
-void Client_handler::execute(Client_handler handler) {
-	while (true){
-		handler.run();
-	}
+void Client_handler::execute(Client_handler* handler) {
+	handler->_is_active = true;
+	handler->run();
+}
+
+void Client_handler::stop() {
+	std::cout << "Stop" << std::endl;
+	this->socket.shutdown_socket();
+	this->_is_active = false;
 }

@@ -27,6 +27,6 @@ Accept_queue::~Accept_queue() {
 	// TODO Auto-generated destructor stub
 }
 
-Client_handler Accept_queue::accept_client() {
-	return Client_handler();
+Client_handler* Accept_queue::accept_client() {
+	return new Client_handler();
 }
