@@ -34,9 +34,17 @@ public:
 	virtual ~Client_handler();
 
 public:
+	static void execute(Client_handler handler);
+
+private:
+	void run();
+
+public:
 	bool is_valid();
 	bool is_active();
 	void recicle();
+
+
 };
 
 #endif /* CLIENT_HANDLER_H_ */

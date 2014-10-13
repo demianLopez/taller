@@ -18,6 +18,9 @@
  */
 #include "client_handler.h"
 
+#include <iostream>
+#include <thread>
+
 Client_handler::Client_handler() {
 	this->_is_active=false;
 }
@@ -34,6 +37,16 @@ bool Client_handler::is_active() {
 	return this->_is_active;
 }
 
+void Client_handler::run() {
+	std::cout << "Printing from thread: "<< std::this_thread::get_id() << std::endl;
+}
+
 void Client_handler::recicle() {
 	this->socket.close_port();
+}
+
+void Client_handler::execute(Client_handler handler) {
+	while (true){
+		handler.run();
+	}
 }

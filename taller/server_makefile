@@ -2,7 +2,7 @@
 #General
 CC = gcc -std=c++11 -g
 CPPFLAGS = -Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage
-CPPLDFLAGS = -lm -lstdc++ -lgcov -coverage #-lpthread -pthread
+CPPLDFLAGS = -lm -lstdc++ -lgcov -coverage -lpthread -pthread
 
 #ALL
 COMMON_O = Socket.o #mutex.o thread.o 
@@ -11,7 +11,7 @@ CLIENT_O = $(COMMON_O)
 
 all: Server Client
 
-Server: $(SERVER_O)
+Server: $(SERVER_O) example_server.cpp
 	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(SERVER_O) example_server.cpp -o Server
 	
 Client: $(CLIENT_O)
