@@ -2,7 +2,7 @@
 #define COSACONMOVIMIENTO_H_
 
 #include "VectorXY.h"
-#include "Box2D/Box2D.h"
+#include <Box2D.h>
 #include "engine/Animation.h"
 #include "Resources.h"
 

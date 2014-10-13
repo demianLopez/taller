@@ -65,7 +65,8 @@ unsigned int Game::getElapsedTime(){
 bool Game::start(){
 	return this->gameCicle();
 }
-
+#include <iostream>
+using namespace std;
 bool Game::instantiate(){
 	bool success = true;
 
@@ -76,8 +77,10 @@ bool Game::instantiate(){
 		success = false;
 	} else {
 		Logger::customLog("Game.cpp", Logger::INFO, "SDL Initialize: OK");
-		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
-
+		//gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
+		cout << SDL_GetError() << endl;
+		SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_SHOWN, &gWindow, &gRenderer);
+		cout << SDL_GetError() << endl;
 		if(gWindow == NULL)
 		{
 			Logger::customLog("Game.cpp", Logger::ERROR, "No se ha podido crear la ventana de SDL"); //SDL_GetError()
@@ -87,7 +90,7 @@ bool Game::instantiate(){
 		{
 			Logger::customLog("Game.cpp", Logger::INFO, "Ventana creada");
 			//Get window surface
-			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+			//gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 
             SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
@@ -217,10 +220,10 @@ bool Game::gameCicle(){
 
 void Game::gameClose(){
 
-	SDL_DestroyWindow(this->gWindow);
-	Logger::customLog("Game.cpp", Logger::INFO, "Ventana destruida");
 	SDL_DestroyRenderer(this->gRenderer);
 	Logger::customLog("Game.cpp", Logger::INFO, "Render destruido");
+	SDL_DestroyWindow(this->gWindow);
+	Logger::customLog("Game.cpp", Logger::INFO, "Ventana destruida");
 	TTF_CloseFont(gFont);
 	Logger::customLog("Game.cpp", Logger::INFO, "Fuente cerrada");
 
