@@ -9,12 +9,12 @@
 #define LECTORJSON_H_
 
 #include <iostream>
-#include <json/json.h>
+#include "json/json.h"
 #include <fstream>
-#include <LogManager.h>
+#include "LogManager.h"
 #include <string.h>
 #include <stdlib.h>
-#include <GestorEscenario.h>
+#include "GestorEscenario.h"
 
 using namespace std;
 using namespace Json;

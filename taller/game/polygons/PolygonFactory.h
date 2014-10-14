@@ -20,7 +20,7 @@
 #define Polygon_FACTORY_H_
 
 #include "Polygon.h"
-#include <World.h>
+#include "../World.h"
 
 #include <Box2D/Box2D.h>
 #include <stddef.h>
