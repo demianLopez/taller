@@ -10823,3 +10823,25 @@ INFO- 12/10/2014   18:20:44 -INFO
 12/10/2014   18:20:59-User Game.cpp INFO:SDL cerrado: OK
 12/10/2014   18:20:59-User Game.cpp INFO:SDL Image cerrado: OK
 12/10/2014   18:20:59-User Game.cpp INFO:SDL TTF cerrado: OK
+--Inicio de ejecucion--
+INFO- 13/10/2014   21:19:19 -INFO
+13/10/2014   21:19:19-User Game.cpp INFO:Inicilizando componentes SDL
+13/10/2014   21:19:20-User Game.cpp INFO:SDL Initialize: OK
+13/10/2014   21:19:20-User Game.cpp INFO:Ventana creada
+13/10/2014   21:19:20-User Game.cpp INFO:Inicializado SDL_image
+13/10/2014   21:19:20-User Game.cpp INFO:Inicializado SDL_ttf
+13/10/2014   21:19:20-User Game.cpp INFO:Componentes SDL Inicializados!
+13/10/2014   21:19:20-User Game.cpp INFO:Comenzando el ciclo de juego
+13/10/2014   21:19:20-User Game.cpp INFO:Seteados maximos FPS a: 50
+13/10/2014   21:19:20-User Game.cpp INFO:Llamado a metodo de inicializacion
+13/10/2014   21:19:20-User Game.cpp INFO:Inicializacion realizada exitosamente
+13/10/2014   21:19:22-User Game.cpp INFO:Finalizando ciclo de juego
+13/10/2014   21:19:22-User Game.cpp INFO:Llamando a la funcion de cierre
+13/10/2014   21:19:22-User Game.cpp INFO:Funcion de cierre finalizada
+13/10/2014   21:19:22-User Game.cpp INFO:Cerrando componentes de SDL
+13/10/2014   21:19:22-User Game.cpp INFO:Render destruido
+13/10/2014   21:19:22-User Game.cpp INFO:Ventana destruida
+13/10/2014   21:19:22-User Game.cpp INFO:Fuente cerrada
+13/10/2014   21:19:22-User Game.cpp INFO:SDL cerrado: OK
+13/10/2014   21:19:22-User Game.cpp INFO:SDL Image cerrado: OK
+13/10/2014   21:19:22-User Game.cpp INFO:SDL TTF cerrado: OK
