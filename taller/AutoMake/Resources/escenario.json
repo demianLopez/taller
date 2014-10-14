@@ -1,0 +1,200 @@
+{ 
+	"escenario": { 
+		"altopx": 800,
+		"anchopx": 1280,
+		"altoun": 80,
+		"anchoun": 100,
+		"imagen_fondo": "Resources/pasto.png",
+		"personaje": {
+			"x": 500,
+			"y": 500
+		},
+		"objetos": [
+			{
+				"tipo": "rect",
+				"x": 0.0, 
+				"y": 0.0, 
+				"color": "#000000",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 200.0,
+				"alto": 0.1 
+			},
+			{
+				"tipo": "rect",
+				"x": 0.0, 
+				"y": 0.0, 
+				"color": "#000000",
+				"rot": 90.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 180.0,
+				"alto": 0.1 
+			},
+			{
+				"tipo": "rect",
+				"x": 100.2, 
+				"y": 0.0, 
+				"color": "#000000",
+				"rot": 90.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 180.0,
+				"alto": 0.3 
+			},    
+			{ 
+				"tipo": "poli", 
+				"x": 68.0, 
+				"y": 38.0, 
+				"escala": 10.0,
+				"color": "#3CB371", 
+				"rot": 90.0, 
+				"masa": 2.0, 
+				"estatico": true,
+				"lados": 5 
+			},
+			{ 
+				"tipo": "poli", 
+				"x": 17.0, 
+				"y": 63.0, 
+				"escala": 6.0,
+				"color": "#0000FF", 
+				"rot": 60.0, 
+				"masa": 2.0, 
+				"estatico": false,
+				"lados": 3 
+			},
+			{
+				"tipo": "rect",
+				"x": 14, 
+				"y": 53.0, 
+				"color": "#D2B48C",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 12.0,
+				"alto": 3.0 
+			},
+			{
+				"tipo": "rect",
+				"x": 15.0, 
+				"y": 9.0, 
+				"color": "#CD853F",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 6.0,
+				"alto": 2.0 
+			},          
+			{ 
+				"tipo": "circ", 
+				"x": 92.0, 
+				"y": 79.0, 
+				"color": "#FF0000", 
+				"rot": 90.0, 
+				"masa": 2.0, 
+				"estatico": false,
+				"radio": 1.0
+			}, 
+			{ 
+				"tipo": "paral",
+				"x": 92.0, 
+				"y": 73.0,  
+				"color": "#FF0000", 
+				"rot": 0.0, 
+				"masa": 2.0, 
+				"estatico": true, 
+				"base": 3.0,
+				"alto": 6.0,
+				"angulo": 50.0
+			},
+			{ 
+				"tipo": "paral",
+				"x": 85.0, 
+				"y": 65.0,  
+				"color": "#FF0000", 
+				"rot": 70.0, 
+				"masa": 2.0, 
+				"estatico": true, 
+				"base": 3.0,
+				"alto": 6.0,
+				"angulo": 50.0
+			},
+			{ 
+				"tipo": "paral",
+				"x": 92.0, 
+				"y": 58.0,  
+				"color": "#FF0000", 
+				"rot": -70.0, 
+				"masa": 2.0, 
+				"estatico": true, 
+				"base": 3.0,
+				"alto": 6.0,
+				"angulo": 50.0
+			},
+			{ 
+				"tipo": "paral",
+				"x": 85.0, 
+				"y": 50.0,  
+				"color": "#FF0000", 
+				"rot": 70.0, 
+				"masa": 2.0, 
+				"estatico": true, 
+				"base": 3.0,
+				"alto": 6.0,
+				"angulo": 50.0
+			},
+			{ 
+				"tipo": "paral",
+				"x": 92.0, 
+				"y": 43.0,  
+				"color": "#FF0000", 
+				"rot": -70.0, 
+				"masa": 2.0, 
+				"estatico": true, 
+				"base": 3.0,
+				"alto": 6.0,
+				"angulo": 50.0
+			},
+			{ 
+				"tipo": "paral",
+				"x": 85.0, 
+				"y": 36.0,  
+				"color": "#FF0000", 
+				"rot": 70.0, 
+				"masa": 2.0, 
+				"estatico": true, 
+				"base": 3.0,
+				"alto": 6.0,
+				"angulo": 50.0
+			},
+			{ 
+				"tipo": "trap",
+				"x": 93.0, 
+				"y": 5.0, 
+				"color": "#2E8B57", 
+				"rot": 90.0, 
+				"masa": 2.0, 
+				"estatico": false,
+				"base_inferior": 15.0,
+				"base_superior": 5.0,
+				"alto": 7.0,
+				"angulo": 90.0 			
+			},  
+			{ 
+				"tipo": "trap",
+				"x": 5.0, 
+				"y": 5.0, 
+				"color": "#2E8B57", 
+				"rot": 0.0, 
+				"masa": 2.0, 
+				"estatico": false,
+				"base_inferior": 15.0,
+				"base_superior": 5.0,
+				"alto": 7.0,
+				"angulo": 90.0 			
+			} 
+		] 
+	} 
+}
