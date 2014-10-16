@@ -30,3 +30,8 @@ Accept_queue::~Accept_queue() {
 Client_handler* Accept_queue::accept_client() {
 	return new Client_handler();
 }
+
+bool Accept_queue::is_open() {
+	return true;
+	return this->queue.is_valid();
+}

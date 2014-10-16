@@ -23,7 +23,7 @@
 #include <chrono>
 
 Client_handler::Client_handler() {
-	this->_is_active = false;
+	this->_is_active = true;
 }
 
 Client_handler::~Client_handler() {

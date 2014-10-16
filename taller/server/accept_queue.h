@@ -34,6 +34,8 @@ public:
 	void initialize(){};
 	Client_handler* accept_client();
 
+	bool is_open();
+
 };
 
 #endif /* ACCEPT_QUEUE_H_ */
