@@ -30,6 +30,9 @@ Game::Game(const char *title) {
 	this->maxFPS = 0;
 	this->lastRenderTime = 0;
 	this->sfps = 0;
+	this->currentState = NULL;
+	this->nextState = 0;
+	this->changingState = false;
 }
 
 int Game::getScreenHeight(){
@@ -48,6 +51,14 @@ void Game::setMaxFPS(int maxFPS){
 	this->maxFPS = maxFPS;
 }
 
+void Game::addState(GameState * state){
+	this->stateList.push_back(state);
+}
+
+void Game::enterState(int id){
+	this->nextState = id;
+	this->changingState = true;
+}
 
 void Game::setScreenSize(int width, int height){
 	this->height = height;
@@ -62,8 +73,8 @@ unsigned int Game::getElapsedTime(){
 	return SDL_GetTicks();
 }
 
-bool Game::start(){
-	return this->gameCicle();
+void Game::start(){
+	this->gameCicle();
 }
 
 bool Game::instantiate(){
@@ -130,8 +141,8 @@ void Game::endGame(){
 	this->quit = true;
 }
 
-bool Game::gameCicle(){
-	bool continues = false;
+void Game::gameCicle(){
+
 	Logger::customLog("Game.cpp", Logger::INFO, "Comenzando el ciclo de juego");
 	if(this->sfps){
 		std::stringstream asd;
@@ -148,21 +159,29 @@ bool Game::gameCicle(){
 
 	//Antes de arrancar el ciclo, llamamos a la funcion init
 	Logger::customLog("Game.cpp", Logger::INFO, "Llamado a metodo de inicializacion");
-	this->init();
+
+	for(auto * state : this->stateList){
+		state->init();
+	}
+
 	Logger::customLog("Game.cpp", Logger::INFO, "Inicializacion realizada exitosamente");
 
 	while(!this->quit) {
+		if(this->changingState){
+			if(this->currentState != NULL){
+				this->currentState->leave();
+			}
+			this->currentState = this->stateList[this->nextState];
+			this->currentState->enter();
+			this->changingState = false;
+		}
+
 		while( SDL_PollEvent( &e ) != 0 ){
 			//User requests quit
 			if( e.type == SDL_QUIT ){
 				this->endGame();
 			} else {
-				if (e.key.keysym.sym == SDLK_r){
-					continues = true;
-					this->endGame();
-				}else{
-					this->keyEvent(e);
-				}
+				this->currentState->keyEvent(e);
 			}
 		}
 
@@ -177,13 +196,13 @@ bool Game::gameCicle(){
 		g->resetGraphics();
 
 		int delta = SDL_GetTicks() - this->lastUpdateTime;
-		this->update(delta);
+		this->currentState->update(delta);
 		this->lastUpdateTime = SDL_GetTicks();
 
 		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
 		SDL_RenderClear(gRenderer);
 
-		this->render(g);
+		this->currentState->render(g);
 		this->lastRenderTime = SDL_GetTicks();
 
 		this->renderCount++;
@@ -207,11 +226,12 @@ bool Game::gameCicle(){
 
 	Logger::customLog("Game.cpp", Logger::INFO, "Finalizando ciclo de juego");
 	Logger::customLog("Game.cpp", Logger::INFO, "Llamando a la funcion de cierre");
-	this->exit();
+	for(auto * state : this->stateList){
+		state->exit();
+	}
 	Logger::customLog("Game.cpp", Logger::INFO, "Funcion de cierre finalizada");
 	Logger::customLog("Game.cpp", Logger::INFO, "Cerrando componentes de SDL");
 	this->gameClose();
-	return continues;
 }
 
 

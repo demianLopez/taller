@@ -1,36 +1,37 @@
-#include "SDL.h"
 #include <iostream>
-#include <Box2D/Box2D.h>
 #include <stdio.h>
 #include "SnowBross.h"
 #include "Jugador.h"
-#include "LectorJson.h"
+#include "engine/Game.h"
 #include "../common/Logger.h"
-#include "engine/game.h"
+#include "MainMenu.h"
 
 using namespace std;
 
+int const SCREEN_WIDTH = 800;
+int const SCREEN_HEIGHT = 600;
+
+
+
 int main(int argc, char *argv[]){
-	bool continues = true;
-	while(continues){
 		Logger::initializeCustomLogs();
 
-		LectorJson* lector = new LectorJson();
-		lector->cargarEscenario("Resources/tp0.json");
-		GestorEscenario * gE = lector->obtenerGestorEscenario();
-
 		SnowBross *pE = new SnowBross("Snow Bross");
-		pE->setScreenSize(gE->datos().anchopx, gE->datos().altopx);
+		pE->setScreenSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		pE->instantiate();
-		pE->setWorld(gE->obtenerMundo());
 
-		delete lector;
+		//TODO: World ahora se tiene que venir via internet, alguien lo tiene que generar!
+		//pE->setWorld(gE->obtenerMundo());
+		//delete lector;
+
+		pE->addState(new MainMenu());
+		pE->enterState(0);
 
 		pE->setMaxFPS(50);
 		pE->showFPS(true);
-		continues = pE->start();
-		delete pE;
+		pE->start();
+
 		//delete lector; //estamos perdiendo memoria con esto, pero falla si lo descomento..
-	}
+
 	return 0;
 }

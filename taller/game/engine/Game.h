@@ -9,10 +9,12 @@
 #define GAME_H_
 
 #include <iostream>
+#include <vector>
 #include "LibIncludes.h"
 #include "GameElements.h"
 #include <string>
 #include <sstream>
+#include "GameState.h"
 
 class Graphics;
 
@@ -24,9 +26,12 @@ public:
 	unsigned int getElapsedTime();
 	void setMaxFPS(int maxFPS);
 
-	bool start();
+	void start();
 	bool instantiate();
 	void endGame();
+
+	void addState(GameState * state);
+	void enterState(int id);
 
 	int getScreenHeight();
 	int getScreenWidth();
@@ -40,13 +45,17 @@ private:
 
 	const char* title;
 
+	GameState * currentState;
+	bool changingState;
+	int nextState;
+
 	bool quit;
 	SDL_Window *gWindow;
 	SDL_Surface *gScreenSurface;
 	SDL_Renderer* gRenderer;
 	TTF_Font *gFont;
 
-	bool gameCicle();
+	void gameCicle();
 	void gameClose();
 
 	int fps;
@@ -62,12 +71,7 @@ private:
 	bool sfps; //SHOW FPS
 	std::stringstream fpsText;
 
-protected:
-	virtual void render(Graphics *g) = 0;
-	virtual void update(unsigned int delta) = 0;
-	virtual void keyEvent(SDL_Event e) = 0;
-	virtual void init() { };
-	virtual void exit() { };
+	std::vector<GameState *> stateList;
 };
 
 #endif /* GAME_H_ */
