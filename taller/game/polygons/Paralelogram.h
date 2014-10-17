@@ -8,7 +8,7 @@
 #ifndef PARALELOGRAM_H_
 #define PARALELOGRAM_H_
 
-#include <polygons/Polygon.h>
+#include "Polygon.h"
 #include <Box2D/Box2D.h>
 
 class Paralelogram: public Polygon {

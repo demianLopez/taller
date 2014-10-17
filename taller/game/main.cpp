@@ -1,4 +1,4 @@
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #include <iostream>
 #include <Box2D/Box2D.h>
 #include <stdio.h>
@@ -6,7 +6,8 @@
 #include "Jugador.h"
 #include "LectorJson.h"
 #include "../common/Logger.h"
-#include "engine/game.h"
+#include "engine/Game.h"
+
 
 using namespace std;
 

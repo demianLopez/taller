@@ -5,7 +5,7 @@
  *      Author: FireHorse
  */
 
-#include <LectorJson.h>
+#include "LectorJson.h"
 
 //Escenario por defecto
 const char* ESCENARIO_X_DEFECTO = "Resources/escenario.json";

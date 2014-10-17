@@ -7,7 +7,7 @@
 
 #include "GestorEscenario.h"
 #include <Box2D/Box2D.h>
-#include <polygons/PolygonFactory.h>
+#include "polygons/PolygonFactory.h"
 #include "../common/Logger.h"
 
 GestorEscenario::GestorEscenario() {

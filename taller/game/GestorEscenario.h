@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <polygons/Polygon.h>
+#include "polygons/Polygon.h"
 #include "World.h"
 
 using namespace std;

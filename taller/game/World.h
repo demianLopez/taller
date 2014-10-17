@@ -8,7 +8,7 @@
 #ifndef WORLD_H_
 #define WORLD_H_
 
-#include "Box2D/Box2D.h"
+#include <Box2D/Box2D.h>
 #include "Jugador.h"
 #include <vector>
 #include "polygons/Polygon.h"
