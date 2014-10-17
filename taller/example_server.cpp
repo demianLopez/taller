@@ -50,6 +50,7 @@ void stop_clients(list<client_t>& clients, list<thread*>& threads) {
 
 		client_thread->join();
 		client->recicle();
+		delete client_thread;
 		n_client++;
 	}
 }
@@ -66,6 +67,7 @@ void run_server(Accept_queue* queue, list<thread*>* threads,
 			threads->push_back(new thread(Client_handler::execute, client));
 		}
 		remove_inactives(*clients, *threads);
+		break;
 	}
 }
 
