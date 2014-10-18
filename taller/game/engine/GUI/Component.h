@@ -15,6 +15,8 @@ public:
 	void setPosition(int x, int y);
 	void setSize(int width, int height);
 
+	bool isClicked(int xClick, int yClick);
+
 	virtual ~Component();
 protected:
 	int posX;

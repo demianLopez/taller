@@ -20,6 +20,13 @@ void Component::setSize(int width, int height){
 	this->height = height;
 }
 
+bool Component::isClicked(int xClick, int yClick){
+	bool hoverX = xClick > posX && xClick < (posX + width);
+	bool hoverY = yClick > posY && yClick < (posY + height);
+
+	return hoverX && hoverY;
+}
+
 void Component::setPosition(int x, int y){
 	this->posX = x;
 	this->posY = y;
