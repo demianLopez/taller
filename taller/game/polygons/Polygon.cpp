@@ -119,7 +119,9 @@ void Polygon::createSDLPoints() {
 	this->polygonImage = new Image(sdlSize.x, sdlSize.y);
 	Image * borderImage = new Image("Resources/border.png");
 	Graphics * g = GameElements::getGraphicsInstance();
+	g->setColor(0, 0, 0, 0);
 	g->setRendererObject(this->polygonImage);
+	g->clearRenderObject();
 	g->drawFillPolygon(vX, vY, pointSize, this->r, this->g, this->b);
 
 	delete[] vX;
