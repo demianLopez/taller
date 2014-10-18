@@ -16,7 +16,7 @@
 
 using namespace std;
 
-struct escenario{
+struct escenario {
 	int altopx;
 	int anchopx;
 	int altoun;
@@ -26,19 +26,19 @@ struct escenario{
 	int personajeY;
 };
 
-struct rgb{
+struct rgb {
 	int red;
 	int green;
 	int blue;
 };
 
-struct objeto{
+struct objeto {
 	string tipo;
 	int lados = 0;
 	double alto = 0;
 	double ancho = 0;
-	double posX = 0 ;
-	double posY = 0 ;
+	double posX = 0;
+	double posY = 0;
 	double baseParal = 0;
 	double base_inferior = 0;
 	double base_superior = 0;
@@ -59,13 +59,12 @@ public:
 	escenario* getEscenario();
 	void imprimirXConsola();
 	escenario datos();
-	void configurarEscenerio(int altopx,int anchopx,int altoun,int anchoun,string imagen_fondo,int personajeX,int personajeY);
-	void agregarObjeto(string tipo,double posX,double posY,string color,double rot,double masa,double escala,bool estado,
-			double alto,double ancho,
-			int lados,
-			double radio,
-			double baseParal,double angulo,
-			double base_superior,double base_inferior);
+	void configurarEscenerio(int altopx, int anchopx, int altoun, int anchoun,
+			string imagen_fondo, int personajeX, int personajeY);
+	void agregarObjeto(string tipo, double posX, double posY, string color,
+			double rot, double masa, double escala, bool estado, double alto,
+			double ancho, int lados, double radio, double baseParal,
+			double angulo, double base_superior, double base_inferior);
 	void obtenerObjetos();
 	Polygon * colocarRect(objeto figura);
 	Polygon * colocarPoli(objeto figura);

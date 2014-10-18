@@ -28,15 +28,18 @@ public:
 	//Renderiza en la pantalla una imagen comenzada a dibujar desde x, y y de longitud dx dy
 	void drawImage(Image *image, int xo, int yo, int dx, int dy);
 
-	void drawImage(Image *image, int xo, int yo, int dx, int dy, float rotation);
+	void drawImage(Image *image, int xo, int yo, int dx, int dy,
+			float rotation);
 
 	void drawImage(Image *image, int xo, int yo, float rotation);
-	void drawImage(Image * image, int xo, int yo, int txo, int tyo, int tdx, int tdy, int dx, int dy);
+	void drawImage(Image * image, int xo, int yo, int txo, int tyo, int tdx,
+			int tdy, int dx, int dy);
 
 	void drawAnimation(Animation * animation, int xo, int yo);
 	void drawAnimation(Animation * animation, int xo, int yo, float rotation);
 	void drawAnimation(Animation * animation, int xo, int yo, int dx, int dy);
-	void drawAnimation(Animation * animation, int xo, int yo, int dx, int dy, float rotation);
+	void drawAnimation(Animation * animation, int xo, int yo, int dx, int dy,
+			float rotation);
 
 	//Dibuja un rectamgulo lleno (pintado interiormente)
 	void drawFillRect(int xo, int yo, int dx, int dy);
@@ -57,11 +60,13 @@ public:
 	void resetGraphics();
 
 	void drawFillCircle(int x, int y, int rad, int r, int g, int b);
-	void drawFillPolygon(short int* vx, short int* vy, int n, int r, int g, int b);
+	void drawFillPolygon(short int* vx, short int* vy, int n, int r, int g,
+			int b);
 
 	//Setea el color
 	void setColor(unsigned char red, unsigned char green, unsigned char blue);
-	void setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
+	void setColor(unsigned char red, unsigned char green, unsigned char blue,
+			unsigned char alpha);
 private:
 	TTF_Font *currentFont;
 	bool dAtCenter;

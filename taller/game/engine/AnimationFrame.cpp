@@ -13,14 +13,13 @@ AnimationFrame::AnimationFrame(Image *frameImage, unsigned int frameTime) {
 	this->frameTime = frameTime;
 }
 
-unsigned int AnimationFrame::getFrameTime(){
+unsigned int AnimationFrame::getFrameTime() {
 	return this->frameTime;
 }
 
-Image* AnimationFrame::getFrameImage(){
+Image* AnimationFrame::getFrameImage() {
 	return this->frameImage;
 }
-
 
 AnimationFrame::~AnimationFrame() {
 	delete frameImage;

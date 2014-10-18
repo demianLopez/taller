@@ -53,7 +53,7 @@ protected:
 	const float friction = 0.5;
 
 	void create_body(b2BodyDef* body_definition, b2FixtureDef* body_fixture,
-			 World * world);
+			World * world);
 
 	void addB2DPoint(double x, double y);
 	void createSDLPoints();

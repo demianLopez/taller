@@ -12,7 +12,8 @@
 
 class SubImage: public Image {
 public:
-	SubImage(Image *originalImage, int width, int height, int xSprite, int ySprite);
+	SubImage(Image *originalImage, int width, int height, int xSprite,
+			int ySprite);
 	~SubImage();
 private:
 	SDL_Rect portionImage;

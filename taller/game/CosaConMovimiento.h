@@ -39,7 +39,6 @@ public:
 	bool isGoingUp();
 	bool isGoingDown();
 
-
 	// Devuelve true si esta mirando para la derecha.
 	bool estaMirandoParaLaDerecha();
 

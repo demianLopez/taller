@@ -23,12 +23,12 @@ LogManager::~LogManager() {
 	// TODO Auto-generated destructor stub
 }
 
-void LogManager::reportarProblema(string descripcionError, int nivel){
-	if(nivel == ERROR)
-		Logger::customLog("JSonParser",Logger::ERROR, descripcionError);
-	if(nivel == WARNING)
-		Logger::customLog("JSonParser",Logger::WARNING, descripcionError);
-	if(nivel == FATAL_ERROR)
-		Logger::customLog("JSonParser",Logger::ERROR, descripcionError);
+void LogManager::reportarProblema(string descripcionError, int nivel) {
+	if (nivel == ERROR)
+		Logger::customLog("JSonParser", Logger::ERROR, descripcionError);
+	if (nivel == WARNING)
+		Logger::customLog("JSonParser", Logger::WARNING, descripcionError);
+	if (nivel == FATAL_ERROR)
+		Logger::customLog("JSonParser", Logger::ERROR, descripcionError);
 
 }

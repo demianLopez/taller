@@ -17,7 +17,8 @@
 #include "Resources.h"
 
 const float ZOOM_INCREMENT = 0.02;
-SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
+SnowBross::SnowBross(const char *pTitle) :
+		Game(pTitle) {
 	this->gameWorld = NULL;
 	this->backParticleEmiter = NULL;
 	this->frontParticleEmiter = NULL;
@@ -29,42 +30,45 @@ SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
 	this->maxZoomScale = 1;
 }
 
-void SnowBross::init(){
+void SnowBross::init() {
 	//ADICIONALES!
 	//Estos son extras, despues hay que cambiarlos!
-	this->backParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
+	this->backParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"),
+			10);
 	this->backParticleEmiter->setMaxParticles(20);
 
-	this->frontParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
+	this->frontParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"),
+			10);
 	this->frontParticleEmiter->setMaxParticles(20);
 
-	this->spriteLightAnimation = new SpriteSheet("Resources/luz.png", 128,512);
+	this->spriteLightAnimation = new SpriteSheet("Resources/luz.png", 128, 512);
 	this->lightAnimation = new Animation();
 	this->lightAnimation->setOneDraw();
 	this->lightAnimation->setFinished(true);
-	for(int i = 0; i<8; i++){
-		this->lightAnimation->addFrame(this->spriteLightAnimation->getSubImage(i, 0), 25);
+	for (int i = 0; i < 8; i++) {
+		this->lightAnimation->addFrame(
+				this->spriteLightAnimation->getSubImage(i, 0), 25);
 	}
 
 	b2Vec2 * wSize = this->gameWorld->getBox2DWorldSize();
 	this->worldImage = new Image(wSize->x * 20, wSize->y * 20);
 
 	//Recalculamos con datos
-	float xMax = ((float)wSize->x * 20)/this->getScreenWidth();
-	float yMax = ((float)wSize->y * 20)/this->getScreenHeight();
+	float xMax = ((float) wSize->x * 20) / this->getScreenWidth();
+	float yMax = ((float) wSize->y * 20) / this->getScreenHeight();
 
-	if(xMax > yMax){
+	if (xMax > yMax) {
 		this->maxZoomScale = yMax;
 	} else {
 		this->maxZoomScale = xMax;
 	}
 }
 
-void SnowBross::setWorld(World * world){
+void SnowBross::setWorld(World * world) {
 	this->gameWorld = world;
 }
 
-void SnowBross::exit(){
+void SnowBross::exit() {
 
 	delete this->lightAnimation;
 	delete this->spriteLightAnimation;
@@ -74,16 +78,18 @@ void SnowBross::exit(){
 	delete this->worldImage;
 }
 
-void SnowBross::render(Graphics *g){
+void SnowBross::render(Graphics *g) {
 	//CALCULOS PREVIOS A RENDER!
 	Resources * resources = this->gameWorld->getResources();
 	Image * backImage = resources->getBackground();
 
 	b2Vec2 * box2dWorld = gameWorld->getBox2DWorldSize();
-	b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
+	b2Vec2 playerPos =
+			this->gameWorld->getMainCharacter()->getBody()->GetPosition();
 
-	b2Vec2 fontPlayerPos(playerPos.x/box2dWorld->x * backImage->getWidth(),
-			backImage->getHeight() - playerPos.y/box2dWorld->y * backImage->getHeight());
+	b2Vec2 fontPlayerPos(playerPos.x / box2dWorld->x * backImage->getWidth(),
+			backImage->getHeight()
+					- playerPos.y / box2dWorld->y * backImage->getHeight());
 
 	playerPos = gameWorld->box2DToSDL(&playerPos);
 
@@ -91,28 +97,30 @@ void SnowBross::render(Graphics *g){
 	int screenH = this->getScreenHeight();
 	int tdX = screenW * this->zoomScale;
 	int tdY = screenH * this->zoomScale;
-	int tXo = playerPos.x - tdX/2;
-	int tYo = playerPos.y - tdY/2;
+	int tXo = playerPos.x - tdX / 2;
+	int tYo = playerPos.y - tdY / 2;
 
-	if((tXo + tdX) > worldImage->getWidth()){
+	if ((tXo + tdX) > worldImage->getWidth()) {
 		tXo = worldImage->getWidth() - tdX;
-	}if(tXo < 0){
+	}
+	if (tXo < 0) {
 		tXo = 0;
-	}if((tYo + tdY) > worldImage->getHeight()){
+	}
+	if ((tYo + tdY) > worldImage->getHeight()) {
 		tYo = worldImage->getHeight() - tdY;
-	}if(tYo < 0){
+	}
+	if (tYo < 0) {
 		tYo = 0;
 	}
 
-	if(backImage != NULL){
-		g->drawImage(backImage, 0, 0,0,0, screenW, screenH, screenW, screenH);
+	if (backImage != NULL) {
+		g->drawImage(backImage, 0, 0, 0, 0, screenW, screenH, screenW, screenH);
 	}
 
-	if(!this->lightAnimation->isFinished()){
+	if (!this->lightAnimation->isFinished()) {
 		g->drawAnimation(this->lightAnimation, this->lightAnimationX, 0);
 	}
 	this->backParticleEmiter->render(g);
-
 
 	//ALL THE MAP RENDERING!
 	//--------------------------------------------------------------------
@@ -122,25 +130,23 @@ void SnowBross::render(Graphics *g){
 	g->setColor(0, 0, 0, 255);
 
 	vector<Polygon *> polList = this->gameWorld->getPolygonList();
-	for(auto *polygon : polList){
+	for (auto *polygon : polList) {
 		polygon->render(g);
 	}
-
-
 
 	g->drawAtCenter(true);
 
 	b2Vec2 playerSize = this->gameWorld->getMainCharacter()->getSize();
-	playerSize =  this->gameWorld->box2DToSDLSize(&playerSize);
+	playerSize = this->gameWorld->box2DToSDLSize(&playerSize);
 
-	g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources), playerPos.x, playerPos.y, playerSize.x, playerSize.y);
-
+	g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources),
+			playerPos.x, playerPos.y, playerSize.x, playerSize.y);
 
 	g->setRendererObject(NULL);
 
 	g->drawAtCenter(false);
 
-	g->drawImage(this->worldImage, 0, 0, tXo, tYo,tdX, tdY, screenW, screenH);
+	g->drawImage(this->worldImage, 0, 0, tXo, tYo, tdX, tdY, screenW, screenH);
 
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
@@ -151,65 +157,64 @@ void SnowBross::render(Graphics *g){
 void SnowBross::keyEvent(SDL_Event e) {
 	if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
-			case SDLK_LEFT:
-				this->gameWorld->getMainCharacter()->setMovingLeft(true);
-				break;
+		case SDLK_LEFT:
+			this->gameWorld->getMainCharacter()->setMovingLeft(true);
+			break;
 
-			case SDLK_RIGHT:
-				this->gameWorld->getMainCharacter()->setMovingRight(true);
-				break;
+		case SDLK_RIGHT:
+			this->gameWorld->getMainCharacter()->setMovingRight(true);
+			break;
 
-			case SDLK_UP:
-				if(this->gameWorld->isMainCharacterTouchingGround()){
-					this->gameWorld->getMainCharacter()->jump();
-				}
-				break;
-			case SDLK_KP_MINUS:
-				this->zoomScale += ZOOM_INCREMENT;
-				if(this->zoomScale > this->maxZoomScale){
-					this->zoomScale = this->maxZoomScale;
-				}
-				break;
-			case SDLK_KP_PLUS:
-				this->zoomScale -= ZOOM_INCREMENT;
-				if(this->zoomScale < this->minZoomScale){
-					this->zoomScale = this->minZoomScale;
-				}
+		case SDLK_UP:
+			if (this->gameWorld->isMainCharacterTouchingGround()) {
+				this->gameWorld->getMainCharacter()->jump();
+			}
+			break;
+		case SDLK_KP_MINUS:
+			this->zoomScale += ZOOM_INCREMENT;
+			if (this->zoomScale > this->maxZoomScale) {
+				this->zoomScale = this->maxZoomScale;
+			}
+			break;
+		case SDLK_KP_PLUS:
+			this->zoomScale -= ZOOM_INCREMENT;
+			if (this->zoomScale < this->minZoomScale) {
+				this->zoomScale = this->minZoomScale;
+			}
 
-				break;
+			break;
 		}
 		return;
 	}
 
 	if (e.type == SDL_KEYUP) {
 		switch (e.key.keysym.sym) {
-			case SDLK_LEFT:
-				this->gameWorld->getMainCharacter()->setMovingLeft(false);
-				break;
+		case SDLK_LEFT:
+			this->gameWorld->getMainCharacter()->setMovingLeft(false);
+			break;
 
-			case SDLK_RIGHT:
-				this->gameWorld->getMainCharacter()->setMovingRight(false);
-				break;
-
+		case SDLK_RIGHT:
+			this->gameWorld->getMainCharacter()->setMovingRight(false);
+			break;
 
 		}
 	}
 
 }
 
-
-void SnowBross::update(unsigned int delta){
+void SnowBross::update(unsigned int delta) {
 
 	this->backParticleEmiter->update(delta);
 	this->frontParticleEmiter->update(delta);
 	this->gameWorld->worldStep(delta);
 	this->gameWorld->getMainCharacter()->update();
 
-	if(this->lightAnimation->isFinished()){
-		int rN = ((float) rand())/RAND_MAX * 5001;
-		if(rN >= 4995){
+	if (this->lightAnimation->isFinished()) {
+		int rN = ((float) rand()) / RAND_MAX * 5001;
+		if (rN >= 4995) {
 			this->lightAnimation->reset();
-			this->lightAnimationX = ((float) rand())/RAND_MAX * this->getScreenWidth();
+			this->lightAnimationX = ((float) rand()) / RAND_MAX
+					* this->getScreenWidth();
 		}
 	}
 

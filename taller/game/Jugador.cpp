@@ -3,7 +3,8 @@
 #include <iostream>
 
 // Inicializa Jugador.
-Jugador::Jugador(b2World * gameWorld, double posX, double posY) : Personaje(gameWorld) {
+Jugador::Jugador(b2World * gameWorld, double posX, double posY) :
+		Personaje(gameWorld) {
 	//Defino forma, posicion y tamanyo del body para el Personaje.
 
 	// TODO: permitir ponerlo en una posicion especifica.
@@ -31,9 +32,9 @@ Jugador::Jugador(b2World * gameWorld, double posX, double posY) : Personaje(game
 	fixtureDef.friction = 0;
 
 	b2Fixture *bodyFixture = body->CreateFixture(&fixtureDef);
-	bodyFixture->SetUserData((void*)3);
+	bodyFixture->SetUserData((void*) 3);
 
-	dynamicBox.SetAsBox( longX - 0.1 , 0.4, b2Vec2(0,-longY), 0);
+	dynamicBox.SetAsBox(longX - 0.1, 0.4, b2Vec2(0, -longY), 0);
 	fixtureDef.density = 0;
 	fixtureDef.isSensor = true;
 	b2Fixture * footSensor = body->CreateFixture(&fixtureDef);
@@ -46,35 +47,35 @@ Jugador::Jugador(b2World * gameWorld, double posX, double posY) : Personaje(game
 	//buffVelocidad = false;
 }
 
-b2Vec2 Jugador::getSize(){
+b2Vec2 Jugador::getSize() {
 	return this->size;
 }
 
 // Devuelve true si tiene buff de velocidad.
 /*
-bool Jugador::tieneBuffVelocidad(){
-	return buffVelocidad;
-}
-*/
+ bool Jugador::tieneBuffVelocidad(){
+ return buffVelocidad;
+ }
+ */
 
 // Le otorga el buff de velocidad.
 /*
-void Jugador::darBuffVelocidad(){
-	velocidadMaximaX = VELOCIDAD_MAXIMA_BUFF_X;
-	buffVelocidad = true;
-}
-*/
+ void Jugador::darBuffVelocidad(){
+ velocidadMaximaX = VELOCIDAD_MAXIMA_BUFF_X;
+ buffVelocidad = true;
+ }
+ */
 
 // Le quita el buff de velocidad.
 /*
-void Jugador::quitarBuffVelocidad(){
-	velocidadMaximaX = VELOCIDAD_MAXIMA_DEFAULT_X;
-	buffVelocidad = false;
-}
-*/
+ void Jugador::quitarBuffVelocidad(){
+ velocidadMaximaX = VELOCIDAD_MAXIMA_DEFAULT_X;
+ buffVelocidad = false;
+ }
+ */
 
 /*
-BolaDeNieve Jugador::disparar(){
-	return BolaDeNieve(estaMirandoParaLaDerecha(), posicion);
-}
-*/
+ BolaDeNieve Jugador::disparar(){
+ return BolaDeNieve(estaMirandoParaLaDerecha(), posicion);
+ }
+ */
