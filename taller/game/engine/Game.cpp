@@ -73,6 +73,7 @@ unsigned int Game::getElapsedTime() {
 }
 
 
+
 void Game::start(){
 	this->gameCicle();
 }
