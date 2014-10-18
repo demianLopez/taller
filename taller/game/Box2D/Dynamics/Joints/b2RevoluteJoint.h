@@ -1,20 +1,20 @@
 /*
-* Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
-*
-* This software is provided 'as-is', without any express or implied
-* warranty.  In no event will the authors be held liable for any damages
-* arising from the use of this software.
-* Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
-* 1. The origin of this software must not be misrepresented; you must not
-* claim that you wrote the original software. If you use this software
-* in a product, an acknowledgment in the product documentation would be
-* appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
-* misrepresented as being the original software.
-* 3. This notice may not be removed or altered from any source distribution.
-*/
+ * Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
 
 #ifndef B2_REVOLUTE_JOINT_H
 #define B2_REVOLUTE_JOINT_H
@@ -32,10 +32,8 @@
 /// 1. you might not know where the center of mass will be.
 /// 2. if you add/remove shapes from a body and recompute the mass,
 ///    the joints will be broken.
-struct b2RevoluteJointDef : public b2JointDef
-{
-	b2RevoluteJointDef()
-	{
+struct b2RevoluteJointDef: public b2JointDef {
+	b2RevoluteJointDef() {
 		type = e_revoluteJoint;
 		localAnchorA.Set(0.0f, 0.0f);
 		localAnchorB.Set(0.0f, 0.0f);
@@ -87,20 +85,25 @@ struct b2RevoluteJointDef : public b2JointDef
 /// a joint limit that specifies a lower and upper angle. You can use a motor
 /// to drive the relative rotation about the shared point. A maximum motor torque
 /// is provided so that infinite forces are not generated.
-class b2RevoluteJoint : public b2Joint
-{
+class b2RevoluteJoint: public b2Joint {
 public:
 	b2Vec2 GetAnchorA() const;
 	b2Vec2 GetAnchorB() const;
 
 	/// The local anchor point relative to bodyA's origin.
-	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
+	const b2Vec2& GetLocalAnchorA() const {
+		return m_localAnchorA;
+	}
 
 	/// The local anchor point relative to bodyB's origin.
-	const b2Vec2& GetLocalAnchorB() const  { return m_localAnchorB; }
+	const b2Vec2& GetLocalAnchorB() const {
+		return m_localAnchorB;
+	}
 
 	/// Get the reference angle.
-	float32 GetReferenceAngle() const { return m_referenceAngle; }
+	float32 GetReferenceAngle() const {
+		return m_referenceAngle;
+	}
 
 	/// Get the current joint angle in radians.
 	float32 GetJointAngle() const;
@@ -137,7 +140,9 @@ public:
 
 	/// Set the maximum motor torque, usually in N-m.
 	void SetMaxMotorTorque(float32 torque);
-	float32 GetMaxMotorTorque() const { return m_maxMotorTorque; }
+	float32 GetMaxMotorTorque() const {
+		return m_maxMotorTorque;
+	}
 
 	/// Get the reaction force given the inverse time step.
 	/// Unit is N.
@@ -155,7 +160,7 @@ public:
 	void Dump();
 
 protected:
-	
+
 	friend class b2Joint;
 	friend class b2GearJoint;
 
@@ -192,12 +197,11 @@ protected:
 	float32 m_invIA;
 	float32 m_invIB;
 	b2Mat33 m_mass;			// effective mass for point-to-point constraint.
-	float32 m_motorMass;	// effective mass for motor/limit angular constraint.
+	float32 m_motorMass;// effective mass for motor/limit angular constraint.
 	b2LimitState m_limitState;
 };
 
-inline float32 b2RevoluteJoint::GetMotorSpeed() const
-{
+inline float32 b2RevoluteJoint::GetMotorSpeed() const {
 	return m_motorSpeed;
 }
 

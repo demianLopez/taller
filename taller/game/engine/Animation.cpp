@@ -17,35 +17,35 @@ Animation::Animation() {
 	this->cicleFinish = false;
 }
 
-AnimationFrame * Animation::getFrame(int index){
+AnimationFrame * Animation::getFrame(int index) {
 	return this->frameList[index];
 }
 
-void Animation::setOneDraw(){
+void Animation::setOneDraw() {
 	this->drawOneTime = true;
 }
 
-void Animation::setFinished(bool finished){
+void Animation::setFinished(bool finished) {
 	this->cicleFinish = finished;
 }
 
-bool Animation::isFinished(){
+bool Animation::isFinished() {
 	return this->cicleFinish;
 }
 
-void Animation::reset(){
+void Animation::reset() {
 	this->drawed = false;
 	this->lastTimeDrawed = 0;
 	this->lastDrawedFrame = 0;
 	this->cicleFinish = false;
 }
 
-AnimationFrame * Animation::getCurrentFrame(){
+AnimationFrame * Animation::getCurrentFrame() {
 
 	unsigned int currentTime = SDL_GetTicks();
 	unsigned int lastTimeDrawed = 0;
 
-	if(this->drawed){
+	if (this->drawed) {
 		lastTimeDrawed = this->lastTimeDrawed;
 	} else {
 		this->drawed = true;
@@ -57,16 +57,17 @@ AnimationFrame * Animation::getCurrentFrame(){
 	bool findFrame = false;
 	int currentFrame = this->lastDrawedFrame;
 
-	while(!findFrame){
+	while (!findFrame) {
 		AnimationFrame * frame = this->frameList[currentFrame];
 
-		if((lastTimeDrawed + frame->getFrameTime())>currentTime){
+		if ((lastTimeDrawed + frame->getFrameTime()) > currentTime) {
 			findFrame = true;
 		} else {
 			currentFrame++;
 			lastTimeDrawed += frame->getFrameTime();
 			this->lastTimeDrawed += frame->getFrameTime();
-			if((currentFrame / this->frameList.size()) >= 1 && this->drawOneTime) {
+			if ((currentFrame / this->frameList.size()) >= 1
+					&& this->drawOneTime) {
 				this->cicleFinish = true;
 			}
 			currentFrame = currentFrame % this->frameList.size();
@@ -77,17 +78,17 @@ AnimationFrame * Animation::getCurrentFrame(){
 	return this->frameList[currentFrame];
 }
 
-void Animation::addFrame(Image * frameImage, int frameTime){
+void Animation::addFrame(Image * frameImage, int frameTime) {
 	AnimationFrame *animationFrame = new AnimationFrame(frameImage, frameTime);
 	this->frameList.push_back(animationFrame);
 }
 
-int Animation::getFrameCount(){
+int Animation::getFrameCount() {
 	return this->frameList.size();
 }
 
 Animation::~Animation() {
-	for(auto *frame : this->frameList){
+	for (auto *frame : this->frameList) {
 		delete frame;
 	}
 

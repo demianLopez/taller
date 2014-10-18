@@ -19,7 +19,6 @@ public:
 
 	virtual ~AnimationFrame();
 
-
 private:
 	Image* frameImage;
 	unsigned int frameTime;

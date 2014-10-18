@@ -8,12 +8,11 @@
 #include "../common/Logger.h"
 #include "engine/Game.h"
 
-
 using namespace std;
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[]) {
 	bool continues = true;
-	while(continues){
+	while (continues) {
 		Logger::initializeCustomLogs();
 
 		LectorJson* lector = new LectorJson();

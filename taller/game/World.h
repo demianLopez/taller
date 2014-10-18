@@ -17,7 +17,6 @@
 class Resources;
 class Polygon;
 
-
 class World {
 public:
 	World(b2Vec2 * gravity);
@@ -62,7 +61,7 @@ private:
 
 	//BOX 2D
 	b2World * box2DWorld;
-	b2Vec2  * gravity;
+	b2Vec2 * gravity;
 
 	b2Vec2 * SDLWindowSize;
 	b2Vec2 * Box2DWorldSize;

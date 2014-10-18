@@ -37,7 +37,8 @@ public:
 	static void initialize_log(std::string log_file);
 	static void log(std::string log_file, std::string caller,
 			error_type_t error_type, std::string error_message);
-	static void customLog(std::string caller, error_type_t error_type, std::string error_message);
+	static void customLog(std::string caller, error_type_t error_type,
+			std::string error_message);
 	static void initializeCustomLogs();
 };
 

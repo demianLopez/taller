@@ -1,20 +1,20 @@
 /*
-* Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
-*
-* This software is provided 'as-is', without any express or implied
-* warranty.  In no event will the authors be held liable for any damages
-* arising from the use of this software.
-* Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
-* 1. The origin of this software must not be misrepresented; you must not
-* claim that you wrote the original software. If you use this software
-* in a product, an acknowledgment in the product documentation would be
-* appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
-* misrepresented as being the original software.
-* 3. This notice may not be removed or altered from any source distribution.
-*/
+ * Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
 
 #include <Box2D/Dynamics/Joints/b2DistanceJoint.h>
 #include <Box2D/Dynamics/b2Body.h>
@@ -36,8 +36,7 @@
 //   = invMass1 + invI1 * cross(r1, u)^2 + invMass2 + invI2 * cross(r2, u)^2
 
 void b2DistanceJointDef::Initialize(b2Body* b1, b2Body* b2,
-									const b2Vec2& anchor1, const b2Vec2& anchor2)
-{
+		const b2Vec2& anchor1, const b2Vec2& anchor2) {
 	bodyA = b1;
 	bodyB = b2;
 	localAnchorA = bodyA->GetLocalPoint(anchor1);
@@ -46,9 +45,8 @@ void b2DistanceJointDef::Initialize(b2Body* b1, b2Body* b2,
 	length = d.Length();
 }
 
-b2DistanceJoint::b2DistanceJoint(const b2DistanceJointDef* def)
-: b2Joint(def)
-{
+b2DistanceJoint::b2DistanceJoint(const b2DistanceJointDef* def) :
+		b2Joint(def) {
 	m_localAnchorA = def->localAnchorA;
 	m_localAnchorB = def->localAnchorB;
 	m_length = def->length;
@@ -59,8 +57,7 @@ b2DistanceJoint::b2DistanceJoint(const b2DistanceJointDef* def)
 	m_bias = 0.0f;
 }
 
-void b2DistanceJoint::InitVelocityConstraints(const b2SolverData& data)
-{
+void b2DistanceJoint::InitVelocityConstraints(const b2SolverData& data) {
 	m_indexA = m_bodyA->m_islandIndex;
 	m_indexB = m_bodyB->m_islandIndex;
 	m_localCenterA = m_bodyA->m_sweep.localCenter;
@@ -88,24 +85,21 @@ void b2DistanceJoint::InitVelocityConstraints(const b2SolverData& data)
 
 	// Handle singularity.
 	float32 length = m_u.Length();
-	if (length > b2_linearSlop)
-	{
+	if (length > b2_linearSlop) {
 		m_u *= 1.0f / length;
-	}
-	else
-	{
+	} else {
 		m_u.Set(0.0f, 0.0f);
 	}
 
 	float32 crAu = b2Cross(m_rA, m_u);
 	float32 crBu = b2Cross(m_rB, m_u);
-	float32 invMass = m_invMassA + m_invIA * crAu * crAu + m_invMassB + m_invIB * crBu * crBu;
+	float32 invMass = m_invMassA + m_invIA * crAu * crAu + m_invMassB
+			+ m_invIB * crBu * crBu;
 
 	// Compute the effective mass matrix.
 	m_mass = invMass != 0.0f ? 1.0f / invMass : 0.0f;
 
-	if (m_frequencyHz > 0.0f)
-	{
+	if (m_frequencyHz > 0.0f) {
 		float32 C = length - m_length;
 
 		// Frequency
@@ -125,15 +119,12 @@ void b2DistanceJoint::InitVelocityConstraints(const b2SolverData& data)
 
 		invMass += m_gamma;
 		m_mass = invMass != 0.0f ? 1.0f / invMass : 0.0f;
-	}
-	else
-	{
+	} else {
 		m_gamma = 0.0f;
 		m_bias = 0.0f;
 	}
 
-	if (data.step.warmStarting)
-	{
+	if (data.step.warmStarting) {
 		// Scale the impulse to support a variable time step.
 		m_impulse *= data.step.dtRatio;
 
@@ -142,9 +133,7 @@ void b2DistanceJoint::InitVelocityConstraints(const b2SolverData& data)
 		wA -= m_invIA * b2Cross(m_rA, P);
 		vB += m_invMassB * P;
 		wB += m_invIB * b2Cross(m_rB, P);
-	}
-	else
-	{
+	} else {
 		m_impulse = 0.0f;
 	}
 
@@ -154,8 +143,7 @@ void b2DistanceJoint::InitVelocityConstraints(const b2SolverData& data)
 	data.velocities[m_indexB].w = wB;
 }
 
-void b2DistanceJoint::SolveVelocityConstraints(const b2SolverData& data)
-{
+void b2DistanceJoint::SolveVelocityConstraints(const b2SolverData& data) {
 	b2Vec2 vA = data.velocities[m_indexA].v;
 	float32 wA = data.velocities[m_indexA].w;
 	b2Vec2 vB = data.velocities[m_indexB].v;
@@ -181,10 +169,8 @@ void b2DistanceJoint::SolveVelocityConstraints(const b2SolverData& data)
 	data.velocities[m_indexB].w = wB;
 }
 
-bool b2DistanceJoint::SolvePositionConstraints(const b2SolverData& data)
-{
-	if (m_frequencyHz > 0.0f)
-	{
+bool b2DistanceJoint::SolvePositionConstraints(const b2SolverData& data) {
+	if (m_frequencyHz > 0.0f) {
 		// There is no position correction for soft distance constraints.
 		return true;
 	}
@@ -220,30 +206,25 @@ bool b2DistanceJoint::SolvePositionConstraints(const b2SolverData& data)
 	return b2Abs(C) < b2_linearSlop;
 }
 
-b2Vec2 b2DistanceJoint::GetAnchorA() const
-{
+b2Vec2 b2DistanceJoint::GetAnchorA() const {
 	return m_bodyA->GetWorldPoint(m_localAnchorA);
 }
 
-b2Vec2 b2DistanceJoint::GetAnchorB() const
-{
+b2Vec2 b2DistanceJoint::GetAnchorB() const {
 	return m_bodyB->GetWorldPoint(m_localAnchorB);
 }
 
-b2Vec2 b2DistanceJoint::GetReactionForce(float32 inv_dt) const
-{
+b2Vec2 b2DistanceJoint::GetReactionForce(float32 inv_dt) const {
 	b2Vec2 F = (inv_dt * m_impulse) * m_u;
 	return F;
 }
 
-float32 b2DistanceJoint::GetReactionTorque(float32 inv_dt) const
-{
+float32 b2DistanceJoint::GetReactionTorque(float32 inv_dt) const {
 	B2_NOT_USED(inv_dt);
 	return 0.0f;
 }
 
-void b2DistanceJoint::Dump()
-{
+void b2DistanceJoint::Dump() {
 	int32 indexA = m_bodyA->m_islandIndex;
 	int32 indexB = m_bodyB->m_islandIndex;
 
@@ -251,8 +232,10 @@ void b2DistanceJoint::Dump()
 	b2Log("  jd.bodyA = bodies[%d];\n", indexA);
 	b2Log("  jd.bodyB = bodies[%d];\n", indexB);
 	b2Log("  jd.collideConnected = bool(%d);\n", m_collideConnected);
-	b2Log("  jd.localAnchorA.Set(%.15lef, %.15lef);\n", m_localAnchorA.x, m_localAnchorA.y);
-	b2Log("  jd.localAnchorB.Set(%.15lef, %.15lef);\n", m_localAnchorB.x, m_localAnchorB.y);
+	b2Log("  jd.localAnchorA.Set(%.15lef, %.15lef);\n", m_localAnchorA.x,
+			m_localAnchorA.y);
+	b2Log("  jd.localAnchorB.Set(%.15lef, %.15lef);\n", m_localAnchorB.x,
+			m_localAnchorB.y);
 	b2Log("  jd.length = %.15lef;\n", m_length);
 	b2Log("  jd.frequencyHz = %.15lef;\n", m_frequencyHz);
 	b2Log("  jd.dampingRatio = %.15lef;\n", m_dampingRatio);

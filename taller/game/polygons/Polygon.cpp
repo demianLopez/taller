@@ -34,9 +34,7 @@ Polygon::Polygon(int body_def) {
 	this->g = 0;
 }
 
-
-
-void Polygon::setColor(int r, int g, int b){
+void Polygon::setColor(int r, int g, int b) {
 	this->r = r;
 	this->g = g;
 	this->b = b;
@@ -44,15 +42,15 @@ void Polygon::setColor(int r, int g, int b){
 	this->createSDLPoints();
 }
 
-b2Body * Polygon::getBody(){
+b2Body * Polygon::getBody() {
 	return body;
 }
 
-void Polygon::addB2DPoint(double x, double y){
+void Polygon::addB2DPoint(double x, double y) {
 	this->pointList.push_back(new b2Vec2(x, y));
 }
 
-void Polygon::createSDLPoints(){
+void Polygon::createSDLPoints() {
 
 	//Buscamos el ancho y largo maximo!!
 	double xMaxPos = 0;
@@ -60,23 +58,23 @@ void Polygon::createSDLPoints(){
 	double yMaxPos = 0;
 	double yMaxNeg = 0;
 
-	for(auto *point : pointList){
-		if(point->x < 0){
-			if(point->x < xMaxNeg){
+	for (auto *point : pointList) {
+		if (point->x < 0) {
+			if (point->x < xMaxNeg) {
 				xMaxNeg = point->x;
 			}
 		} else {
-			if(point->x > xMaxPos){
+			if (point->x > xMaxPos) {
 				xMaxPos = point->x;
 			}
 		}
 
-		if(point->y < 0){
-			if(point->y < yMaxNeg){
+		if (point->y < 0) {
+			if (point->y < yMaxNeg) {
 				yMaxNeg = point->y;
 			}
 		} else {
-			if(point->y > yMaxPos){
+			if (point->y > yMaxPos) {
 				yMaxPos = point->y;
 			}
 		}
@@ -84,7 +82,7 @@ void Polygon::createSDLPoints(){
 
 	b2Vec2 b2DSize = b2Vec2(xMaxPos - xMaxNeg, yMaxPos - yMaxNeg);
 
-	if(this->polygonImage != NULL){
+	if (this->polygonImage != NULL) {
 		delete this->polygonImage;
 	}
 
@@ -100,18 +98,18 @@ void Polygon::createSDLPoints(){
 	sdlSize.x *= 1.5;
 	sdlSize.y *= 1.5;
 
-	if(((int) sdlSize.x)%2 == 0){
+	if (((int) sdlSize.x) % 2 == 0) {
 		sdlSize.x++;
 	}
 
-	if(((int) sdlSize.y%2) == 0){
+	if (((int) sdlSize.y % 2) == 0) {
 		sdlSize.y++;
 	}
 
 	int centerX = sdlSize.x / 2;
 	int centerY = sdlSize.y / 2;
 
-	for(auto *point : pointList){
+	for (auto *point : pointList) {
 		b2Vec2 sdlPos = this->world->box2DToSDLSize(point);
 		vX[c] = sdlPos.x + centerX;
 		vY[c] = sdlSize.y - (sdlPos.y + centerY);
@@ -131,46 +129,47 @@ void Polygon::createSDLPoints(){
 }
 
 Polygon::~Polygon() {
-	for(auto *point : pointList){
+	for (auto *point : pointList) {
 		delete point;
 	}
 	pointList.clear();
 
-	if(this->polygonImage != NULL){
+	if (this->polygonImage != NULL) {
 
 		delete this->polygonImage;
 	}
 }
 
-void Polygon::render(Graphics * g){
+void Polygon::render(Graphics * g) {
 	b2Vec2 b2DPos = this->body->GetPosition();
 	b2Vec2 sdlPos = this->world->box2DToSDL(&b2DPos);
 
 	g->drawAtCenter(true);
-	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y,  - this->body->GetAngle() * 57.2957);
+	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y,
+			-this->body->GetAngle() * 57.2957);
 	g->drawAtCenter(false);
 }
 
-bool Polygon::shouldIRender(){
+bool Polygon::shouldIRender() {
 	return !this->world->isOutOfWorld(this->body->GetPosition());
 }
 
-bool Polygon::isStatic(){
+bool Polygon::isStatic() {
 	return body->GetType() == b2_staticBody;
 }
 
-b2Vec2 * Polygon::getPosition(){
-	return (b2Vec2*)&this->body->GetPosition();
+b2Vec2 * Polygon::getPosition() {
+	return (b2Vec2*) &this->body->GetPosition();
 }
 
 void Polygon::create_body(b2BodyDef* body_definition,
-		b2FixtureDef* body_fixture,  World * world) {
+		b2FixtureDef* body_fixture, World * world) {
 	this->world = world;
 	b2World * bWorld = world->getBox2DWorld();
 	this->body = bWorld->CreateBody(body_definition);
 	b2Fixture *fixture = this->body->CreateFixture(body_fixture);
 
-	fixture->SetUserData( (void*) 1); // Le ponemos a los poligonos el tag "1". (Para detectar colisiones)
+	fixture->SetUserData((void*) 1); // Le ponemos a los poligonos el tag "1". (Para detectar colisiones)
 
 	this->body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 }
