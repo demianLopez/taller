@@ -9,39 +9,12 @@
 #define SNOWBROSS_H_
 
 #include "engine/Game.h"
-#include "engine/Image.h"
-#include "engine/SpriteSheet.h"
-#include "engine/Animation.h"
-
-class Graphics;
-class World;
-class ParticleEmiter;
 
 class SnowBross: public Game {
 public:
-	SnowBross(const char *pTitle);
-	void setWorld(World * world);
+	SnowBross( const char *pTitle);
 	virtual ~SnowBross();
-private:
-	virtual void update(unsigned int delta);
-	virtual void render(Graphics *g);
-	virtual void keyEvent(SDL_Event e);
-	virtual void init();
-	virtual void exit();
 
-	Image * worldImage;
-
-	World * gameWorld;
-	ParticleEmiter * backParticleEmiter;
-	ParticleEmiter * frontParticleEmiter;
-
-	Animation * lightAnimation;
-	SpriteSheet * spriteLightAnimation;
-	int lightAnimationX;
-
-	float zoomScale;
-	float maxZoomScale;
-	float minZoomScale;
 };
 
 #endif /* SNOWBROSS_H_ */

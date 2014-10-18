@@ -5,7 +5,7 @@
  *      Author: EscDemi
  */
 
-#include "../engine/Particle.h"
+#include <engine/Particle.h>
 #include "ParticleEmiter.h"
 #include "Graphics.h"
 #include <math.h>
