@@ -36,7 +36,9 @@ protected:
 	sockaddr_in_s _address; //Direccion de conexion
 
 protected:
-	_socket(){};
+	_socket() {
+	}
+	;
 
 public:
 	void close_port();

@@ -18,14 +18,13 @@
  */
 #include "Thread.h"
 
-
 void* Thread::starter(void* args) {
 	Thread* thread = (Thread*) args;
 	thread->run_func(thread->run_data);
 	return NULL;
 }
 
-Thread::Thread(thread_run_func_t run_func, thread_run_data_t run_data){
+Thread::Thread(thread_run_func_t run_func, thread_run_data_t run_data) {
 
 	this->_thread = 0;
 	this->run_func = run_func;
@@ -33,12 +32,12 @@ Thread::Thread(thread_run_func_t run_func, thread_run_data_t run_data){
 
 }
 
-Thread::~Thread(){
+Thread::~Thread() {
 	this->join();
 }
 
 void Thread::start() {
-	pthread_create(&this->_thread, NULL, starter,this);
+	pthread_create(&this->_thread, NULL, starter, this);
 }
 
 void Thread::join() {
