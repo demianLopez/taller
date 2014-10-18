@@ -10,6 +10,7 @@
 
 #include "engine/GameState.h"
 #include "engine/GUI/Button.h"
+#include "engine/GUI/Label.h"
 #include "engine/ParticleEmiter.h"
 
 class MainMenu: public GameState {
@@ -39,6 +40,8 @@ private:
 	Image * backgroundImage;
 
 	ParticleEmiter * particleEmiter;
+	Label * titleLabel;
+
 
 };
 
