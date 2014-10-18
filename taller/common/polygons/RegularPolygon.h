@@ -26,8 +26,8 @@
 
 class RegularPolygon: public Polygon {
 public:
-	RegularPolygon(size_t edges, double scale, double posX, double posY, int body_type,
-			double density, double angle, World * world);
+	RegularPolygon(size_t edges, double scale, double posX, double posY,
+			int body_type, double density, double angle, World * world);
 	virtual ~RegularPolygon();
 private:
 	void setSDLVertex(size_t sides, b2Vec2* vertex);

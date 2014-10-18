@@ -72,6 +72,7 @@ private:
 	std::stringstream fpsText;
 
 	std::vector<GameState *> stateList;
+
 };
 
 #endif /* GAME_H_ */

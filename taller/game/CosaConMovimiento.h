@@ -2,7 +2,7 @@
 #define COSACONMOVIMIENTO_H_
 
 #include "VectorXY.h"
-#include "Box2D/Box2D.h"
+#include <Box2D/Box2D.h>
 #include "engine/Animation.h"
 #include "Resources.h"
 
@@ -38,7 +38,6 @@ public:
 
 	bool isGoingUp();
 	bool isGoingDown();
-
 
 	// Devuelve true si esta mirando para la derecha.
 	bool estaMirandoParaLaDerecha();

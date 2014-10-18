@@ -7,7 +7,6 @@
 
 #include "SnowBross.h"
 
-
 SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
 
 }

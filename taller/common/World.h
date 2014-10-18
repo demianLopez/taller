@@ -8,7 +8,7 @@
 #ifndef WORLD_H_
 #define WORLD_H_
 
-#include "Box2D/Box2D.h"
+#include <Box2D/Box2D.h>
 #include "Jugador.h"
 #include <vector>
 #include "polygons/Polygon.h"
@@ -16,7 +16,6 @@
 
 class Resources;
 class Polygon;
-
 
 class World {
 public:
@@ -62,7 +61,7 @@ private:
 
 	//BOX 2D
 	b2World * box2DWorld;
-	b2Vec2  * gravity;
+	b2Vec2 * gravity;
 
 	b2Vec2 * SDLWindowSize;
 	b2Vec2 * Box2DWorldSize;

@@ -22,13 +22,14 @@ Circle::~Circle() {
 	delete this->circleImage;
 }
 
-Circle::Circle(double diameter, double posX, double posY, double density,double angle, int body_type,
-		World * world) : Polygon(body_type) {
+Circle::Circle(double diameter, double posX, double posY, double density,
+		double angle, int body_type, World * world) :
+		Polygon(body_type) {
 
 	b2CircleShape circle_shape;
 	//circle_shape.m_p.Set(0, 0);
 	this->diameter = diameter;
-	float32 radius = diameter/2;
+	float32 radius = diameter / 2;
 	circle_shape.m_radius = radius;
 
 	b2FixtureDef body_fixture;
@@ -39,7 +40,7 @@ Circle::Circle(double diameter, double posX, double posY, double density,double 
 	b2BodyDef body_definition;
 	body_definition.angle = angle;
 
-	if(body_type == Polygon::STATIC){
+	if (body_type == Polygon::STATIC) {
 		body_definition.type = b2_staticBody;
 	} else {
 		body_definition.type = b2_dynamicBody;
@@ -52,8 +53,8 @@ Circle::Circle(double diameter, double posX, double posY, double density,double 
 	this->circleImage = new Image("Resources/bola.png");
 }
 
-void Circle::render(Graphics * g){
-	if(!this->shouldIRender()){
+void Circle::render(Graphics * g) {
+	if (!this->shouldIRender()) {
 		return; //Evitamos gastar recursos renderizando algo que no esta en pantalla
 	}
 
@@ -64,6 +65,8 @@ void Circle::render(Graphics * g){
 	b2Vec2 SDLsize = this->world->box2DToSDL(&size);
 
 	g->drawAtCenter(true);
-	g->drawImage(this->circleImage, SDLPos.x, SDLPos.y, SDLsize.x, SDLsize.y - this->world->getWindowSize()->y, -this->body->GetAngle() * 57);
+	g->drawImage(this->circleImage, SDLPos.x, SDLPos.y, SDLsize.x,
+			SDLsize.y - this->world->getWindowSize()->y,
+			-this->body->GetAngle() * 57);
 	g->drawAtCenter(false);
 }

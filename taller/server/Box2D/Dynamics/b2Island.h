@@ -1,20 +1,20 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
-*
-* This software is provided 'as-is', without any express or implied
-* warranty.  In no event will the authors be held liable for any damages
-* arising from the use of this software.
-* Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
-* 1. The origin of this software must not be misrepresented; you must not
-* claim that you wrote the original software. If you use this software
-* in a product, an acknowledgment in the product documentation would be
-* appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
-* misrepresented as being the original software.
-* 3. This notice may not be removed or altered from any source distribution.
-*/
+ * Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
 
 #ifndef B2_ISLAND_H
 #define B2_ISLAND_H
@@ -31,40 +31,36 @@ struct b2ContactVelocityConstraint;
 struct b2Profile;
 
 /// This is an internal class.
-class b2Island
-{
+class b2Island {
 public:
 	b2Island(int32 bodyCapacity, int32 contactCapacity, int32 jointCapacity,
 			b2StackAllocator* allocator, b2ContactListener* listener);
 	~b2Island();
 
-	void Clear()
-	{
+	void Clear() {
 		m_bodyCount = 0;
 		m_contactCount = 0;
 		m_jointCount = 0;
 	}
 
-	void Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& gravity, bool allowSleep);
+	void Solve(b2Profile* profile, const b2TimeStep& step,
+			const b2Vec2& gravity, bool allowSleep);
 
 	void SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiIndexB);
 
-	void Add(b2Body* body)
-	{
+	void Add(b2Body* body) {
 		b2Assert(m_bodyCount < m_bodyCapacity);
 		body->m_islandIndex = m_bodyCount;
 		m_bodies[m_bodyCount] = body;
 		++m_bodyCount;
 	}
 
-	void Add(b2Contact* contact)
-	{
+	void Add(b2Contact* contact) {
 		b2Assert(m_contactCount < m_contactCapacity);
 		m_contacts[m_contactCount++] = contact;
 	}
 
-	void Add(b2Joint* joint)
-	{
+	void Add(b2Joint* joint) {
 		b2Assert(m_jointCount < m_jointCapacity);
 		m_joints[m_jointCount++] = joint;
 	}

@@ -11,7 +11,6 @@
 #include "../../common/Logger.h"
 #include <stdio.h>
 
-
 Game::Game(const char *title) {
 	//Seteo por default
 	this->height = 600;
@@ -35,18 +34,18 @@ Game::Game(const char *title) {
 	this->changingState = false;
 }
 
-int Game::getScreenHeight(){
+int Game::getScreenHeight() {
 	return this->height;
 }
 
-int Game::getScreenWidth(){
+int Game::getScreenWidth() {
 	return this->width;
 }
 
-void Game::showFPS(bool showFPS){
+void Game::showFPS(bool showFPS) {
 	this->sfps = showFPS;
 }
-void Game::setMaxFPS(int maxFPS){
+void Game::setMaxFPS(int maxFPS) {
 	this->limitedFPS = true;
 	this->maxFPS = maxFPS;
 }
@@ -65,89 +64,95 @@ void Game::setScreenSize(int width, int height){
 	this->width = width;
 }
 
-unsigned int Game::getFPS(){
+unsigned int Game::getFPS() {
 	return this->fps;
 }
 
-unsigned int Game::getElapsedTime(){
+unsigned int Game::getElapsedTime() {
 	return SDL_GetTicks();
 }
+
+
 
 void Game::start(){
 	this->gameCicle();
 }
 
 bool Game::instantiate(){
+
 	bool success = true;
 
 	Logger::customLog("Game.cpp", Logger::INFO, "Inicilizando componentes SDL");
 
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
-		Logger::customLog("Game.cpp", Logger::ERROR, "SDL No pudo inicializar correctamente");
+	if (SDL_Init( SDL_INIT_VIDEO) < 0) {
+		Logger::customLog("Game.cpp", Logger::ERROR,
+				"SDL No pudo inicializar correctamente");
 		success = false;
 	} else {
 		Logger::customLog("Game.cpp", Logger::INFO, "SDL Initialize: OK");
+
 		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
 
 		if(gWindow == NULL)
 		{
 			Logger::customLog("Game.cpp", Logger::ERROR, "No se ha podido crear la ventana de SDL"); //SDL_GetError()
+
 			success = false;
-		}
-		else
-		{
+		} else {
 			Logger::customLog("Game.cpp", Logger::INFO, "Ventana creada");
 			//Get window surface
 			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 
-            SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+			SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-            int imgFlags = IMG_INIT_PNG;
-            if( !( IMG_Init( imgFlags ) & imgFlags ) )
-            {
-            	Logger::customLog("Game.cpp", Logger::ERROR, "No se pudo inicializar componente SDL_image");
-                success = false;
-            } else {
-            	Logger::customLog("Game.cpp", Logger::INFO, "Inicializado SDL_image");
-                if(TTF_Init() == -1) {
-                	   Logger::customLog("Game.cpp", Logger::ERROR, "No se pudo inicializar componente SDL_ttf");
+			int imgFlags = IMG_INIT_PNG;
+			if (!(IMG_Init(imgFlags) & imgFlags)) {
+				Logger::customLog("Game.cpp", Logger::ERROR,
+						"No se pudo inicializar componente SDL_image");
+				success = false;
+			} else {
+				Logger::customLog("Game.cpp", Logger::INFO,
+						"Inicializado SDL_image");
+				if (TTF_Init() == -1) {
+					Logger::customLog("Game.cpp", Logger::ERROR,
+							"No se pudo inicializar componente SDL_ttf");
 
-                       success = false;
-                } else {
-                	Logger::customLog("Game.cpp", Logger::INFO, "Inicializado SDL_ttf");
-                	this->gFont = TTF_OpenFont( "Resources/font.ttf", 28 );
-                	GameElements::gFont = this->gFont;
-                }
+					success = false;
+				} else {
+					Logger::customLog("Game.cpp", Logger::INFO,
+							"Inicializado SDL_ttf");
+					this->gFont = TTF_OpenFont("Resources/font.ttf", 28);
+					GameElements::gFont = this->gFont;
+				}
 
-            	this->gScreenSurface = SDL_GetWindowSurface(gWindow);
+				this->gScreenSurface = SDL_GetWindowSurface(gWindow);
 
-            	//Definimos GAME ELEMENTS
-            	GameElements::gScreenSurface = this->gScreenSurface;
-            	GameElements::gRenderer = this->gRenderer;
+				//Definimos GAME ELEMENTS
+				GameElements::gScreenSurface = this->gScreenSurface;
+				GameElements::gRenderer = this->gRenderer;
 
+				Logger::customLog("Game.cpp", Logger::INFO,
+						"Componentes SDL Inicializados!");
+				//Arrancamos el gameCicle
 
-            	Logger::customLog("Game.cpp", Logger::INFO, "Componentes SDL Inicializados!");
-            	//Arrancamos el gameCicle
-
-
-            }
+			}
 		}
 	}
 
 	return success;
 }
 
-void Game::endGame(){
+void Game::endGame() {
 	this->quit = true;
 }
 
-void Game::gameCicle(){
 
+void Game::gameCicle(){
 	Logger::customLog("Game.cpp", Logger::INFO, "Comenzando el ciclo de juego");
-	if(this->sfps){
+	if (this->sfps) {
 		std::stringstream asd;
 		asd.str("");
-		asd<<"Seteados maximos FPS a: "<<this->maxFPS;
+		asd << "Seteados maximos FPS a: " << this->maxFPS;
 
 		Logger::customLog("Game.cpp", Logger::INFO, asd.str().c_str());
 		asd.clear();
@@ -158,6 +163,7 @@ void Game::gameCicle(){
 	SDL_Event e;
 
 	//Antes de arrancar el ciclo, llamamos a la funcion init
+
 	Logger::customLog("Game.cpp", Logger::INFO, "Llamado a metodo de inicializacion");
 
 	for(auto * state : this->stateList){
@@ -178,17 +184,17 @@ void Game::gameCicle(){
 
 		while( SDL_PollEvent( &e ) != 0 ){
 			//User requests quit
-			if( e.type == SDL_QUIT ){
+			if (e.type == SDL_QUIT) {
 				this->endGame();
 			} else {
 				this->currentState->keyEvent(e);
 			}
 		}
 
-		if(this->limitedFPS){
+		if (this->limitedFPS) {
 			int renderTime = 1000 / this->maxFPS;
 			int elapsedTime = SDL_GetTicks() - this->lastRenderTime;
-			if(elapsedTime < renderTime){
+			if (elapsedTime < renderTime) {
 				SDL_Delay(renderTime - elapsedTime);
 			}
 		}
@@ -207,16 +213,16 @@ void Game::gameCicle(){
 
 		this->renderCount++;
 
-		if((SDL_GetTicks() - this->lastFPSUpdateTime) > 1000){
+		if ((SDL_GetTicks() - this->lastFPSUpdateTime) > 1000) {
 			this->fps = this->renderCount;
 			this->renderCount = 0;
 			this->lastFPSUpdateTime = SDL_GetTicks();
 		}
 
-		if(this->sfps){
+		if (this->sfps) {
 			fpsText.clear();
 			fpsText.str("");
-			fpsText<<this->getFPS()<< " FPS";
+			fpsText << this->getFPS() << " FPS";
 			g->drawText(10, 10, fpsText.str().c_str());
 		}
 
@@ -234,8 +240,7 @@ void Game::gameCicle(){
 	this->gameClose();
 }
 
-
-void Game::gameClose(){
+void Game::gameClose() {
 
 	SDL_DestroyWindow(this->gWindow);
 	Logger::customLog("Game.cpp", Logger::INFO, "Ventana destruida");

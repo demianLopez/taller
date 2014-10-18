@@ -21,12 +21,12 @@
 
 #include "Polygon.h"
 #include <Box2D/Box2D.h>
-#include <engine/Image.h>
+#include "../game/engine/Image.h"
 
 class Circle: public Polygon {
 public:
-	Circle(double diameter, double posX, double posY, double density, double angle, int body_type,
-			World * world);
+	Circle(double diameter, double posX, double posY, double density,
+			double angle, int body_type, World * world);
 	virtual ~Circle();
 
 	virtual void render(Graphics * g);

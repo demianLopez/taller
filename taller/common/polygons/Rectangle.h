@@ -24,7 +24,7 @@
 class Rectangle: public Polygon {
 public:
 	Rectangle(double width, double height, double posX, double posY,
-			double density,double angle, int body_type,  World * world);
+			double density, double angle, int body_type, World * world);
 
 	virtual ~Rectangle();
 private:
