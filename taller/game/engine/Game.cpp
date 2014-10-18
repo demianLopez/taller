@@ -50,7 +50,6 @@ void Game::setMaxFPS(int maxFPS) {
 	this->maxFPS = maxFPS;
 }
 
-<<<<<<< HEAD
 void Game::addState(GameState * state){
 	this->stateList.push_back(state);
 }
@@ -61,9 +60,6 @@ void Game::enterState(int id){
 }
 
 void Game::setScreenSize(int width, int height){
-=======
-void Game::setScreenSize(int width, int height) {
->>>>>>> e1937808fb9afca4669f6be726bfa2a8c61091d9
 	this->height = height;
 	this->width = width;
 }
@@ -76,20 +72,13 @@ unsigned int Game::getElapsedTime() {
 	return SDL_GetTicks();
 }
 
-<<<<<<< HEAD
+
 void Game::start(){
 	this->gameCicle();
 }
 
 bool Game::instantiate(){
-=======
-bool Game::start() {
-	return this->gameCicle();
-}
-#include <iostream>
-using namespace std;
-bool Game::instantiate() {
->>>>>>> e1937808fb9afca4669f6be726bfa2a8c61091d9
+
 	bool success = true;
 
 	Logger::customLog("Game.cpp", Logger::INFO, "Inicilizando componentes SDL");
@@ -100,22 +89,13 @@ bool Game::instantiate() {
 		success = false;
 	} else {
 		Logger::customLog("Game.cpp", Logger::INFO, "SDL Initialize: OK");
-<<<<<<< HEAD
+
 		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
 
 		if(gWindow == NULL)
 		{
 			Logger::customLog("Game.cpp", Logger::ERROR, "No se ha podido crear la ventana de SDL"); //SDL_GetError()
-=======
-		//gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
-		cout << SDL_GetError() << endl;
-		SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_SHOWN, &gWindow,
-				&gRenderer);
-		cout << SDL_GetError() << endl;
-		if (gWindow == NULL) {
-			Logger::customLog("Game.cpp", Logger::ERROR,
-					"No se ha podido crear la ventana de SDL"); //SDL_GetError()
->>>>>>> e1937808fb9afca4669f6be726bfa2a8c61091d9
+
 			success = false;
 		} else {
 			Logger::customLog("Game.cpp", Logger::INFO, "Ventana creada");
@@ -165,13 +145,8 @@ void Game::endGame() {
 	this->quit = true;
 }
 
-<<<<<<< HEAD
-void Game::gameCicle(){
 
-=======
-bool Game::gameCicle() {
-	bool continues = false;
->>>>>>> e1937808fb9afca4669f6be726bfa2a8c61091d9
+void Game::gameCicle(){
 	Logger::customLog("Game.cpp", Logger::INFO, "Comenzando el ciclo de juego");
 	if (this->sfps) {
 		std::stringstream asd;
@@ -187,7 +162,7 @@ bool Game::gameCicle() {
 	SDL_Event e;
 
 	//Antes de arrancar el ciclo, llamamos a la funcion init
-<<<<<<< HEAD
+
 	Logger::customLog("Game.cpp", Logger::INFO, "Llamado a metodo de inicializacion");
 
 	for(auto * state : this->stateList){
@@ -207,30 +182,11 @@ bool Game::gameCicle() {
 		}
 
 		while( SDL_PollEvent( &e ) != 0 ){
-=======
-	Logger::customLog("Game.cpp", Logger::INFO,
-			"Llamado a metodo de inicializacion");
-	this->init();
-	Logger::customLog("Game.cpp", Logger::INFO,
-			"Inicializacion realizada exitosamente");
-
-	while (!this->quit) {
-		while (SDL_PollEvent(&e) != 0) {
->>>>>>> e1937808fb9afca4669f6be726bfa2a8c61091d9
 			//User requests quit
 			if (e.type == SDL_QUIT) {
 				this->endGame();
 			} else {
-<<<<<<< HEAD
 				this->currentState->keyEvent(e);
-=======
-				if (e.key.keysym.sym == SDLK_r) {
-					continues = true;
-					this->endGame();
-				} else {
-					this->keyEvent(e);
-				}
->>>>>>> e1937808fb9afca4669f6be726bfa2a8c61091d9
 			}
 		}
 
@@ -274,16 +230,10 @@ bool Game::gameCicle() {
 	}
 
 	Logger::customLog("Game.cpp", Logger::INFO, "Finalizando ciclo de juego");
-<<<<<<< HEAD
 	Logger::customLog("Game.cpp", Logger::INFO, "Llamando a la funcion de cierre");
 	for(auto * state : this->stateList){
 		state->exit();
 	}
-=======
-	Logger::customLog("Game.cpp", Logger::INFO,
-			"Llamando a la funcion de cierre");
-	this->exit();
->>>>>>> e1937808fb9afca4669f6be726bfa2a8c61091d9
 	Logger::customLog("Game.cpp", Logger::INFO, "Funcion de cierre finalizada");
 	Logger::customLog("Game.cpp", Logger::INFO, "Cerrando componentes de SDL");
 	this->gameClose();

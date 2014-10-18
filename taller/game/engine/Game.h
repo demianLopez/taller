@@ -71,20 +71,8 @@ private:
 	bool sfps; //SHOW FPS
 	std::stringstream fpsText;
 
-<<<<<<< HEAD
 	std::vector<GameState *> stateList;
-=======
-protected:
-	virtual void render(Graphics *g) = 0;
-	virtual void update(unsigned int delta) = 0;
-	virtual void keyEvent(SDL_Event e) = 0;
-	virtual void init() {
-	}
-	;
-	virtual void exit() {
-	}
-	;
->>>>>>> e1937808fb9afca4669f6be726bfa2a8c61091d9
+
 };
 
 #endif /* GAME_H_ */
