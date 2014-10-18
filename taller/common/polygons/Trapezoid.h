@@ -25,13 +25,15 @@
 
 class Trapezoid: public Polygon {
 public:
-	Trapezoid(double height, double base, double top, double angle, double posX, double posY, double density, double rotation,
-			int body_type, World * world);
+	Trapezoid(double height, double base, double top, double angle, double posX,
+			double posY, double density, double rotation, int body_type,
+			World * world);
 	virtual ~Trapezoid();
 
 private:
 	void setVertex(b2Vec2 * vertex);
-	b2Vec2 * define_vertex(double angle, double height, double base, double top);
+	b2Vec2 * define_vertex(double angle, double height, double base,
+			double top);
 };
 
 #endif /* MODEL_TRAPEZOID_H_ */

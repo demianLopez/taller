@@ -22,29 +22,29 @@ CosaConMovimiento::CosaConMovimiento(b2World * gameWorld) {
 	this->mirandoParaLaDerecha = true;
 	this->wasMovingLeftFirst = false;
 
-	this->lastVelocity = b2Vec2(0,0);
+	this->lastVelocity = b2Vec2(0, 0);
 }
 
-bool CosaConMovimiento::isGoingUp(){
+bool CosaConMovimiento::isGoingUp() {
 	return (this->body->GetLinearVelocity().y > TOLERANCIA_VELOCIDAD);
 }
 
-bool CosaConMovimiento::isGoingDown(){
+bool CosaConMovimiento::isGoingDown() {
 	return (this->body->GetLinearVelocity().y < -TOLERANCIA_VELOCIDAD);
 }
 
-void CosaConMovimiento::update(){
+void CosaConMovimiento::update() {
 	b2Vec2 currentVel = this->body->GetLinearVelocity();
 
-	if(currentVel.y < 1 && currentVel.y > -1){ // Quieto en Y
-		if(this->goingUp){
+	if (currentVel.y < 1 && currentVel.y > -1) { // Quieto en Y
+		if (this->goingUp) {
 			this->goingUp = false;
 			this->onTopJump = true;
 		}
 
-		if(this->goingDown){
+		if (this->goingDown) {
 			this->goingDown = false;
-			if(stopAtHit){
+			if (stopAtHit) {
 				this->stop();
 				this->stopAtHit = false;
 			}
@@ -52,91 +52,99 @@ void CosaConMovimiento::update(){
 
 	}
 
-	if(currentVel.y < -1){ // Cayendo
-		if(this->onTopJump){
+	if (currentVel.y < -1) { // Cayendo
+		if (this->onTopJump) {
 			this->onTopJump = false;
 			this->goingDown = true;
 		}
 	}
 
 	//Movimiento hacia los lados
-	if (movingRight){
-		if( !movingLeft || !wasMovingLeftFirst ){
-			body->ApplyLinearImpulse(b2Vec2(15-body->GetLinearVelocity().x*2,0), body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
+	if (movingRight) {
+		if (!movingLeft || !wasMovingLeftFirst) {
+			body->ApplyLinearImpulse(
+					b2Vec2(15 - body->GetLinearVelocity().x * 2, 0),
+					body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
 			mirandoParaLaDerecha = true;
 			return;
 		}
 	}
-	if (movingLeft){
-		if( !movingRight || wasMovingLeftFirst ){
-			body->ApplyLinearImpulse(b2Vec2(-15-body->GetLinearVelocity().x*2,0), body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
+	if (movingLeft) {
+		if (!movingRight || wasMovingLeftFirst) {
+			body->ApplyLinearImpulse(
+					b2Vec2(-15 - body->GetLinearVelocity().x * 2, 0),
+					body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
 			mirandoParaLaDerecha = false;
 			return;
 		}
 	}
 
-	stop(true,false);
+	stop(true, false);
 }
 
-void CosaConMovimiento::setFreezeRotation(bool freezeRotation){
+void CosaConMovimiento::setFreezeRotation(bool freezeRotation) {
 	this->body->SetFixedRotation(freezeRotation);
 }
 
 // Frena la cosa en X y/o Y
-void CosaConMovimiento::stop(bool stopX, bool stopY){
+void CosaConMovimiento::stop(bool stopX, bool stopY) {
 	b2Vec2 currentVel = this->body->GetLinearVelocity();
-	if(stopX){
+	if (stopX) {
 		this->body->SetLinearVelocity(b2Vec2(0, currentVel.y));
 	}
-	if(stopY){
+	if (stopY) {
 		this->body->SetLinearVelocity(b2Vec2(currentVel.x, 0));
 	}
 }
 
-b2Body * CosaConMovimiento::getBody(){
+b2Body * CosaConMovimiento::getBody() {
 	return this->body;
 }
 
-void CosaConMovimiento::setMovingLeft(bool isMovingLeft){
-	if (isMovingLeft){	// Se quiere setear movingLeft true
-		if ( !isMovingRight() ) wasMovingLeftFirst = true; // Se empezo a mover a la izq primero
-	}else{	// Se quiere setear movingLeft false
-		if ( isMovingRight() ) wasMovingLeftFirst = false; // De ahora en mas se empezo a mover a la der primero
+void CosaConMovimiento::setMovingLeft(bool isMovingLeft) {
+	if (isMovingLeft) {	// Se quiere setear movingLeft true
+		if (!isMovingRight())
+			wasMovingLeftFirst = true; // Se empezo a mover a la izq primero
+	} else {	// Se quiere setear movingLeft false
+		if (isMovingRight())
+			wasMovingLeftFirst = false; // De ahora en mas se empezo a mover a la der primero
 	}
 	movingLeft = isMovingLeft;	// seteo.
 }
 
-void CosaConMovimiento::setMovingRight(bool isMovingRight){
+void CosaConMovimiento::setMovingRight(bool isMovingRight) {
 	// Para explicacion ver setMovingLeft()
-	if (isMovingRight){
-		if ( !isMovingLeft() ) wasMovingLeftFirst = false;
-	}else{
-		if ( isMovingLeft() ) wasMovingLeftFirst = true;
+	if (isMovingRight) {
+		if (!isMovingLeft())
+			wasMovingLeftFirst = false;
+	} else {
+		if (isMovingLeft())
+			wasMovingLeftFirst = true;
 	}
 	movingRight = isMovingRight;
 }
 
-bool CosaConMovimiento::isMovingLeft(){
+bool CosaConMovimiento::isMovingLeft() {
 	return movingLeft;
 }
 
-bool CosaConMovimiento::isMovingRight(){
+bool CosaConMovimiento::isMovingRight() {
 	return movingRight;
 }
 
-bool CosaConMovimiento::isOnAir(){
+bool CosaConMovimiento::isOnAir() {
 	return (this->goingUp || this->goingDown || this->onTopJump);
 }
 
 // Devuelve true si esta mirando para la derecha.
-bool CosaConMovimiento::estaMirandoParaLaDerecha(){
+bool CosaConMovimiento::estaMirandoParaLaDerecha() {
 	return mirandoParaLaDerecha;
 }
 
-Animation * CosaConMovimiento::getAnimation(Resources *resources){
+Animation * CosaConMovimiento::getAnimation(Resources *resources) {
 	return NULL;
 }
 
-CosaConMovimiento::~CosaConMovimiento(){
+CosaConMovimiento::~CosaConMovimiento() {
 
 }

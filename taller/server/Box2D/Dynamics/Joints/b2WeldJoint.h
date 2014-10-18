@@ -1,20 +1,20 @@
 /*
-* Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
-*
-* This software is provided 'as-is', without any express or implied
-* warranty.  In no event will the authors be held liable for any damages
-* arising from the use of this software.
-* Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
-* 1. The origin of this software must not be misrepresented; you must not
-* claim that you wrote the original software. If you use this software
-* in a product, an acknowledgment in the product documentation would be
-* appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
-* misrepresented as being the original software.
-* 3. This notice may not be removed or altered from any source distribution.
-*/
+ * Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
 
 #ifndef B2_WELD_JOINT_H
 #define B2_WELD_JOINT_H
@@ -24,10 +24,8 @@
 /// Weld joint definition. You need to specify local anchor points
 /// where they are attached and the relative body angle. The position
 /// of the anchor points is important for computing the reaction torque.
-struct b2WeldJointDef : public b2JointDef
-{
-	b2WeldJointDef()
-	{
+struct b2WeldJointDef: public b2JointDef {
+	b2WeldJointDef() {
 		type = e_weldJoint;
 		localAnchorA.Set(0.0f, 0.0f);
 		localAnchorB.Set(0.0f, 0.0f);
@@ -48,7 +46,7 @@ struct b2WeldJointDef : public b2JointDef
 
 	/// The bodyB angle minus bodyA angle in the reference state (radians).
 	float32 referenceAngle;
-	
+
 	/// The mass-spring-damper frequency in Hertz. Rotation only.
 	/// Disable softness with a value of 0.
 	float32 frequencyHz;
@@ -59,8 +57,7 @@ struct b2WeldJointDef : public b2JointDef
 
 /// A weld joint essentially glues two bodies together. A weld joint may
 /// distort somewhat because the island constraint solver is approximate.
-class b2WeldJoint : public b2Joint
-{
+class b2WeldJoint: public b2Joint {
 public:
 	b2Vec2 GetAnchorA() const;
 	b2Vec2 GetAnchorB() const;
@@ -69,21 +66,35 @@ public:
 	float32 GetReactionTorque(float32 inv_dt) const;
 
 	/// The local anchor point relative to bodyA's origin.
-	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
+	const b2Vec2& GetLocalAnchorA() const {
+		return m_localAnchorA;
+	}
 
 	/// The local anchor point relative to bodyB's origin.
-	const b2Vec2& GetLocalAnchorB() const  { return m_localAnchorB; }
+	const b2Vec2& GetLocalAnchorB() const {
+		return m_localAnchorB;
+	}
 
 	/// Get the reference angle.
-	float32 GetReferenceAngle() const { return m_referenceAngle; }
+	float32 GetReferenceAngle() const {
+		return m_referenceAngle;
+	}
 
 	/// Set/get frequency in Hz.
-	void SetFrequency(float32 hz) { m_frequencyHz = hz; }
-	float32 GetFrequency() const { return m_frequencyHz; }
+	void SetFrequency(float32 hz) {
+		m_frequencyHz = hz;
+	}
+	float32 GetFrequency() const {
+		return m_frequencyHz;
+	}
 
 	/// Set/get damping ratio.
-	void SetDampingRatio(float32 ratio) { m_dampingRatio = ratio; }
-	float32 GetDampingRatio() const { return m_dampingRatio; }
+	void SetDampingRatio(float32 ratio) {
+		m_dampingRatio = ratio;
+	}
+	float32 GetDampingRatio() const {
+		return m_dampingRatio;
+	}
 
 	/// Dump to b2Log
 	void Dump();

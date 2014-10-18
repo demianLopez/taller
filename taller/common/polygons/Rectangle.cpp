@@ -18,15 +18,14 @@
  */
 #include "Rectangle.h"
 
-
-
-Rectangle::Rectangle(double width, double height, double density, double posX, double posY, double angle,
-		int body_type, World * world):Polygon(body_type) {
+Rectangle::Rectangle(double width, double height, double density, double posX,
+		double posY, double angle, int body_type, World * world) :
+		Polygon(body_type) {
 
 	this->size = new b2Vec2(width, height);
 
 	b2PolygonShape box_shape;
-	box_shape.SetAsBox(width/2,height/2); //seteo los vertices del poligono
+	box_shape.SetAsBox(width / 2, height / 2); //seteo los vertices del poligono
 
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &box_shape;
@@ -36,7 +35,7 @@ Rectangle::Rectangle(double width, double height, double density, double posX, d
 	b2BodyDef body_definition;
 	body_definition.angle = angle;
 
-	if(body_type == Polygon::STATIC){
+	if (body_type == Polygon::STATIC) {
 		body_definition.type = b2_staticBody;
 	} else {
 		body_definition.type = b2_dynamicBody;
@@ -48,10 +47,10 @@ Rectangle::Rectangle(double width, double height, double density, double posX, d
 
 	//Lo necesario para SDL!
 
-	this->addB2DPoint(-width/2, height/2);
-	this->addB2DPoint(width/2, height/2);
-	this->addB2DPoint(width/2, -height/2);
-	this->addB2DPoint(-width/2, -height/2);
+	this->addB2DPoint(-width / 2, height / 2);
+	this->addB2DPoint(width / 2, height / 2);
+	this->addB2DPoint(width / 2, -height / 2);
+	this->addB2DPoint(-width / 2, -height / 2);
 
 	this->createSDLPoints();
 }

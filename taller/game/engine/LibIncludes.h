@@ -14,5 +14,4 @@
 
 #include "../../common/Logger.h"
 
-
 #endif /* LIBINCLUDES_H_ */

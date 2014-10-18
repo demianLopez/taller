@@ -1,20 +1,20 @@
 /*
-* Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
-*
-* This software is provided 'as-is', without any express or implied
-* warranty.  In no event will the authors be held liable for any damages
-* arising from the use of this software.
-* Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
-* 1. The origin of this software must not be misrepresented; you must not
-* claim that you wrote the original software. If you use this software
-* in a product, an acknowledgment in the product documentation would be
-* appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
-* misrepresented as being the original software.
-* 3. This notice may not be removed or altered from any source distribution.
-*/
+ * Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
 
 #ifndef B2_WHEEL_JOINT_H
 #define B2_WHEEL_JOINT_H
@@ -27,10 +27,8 @@
 /// can violate the constraint slightly. The joint translation is zero
 /// when the local anchor points coincide in world space. Using local
 /// anchors and a local axis helps when saving and loading a game.
-struct b2WheelJointDef : public b2JointDef
-{
-	b2WheelJointDef()
-	{
+struct b2WheelJointDef: public b2JointDef {
+	b2WheelJointDef() {
 		type = e_wheelJoint;
 		localAnchorA.SetZero();
 		localAnchorB.SetZero();
@@ -44,7 +42,8 @@ struct b2WheelJointDef : public b2JointDef
 
 	/// Initialize the bodies, anchors, axis, and reference angle using the world
 	/// anchor and world axis.
-	void Initialize(b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor, const b2Vec2& axis);
+	void Initialize(b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor,
+			const b2Vec2& axis);
 
 	/// The local anchor point relative to bodyA's origin.
 	b2Vec2 localAnchorA;
@@ -76,8 +75,7 @@ struct b2WheelJointDef : public b2JointDef
 /// joint limit to restrict the range of motion and a joint motor to drive
 /// the rotation or to model rotational friction.
 /// This joint is designed for vehicle suspensions.
-class b2WheelJoint : public b2Joint
-{
+class b2WheelJoint: public b2Joint {
 public:
 	b2Vec2 GetAnchorA() const;
 	b2Vec2 GetAnchorB() const;
@@ -86,13 +84,19 @@ public:
 	float32 GetReactionTorque(float32 inv_dt) const;
 
 	/// The local anchor point relative to bodyA's origin.
-	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
+	const b2Vec2& GetLocalAnchorA() const {
+		return m_localAnchorA;
+	}
 
 	/// The local anchor point relative to bodyB's origin.
-	const b2Vec2& GetLocalAnchorB() const  { return m_localAnchorB; }
+	const b2Vec2& GetLocalAnchorB() const {
+		return m_localAnchorB;
+	}
 
 	/// The local joint axis relative to bodyA.
-	const b2Vec2& GetLocalAxisA() const { return m_localXAxisA; }
+	const b2Vec2& GetLocalAxisA() const {
+		return m_localXAxisA;
+	}
 
 	/// Get the current joint translation, usually in meters.
 	float32 GetJointTranslation() const;
@@ -178,33 +182,27 @@ protected:
 	float32 m_gamma;
 };
 
-inline float32 b2WheelJoint::GetMotorSpeed() const
-{
+inline float32 b2WheelJoint::GetMotorSpeed() const {
 	return m_motorSpeed;
 }
 
-inline float32 b2WheelJoint::GetMaxMotorTorque() const
-{
+inline float32 b2WheelJoint::GetMaxMotorTorque() const {
 	return m_maxMotorTorque;
 }
 
-inline void b2WheelJoint::SetSpringFrequencyHz(float32 hz)
-{
+inline void b2WheelJoint::SetSpringFrequencyHz(float32 hz) {
 	m_frequencyHz = hz;
 }
 
-inline float32 b2WheelJoint::GetSpringFrequencyHz() const
-{
+inline float32 b2WheelJoint::GetSpringFrequencyHz() const {
 	return m_frequencyHz;
 }
 
-inline void b2WheelJoint::SetSpringDampingRatio(float32 ratio)
-{
+inline void b2WheelJoint::SetSpringDampingRatio(float32 ratio) {
 	m_dampingRatio = ratio;
 }
 
-inline float32 b2WheelJoint::GetSpringDampingRatio() const
-{
+inline float32 b2WheelJoint::GetSpringDampingRatio() const {
 	return m_dampingRatio;
 }
 

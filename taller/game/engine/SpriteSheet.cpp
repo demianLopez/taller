@@ -8,7 +8,7 @@
 #include "SpriteSheet.h"
 #include "SubImage.h"
 
-SpriteSheet::SpriteSheet(const char* pFile, int pX, int pY){
+SpriteSheet::SpriteSheet(const char* pFile, int pX, int pY) {
 	this->spriteImage = new Image(pFile);
 	this->pX = pX;
 	this->pY = pY;
@@ -17,33 +17,34 @@ SpriteSheet::SpriteSheet(const char* pFile, int pX, int pY){
 	this->verticalCount = this->spriteImage->getHeight() / pY;
 }
 
-Image * SpriteSheet::getSubImage(int x, int y){
+Image * SpriteSheet::getSubImage(int x, int y) {
 	//Evitamos irnos fuera de la imagen
 	int xSubImage = x % this->horizontalCount;
 	int ySubImage = y % this->verticalCount;
 
-	SubImage *subImage = new SubImage(this->spriteImage, this->pX, this->pY, xSubImage, ySubImage);
+	SubImage *subImage = new SubImage(this->spriteImage, this->pX, this->pY,
+			xSubImage, ySubImage);
 
 	return subImage;
 }
 
-Image * SpriteSheet::getSpriteSheetImage(){
+Image * SpriteSheet::getSpriteSheetImage() {
 	return spriteImage;
 }
 
-int SpriteSheet::getHeight(){
+int SpriteSheet::getHeight() {
 	return this->spriteImage->getHeight();
 }
 
-int SpriteSheet::getWidth(){
+int SpriteSheet::getWidth() {
 	return this->spriteImage->getWidth();
 }
 
-int SpriteSheet::getHorizontalCount(){
+int SpriteSheet::getHorizontalCount() {
 	return this->horizontalCount;
 }
 
-int SpriteSheet::getVerticalCount(){
+int SpriteSheet::getVerticalCount() {
 	return this->verticalCount;
 }
 

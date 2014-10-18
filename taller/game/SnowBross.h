@@ -17,9 +17,9 @@ class Graphics;
 class World;
 class ParticleEmiter;
 
-class SnowBross : public Game {
+class SnowBross: public Game {
 public:
-	SnowBross( const char *pTitle);
+	SnowBross(const char *pTitle);
 	void setWorld(World * world);
 	virtual ~SnowBross();
 private:
@@ -28,7 +28,6 @@ private:
 	virtual void keyEvent(SDL_Event e);
 	virtual void init();
 	virtual void exit();
-
 
 	Image * worldImage;
 

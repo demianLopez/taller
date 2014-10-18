@@ -23,8 +23,8 @@ public:
 
 	void render(int xo, int yo, int dx, int dy);
 	void render(int xo, int yo, int dx, int dy, float rotation);
-	void render(int xo, int yo, int txo, int tyo, int tdx, int tdy, int dx, int dy);
-
+	void render(int xo, int yo, int txo, int tyo, int tdx, int tdy, int dx,
+			int dy);
 
 	//Return 0 if succes, or negative error code on faliure!
 	int setAlpha(unsigned char alpha);
@@ -41,7 +41,8 @@ public:
 private:
 	SDL_Surface *loadSurface(const char* pFile);
 	SDL_Point* centerRotation;
-	void completeRender(SDL_Rect *imageData, float angle, SDL_RendererFlip flip);
+	void completeRender(SDL_Rect *imageData, float angle,
+			SDL_RendererFlip flip);
 
 protected:
 	Image();
@@ -54,7 +55,5 @@ protected:
 	virtual SDL_Rect * getImagePortion();
 
 };
-
-
 
 #endif /* IMAGE_H_ */
