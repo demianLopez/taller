@@ -27,7 +27,7 @@ public:
 	//Llamado al final de toda la api
 	virtual void exit(Game * game) = 0;
 
-	virtual void render(Graphics *g) = 0;
+	virtual void render(Graphics *g, Game * game) = 0;
 	virtual void update(unsigned int delta) = 0;
 	virtual void keyEvent(SDL_Event e) = 0;
 };

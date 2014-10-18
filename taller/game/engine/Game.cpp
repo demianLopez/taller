@@ -208,7 +208,7 @@ void Game::gameCicle(){
 		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
 		SDL_RenderClear(gRenderer);
 
-		this->currentState->render(g);
+		this->currentState->render(g, this);
 		this->lastRenderTime = SDL_GetTicks();
 
 		this->renderCount++;
