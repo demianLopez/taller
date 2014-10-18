@@ -20,10 +20,10 @@
 #define MODEL_POLYGON_H_
 
 #include <Box2D/Box2D.h>
-#include <engine/Graphics.h>
+#include "../game/engine/Graphics.h"
 #include "../World.h"
 #include <vector>
-#include <engine/Image.h>
+#include "../game/engine/Image.h"
 
 class World;
 
@@ -53,7 +53,7 @@ protected:
 	const float friction = 0.5;
 
 	void create_body(b2BodyDef* body_definition, b2FixtureDef* body_fixture,
-			 World * world);
+			World * world);
 
 	void addB2DPoint(double x, double y);
 	void createSDLPoints();

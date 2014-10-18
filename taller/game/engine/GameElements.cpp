@@ -16,7 +16,7 @@ GameElements::GameElements() {
 
 }
 
-Graphics * GameElements::getGraphicsInstance(){
+Graphics * GameElements::getGraphicsInstance() {
 	return new Graphics(GameElements::gFont);
 }
 

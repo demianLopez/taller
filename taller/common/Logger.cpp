@@ -24,7 +24,6 @@
 #include <sstream>
 #include <fstream>
 
-
 using std::string;
 using std::stringstream;
 using std::setw;
@@ -33,9 +32,9 @@ using std::fstream;
 using std::endl;
 
 string get_date() {
-    time_t t = time(0);
+	time_t t = time(0);
 
-    stringstream date;
+	stringstream date;
 
 	struct tm * now = localtime(&t);
 	date << setfill('0');
@@ -45,64 +44,64 @@ string get_date() {
 			<< now->tm_hour << ":" << setw(2) << now->tm_min << ":" << setw(2)
 			<< now->tm_sec;
 
-    return date.str();
+	return date.str();
 }
 
 /*
-CONF_FILE="$CONFDIR/installer.conf" #Hay que poner el que corresponda
-TRIM_LOG_SIZE=50
+ CONF_FILE="$CONFDIR/installer.conf" #Hay que poner el que corresponda
+ TRIM_LOG_SIZE=50
 
-# Gets the process calling the logger, returns the correspondant log file
-getFilePath() {
-  CALLER="$1"
-  #LOGDIR=$(getEnvVarValue LOGDIR)
+ # Gets the process calling the logger, returns the correspondant log file
+ getFilePath() {
+ CALLER="$1"
+ #LOGDIR=$(getEnvVarValue LOGDIR)
  # LOGEXT=$(getEnvVarValue LOGEXT)
-  echo "$LOGDIR/$CALLER.$LOGEXT"
-}
+ echo "$LOGDIR/$CALLER.$LOGEXT"
+ }
 
-# Trims the log file to the last TRIM_LOG_SIZE lines
-trimLogFile() {
-  FILE="$1"
-  AUX_FILE="$1.aux"
-  DATE=$(date +"%d/%m/%Y %H:%M:%S")
-  echo "$DATE - Log excedido" > "$AUX_FILE"
-  tail --lines="$TRIM_LOG_SIZE" "$FILE" >> "$AUX_FILE"
-  rm "$FILE"
-  mv "$AUX_FILE" "$FILE"
-}
+ # Trims the log file to the last TRIM_LOG_SIZE lines
+ trimLogFile() {
+ FILE="$1"
+ AUX_FILE="$1.aux"
+ DATE=$(date +"%d/%m/%Y %H:%M:%S")
+ echo "$DATE - Log excedido" > "$AUX_FILE"
+ tail --lines="$TRIM_LOG_SIZE" "$FILE" >> "$AUX_FILE"
+ rm "$FILE"
+ mv "$AUX_FILE" "$FILE"
+ }
 
-# Obtains the file name and LOGSIZE
-FILE=$(getFilePath "$1")
+ # Obtains the file name and LOGSIZE
+ FILE=$(getFilePath "$1")
 
-touch "$FILE"
-LOGSIZE=$(getEnvVarValue LOGSIZE)
-# Checks for trimming
-FILE_LINES=$(wc -l < "$FILE")
-if [ "$FILE_LINES" -gt "$LOGSIZE" ]
-then
-    trimLogFile "$FILE"
-fi
-# Logs
-if [ "$#" -lt 2 ]
-then
-    echo -e "\nUso: logging comando mensaje [tipo_mensaje]\n\n\tTipo de mensaje puede ser INFO, WAR o ERR.\n\tSi se omite, por defecto es INFO.\n"
-    exit -1
-elif [ "$#" -eq 2 ]
-then
-    log "$1" "$2" "INFO"
-else
-    log "$1" "$2" "$3"
-fi
-exit 0
-*/
-
+ touch "$FILE"
+ LOGSIZE=$(getEnvVarValue LOGSIZE)
+ # Checks for trimming
+ FILE_LINES=$(wc -l < "$FILE")
+ if [ "$FILE_LINES" -gt "$LOGSIZE" ]
+ then
+ trimLogFile "$FILE"
+ fi
+ # Logs
+ if [ "$#" -lt 2 ]
+ then
+ echo -e "\nUso: logging comando mensaje [tipo_mensaje]\n\n\tTipo de mensaje puede ser INFO, WAR o ERR.\n\tSi se omite, por defecto es INFO.\n"
+ exit -1
+ elif [ "$#" -eq 2 ]
+ then
+ log "$1" "$2" "INFO"
+ else
+ log "$1" "$2" "$3"
+ fi
+ exit 0
+ */
 
 void Logger::initialize_log(std::string log_file) {
 	fstream file_stream;
 	file_stream.open(log_file, fstream::out | fstream::app);
 
 	file_stream << "--Inicio de ejecucion--" << endl;
-	file_stream << get_error_flag(INFO) << "- " << get_date() <<" -"<< get_error_flag(INFO)<<endl;
+	file_stream << get_error_flag(INFO) << "- " << get_date() << " -"
+			<< get_error_flag(INFO) << endl;
 
 	file_stream.close();
 }
@@ -119,7 +118,7 @@ string Logger::get_error_flag(error_type_t error_level) {
 	}
 }
 
-const char * Logger::getCustomLog(error_type_t error_level){
+const char * Logger::getCustomLog(error_type_t error_level) {
 	switch (error_level) {
 	case ERROR:
 		return "error.log";
@@ -131,14 +130,16 @@ const char * Logger::getCustomLog(error_type_t error_level){
 	}
 }
 
-void Logger::initializeCustomLogs(){
-	for(char l = 0; l < 3; l++){
+void Logger::initializeCustomLogs() {
+	for (char l = 0; l < 3; l++) {
 		Logger::initialize_log(Logger::getCustomLog(l));
 	}
 }
 
-void Logger::customLog(std::string caller, error_type_t error_type, std::string error_message){
-	Logger::log(Logger::getCustomLog(error_type), caller, error_type, error_message);
+void Logger::customLog(std::string caller, error_type_t error_type,
+		std::string error_message) {
+	Logger::log(Logger::getCustomLog(error_type), caller, error_type,
+			error_message);
 }
 
 void Logger::log(string log_file, string caller, error_type_t error_type,

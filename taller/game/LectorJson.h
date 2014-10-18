@@ -9,24 +9,31 @@
 #define LECTORJSON_H_
 
 #include <iostream>
-#include <json/json.h>
+#include "json/json.h"
 #include <fstream>
-#include <LogManager.h>
+#include "LogManager.h"
 #include <string.h>
 #include <stdlib.h>
-#include <GestorEscenario.h>
+#include "GestorEscenario.h"
 
 using namespace std;
 using namespace Json;
 
 class LectorJson {
 private:
-	int validarInt(string miembro, Value raiz, int valorDefecto, string codigoObjeto);
-	double validarDouble(string miembro, Value raiz, double valorDefecto, string codigoObjeto);
-	string validarColor(string miembro,Value raiz, string valorDefecto, string codigoObjeto);
-	string validarImagen(string miembro,Value raiz, string valorDefecto, string codigoObjeto);
-	bool validarBool(string miembro,Value raiz, bool valorDefecto, string codigoObjeto);
-	int validarComunes(Value objeto,double *posx,double *posy,double *rot,double *masa,string *color,double *escala,bool *estado, string codigoObjeto);
+	int validarInt(string miembro, Value raiz, int valorDefecto,
+			string codigoObjeto);
+	double validarDouble(string miembro, Value raiz, double valorDefecto,
+			string codigoObjeto);
+	string validarColor(string miembro, Value raiz, string valorDefecto,
+			string codigoObjeto);
+	string validarImagen(string miembro, Value raiz, string valorDefecto,
+			string codigoObjeto);
+	bool validarBool(string miembro, Value raiz, bool valorDefecto,
+			string codigoObjeto);
+	int validarComunes(Value objeto, double *posx, double *posy, double *rot,
+			double *masa, string *color, double *escala, bool *estado,
+			string codigoObjeto);
 	void obtenerEscenario(Value raiz);
 	void obtenerObjetos(Value raiz);
 	void crearObjeto(Value objeto);

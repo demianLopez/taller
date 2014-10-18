@@ -5,7 +5,7 @@
 #include "CosaConMovimiento.h"
 #include "ContactListener.h"
 
-#include "Box2D/Box2D.h"
+#include <Box2D/Box2D.h>
 
 // Personaje (tanto jugador como NPC).
 class Animation;

@@ -49,7 +49,6 @@ private:
 	Animation * characterWalkRight;
 	Animation * characterWalkLeft;
 
-
 	SpriteSheet * characterJump;
 	Animation * characterStaticLeft;
 	Animation * characterStaticRight;

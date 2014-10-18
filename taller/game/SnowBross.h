@@ -10,10 +10,11 @@
 
 #include "engine/Game.h"
 
-class SnowBross : public Game {
+class SnowBross: public Game {
 public:
 	SnowBross( const char *pTitle);
 	virtual ~SnowBross();
+
 };
 
 #endif /* SNOWBROSS_H_ */
