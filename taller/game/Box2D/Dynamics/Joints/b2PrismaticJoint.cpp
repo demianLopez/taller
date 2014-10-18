@@ -375,7 +375,7 @@ bool b2PrismaticJoint::SolvePositionConstraints(const b2SolverData& data) {
 						- m_lowerTranslation) < 2.0f * b2_linearSlop) {
 			// Prevent large angular corrections
 			C2 = b2Clamp(translation, -b2_maxLinearCorrection,
-					b2_maxLinearCorrection);
+			b2_maxLinearCorrection);
 			linearError = b2Max(linearError, b2Abs(translation));
 			active = true;
 		} else if (translation <= m_lowerTranslation) {
@@ -387,7 +387,7 @@ bool b2PrismaticJoint::SolvePositionConstraints(const b2SolverData& data) {
 		} else if (translation >= m_upperTranslation) {
 			// Prevent large linear corrections and allow some slop.
 			C2 = b2Clamp(translation - m_upperTranslation - b2_linearSlop, 0.0f,
-					b2_maxLinearCorrection);
+			b2_maxLinearCorrection);
 			linearError = b2Max(linearError, translation - m_upperTranslation);
 			active = true;
 		}

@@ -3017,7 +3017,7 @@ int filledPolygonColor(SDL_Renderer * renderer, const Sint16 * vx,
 		const Sint16 * vy, int n, Uint32 color) {
 	Uint8 *c = (Uint8 *) &color;
 	return filledPolygonRGBAMT(renderer, vx, vy, n, c[0], c[1], c[2], c[3],
-			NULL, NULL);
+	NULL, NULL);
 }
 
 /*!

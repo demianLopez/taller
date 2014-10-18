@@ -280,7 +280,7 @@ bool b2RevoluteJoint::SolvePositionConstraints(const b2SolverData& data) {
 		if (m_limitState == e_equalLimits) {
 			// Prevent large angular corrections
 			float32 C = b2Clamp(angle - m_lowerAngle, -b2_maxAngularCorrection,
-					b2_maxAngularCorrection);
+			b2_maxAngularCorrection);
 			limitImpulse = -m_motorMass * C;
 			angularError = b2Abs(C);
 		} else if (m_limitState == e_atLowerLimit) {
