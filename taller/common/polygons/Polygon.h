@@ -20,10 +20,10 @@
 #define MODEL_POLYGON_H_
 
 #include <Box2D/Box2D.h>
-#include "../engine/Graphics.h"
+#include "../game/engine/Graphics.h"
 #include "../World.h"
 #include <vector>
-#include "../engine/Image.h"
+#include "../game/engine/Image.h"
 
 class World;
 
