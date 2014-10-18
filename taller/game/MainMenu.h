@@ -9,6 +9,7 @@
 #define MAINMENU_H_
 
 #include "engine/GameState.h"
+#include "engine/GUI/Button.h"
 
 class MainMenu: public GameState {
 public:
@@ -22,11 +23,18 @@ public:
 	//llamado cuando sale del state
 	//virtual void leave() {};
 	//Llamado al final de toda la api
-	virtual void init();
-	virtual void exit();
+	virtual void init(Game * game);
+	virtual void exit(Game * game);
 	virtual void render(Graphics *g);
 	virtual void update(unsigned int delta);
 	virtual void keyEvent(SDL_Event e);
+private:
+	int mouseX;
+	int mouseY;
+
+	Button * buttonConnect;
+
+	void renderGUI(Graphics * g);
 
 };
 

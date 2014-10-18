@@ -24,7 +24,7 @@ LevelState::LevelState() {
 }
 
 
-void LevelState::init(){
+void LevelState::init(Game * game){
 	//ADICIONALES!
 	//Estos son extras, despues hay que cambiarlos!
 	this->backParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
@@ -62,7 +62,7 @@ void LevelState::setWorld(World * world){
 	this->gameWorld = world;
 }
 
-void LevelState::exit(){
+void LevelState::exit(Game * game){
 
 	delete this->lightAnimation;
 	delete this->spriteLightAnimation;

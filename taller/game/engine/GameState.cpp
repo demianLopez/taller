@@ -5,7 +5,8 @@
  *      Author: demian
  */
 
-#include "engine/GameState.h"
+#include "GameState.h"
+#include "Game.h"
 
 GameState::GameState() {
 	// TODO Auto-generated constructor stub

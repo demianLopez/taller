@@ -34,8 +34,8 @@ private:
 	virtual void update(unsigned int delta);
 	virtual void render(Graphics *g);
 	virtual void keyEvent(SDL_Event e);
-	virtual void init();
-	virtual void exit();
+	virtual void init(Game * game);
+	virtual void exit(Game * game);
 
 
 	Image * worldImage;

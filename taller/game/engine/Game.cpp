@@ -161,7 +161,7 @@ void Game::gameCicle(){
 	Logger::customLog("Game.cpp", Logger::INFO, "Llamado a metodo de inicializacion");
 
 	for(auto * state : this->stateList){
-		state->init();
+		state->init(this);
 	}
 
 	Logger::customLog("Game.cpp", Logger::INFO, "Inicializacion realizada exitosamente");
@@ -227,7 +227,7 @@ void Game::gameCicle(){
 	Logger::customLog("Game.cpp", Logger::INFO, "Finalizando ciclo de juego");
 	Logger::customLog("Game.cpp", Logger::INFO, "Llamando a la funcion de cierre");
 	for(auto * state : this->stateList){
-		state->exit();
+		state->exit(this);
 	}
 	Logger::customLog("Game.cpp", Logger::INFO, "Funcion de cierre finalizada");
 	Logger::customLog("Game.cpp", Logger::INFO, "Cerrando componentes de SDL");
