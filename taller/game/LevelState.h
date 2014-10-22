@@ -20,27 +20,25 @@
 #include "engine/LibIncludes.h"
 #include "engine/ParticleEmiter.h"
 #include "engine/Image.h" //Provisional
-#include "Personaje.h"
-#include "World.h"
-#include "Resources.h"
+#include "GameWorld.h"
 
 class LevelState: public GameState {
 public:
 	LevelState();
 	virtual ~LevelState();
 
-	void setWorld(World * world);
+	void setWorld(GameWorld * world);
 private:
 	virtual void update(unsigned int delta);
-	virtual void render(Graphics *g);
+	virtual void render(Graphics *g, Game * game);
 	virtual void keyEvent(SDL_Event e);
-	virtual void init();
-	virtual void exit();
+	virtual void init(Game * game);
+	virtual void exit(Game * game);
 
 
 	Image * worldImage;
 
-	World * gameWorld;
+	GameWorld * gameWorld;
 	ParticleEmiter * backParticleEmiter;
 	ParticleEmiter * frontParticleEmiter;
 
@@ -51,6 +49,8 @@ private:
 	float zoomScale;
 	float maxZoomScale;
 	float minZoomScale;
+
+	Resources * resources;
 };
 
 #endif /* LEVELSTATE_H_ */

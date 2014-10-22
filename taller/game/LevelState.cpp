@@ -6,6 +6,7 @@
  */
 
 #include "LevelState.h"
+#include "VectorXY.h"
 
 
 const float ZOOM_INCREMENT = 0.02;
@@ -24,7 +25,7 @@ LevelState::LevelState() {
 }
 
 
-void LevelState::init(){
+void LevelState::init(Game * game){
 	//ADICIONALES!
 	//Estos son extras, despues hay que cambiarlos!
 	this->backParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
@@ -41,15 +42,15 @@ void LevelState::init(){
 		this->lightAnimation->addFrame(this->spriteLightAnimation->getSubImage(i, 0), 25);
 	}
 
-	b2Vec2 * wSize = this->gameWorld->getBox2DWorldSize();
-	this->worldImage = new Image(wSize->x * 20, wSize->y * 20);
+	VectorXY wSize = this->gameWorld->getBox2DWorldSize();
+	this->worldImage = new Image(wSize.x * 20, wSize.y * 20);
 
 	//Recalculamos con datos
 	//TODO: Cambiar! por el valor de la pantalla no harcodeado
 	//float xMax = ((float)wSize->x * 20)/this->getScreenWidth();
 	//float yMax = ((float)wSize->y * 20)/this->getScreenHeight();
-	float xMax = ((float)wSize->x * 20)/800;
-	float yMax = ((float)wSize->y * 20)/600;
+	float xMax = ((float)wSize.x * 20)/800;
+	float yMax = ((float)wSize.y * 20)/600;
 	//---------------------------------------------
 	if(xMax > yMax){
 		this->maxZoomScale = yMax;
@@ -58,11 +59,11 @@ void LevelState::init(){
 	}
 }
 
-void LevelState::setWorld(World * world){
+void LevelState::setWorld(GameWorld * world){
 	this->gameWorld = world;
 }
 
-void LevelState::exit(){
+void LevelState::exit(Game * game){
 
 	delete this->lightAnimation;
 	delete this->spriteLightAnimation;
@@ -72,25 +73,30 @@ void LevelState::exit(){
 	delete this->worldImage;
 }
 
-void LevelState::render(Graphics *g){
+void LevelState::render(Graphics *g, Game * game){
 	//CALCULOS PREVIOS A RENDER!
-	Resources * resources = this->gameWorld->getResources();
 	Image * backImage = resources->getBackground();
 
-	b2Vec2 * box2dWorld = gameWorld->getBox2DWorldSize();
-	b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
+	VectorXY box2dWorld = gameWorld->getBox2DWorldSize();
+	//b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
+	VectorXY playerPos(10, 10);
 
+	//TODO SCROLLING MAL ARMADO CORREGIR!
+	/*
 	b2Vec2 fontPlayerPos(playerPos.x/box2dWorld->x * backImage->getWidth(),
 			backImage->getHeight() - playerPos.y/box2dWorld->y * backImage->getHeight());
 
 	playerPos = gameWorld->box2DToSDL(&playerPos);
+	*/
 
 	//TODO: Corregir!
 	//int screenW = this->getScreenWidth();
 	//int screenH = this->getScreenHeight();
 
-	int screenW = 800;
-	int screenH = 600;
+
+	int screenW = game->getScreenWidth();
+	int screenH = game->getScreenHeight();
+	/*
 	//------------------------------------
 
 	int tdX = screenW * this->zoomScale;
@@ -107,6 +113,7 @@ void LevelState::render(Graphics *g){
 	}if(tYo < 0){
 		tYo = 0;
 	}
+	*/
 
 	if(backImage != NULL){
 		g->drawImage(backImage, 0, 0,0,0, screenW, screenH, screenW, screenH);
@@ -134,18 +141,20 @@ void LevelState::render(Graphics *g){
 
 	g->drawAtCenter(true);
 
+	/* TODO: PLAYER MOVIMIENTO CORREGIR!
 	b2Vec2 playerSize = this->gameWorld->getMainCharacter()->getSize();
 	playerSize =  this->gameWorld->box2DToSDLSize(&playerSize);
 
 	g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources), playerPos.x, playerPos.y, playerSize.x, playerSize.y);
 
 
+	*/
 	g->setRendererObject(NULL);
 
 	g->drawAtCenter(false);
 
-	g->drawImage(this->worldImage, 0, 0, tXo, tYo,tdX, tdY, screenW, screenH);
-
+	//g->drawImage(this->worldImage, 0, 0, tXo, tYo,tdX, tdY, screenW, screenH);
+	g->drawImage(this->worldImage, 0, 0, 0, 0,screenW, screenH, screenW, screenH);
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
@@ -156,17 +165,17 @@ void LevelState::keyEvent(SDL_Event e) {
 	if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				this->gameWorld->getMainCharacter()->setMovingLeft(true);
+				//this->gameWorld->getMainCharacter()->setMovingLeft(true);
 				break;
 
 			case SDLK_RIGHT:
-				this->gameWorld->getMainCharacter()->setMovingRight(true);
+				//this->gameWorld->getMainCharacter()->setMovingRight(true);
 				break;
 
 			case SDLK_UP:
-				if(this->gameWorld->isMainCharacterTouchingGround()){
+				/*if(this->gameWorld->isMainCharacterTouchingGround()){
 					this->gameWorld->getMainCharacter()->jump();
-				}
+				}*/
 				break;
 			case SDLK_KP_MINUS:
 				this->zoomScale += ZOOM_INCREMENT;
@@ -188,11 +197,11 @@ void LevelState::keyEvent(SDL_Event e) {
 	if (e.type == SDL_KEYUP) {
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				this->gameWorld->getMainCharacter()->setMovingLeft(false);
+				//this->gameWorld->getMainCharacter()->setMovingLeft(false);
 				break;
 
 			case SDLK_RIGHT:
-				this->gameWorld->getMainCharacter()->setMovingRight(false);
+				//this->gameWorld->getMainCharacter()->setMovingRight(false);
 				break;
 
 
@@ -206,8 +215,7 @@ void LevelState::update(unsigned int delta){
 
 	this->backParticleEmiter->update(delta);
 	this->frontParticleEmiter->update(delta);
-	this->gameWorld->worldStep(delta);
-	this->gameWorld->getMainCharacter()->update();
+	//this->gameWorld->getMainCharacter()->update();
 
 	if(this->lightAnimation->isFinished()){
 		int rN = ((float) rand())/RAND_MAX * 5001;

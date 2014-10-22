@@ -5,6 +5,7 @@
 #include "engine/Game.h"
 #include "../common/Logger.h"
 #include "MainMenu.h"
+#include "LevelState.h"
 
 using namespace std;
 
@@ -23,6 +24,10 @@ int main(int argc, char *argv[]){
 	//delete lector;
 
 	pE->addState(new MainMenu());
+	LevelState * lS = new LevelState();
+	lS->setWorld(new GameWorld(VectorXY(50, 30)));
+
+	pE->addState(lS);
 	pE->enterState(0);
 
 	pE->setMaxFPS(50);
