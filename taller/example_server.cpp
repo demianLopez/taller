@@ -80,9 +80,8 @@ int main() {
 
 	thread server_thread = thread(run_server, &queue, &threads, &clients);
 
-	while (fgetc(stdin) != EOF)
-		;
-
+	while (fgetc(stdin) != EOF);
 	stop_clients(clients, threads);
+	server_thread.join();
 	return 0;
 }
