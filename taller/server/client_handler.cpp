@@ -22,16 +22,18 @@
 #include <thread>
 #include <chrono>
 
-Client_handler::Client_handler() {
+Client_handler::Client_handler(Socket& socket) {
 	this->_is_active = true;
+	this->socket = socket;
 }
 
 Client_handler::~Client_handler() {
+	this->socket.shutdown_socket();
+	this->socket.close_port();
 }
 
 bool Client_handler::is_valid() {
-	return true;
-	//return this->socket.is_valid(); //TODO: agregar mas condiciones
+	return this->socket.is_valid(); //TODO: agregar mas condiciones
 }
 
 bool Client_handler::is_active() {
@@ -39,11 +41,15 @@ bool Client_handler::is_active() {
 }
 
 void Client_handler::run() {
-	while (this->_is_active) {
+	//Threadear la escucha que es lo que pasa menos seguido
+	while (this->is_active()) {
+		//Send from socket
 		std::cout << "Printing from thread: " << std::this_thread::get_id()
 				<< std::endl;
 		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 	}
+	socket.shutdown_socket();
+	socket.close_port();
 }
 
 void Client_handler::recicle() {

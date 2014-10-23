@@ -28,6 +28,7 @@ void remove_inactives(list<client_t>& clients, list<thread*> threads) {
 			client_thread->join();
 			client->recicle();
 			delete client;
+			delete client_thread;
 		} else {
 			clients.push_back(client);
 			threads.push_back(client_thread);
@@ -67,8 +68,11 @@ void run_server(Accept_queue* queue, list<thread*>* threads,
 			threads->push_back(new thread(Client_handler::execute, client));
 		}
 		remove_inactives(*clients, *threads);
-		break;
 	}
+}
+
+void stop_queue(Accept_queue& queue){
+	queue.close();
 }
 
 int main() {
@@ -81,6 +85,7 @@ int main() {
 	thread server_thread = thread(run_server, &queue, &threads, &clients);
 
 	while (fgetc(stdin) != EOF);
+	stop_queue(queue);
 	stop_clients(clients, threads);
 	server_thread.join();
 	return 0;

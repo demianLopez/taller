@@ -28,10 +28,15 @@ Accept_queue::~Accept_queue() {
 }
 
 Client_handler* Accept_queue::accept_client() {
-	return new Client_handler();
+	Socket socket = this->queue.accept_connection();
+	return new Client_handler(socket);
 }
 
 bool Accept_queue::is_open() {
-	return true;
 	return this->queue.is_valid();
+}
+
+void Accept_queue::close() {
+	this->queue.shutdown_socket();
+	this->queue.close_port();
 }

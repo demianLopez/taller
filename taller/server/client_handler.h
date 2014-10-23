@@ -30,7 +30,7 @@ private:
 	Socket socket;
 
 public:
-	Client_handler();
+	Client_handler(Socket& socket);
 	virtual ~Client_handler();
 
 public:

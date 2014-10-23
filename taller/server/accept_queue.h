@@ -31,12 +31,12 @@ public:
 	virtual ~Accept_queue();
 
 public:
-	void initialize() {
-	}
-	;
+	void initialize() {};
 	Client_handler* accept_client();
 
 	bool is_open();
+
+	void close();
 
 };
 

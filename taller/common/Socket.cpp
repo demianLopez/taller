@@ -35,6 +35,7 @@ void _socket::shutdown_socket() {
 void _socket::close_port() {
 	this->shutdown_socket();
 	close(this->sockfd);
+	this->sockfd = -1;
 }
 
 bool _socket::is_valid() {
