@@ -123,11 +123,12 @@ void SocketQueue::init(int port, in_addr_t address) {
 		return; //TODO: Loguear error
 
 	this->_port = port;
+	this->binded = true;
 }
 
-void SocketQueue::init(int puerto, const char* direccion) {
-	in_addr_t addr = inet_addr(direccion);
-	this->init(puerto, addr);
+void SocketQueue::init(int port, const char* address) {
+	in_addr_t addr = inet_addr(address);
+	this->init(port, addr);
 }
 
 Socket SocketQueue::accept_connection() {
@@ -142,4 +143,8 @@ Socket SocketQueue::accept_connection() {
 
 void SocketQueue::listen_connection(int backlog) {
 	listen(sockfd, backlog);
+}
+
+bool SocketQueue::is_valid() {
+	return _socket::is_valid() && this->binded;
 }

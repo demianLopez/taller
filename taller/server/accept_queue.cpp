@@ -36,6 +36,10 @@ bool Accept_queue::is_open() {
 	return this->queue.is_valid();
 }
 
+void Accept_queue::initialize(int port) {
+	this->queue.init(port);
+}
+
 void Accept_queue::close() {
 	this->queue.shutdown_socket();
 	this->queue.close_port();

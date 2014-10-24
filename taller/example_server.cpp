@@ -82,7 +82,7 @@ int main() {
 	list<client_t> clients;
 	list<thread*> threads;
 
-	queue.initialize();
+	queue.initialize(8080);
 
 	thread server_thread = thread(run_server, &queue, &threads, &clients);
 

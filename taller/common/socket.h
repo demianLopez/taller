@@ -41,10 +41,10 @@ protected:
 	;
 
 public:
-	void close_port();
-	void shutdown_socket();
-	int get_port();
-	bool is_valid();
+	virtual void close_port();
+	virtual void shutdown_socket();
+	virtual int get_port();
+	virtual bool is_valid();
 };
 
 class Socket: public _socket {
@@ -62,6 +62,9 @@ public:
 
 class SocketQueue: public _socket {
 
+private:
+	bool binded = false;
+
 public:
 	/**
 	 * Crea una nueva cola de socket no asociada a algun puerto
@@ -70,6 +73,8 @@ public:
 	void init(int port, in_addr_t address = INADDR_ANY);
 	void init(int port, const char* address);
 	void listen_connection(int backlog = 20);
+	bool is_valid();
+
 
 	Socket accept_connection();
 };

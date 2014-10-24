@@ -31,7 +31,7 @@ public:
 	virtual ~Accept_queue();
 
 public:
-	void initialize() {};
+	void initialize(int port);
 	Client_handler* accept_client();
 
 	bool is_open();
