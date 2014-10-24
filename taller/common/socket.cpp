@@ -150,5 +150,5 @@ bool SocketQueue::is_valid() {
 }
 
 int Socket::send_message(string message) {
-	this->send_message(message.c_str(), message.length());
+	return this->send_message(message.c_str(), message.length());
 }
