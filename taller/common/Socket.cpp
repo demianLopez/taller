@@ -33,6 +33,8 @@ void _socket::shutdown_socket() {
 }
 
 void _socket::close_port() {
+	if (this->sockfd == -1)
+		return;
 	this->shutdown_socket();
 	close(this->sockfd);
 	this->sockfd = -1;

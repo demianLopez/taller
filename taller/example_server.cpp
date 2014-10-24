@@ -66,6 +66,8 @@ void run_server(Accept_queue* queue, list<thread*>* threads,
 		if (client->is_valid()) {
 			clients->push_back(client);
 			threads->push_back(new thread(Client_handler::execute, client));
+		}else{
+			delete client;
 		}
 		remove_inactives(*clients, *threads);
 	}
