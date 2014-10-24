@@ -9,13 +9,13 @@ COMMON_O = socket.o
 SERVER_O = $(COMMON_O) accept_queue.o client_handler.o
 CLIENT_O = $(COMMON_O)
 
-all: server
+all: server client
 
 server: $(SERVER_O) example_server.cpp
-	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(SERVER_O) example_server.cpp -o Server
+	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(SERVER_O) example_server.cpp -o server
 	
 client: $(CLIENT_O)
-	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(CLIENT_O) example_client.cpp -o Client
+	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(CLIENT_O) example_client.cpp -o client
 	
 socket.o: common/socket.h common/socket.cpp
 	$(CC) $(CPPLDFLAGS) -c common/socket.cpp
@@ -27,4 +27,4 @@ client_handler.o: server/client_handler.h server/client_handler.cpp
 	$(CC) $(CPPLDFLAGS) -c server/client_handler.cpp
 	
 clean:
-	rm -f *.o *.gcno *.gcda  *~
+	rm -f *.o *.gcno *.gcda  *~ client server

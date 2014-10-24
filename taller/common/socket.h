@@ -56,6 +56,7 @@ public:
 	Socket(int sockfd, sockaddr_in_s direccion);
 
 	int receive(char* buff, size_t bytes_to_read);
+	int send_message(std::string message);
 	int send_message(const char* message, size_t message_len);
 
 };

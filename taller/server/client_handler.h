@@ -27,7 +27,7 @@ class Client_handler {
 
 private:
 	bool _is_active;
-	Socket socket;
+	Socket _socket;
 
 public:
 	Client_handler(Socket& socket);

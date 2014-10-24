@@ -21,19 +21,20 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <string>
 
 Client_handler::Client_handler(Socket& socket) {
 	this->_is_active = true;
-	this->socket = socket;
+	this->_socket = socket;
 }
 
 Client_handler::~Client_handler() {
-	this->socket.shutdown_socket();
-	this->socket.close_port();
+	this->_socket.shutdown_socket();
+	this->_socket.close_port();
 }
 
 bool Client_handler::is_valid() {
-	return this->socket.is_valid(); //TODO: agregar mas condiciones
+	return this->_socket.is_valid(); //TODO: agregar mas condiciones
 }
 
 bool Client_handler::is_active() {
@@ -42,19 +43,25 @@ bool Client_handler::is_active() {
 
 void Client_handler::run() {
 	//Threadear la escucha que es lo que pasa menos seguido
+	char message[11];
+	message[10] = '\n';
 	while (this->is_active()) {
 		//Send from socket
-		std::cout << "Printing from thread: " << std::this_thread::get_id()
-				<< std::endl;
+		this->_socket.receive(message, 10);
+		std::string mess = std::string(message);
+
+		std::cout << "El gil del thread -" << std::this_thread::get_id()
+				<< "- dice:" << mess << std::endl;
+
 		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 	}
-	socket.shutdown_socket();
-	socket.close_port();
+	_socket.shutdown_socket();
+	_socket.close_port();
 }
 
 void Client_handler::recicle() {
 	std::cout << "Stop" << std::endl;
-	this->socket.close_port();
+	this->_socket.close_port();
 }
 
 void Client_handler::execute(Client_handler* handler) {
@@ -64,6 +71,6 @@ void Client_handler::execute(Client_handler* handler) {
 
 void Client_handler::stop() {
 	std::cout << "Stop" << std::endl;
-	this->socket.shutdown_socket();
+	this->_socket.shutdown_socket();
 	this->_is_active = false;
 }

@@ -148,3 +148,7 @@ void SocketQueue::listen_connection(int backlog) {
 bool SocketQueue::is_valid() {
 	return _socket::is_valid() && this->binded;
 }
+
+int Socket::send_message(string message) {
+	this->send_message(message.c_str(),message.length());
+}
