@@ -19,7 +19,7 @@
 #ifndef ACCEPT_QUEUE_H_
 #define ACCEPT_QUEUE_H_
 
-#include "../common/Socket.h"
+#include "../common/socket.h"
 #include "client_handler.h"
 
 class Accept_queue {

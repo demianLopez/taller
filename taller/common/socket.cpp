@@ -1,5 +1,5 @@
 /**
- Socket.cpp
+ socket.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -17,7 +17,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-#include "Socket.h"
+#include "socket.h"
 #include <string>
 
 #include <arpa/inet.h>
