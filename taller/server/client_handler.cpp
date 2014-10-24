@@ -43,11 +43,20 @@ bool Client_handler::is_active() {
 
 void Client_handler::run() {
 	//Threadear la escucha que es lo que pasa menos seguido
-	char message[11];
-	message[10] = '\n';
+	char message[100];
+	message[10] = '\0';
 	while (this->is_active()) {
 		//Send from socket
-		this->_socket.receive(message, 10);
+		int bytes_read = this->_socket.receive(message, 11);
+
+		if (bytes_read < 1) {
+			std::cerr << "Error de conexion con el cliente. Desconexion"
+					<< std::endl;
+			break;
+		}
+
+		message[bytes_read] = '\0';
+
 		std::string mess = std::string(message);
 
 		std::cout << "El gil del thread -" << std::this_thread::get_id()

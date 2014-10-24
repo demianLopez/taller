@@ -76,7 +76,6 @@ public:
 	void listen_connection(int backlog = 20);
 	bool is_valid();
 
-
 	Socket accept_connection();
 };
 
