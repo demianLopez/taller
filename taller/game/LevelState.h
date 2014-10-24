@@ -31,14 +31,16 @@ public:
 private:
 	virtual void update(unsigned int delta);
 	virtual void render(Graphics *g, Game * game);
-	virtual void keyEvent(SDL_Event e);
+	virtual void keyEvent(SDL_Event e, Game * game);
 	virtual void init(Game * game);
 	virtual void exit(Game * game);
 
 
 	Image * worldImage;
+	Image * backgroundImage;
 
 	GameWorld * gameWorld;
+
 	ParticleEmiter * backParticleEmiter;
 	ParticleEmiter * frontParticleEmiter;
 
@@ -49,8 +51,6 @@ private:
 	float zoomScale;
 	float maxZoomScale;
 	float minZoomScale;
-
-	Resources * resources;
 };
 
 #endif /* LEVELSTATE_H_ */

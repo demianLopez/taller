@@ -63,12 +63,19 @@ void MainMenu::update(unsigned int delta){
 	this->particleEmiter->update(delta);
 }
 
-void MainMenu::keyEvent(SDL_Event e){
+void MainMenu::keyEvent(SDL_Event e, Game * game){
 	switch(e.type)
 	{
 	case SDL_MOUSEMOTION:
 		this->mouseX = e.motion.x;
 		this->mouseY = e.motion.y;
+		break;
+	case SDL_MOUSEBUTTONDOWN:
+
+		if(this->buttonConnect->isClicked(mouseX, mouseY)){
+			game->enterState(1);
+		}
+
 		break;
 	}
 }

@@ -29,7 +29,7 @@ public:
 	virtual void exit(Game * game);
 	virtual void render(Graphics *g, Game * game);
 	virtual void update(unsigned int delta);
-	virtual void keyEvent(SDL_Event e);
+	virtual void keyEvent(SDL_Event e, Game * game);
 private:
 	int mouseX;
 	int mouseY;

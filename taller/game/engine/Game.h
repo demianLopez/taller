@@ -72,6 +72,8 @@ private:
 	std::stringstream fpsText;
 
 	std::vector<GameState *> stateList;
+protected:
+	virtual void initializeGameStates() = 0;
 
 };
 

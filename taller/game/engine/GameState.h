@@ -29,7 +29,7 @@ public:
 
 	virtual void render(Graphics *g, Game * game) = 0;
 	virtual void update(unsigned int delta) = 0;
-	virtual void keyEvent(SDL_Event e) = 0;
+	virtual void keyEvent(SDL_Event e, Game * game) = 0;
 };
 
 #endif /* GAMESTATE_H_ */
