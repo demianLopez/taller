@@ -18,6 +18,8 @@
  */
 #include "accept_queue.h"
 
+#define QUEUE_SIZE 20
+
 Accept_queue::Accept_queue() {
 	// TODO Auto-generated constructor stub
 
@@ -38,6 +40,9 @@ bool Accept_queue::is_open() {
 
 void Accept_queue::initialize(int port) {
 	this->queue.init(port);
+	if (!this->queue.is_valid())
+		return;
+	this->queue.listen_connection(QUEUE_SIZE);
 }
 
 void Accept_queue::close() {
