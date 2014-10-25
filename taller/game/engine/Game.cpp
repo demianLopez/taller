@@ -148,6 +148,9 @@ void Game::endGame() {
 
 
 void Game::gameCicle(){
+
+	this->initializeGameStates();
+
 	Logger::customLog("Game.cpp", Logger::INFO, "Comenzando el ciclo de juego");
 	if (this->sfps) {
 		std::stringstream asd;
@@ -187,7 +190,7 @@ void Game::gameCicle(){
 			if (e.type == SDL_QUIT) {
 				this->endGame();
 			} else {
-				this->currentState->keyEvent(e);
+				this->currentState->keyEvent(e, this);
 			}
 		}
 
@@ -263,5 +266,10 @@ void Game::gameClose() {
 
 Game::~Game() {
 	this->fpsText.clear();
+	for(auto * state : this->stateList){
+		delete state;
+	}
+
+	this->stateList.clear();
 }
 

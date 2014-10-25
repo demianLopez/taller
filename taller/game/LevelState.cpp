@@ -28,6 +28,8 @@ LevelState::LevelState() {
 void LevelState::init(Game * game){
 	//ADICIONALES!
 	//Estos son extras, despues hay que cambiarlos!
+
+	this->backgroundImage = new Image("Resources/font1.png");
 	this->backParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
 	this->backParticleEmiter->setMaxParticles(20);
 
@@ -38,6 +40,7 @@ void LevelState::init(Game * game){
 	this->lightAnimation = new Animation();
 	this->lightAnimation->setOneDraw();
 	this->lightAnimation->setFinished(true);
+
 	for(int i = 0; i<8; i++){
 		this->lightAnimation->addFrame(this->spriteLightAnimation->getSubImage(i, 0), 25);
 	}
@@ -71,11 +74,11 @@ void LevelState::exit(Game * game){
 	delete this->backParticleEmiter;
 	delete this->frontParticleEmiter;
 	delete this->worldImage;
+	delete this->backgroundImage;
 }
 
 void LevelState::render(Graphics *g, Game * game){
 	//CALCULOS PREVIOS A RENDER!
-	Image * backImage = resources->getBackground();
 
 	VectorXY box2dWorld = gameWorld->getBox2DWorldSize();
 	//b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
@@ -115,8 +118,8 @@ void LevelState::render(Graphics *g, Game * game){
 	}
 	*/
 
-	if(backImage != NULL){
-		g->drawImage(backImage, 0, 0,0,0, screenW, screenH, screenW, screenH);
+	if(this->backgroundImage != NULL){
+		g->drawImage(this->backgroundImage, 0, 0,0,0, screenW, screenH, screenW, screenH);
 	}
 
 	if(!this->lightAnimation->isFinished()){
@@ -161,7 +164,7 @@ void LevelState::render(Graphics *g, Game * game){
 
 }
 
-void LevelState::keyEvent(SDL_Event e) {
+void LevelState::keyEvent(SDL_Event e, Game * game) {
 	if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
@@ -228,6 +231,6 @@ void LevelState::update(unsigned int delta){
 }
 
 LevelState::~LevelState() {
-	// TODO Auto-generated destructor stub
+
 }
 
