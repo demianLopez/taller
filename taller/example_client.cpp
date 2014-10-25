@@ -95,7 +95,7 @@ static void recv_msj(Socket* socket, std::mutex* std_out_mutex) {
 
 
 		//Obtengo los parametros
-		char* args_buffer = new char [args_len+1];
+		char* args_buffer = new char [args_len+10];
 		bytes_read = 0;
 		while(bytes_read < args_len){
 			int read = socket->receive(args_buffer+bytes_read, args_len-bytes_read);
@@ -111,9 +111,7 @@ static void recv_msj(Socket* socket, std::mutex* std_out_mutex) {
 			break;
 		}
 
-		command_args_type_t args = *((command_args_type_t*)args_buffer);
-
-
+		command_args_type_t args = (command_args_type_t)args_buffer;
 
 		//DEBUG
 
@@ -131,6 +129,10 @@ static void recv_msj(Socket* socket, std::mutex* std_out_mutex) {
 		std_out_mutex->unlock();
 
 		//DEBUG
+
+		delete[] command_buffer;
+		delete[] command_len_buffer;
+		delete[] args_buffer;
 
 	}
 	socket->close_port();

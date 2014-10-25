@@ -116,6 +116,8 @@ void Client_handler::send_message(message_command_t& message) {
 		sent += bytes_sent;
 	}
 
+	delete[] message_buffer;
+
 	if (sent < 0){
 		//handle error;
 		return;
