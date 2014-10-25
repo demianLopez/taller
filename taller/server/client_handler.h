@@ -20,6 +20,8 @@
 #define CLIENT_HANDLER_H_
 
 #include "../common/socket.h"
+#include <string>
+
 
 typedef char status_t;
 
@@ -34,16 +36,19 @@ public:
 	virtual ~Client_handler();
 
 public:
-	static void execute(Client_handler* handler);
+	static void execute_listen(Client_handler* handler);
+	static void execute_send(Client_handler* handler);
 
 private:
-	void run();
+	void run_listen();
 
 public:
 	bool is_valid();
 	bool is_active();
 	void recicle();
 	void stop();
+
+	void send_message(std::string message);
 };
 
 #endif /* CLIENT_HANDLER_H_ */

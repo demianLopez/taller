@@ -46,9 +46,9 @@ static void send_msj(Socket* socket, std::mutex* std_out_mutex) {
 static void recv_msj(Socket* socket, std::mutex* std_out_mutex) {
 	signal(SIGPIPE, SIG_IGN);
 	while (socket->is_valid()) {
-		char message[10];
+		char message[100];
 		//Send from socket
-		int bytes_read = socket->receive(message, 11);
+		int bytes_read = socket->receive(message, 25);
 
 		if (bytes_read < 0) {
 			std::cerr << "Error de conexion con el cliente. Desconexion"

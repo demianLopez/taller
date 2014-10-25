@@ -1,6 +1,8 @@
 #include <list>
 #include <iostream>
 #include <thread>
+#include <chrono>
+
 
 #include "server/accept_queue.h"
 #include "server/client_handler.h"
@@ -65,7 +67,7 @@ void run_server(Accept_queue* queue, list<thread*>* threads,
 		std::cout << "a" << std::endl;
 		if (client->is_valid()) {
 			clients->push_back(client);
-			threads->push_back(new thread(Client_handler::execute, client));
+			threads->push_back(new thread(Client_handler::execute_listen, client));
 		} else {
 			delete client;
 		}
@@ -87,8 +89,12 @@ int main() {
 
 	thread server_thread = thread(run_server, &queue, &threads, &clients);
 
-	while (fgetc(stdin) != EOF)
-		;
+	while (fgetc(stdin) != EOF){
+		if (clients.size()){
+			clients.front()->send_message("That you have a boyfriend");
+		}
+
+	}
 	stop_queue(queue);
 	stop_clients(clients, threads);
 	server_thread.join();

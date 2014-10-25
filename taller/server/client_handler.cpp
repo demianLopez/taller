@@ -41,13 +41,13 @@ bool Client_handler::is_active() {
 	return this->_is_active;
 }
 
-void Client_handler::run() {
+void Client_handler::run_listen() {
 	//Threadear la escucha que es lo que pasa menos seguido
 	char message[100];
 	message[10] = '\0';
 	while (this->is_active()) {
 		//Send from socket
-		int bytes_read = this->_socket.receive(message, 11);
+		int bytes_read = this->_socket.receive(message, 10);
 
 		if (bytes_read < 1) {
 			std::cerr << "Error de conexion con el cliente. Desconexion"
@@ -73,13 +73,20 @@ void Client_handler::recicle() {
 	this->_socket.close_port();
 }
 
-void Client_handler::execute(Client_handler* handler) {
+void Client_handler::execute_listen(Client_handler* handler) {
 	handler->_is_active = true;
-	handler->run();
+	handler->run_listen();
 }
 
 void Client_handler::stop() {
 	std::cout << "Stop" << std::endl;
 	this->_socket.shutdown_socket();
 	this->_is_active = false;
+}
+
+void Client_handler::send_message(std::string message) {
+	if (!_socket.is_valid()) return;
+
+	int sent = -1;
+	_socket.send_message(message);
 }
