@@ -18,6 +18,8 @@
  */
 #include "client_handler.h"
 
+#include <stdio.h>
+
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -84,9 +86,38 @@ void Client_handler::stop() {
 	this->_is_active = false;
 }
 
-void Client_handler::send_message(std::string message) {
+void Client_handler::send_message(message_command_t& message) {
 	if (!_socket.is_valid()) return;
 
-	int sent = -1;
-	_socket.send_message(message);
+	size_t command_len = sizeof(command_id_type_t);
+	size_t message_len = command_len;
+
+	size_t command_len_len = sizeof(command_len_type_t);
+	message_len += command_len_len;
+
+	message_len += message.args_len;
+
+	char* message_buffer = new char[message_len];
+
+	memcpy (message_buffer,&message.command,command_len);
+	memcpy (message_buffer+command_len,&message.args_len,command_len_len);
+	memcpy (message_buffer+command_len+command_len_len,message.command_args,message.args_len);
+
+	int sent = 0;
+
+	while (sent<message_len){
+		int bytes_sent = _socket.send_message(message_buffer+sent,message_len-sent);
+
+		if (bytes_sent < 0){
+			sent = bytes_sent;
+			break;
+		}
+
+		sent += bytes_sent;
+	}
+
+	if (sent < 0){
+		//handle error;
+		return;
+	}
 }

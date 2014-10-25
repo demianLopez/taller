@@ -90,8 +90,15 @@ int main() {
 	thread server_thread = thread(run_server, &queue, &threads, &clients);
 
 	while (fgetc(stdin) != EOF){
+		std::string message = "Well somebody told me you had a boyfriend, who looked like a girlfriend that I had in February of last year";
+
+		message_command_t command_message;
+		command_message.command = SHOW_DEBUG_STRING;
+		command_message.args_len = message.size();
+		command_message.command_args = (char*)message.c_str();
+
 		if (clients.size()){
-			clients.front()->send_message("That you have a boyfriend");
+			clients.front()->send_message(command_message);
 		}
 
 	}

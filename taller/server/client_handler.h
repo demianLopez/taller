@@ -20,6 +20,7 @@
 #define CLIENT_HANDLER_H_
 
 #include "../common/socket.h"
+#include "../common/message_command.h"
 #include <string>
 
 
@@ -48,7 +49,7 @@ public:
 	void recicle();
 	void stop();
 
-	void send_message(std::string message);
+	void send_message(message_command_t& message);
 };
 
 #endif /* CLIENT_HANDLER_H_ */
