@@ -5,7 +5,7 @@
  *      Author: demian
  */
 
-#include "engine/GUI/Button.h"
+#include "Button.h"
 
 Button::Button(const char * text) {
 	this->text = text;

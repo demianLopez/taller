@@ -5,7 +5,7 @@
  *      Author: demian
  */
 
-#include "engine/GUI/Component.h"
+#include "Component.h"
 
 Component::Component() {
 	this->posX = 0;

@@ -12,6 +12,7 @@
 #include "engine/GUI/Button.h"
 #include "engine/GUI/Label.h"
 #include "engine/ParticleEmiter.h"
+#include "engine/GUI/TextBox.h"
 
 class MainMenu: public GameState {
 public:
@@ -34,13 +35,16 @@ private:
 	int mouseX;
 	int mouseY;
 
-	Button * buttonConnect;
-
 	void renderGUI(Graphics * g,  Game * game);
 	Image * backgroundImage;
 
 	ParticleEmiter * particleEmiter;
+
+	//GUI
+
+	Button * buttonConnect;
 	Label * titleLabel;
+	TextBox * userName;
 
 
 };

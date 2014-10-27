@@ -31,6 +31,11 @@ void MainMenu::init(Game * game){
 	this->titleLabel->setSize(200, 50);
 	pX = (game->getScreenWidth() - 200)/2;
 	this->titleLabel->setPosition(pX, 80);
+
+	this->userName = new TextBox("Username");
+	this->userName->setSize(530, 40);
+	pX = (game->getScreenWidth() - 530)/2;
+	this->userName->setPosition(pX, 135);
 }
 
 void MainMenu::exit(Game * game){
@@ -55,12 +60,13 @@ void MainMenu::renderGUI(Graphics * g, Game * game){
 	g->setColor(0,0,0);
 
 	this->titleLabel->render(g);
-
 	this->buttonConnect->render(g, mouseX, mouseY);
+	this->userName->render(g);
 }
 
 void MainMenu::update(unsigned int delta){
 	this->particleEmiter->update(delta);
+	this->userName->update(delta);
 }
 
 void MainMenu::keyEvent(SDL_Event e, Game * game){
@@ -77,6 +83,19 @@ void MainMenu::keyEvent(SDL_Event e, Game * game){
 		}
 
 		break;
+	case SDL_KEYDOWN:
+		unsigned char k = e.key.keysym.sym;
+		//TODO: agregar mas ascii para el textBox!
+		//OJO, los ascii de SDL no todos coinciden con los ascii reales!
+
+		if((k >= 97 && k <= 122) || k == 32){
+			this->userName->addChar(k);
+		}
+
+		if(k == 8){
+
+			this->userName->deleteChar();
+		}
 	}
 }
 
