@@ -36,6 +36,8 @@ private:
 	int mouseY;
 
 	void renderGUI(Graphics * g,  Game * game);
+	void connectToServer();
+
 	Image * backgroundImage;
 
 	ParticleEmiter * particleEmiter;

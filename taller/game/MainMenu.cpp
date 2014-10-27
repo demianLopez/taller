@@ -79,6 +79,7 @@ void MainMenu::keyEvent(SDL_Event e, Game * game){
 	case SDL_MOUSEBUTTONDOWN:
 
 		if(this->buttonConnect->isClicked(mouseX, mouseY)){
+			this->connectToServer();
 			game->enterState(1);
 		}
 
@@ -93,10 +94,13 @@ void MainMenu::keyEvent(SDL_Event e, Game * game){
 		}
 
 		if(k == 8){
-
 			this->userName->deleteChar();
 		}
 	}
+}
+
+void MainMenu::connectToServer(){
+
 }
 
 MainMenu::~MainMenu() {
