@@ -1,5 +1,5 @@
 /**
- message_command.h
+ accept_queue.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,23 +16,36 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+#include "accept_queue.h"
 
-#ifndef MESSAGE_COMMAND_H_
-#define MESSAGE_COMMAND_H_
+#define QUEUE_SIZE 20
 
-typedef char  command_id_type_t;
-typedef char  command_len_type_t;
-typedef char* command_args_type_t;
+Accept_queue::Accept_queue() {
+	// TODO Auto-generated constructor stub
 
-//Comandos
+}
 
-#define SHOW_DEBUG_STRING 0
+Accept_queue::~Accept_queue() {
+	// TODO Auto-generated destructor stub
+}
 
-typedef struct _command{
-	command_id_type_t	command;
-	command_len_type_t	args_len;
-	command_args_type_t	command_args;
-} message_command_t;
+Client_handler* Accept_queue::accept_client() {
+	Socket socket = this->queue.accept_connection();
+	return new Client_handler(socket);
+}
 
+bool Accept_queue::is_open() {
+	return this->queue.is_valid();
+}
 
-#endif /* MESSAGE_COMMAND_H_ */
+void Accept_queue::initialize(int port) {
+	this->queue.init(port);
+	if (!this->queue.is_valid())
+		return;
+	this->queue.listen_connection(QUEUE_SIZE);
+}
+
+void Accept_queue::close() {
+	this->queue.shutdown_socket();
+	this->queue.close_port();
+}

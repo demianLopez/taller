@@ -1,5 +1,5 @@
 /**
- message_command.h
+ client_handler.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,23 +16,40 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+#ifndef CLIENT_HANDLER_H_
+#define CLIENT_HANDLER_H_
 
-#ifndef MESSAGE_COMMAND_H_
-#define MESSAGE_COMMAND_H_
-
-typedef char  command_id_type_t;
-typedef char  command_len_type_t;
-typedef char* command_args_type_t;
-
-//Comandos
-
-#define SHOW_DEBUG_STRING 0
-
-typedef struct _command{
-	command_id_type_t	command;
-	command_len_type_t	args_len;
-	command_args_type_t	command_args;
-} message_command_t;
+#include "../common/socket.h"
+#include "../common/message_command.h"
+#include <string>
 
 
-#endif /* MESSAGE_COMMAND_H_ */
+typedef char status_t;
+
+class Client_handler {
+
+private:
+	bool _is_active;
+	Socket _socket;
+
+public:
+	Client_handler(Socket& socket);
+	virtual ~Client_handler();
+
+public:
+	static void execute_listen(Client_handler* handler);
+	static void execute_send(Client_handler* handler);
+
+private:
+	void run_listen();
+
+public:
+	bool is_valid();
+	bool is_active();
+	void recicle();
+	void stop();
+
+	void send_message(message_command_t& message);
+};
+
+#endif /* CLIENT_HANDLER_H_ */

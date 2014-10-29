@@ -1,5 +1,5 @@
 /**
- message_command.h
+ accept_queue.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,23 +16,28 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+#ifndef ACCEPT_QUEUE_H_
+#define ACCEPT_QUEUE_H_
 
-#ifndef MESSAGE_COMMAND_H_
-#define MESSAGE_COMMAND_H_
+#include "../common/socket.h"
+#include "client_handler.h"
 
-typedef char  command_id_type_t;
-typedef char  command_len_type_t;
-typedef char* command_args_type_t;
+class Accept_queue {
+private:
+	SocketQueue queue;
 
-//Comandos
+public:
+	Accept_queue();
+	virtual ~Accept_queue();
 
-#define SHOW_DEBUG_STRING 0
+public:
+	void initialize(int port);
+	Client_handler* accept_client();
 
-typedef struct _command{
-	command_id_type_t	command;
-	command_len_type_t	args_len;
-	command_args_type_t	command_args;
-} message_command_t;
+	bool is_open();
 
+	void close();
 
-#endif /* MESSAGE_COMMAND_H_ */
+};
+
+#endif /* ACCEPT_QUEUE_H_ */
