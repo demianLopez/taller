@@ -11,7 +11,12 @@ using namespace std;
 int const SCREEN_WIDTH = 800;
 int const SCREEN_HEIGHT = 600;
 
-int main(int argc, char *argv[]){
+int mainServer(){
+	std::cout<<"Server"<<endl;
+	return 0;
+}
+
+int mainCliente(){
 	Logger::initializeCustomLogs();
 
 	SnowBross *pE = new SnowBross("Snow Bross");
@@ -29,4 +34,12 @@ int main(int argc, char *argv[]){
 		//delete lector; //estamos perdiendo memoria con esto, pero falla si lo descomento..
 
 	return 0;
+}
+
+int main(int argc, char *argv[]){
+	if(argc > 1){
+		return mainServer();
+	}
+
+	return mainCliente();
 }
