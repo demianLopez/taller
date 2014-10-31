@@ -1,9 +1,12 @@
 #include <iostream>
 #include <stdio.h>
+#include <string>
 #include "SnowBross.h"
 #include "Jugador.h"
 #include "engine/Game.h"
 #include "../common/Logger.h"
+#include "../server/Server.h"
+#include "Client.h"
 
 
 using namespace std;
@@ -12,12 +15,31 @@ int const SCREEN_WIDTH = 800;
 int const SCREEN_HEIGHT = 600;
 
 int mainServer(){
-	std::cout<<"Server"<<endl;
+	Server * sv = new Server();
+	sv->starServer(8080);
+
+
+	bool commandLoop = true;
+	string command;
+
+	cout<<"Iniciado servidor en puerto 8080"<<endl;
+	while (commandLoop){
+		cin>>command;
+
+		if(command.compare("shutdown") == 0){
+			commandLoop = false;
+		}
+	}
+
+	sv->stopServer();
 	return 0;
 }
 
 int mainCliente(){
 	Logger::initializeCustomLogs();
+
+	Client * c = new Client();
+	c->connect(8080);
 
 	SnowBross *pE = new SnowBross("Snow Bross");
 	pE->setScreenSize(SCREEN_WIDTH, SCREEN_HEIGHT);
