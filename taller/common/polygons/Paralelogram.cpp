@@ -54,7 +54,6 @@ Paralelogram::Paralelogram(double base, double height, double angle, double posX
 	body_definition.position.Set(posX, posY); //seteo posicion base
 	this->create_body(&body_definition, &body_fixture, world);
 	this->setVertex(vertex);
-	this->createSDLPoints();
 	delete[] vertex;
 }
 void Paralelogram::setVertex(b2Vec2 * vertex){

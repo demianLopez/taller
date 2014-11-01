@@ -14,11 +14,13 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <mutex>
 
 using std::list;
 using std::cout;
 using std::endl;
 using std::thread;
+using std::mutex;
 
 class Server {
 public:
@@ -31,6 +33,9 @@ public:
 	void removeInactives();
 
 
+	void waitServerThread();
+
+	Client_handler * getUser(char userIndex);
 
 	virtual ~Server();
 private:
@@ -47,6 +52,10 @@ private:
 	bool serverLoop;
 
 	static void run_server(Server * server);
+
+	mutex userListMutex;
+
+	char lastIndex;
 };
 
 #endif /* SERVER_H_ */

@@ -6,7 +6,6 @@
  */
 
 #include "World.h"
-#include "Resources.h"
 #include "Personaje.h"
 #include "polygons/PolygonFactory.h"
 #include "polygons/Polygon.h"
@@ -14,13 +13,9 @@
 World::World(b2Vec2 * gravity) {
 	this->gravity = gravity;
 	this->contactListener = new ContactListener();
-	this->worldResources = new Resources();
-	this->mainCharacter = NULL;
 	this->Box2DWorldSize = new b2Vec2(0, 0);
-	this->SDLWindowSize = new b2Vec2(0, 0);
 	this->box2DWorld = new b2World(*gravity);
 	this->Box2DWorldSize = NULL;
-	this->mainCharacter = NULL;
 }
 
 b2World * World::getBox2DWorld() {
@@ -31,21 +26,27 @@ b2Vec2 * World::getBox2DWorldSize() {
 	return this->Box2DWorldSize;
 }
 
-void World::setUnits(int wU, int hU) {
-	this->Box2DWorldSize = new b2Vec2(wU, hU);
-	int sizeX = wU * 20;
-	int sizeY = hU * 20;
-	this->SDLWindowSize = new b2Vec2(sizeX, sizeY);
+void World::waitWorldThread(){
+	this->worldThread.join();
 }
 
-void World::loadResources() {
-	this->worldResources->loadAnimations();
+void World::addPlayer(Jugador * jugador){
+	this->playerList.push_back(jugador);
+}
+
+vector<Jugador *> World::getPlayerList(){
+	return this->playerList;
+}
+
+void World::setUnits(int wU, int hU) {
+	this->Box2DWorldSize = new b2Vec2(wU, hU);
 }
 
 void World::addPolygon(Polygon * polygon) {
 	this->polygonList.push_back(polygon);
 }
 
+/*
 b2Vec2 World::box2DToSDL(b2Vec2 * box2DCoord) {
 	float sdlX = box2DCoord->x / Box2DWorldSize->x * SDLWindowSize->x;
 	float sdlY = SDLWindowSize->y
@@ -75,6 +76,7 @@ b2Vec2 World::SDLToBox2D(b2Vec2 * SDLCoord) {
 	b2Vec2 box2DCoord(b2DX, b2DY);
 	return box2DCoord;
 }
+*/
 
 void World::worldStep(int delta) {
 	float32 timeStep = ((float) delta) / 1000;
@@ -84,22 +86,8 @@ void World::worldStep(int delta) {
 	this->box2DWorld->Step(timeStep, velocityIterations, positionIterations);
 }
 
-Jugador * World::getMainCharacter() {
-	return this->mainCharacter;
-}
-
 bool World::isMainCharacterTouchingGround() {
 	return contactListener->getNumberOfContacts() > 0;
-}
-
-void World::setMainCharacter(Jugador * mainCharacter) {
-	this->mainCharacter = mainCharacter;
-	this->mainCharacter->setListenerTouchingGround(contactListener);
-	box2DWorld->SetContactListener(contactListener);
-}
-
-b2Vec2 * World::getWindowSize() {
-	return this->SDLWindowSize;
 }
 
 bool World::isOutOfWorld(b2Vec2 position) {
@@ -113,18 +101,33 @@ vector<Polygon *> World::getPolygonList() {
 	return this->polygonList;
 }
 
-Resources * World::getResources() {
-	return this->worldResources;
+void World::start(){
+	this->wordLoop = true;
+	this->worldThread = thread(World::worldLoop, this);
+}
+
+void World::stop(){
+	this->wordLoop = false;
+}
+
+bool World::isOnLoop(){
+	return this->wordLoop;
+}
+
+void World::worldLoop(World * word){
+	while(word->isOnLoop()){
+		//Word logic!
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+	}
 }
 
 World::~World() {
-	delete this->worldResources;
 	delete this->contactListener;
-	delete this->mainCharacter;
 
 	delete this->gravity;
 	delete this->box2DWorld;
-	delete this->SDLWindowSize;
+
 
 	for (auto *polygon : polygonList) {
 		delete polygon;

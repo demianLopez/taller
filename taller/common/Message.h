@@ -17,7 +17,7 @@ public:
 
 	void addCommandCode(CommandCode commandCode);
 	void addChar(char c);
-	void addCharArray(char * array, char length);
+	void addCharArray(const char * array, char length);
 
 	CommandCode getCommandCode();
 	char getCharArray(char ** array);

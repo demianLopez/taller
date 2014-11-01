@@ -43,6 +43,9 @@ private:
 	static void threadFunction(Client_handler * client);
 
 public:
+	char userIndex;
+
+
 	Client_handler(Socket& socket);
 	virtual ~Client_handler();
 

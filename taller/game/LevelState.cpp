@@ -138,7 +138,7 @@ void LevelState::render(Graphics *g, Game * game){
 
 	vector<Polygon *> polList = this->gameWorld->getPolygonList();
 	for(auto *polygon : polList){
-		polygon->render(g);
+		//polygon->render(g);
 	}
 
 

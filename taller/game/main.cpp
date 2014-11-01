@@ -12,12 +12,28 @@
 #include "ClientData.h"
 #include <Global.h>
 
+
+#include <LectorJson.h>
+#include <GestorEscenario.h>
+#include <Data.h>
 using namespace std;
 
 int const SCREEN_WIDTH = 800;
 int const SCREEN_HEIGHT = 600;
 
 int mainServer(){
+
+	LectorJson * lj = new LectorJson();
+	cout<<"Cargando mapa tp0"<<endl;
+	lj->cargarEscenario("Maps/tp0.json");
+	GestorEscenario * ge = lj->obtenerGestorEscenario();
+	World * w = ge->obtenerMundo();
+
+	delete lj;
+
+	w->start();
+	cout<<"Mapa iniciado - Esperando jugadores"<<endl;
+
 	Server * sv = new Server();
 	sv->starServer(8080);
 
@@ -26,15 +42,36 @@ int mainServer(){
 	string command;
 
 	cout<<"Iniciado servidor en puerto 8080"<<endl;
+
+	Data::server = sv;
+	Data::world = w;
+
+
 	while (commandLoop){
 		cin>>command;
 
 		if(command.compare("shutdown") == 0){
 			commandLoop = false;
 		}
+
+		if(command.compare("playerlist") == 0){
+			std::cout<<"Jugadores Online:"<<endl;
+			for(auto p : w->getPlayerList()){
+				std::cout<<p->getName()<<endl;
+			}
+		}
 	}
 
+
+	std::cout<<"Cerrando server"<<endl;
 	sv->stopServer();
+	std::cout<<"Cerrando World;"<<endl;
+	w->stop();
+
+	w->waitWorldThread();
+	std::cout<<"a borrar"<<std::endl;
+	delete sv;
+	delete w;
 	return 0;
 }
 
@@ -49,6 +86,7 @@ int mainCliente(){
 	Global::client = c;
 
 	SnowBross *pE = new SnowBross("Snow Bross");
+	Global::game = pE;
 	pE->setScreenSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	pE->instantiate();
 

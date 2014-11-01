@@ -10,7 +10,7 @@
 
 #include "VectorXY.h"
 #include <vector>
-#include "../common/polygons/Polygon.h"
+#include <polygons/Polygon.h>
 
 class GameWorld {
 public:

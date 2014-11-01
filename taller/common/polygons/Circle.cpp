@@ -19,7 +19,7 @@
 #include "Circle.h"
 
 Circle::~Circle() {
-	delete this->circleImage;
+
 }
 
 Circle::Circle(double diameter, double posX, double posY, double density,
@@ -50,10 +50,12 @@ Circle::Circle(double diameter, double posX, double posY, double density,
 
 	Polygon::create_body(&body_definition, &body_fixture, world);
 
-	this->circleImage = new Image("Resources/bola.png");
+	//this->circleImage = new Image("Resources/bola.png");
 }
 
+/*
 void Circle::render(Graphics * g) {
+
 	if (!this->shouldIRender()) {
 		return; //Evitamos gastar recursos renderizando algo que no esta en pantalla
 	}
@@ -69,4 +71,6 @@ void Circle::render(Graphics * g) {
 			SDLsize.y - this->world->getWindowSize()->y,
 			-this->body->GetAngle() * 57);
 	g->drawAtCenter(false);
+
 }
+*/

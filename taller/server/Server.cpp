@@ -14,6 +14,10 @@ void Server::run_server(Server * server) {
 	}
 }
 
+void Server::waitServerThread(){
+	this->server_thread.join();
+}
+
 void Server::listen(){
 	if(queue.is_open()){
 
@@ -21,32 +25,44 @@ void Server::listen(){
 		client = queue.accept_client();
 
 		if (client != NULL) {
+			this->userListMutex.lock();
 			clients.push_back(client);
+			client->userIndex = lastIndex;
+			lastIndex++;
 			client->setDataObserver(new ServerData(this));
 			this->removeInactives();
+			this->userListMutex.unlock();
 		}
 	}
 }
 
 Server::Server() {
-	// TODO Auto-generated constructor stub
+	this->lastIndex = 0;
+}
 
+Client_handler * Server::getUser(char userIndex){
+	this->userListMutex.lock();
+	for(auto * user : clients){
+		if(user->userIndex == userIndex){
+			return user;
+		}
+	}
+	this->userListMutex.unlock();
+
+	return NULL;
 }
 
 void Server::removeInactives(){
 	size_t n_client = 0;
 
-	while (n_client < clients.size()) {
+	//TODO: DESCONFIO DE LA EFECTIVIDAD DE ESTA FUNCION, TIRA VARIOS SEG FAULT
 
-		Client_handler * client = clients.front();
-		clients.pop_front();
+	for(auto * client : clients){
 
-		std::cout << "B" << std::endl;
+		std::cout << "B " << client<< std::endl;
 		if (!client->isConnected()) {
 			std::cout << "C" << std::endl;
-			delete client;
-		} else {
-			clients.push_back(client);
+			delete client; //ACA TIRA SEG FAULT
 		}
 
 		n_client++;
@@ -60,10 +76,9 @@ void Server::stopQueue(){
 
 void Server::stopClients(){
 	size_t n_client = 0;
-	while (n_client < clients.size()) {
-		Client_handler * client = clients.front();
-		clients.pop_front();
+	for(auto * client : clients){
 		client->stop();
+		client->waitThreadEnd();
 		n_client++;
 	}
 }
@@ -71,8 +86,9 @@ void Server::stopClients(){
 void Server::stopServer(){
 	this->serverLoop = false;
 	this->stopQueue();
-	this->stopClients();
 	server_thread.join();
+	this->stopClients();
+	cout<<"Clients stoped"<<endl;
 	this->removeInactives();
 }
 
@@ -84,6 +100,7 @@ void Server::starServer(int port){
 	this->serverLoop = true;
 	queue.initialize(port);
 	server_thread = thread(Server::run_server, this);
+
 }
 
 Server::~Server() {

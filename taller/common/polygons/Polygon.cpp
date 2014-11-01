@@ -26,21 +26,8 @@ Polygon::Polygon(int body_def) {
 	this->body_def = body_def;
 	this->body = NULL;
 	this->world = NULL;
-
-	this->polygonImage = NULL;
-
-	this->r = 0;
-	this->b = 0;
-	this->g = 0;
 }
 
-void Polygon::setColor(int r, int g, int b) {
-	this->r = r;
-	this->g = g;
-	this->b = b;
-
-	this->createSDLPoints();
-}
 
 b2Body * Polygon::getBody() {
 	return body;
@@ -50,7 +37,9 @@ void Polygon::addB2DPoint(double x, double y) {
 	this->pointList.push_back(new b2Vec2(x, y));
 }
 
+/*
 void Polygon::createSDLPoints() {
+
 
 	//Buscamos el ancho y largo maximo!!
 	double xMaxPos = 0;
@@ -128,21 +117,20 @@ void Polygon::createSDLPoints() {
 	delete[] vY;
 	delete g;
 	delete borderImage;
+
 }
+*/
 
 Polygon::~Polygon() {
 	for (auto *point : pointList) {
 		delete point;
 	}
 	pointList.clear();
-
-	if (this->polygonImage != NULL) {
-
-		delete this->polygonImage;
-	}
 }
 
+/*
 void Polygon::render(Graphics * g) {
+
 	b2Vec2 b2DPos = this->body->GetPosition();
 	b2Vec2 sdlPos = this->world->box2DToSDL(&b2DPos);
 
@@ -150,11 +138,9 @@ void Polygon::render(Graphics * g) {
 	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y,
 			-this->body->GetAngle() * 57.2957);
 	g->drawAtCenter(false);
-}
 
-bool Polygon::shouldIRender() {
-	return !this->world->isOutOfWorld(this->body->GetPosition());
 }
+*/
 
 bool Polygon::isStatic() {
 	return body->GetType() == b2_staticBody;

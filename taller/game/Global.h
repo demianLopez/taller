@@ -13,6 +13,7 @@
 #include <MainMenu.h>
 #include <Message.h>
 #include <CommandCode.h>
+#include <engine/Game.h>
 
 class Global {
 public:
@@ -20,6 +21,7 @@ public:
 	static Client_handler * client;
 	static LevelState * levelState;
 	static MainMenu * mainMenu;
+	static Game * game;
 
 };
 

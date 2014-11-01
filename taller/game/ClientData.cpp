@@ -18,11 +18,26 @@ void ClientData::closeConnection(Client_handler * client){
 }
 
 void ClientData::dataArribal(Message * m, Client_handler * client){
+	char cCode = m->getCommandCode();
 
-	if(m->getCommandCode() == SERVER_DATA){
+	if(cCode == SERVER_DATA){
 		char * serverName;
 		char l = m->getCharArray(&serverName);
 		Global::mainMenu->setServerInfo(serverName, m->getChar(), m->getChar());
+		return;
+	}
+
+	if(cCode == ERROR_MESSAGE){
+		char * msg;
+		char * title;
+
+		m->getCharArray(&title);
+		m->getCharArray(&msg);
+
+		Global::game->showErrorMessage(title, msg);
+
+		delete[] msg;
+		delete[] title;
 		return;
 	}
 }

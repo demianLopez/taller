@@ -12,6 +12,7 @@ typedef char CommandCode;
 
 const CommandCode IM_LOGGED = 0;
 const CommandCode SERVER_DATA = 1;
-const CommandCode CLIENT_NAME = 2;
+const CommandCode LOGGIN_GAME = 2;
+const CommandCode ERROR_MESSAGE = 3;
 
 #endif /* COMMANDCODE_H_ */

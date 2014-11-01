@@ -59,6 +59,10 @@ void Game::enterState(int id){
 	this->changingState = true;
 }
 
+void Game::showErrorMessage(char * title, char * error){
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title, error, NULL);
+}
+
 void Game::setScreenSize(int width, int height){
 	this->height = height;
 	this->width = width;

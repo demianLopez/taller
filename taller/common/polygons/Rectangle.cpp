@@ -51,8 +51,6 @@ Rectangle::Rectangle(double width, double height, double density, double posX,
 	this->addB2DPoint(width / 2, height / 2);
 	this->addB2DPoint(width / 2, -height / 2);
 	this->addB2DPoint(-width / 2, -height / 2);
-
-	this->createSDLPoints();
 }
 
 Rectangle::~Rectangle() {

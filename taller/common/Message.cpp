@@ -26,7 +26,7 @@ void Message::addChar(char c){
 	pointer++;
 }
 
-void Message::addCharArray(char * array, char length){
+void Message::addCharArray(const char * array, char length){
 	this->addChar(length);
 	memcpy(&message[pointer], array, length);
 	pointer += length;

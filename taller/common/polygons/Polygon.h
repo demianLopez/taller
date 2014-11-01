@@ -20,10 +20,8 @@
 #define MODEL_POLYGON_H_
 
 #include <Box2D/Box2D.h>
-#include "../game/engine/Graphics.h"
-#include "../World.h"
+#include <World.h>
 #include <vector>
-#include "../game/engine/Image.h"
 
 class World;
 
@@ -39,10 +37,6 @@ public:
 	b2Vec2 * getPosition();
 	b2Body * getBody();
 
-	virtual void render(Graphics * g);
-
-	void setColor(int r, int g, int b);
-
 	bool isStatic();
 
 protected:
@@ -56,19 +50,11 @@ protected:
 			World * world);
 
 	void addB2DPoint(double x, double y);
-	void createSDLPoints();
-	bool shouldIRender();
+
 
 private:
 	vector<b2Vec2 *> pointList;
-
 	int body_def;
-
-	Image * polygonImage;
-
-	int r;
-	int g;
-	int b;
 };
 
 #endif /* MODEL_POLYGON_H_ */

@@ -13,49 +13,53 @@
 #include <vector>
 #include "polygons/Polygon.h"
 #include "ContactListener.h"
+#include <thread>
 
-class Resources;
+using std::thread;
+
 class Polygon;
 
 class World {
 public:
 	World(b2Vec2 * gravity);
 
-	void loadResources();
-	Resources * getResources();
-
-	b2Vec2 box2DToSDL(b2Vec2 * box2DCoord);
-	b2Vec2 SDLToBox2D(b2Vec2 * SDLCoord);
-
 	void setUnits(int wU, int hU);
-	void setMainCharacter(Jugador * mainCharacter);
-
-	//
-	b2Vec2 box2DToSDLSize(b2Vec2 * box2DCoord);
-	b2Vec2 SDLToBox2DSize(b2Vec2 * SDLCoord);
-
-	b2Vec2 * getWindowSize();
 	b2Vec2 * getBox2DWorldSize();
 
 	void worldStep(int delta);
 
 	void addPolygon(Polygon * polygon);
 
-	Jugador * getMainCharacter();
-
 	b2World * getBox2DWorld();
-
 	vector<Polygon *> getPolygonList();
 
 	bool isOutOfWorld(b2Vec2 position);
 
 	bool isMainCharacterTouchingGround();
 
+	void start();
+	void stop();
+
+	bool isOnLoop();
+
+	void waitWorldThread();
+
+	void addPlayer(Jugador * jugador);
+	vector<Jugador*> getPlayerList();
+
+
 	virtual ~World();
 private:
-	Resources * worldResources;
+
+	bool wordLoop;
+	static void worldLoop(World * world);
+
+	vector<Jugador*> playerList;
+
+
 	ContactListener *contactListener;
-	Jugador * mainCharacter;
+
+	thread worldThread;
 
 	vector<Polygon*> polygonList;
 
@@ -63,7 +67,6 @@ private:
 	b2World * box2DWorld;
 	b2Vec2 * gravity;
 
-	b2Vec2 * SDLWindowSize;
 	b2Vec2 * Box2DWorldSize;
 };
 

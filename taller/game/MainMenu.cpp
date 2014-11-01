@@ -112,8 +112,12 @@ void MainMenu::keyEvent(SDL_Event e, Game * game){
 	case SDL_MOUSEBUTTONDOWN:
 
 		if(this->buttonConnect->isClicked(mouseX, mouseY)){
-			this->connectToServer();
-			game->enterState(1);
+			Message * m = new Message();
+			m->addCommandCode(LOGGIN_GAME);
+			m->addCharArray(userName->getText(), userName->getLength());
+			Client_handler * c = Global::client;
+			c->send_message(m);
+			delete m;
 		}
 
 		break;
@@ -130,10 +134,6 @@ void MainMenu::keyEvent(SDL_Event e, Game * game){
 			this->userName->deleteChar();
 		}
 	}
-}
-
-void MainMenu::connectToServer(){
-
 }
 
 MainMenu::~MainMenu() {

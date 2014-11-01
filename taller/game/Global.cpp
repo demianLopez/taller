@@ -10,4 +10,5 @@
 	Client_handler * Global::client;
 	LevelState * Global::levelState;
 	MainMenu * Global::mainMenu;
+	Game * Global::game;
 

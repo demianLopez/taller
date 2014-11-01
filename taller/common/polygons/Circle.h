@@ -29,10 +29,9 @@ public:
 			double angle, int body_type, World * world);
 	virtual ~Circle();
 
-	virtual void render(Graphics * g);
 private:
 	double diameter;
-	Image * circleImage;
+
 };
 
 #endif /* MODEL_CIRCLE_H_ */

@@ -20,6 +20,9 @@ public:
 	void addChar(char c);
 	void deleteChar();
 	virtual ~TextBox();
+
+	const char * getText();
+	char getLength();
 private:
 	std::string text;
 	int lastUpdate;

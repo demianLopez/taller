@@ -51,7 +51,6 @@ Client_handler::~Client_handler() {
 	if(dataObserver != NULL){
 		delete dataObserver;
 	}
-
 }
 
 bool Client_handler::is_valid() {

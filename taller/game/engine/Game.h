@@ -37,6 +37,7 @@ public:
 	int getScreenWidth();
 
 	void showFPS(bool showFPS);
+	void showErrorMessage(char * title, char * error);
 
 	virtual ~Game();
 private:

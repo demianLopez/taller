@@ -87,8 +87,6 @@ Trapezoid::Trapezoid(double height, double base, double top, double angle,
 	this->create_body(&body_definition, &body_fixture, world);
 
 	this->setVertex(vertex);
-	this->createSDLPoints();
-
 	delete[] vertex;
 }
 

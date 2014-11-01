@@ -102,13 +102,8 @@ World * GestorEscenario::obtenerMundo() {
 	world = new World(new b2Vec2(0, -20));
 	world->setUnits(elEscenario.anchoun, elEscenario.altoun);
 
-	world->loadResources();
-	world->getResources()->loadBackground(elEscenario.imagen_fondo.c_str());
 
 	b2Vec2 SDLCharPos = b2Vec2(elEscenario.personajeX, elEscenario.personajeY);
-	b2Vec2 B2DCharPos = world->SDLToBox2DSize(&SDLCharPos);
-	world->setMainCharacter(
-			new Jugador(world->getBox2DWorld(), B2DCharPos.x, B2DCharPos.y));
 
 	for (auto objeto : objetos) {
 
@@ -127,8 +122,6 @@ World * GestorEscenario::obtenerMundo() {
 			nuevoPoligono = this->colocarTrap(objeto);
 		}
 
-		nuevoPoligono->setColor(objeto.colRGB.red, objeto.colRGB.green,
-				objeto.colRGB.blue);
 		bool todoOk = true;
 		for (auto * alreadyAddedPolygon : world->getPolygonList()) {
 			b2Shape * shapeNew =

@@ -72,8 +72,6 @@ RegularPolygon::RegularPolygon(size_t sides, double scale, double posX,
 	//SDL
 
 	this->setSDLVertex(sides, vertex);
-	this->createSDLPoints();
-
 	delete[] vertex;
 }
 

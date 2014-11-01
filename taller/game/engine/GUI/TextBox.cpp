@@ -13,6 +13,14 @@ TextBox::TextBox(const char * init) {
 	this->lastUpdate = 0;
 }
 
+const char * TextBox::getText(){
+	return this->text.c_str();
+}
+
+char TextBox::getLength(){
+	return this->text.size();
+}
+
 void TextBox::render(Graphics * g){
 	g->setColor(0, 0, 0);
 	g->drawFillRect(this->posX, this->posY, this->width, this->height);
