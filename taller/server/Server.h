@@ -9,7 +9,7 @@
 #define SERVER_H_
 
 #include "accept_queue.h"
-#include "client_handler.h"
+#include <client_handler.h>
 #include <list>
 #include <iostream>
 #include <thread>
@@ -30,19 +30,23 @@ public:
 
 	void removeInactives();
 
+
+
 	virtual ~Server();
 private:
 
+	void listen();
 	void stopQueue();
 	void stopClients();
 
 	Accept_queue queue;
 	list<Client_handler *> clients;
-	list<thread *> threads;
 
 	thread server_thread;
 
 	bool serverLoop;
+
+	static void run_server(Server * server);
 };
 
 #endif /* SERVER_H_ */

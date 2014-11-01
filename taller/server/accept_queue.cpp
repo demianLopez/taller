@@ -31,6 +31,11 @@ Accept_queue::~Accept_queue() {
 
 Client_handler* Accept_queue::accept_client() {
 	Socket socket = this->queue.accept_connection();
+
+	if(!socket.is_valid()){
+		return NULL;
+	}
+
 	return new Client_handler(socket);
 }
 

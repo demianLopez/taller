@@ -83,15 +83,16 @@ Socket::Socket() {
 }
 
 int Socket::send_message(const char* message, size_t message_len) {
-	int res = send(sockfd, message, message_len, 0);
+
+	int res = send(sockfd, message, message_len, message_len);
 	if (res == -1)
 		return res; //TODO: LOGUEAR error
 	return res;
 }
 
 int Socket::receive(char* buff, size_t bytes_to_read) {
+	//ssize_t numbytes = recv(sockfd, buff, bytes_to_read, 0);
 	ssize_t numbytes = recv(sockfd, buff, bytes_to_read, 0);
-
 	if (numbytes <= 0)
 		return numbytes; //TODO: LOGUEAR error
 

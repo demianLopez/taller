@@ -17,73 +17,131 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 #include "client_handler.h"
+#include "DataObserver.h"
 
 #include <stdio.h>
 
 #include <iostream>
-#include <thread>
+
 #include <chrono>
 #include <string>
 
+void Client_handler::threadFunction(Client_handler * client){
+	signal(SIGPIPE, SIG_IGN);
+	while(client->isConnected()){
+		if(!client->runListen()){
+			client->stop();
+		}
+	}
+
+}
+
+void Client_handler::waitThreadEnd(){
+	this->clientThread.join();
+}
+
 Client_handler::Client_handler(Socket& socket) {
-	this->_is_active = true;
 	this->_socket = socket;
+	this->threadLoop = true;
+	this->dataObserver = NULL;
+	this->clientThread = thread(Client_handler::threadFunction, this);
 }
 
 Client_handler::~Client_handler() {
-	this->_socket.shutdown_socket();
-	this->_socket.close_port();
+	if(dataObserver != NULL){
+		delete dataObserver;
+	}
+
 }
 
 bool Client_handler::is_valid() {
 	return this->_socket.is_valid(); //TODO: agregar mas condiciones
 }
 
-bool Client_handler::is_active() {
-	return this->_is_active;
+void Client_handler::setDataObserver(DataObserver * dO){
+	this->dataObserver = dO;
 }
 
-void Client_handler::run_listen() {
+bool Client_handler::runListen() {
 	//Threadear la escucha que es lo que pasa menos seguido
-	char message[100];
-	message[10] = '\0';
-	while (this->is_active()) {
-		//Send from socket
-		int bytes_read = this->_socket.receive(message, 10);
+	char  message[256];
 
-		if (bytes_read < 1) {
-			std::cerr << "Error de conexion con el cliente. Desconexion"
-					<< std::endl;
-			break;
+	//Send from socketa
+
+	//char longMensaje[10];
+	//int bytes_read = this->_socket.receive(longMensaje, 1);
+	//std::cout<<longMensaje<<std::endl;
+
+
+	int bytes_read = this->_socket.receive(message, 256);
+
+
+	if (bytes_read < 0) {
+		if(dataObserver != NULL){
+			dataObserver->errorConnection(this, bytes_read);
+		} else {
+			std::cout << "Error de conexion con el cliente. Desconexion"
+				<< std::endl;
 		}
+		return false;
+	}
 
+	if(bytes_read == 0){
+		if(this->threadLoop){
+			if(dataObserver != NULL){
+				dataObserver->closeConnection(this);
+			} else {
+				std::cout << "Se perdio la conexion"
+					<< std::endl;
+			}
+		}
+		return false;
+	}
+
+	if(bytes_read > 0) {
 		message[bytes_read] = '\0';
 
-		std::string mess = std::string(message);
+		if(dataObserver != NULL){
+			dataObserver->dataArribal(message, bytes_read, this);
+		} else {
 
-		std::cout << "El gil del thread -" << std::this_thread::get_id()
-				<< "- dice:" << mess << std::endl;
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+			std::string mess = std::string(message);
+
+			std::cout << "El gil del thread -" << std::this_thread::get_id()
+			<< "- dice:" << mess << std::endl;
+		}
 	}
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(20));
+	return true;
+}
+
+
+bool Client_handler::isConnected(){
+	return this->threadLoop;
+}
+
+void Client_handler::stop() {
+	this->threadLoop = false;
 	_socket.shutdown_socket();
 	_socket.close_port();
 }
 
-void Client_handler::recicle() {
-	std::cout << "Stop" << std::endl;
-	this->_socket.close_port();
-}
+bool Client_handler::send_message(const char * msg, int size){
+	if(_socket.is_valid()){
+		int sent = -1;
 
-void Client_handler::execute_listen(Client_handler* handler) {
-	handler->_is_active = true;
-	handler->run_listen();
-}
+		sent = _socket.send_message(msg, size);
 
-void Client_handler::stop() {
-	std::cout << "Stop" << std::endl;
-	this->_socket.shutdown_socket();
-	this->_is_active = false;
+		if (sent < 1) {
+			this->stop();
+			return false;
+		}
+	}
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(20));
+	return true;
 }
 
 void Client_handler::send_message(message_command_t& message) {
@@ -123,3 +181,5 @@ void Client_handler::send_message(message_command_t& message) {
 		return;
 	}
 }
+
+

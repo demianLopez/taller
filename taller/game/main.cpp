@@ -6,8 +6,9 @@
 #include "engine/Game.h"
 #include "../common/Logger.h"
 #include "../server/Server.h"
-#include "Client.h"
-
+#include <socket.h>
+#include <client_handler.h>
+#include <signal.h>
 
 using namespace std;
 
@@ -37,9 +38,15 @@ int mainServer(){
 
 int mainCliente(){
 	Logger::initializeCustomLogs();
+	signal(SIGPIPE, SIG_IGN);
+	Socket s = Socket(8080);
 
-	Client * c = new Client();
-	c->connect(8080);
+	Client_handler * c = new Client_handler(s);
+
+
+	c->send_message("Jesus es tu mejor amigo", 22);
+
+	c->send_message("Fores gump gordo re loco", 22);
 
 	SnowBross *pE = new SnowBross("Snow Bross");
 	pE->setScreenSize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -53,6 +60,10 @@ int mainCliente(){
 	pE->showFPS(true);
 	pE->start();
 
+	c->stop();
+	c->waitThreadEnd();
+
+	delete c;
 		//delete lector; //estamos perdiendo memoria con esto, pero falla si lo descomento..
 
 	return 0;

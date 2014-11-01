@@ -22,6 +22,11 @@
 #include "../common/socket.h"
 #include "../common/message_command.h"
 #include <string>
+#include <thread>
+#include <signal.h>
+
+using std::thread;
+class DataObserver;
 
 
 typedef char status_t;
@@ -29,27 +34,34 @@ typedef char status_t;
 class Client_handler {
 
 private:
-	bool _is_active;
+
 	Socket _socket;
+	thread clientThread;
+	bool threadLoop;
+
+	static void threadFunction(Client_handler * client);
 
 public:
 	Client_handler(Socket& socket);
 	virtual ~Client_handler();
 
-public:
-	static void execute_listen(Client_handler* handler);
-	static void execute_send(Client_handler* handler);
+	bool isConnected();
 
-private:
-	void run_listen();
+	bool runListen();
 
-public:
+	void waitThreadEnd();
+
+	bool send_message(const char * msg, int size);
+
 	bool is_valid();
-	bool is_active();
-	void recicle();
+
 	void stop();
 
 	void send_message(message_command_t& message);
+
+	void setDataObserver(DataObserver *dO);
+private:
+	DataObserver * dataObserver;
 };
 
 #endif /* CLIENT_HANDLER_H_ */

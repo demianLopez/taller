@@ -6,27 +6,26 @@
  */
 
 #include <Server.h>
+#include "ServerData.h"
 
-void run_server(Accept_queue* queue, list<thread*>* threads,
-		list<Client_handler*>* clients, Server * server) {
-
+void Server::run_server(Server * server) {
 	while (server->isOnLoop()) {
-		if(queue->is_open()){
+		server->listen();
+	}
+}
 
-			Client_handler * client = queue->accept_client();
+void Server::listen(){
+	if(queue.is_open()){
 
-			std::cout << "as" << std::endl;
-			if (client->is_valid()) {
-				clients->push_back(client);
-				threads->push_back(new thread(Client_handler::execute_listen, client));
-			} else {
-				delete client;
-			}
-			server->removeInactives();
+		Client_handler * client = NULL;
+		client = queue.accept_client();
+
+		if (client != NULL) {
+			clients.push_back(client);
+			client->setDataObserver(new ServerData(this));
+			this->removeInactives();
 		}
 	}
-	server->removeInactives();
-
 }
 
 Server::Server() {
@@ -42,18 +41,12 @@ void Server::removeInactives(){
 		Client_handler * client = clients.front();
 		clients.pop_front();
 
-		thread* client_thread = threads.front();
-		threads.pop_front();
 		std::cout << "B" << std::endl;
-		if (!client->is_active()) {
+		if (!client->isConnected()) {
 			std::cout << "C" << std::endl;
-			client_thread->join();
-			client->recicle();
 			delete client;
-			delete client_thread;
 		} else {
 			clients.push_back(client);
-			threads.push_back(client_thread);
 		}
 
 		n_client++;
@@ -64,20 +57,13 @@ void Server::stopQueue(){
 	queue.close();
 }
 
+
 void Server::stopClients(){
 	size_t n_client = 0;
 	while (n_client < clients.size()) {
 		Client_handler * client = clients.front();
 		clients.pop_front();
-
-		thread* client_thread = threads.front();
-		threads.pop_front();
-
 		client->stop();
-
-		client_thread->join();
-		client->recicle();
-		delete client_thread;
 		n_client++;
 	}
 }
@@ -87,6 +73,7 @@ void Server::stopServer(){
 	this->stopQueue();
 	this->stopClients();
 	server_thread.join();
+	this->removeInactives();
 }
 
 bool Server::isOnLoop(){
@@ -96,7 +83,7 @@ bool Server::isOnLoop(){
 void Server::starServer(int port){
 	this->serverLoop = true;
 	queue.initialize(port);
-	server_thread = thread(run_server, &queue, &threads, &clients, this);
+	server_thread = thread(Server::run_server, this);
 }
 
 Server::~Server() {
