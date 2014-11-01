@@ -9,10 +9,12 @@
 #define DATAOBSERVER_H_
 
 #include "client_handler.h"
+#include "CommandCode.h"
+#include "Message.h"
 
 class DataObserver {
 public:
-	virtual void dataArribal(char * data, int length, Client_handler * client) = 0;
+	virtual void dataArribal(Message * msg, Client_handler * client) = 0;
 	virtual void closeConnection(Client_handler * client) = 0;
 	virtual void errorConnection(Client_handler * client, int error) = 0;
 };

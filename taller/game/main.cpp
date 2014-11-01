@@ -9,6 +9,9 @@
 #include <socket.h>
 #include <client_handler.h>
 #include <signal.h>
+#include "ClientData.h"
+#include <CommandCode.h>
+#include <Message.h>
 
 using namespace std;
 
@@ -42,11 +45,12 @@ int mainCliente(){
 	Socket s = Socket(8080);
 
 	Client_handler * c = new Client_handler(s);
+	c->setDataObserver(new ClientData());
 
-
-	c->send_message("Jesus es tu mejor amigo", 22);
-
-	c->send_message("Fores gump gordo re loco", 22);
+	Message * m = new Message();
+	m->addCommandCode(IM_LOGGED);
+	c->send_message(m);
+	delete m;
 
 	SnowBross *pE = new SnowBross("Snow Bross");
 	pE->setScreenSize(SCREEN_WIDTH, SCREEN_HEIGHT);

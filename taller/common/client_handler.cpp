@@ -102,7 +102,9 @@ bool Client_handler::runListen() {
 		message[bytes_read] = '\0';
 
 		if(dataObserver != NULL){
-			dataObserver->dataArribal(message, bytes_read, this);
+			Message * m = new Message(message, bytes_read);
+			dataObserver->dataArribal(m, this);
+			delete m;
 		} else {
 
 
@@ -126,6 +128,22 @@ void Client_handler::stop() {
 	this->threadLoop = false;
 	_socket.shutdown_socket();
 	_socket.close_port();
+}
+
+bool Client_handler::send_message(Message * msg){
+	if(_socket.is_valid()){
+		int sent = -1;
+
+		sent = _socket.send_message(msg->getMessageData(), msg->getMessageLength());
+
+		if (sent < 1) {
+			this->stop();
+			return false;
+		}
+
+		return true;
+	}
+	return false;
 }
 
 bool Client_handler::send_message(const char * msg, int size){

@@ -1,25 +1,22 @@
 /*
- * ServerData.h
+ * ClientData.h
  *
  *  Created on: 31/10/2014
  *      Author: demian
  */
 
-#ifndef SERVERDATA_H_
-#define SERVERDATA_H_
+#ifndef CLIENTDATA_H_
+#define CLIENTDATA_H_
 
 #include <DataObserver.h>
-#include "Server.h"
 
-class ServerData: public DataObserver {
+class ClientData: public DataObserver {
 public:
-	ServerData(Server * sv);
+	ClientData();
 	void dataArribal(Message * m, Client_handler * client);
 	void closeConnection(Client_handler * client);
 	void errorConnection(Client_handler * client, int error);
-	virtual ~ServerData();
-private:
-	Server * sv;
+	virtual ~ClientData();
 };
 
-#endif /* SERVERDATA_H_ */
+#endif /* CLIENTDATA_H_ */

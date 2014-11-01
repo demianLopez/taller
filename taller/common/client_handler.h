@@ -24,6 +24,7 @@
 #include <string>
 #include <thread>
 #include <signal.h>
+#include "Message.h"
 
 using std::thread;
 class DataObserver;
@@ -58,6 +59,7 @@ public:
 	void stop();
 
 	void send_message(message_command_t& message);
+	bool send_message(Message * msg);
 
 	void setDataObserver(DataObserver *dO);
 private:

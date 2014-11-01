@@ -15,8 +15,18 @@ void ServerData::closeConnection(Client_handler * client){
 
 }
 
-void ServerData::dataArribal(char * data, int length, Client_handler * client){
-	std::cout<<"Re: "<<length<<" bytes - "<<data<<std::endl;
+void ServerData::dataArribal(Message * m, Client_handler * client){
+	Message envio = Message();
+	//std::cout<<"Re: "<<m->getMessageLength()<<" bytes - "<<m->getMessageData()<<std::endl;
+	if(m->getCommandCode() == IM_LOGGED){
+
+		envio.addCommandCode(SERVER_DATA);
+		envio.addCharArray("Un mapa de snowBross\0", 21);
+		envio.addChar(0);
+		envio.addChar(4);
+		client->send_message(&envio);
+		return;
+	}
 }
 
 void ServerData::errorConnection(Client_handler * client, int error){
