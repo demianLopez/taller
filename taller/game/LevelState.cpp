@@ -60,6 +60,7 @@ void LevelState::init(Game * game){
 	} else {
 		this->maxZoomScale = xMax;
 	}
+
 }
 
 void LevelState::setWorld(GameWorld * world){

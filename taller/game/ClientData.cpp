@@ -7,6 +7,7 @@
 
 #include <ClientData.h>
 #include <iostream>
+#include "Global.h"
 
 ClientData::ClientData() {
 	// TODO Auto-generated constructor stub
@@ -17,11 +18,12 @@ void ClientData::closeConnection(Client_handler * client){
 }
 
 void ClientData::dataArribal(Message * m, Client_handler * client){
+
 	if(m->getCommandCode() == SERVER_DATA){
 		char * serverName;
-		std::cout<<"ffff "<<m->getMessageLength()<<std::endl;
 		char l = m->getCharArray(&serverName);
-		std::cout<<"llego "<<(int)l<<" b "<<serverName<<std::endl;
+		Global::mainMenu->setServerInfo(serverName, m->getChar(), m->getChar());
+		return;
 	}
 }
 

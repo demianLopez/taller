@@ -22,8 +22,8 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 
 		envio.addCommandCode(SERVER_DATA);
 		envio.addCharArray("Un mapa de snowBross\0", 21);
-		envio.addChar(0);
-		envio.addChar(4);
+		envio.addChar(4); //Max player
+		envio.addChar(0); //Jugando!
 		client->send_message(&envio);
 		return;
 	}

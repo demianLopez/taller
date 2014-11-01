@@ -10,8 +10,7 @@
 #include <client_handler.h>
 #include <signal.h>
 #include "ClientData.h"
-#include <CommandCode.h>
-#include <Message.h>
+#include <Global.h>
 
 using namespace std;
 
@@ -47,10 +46,7 @@ int mainCliente(){
 	Client_handler * c = new Client_handler(s);
 	c->setDataObserver(new ClientData());
 
-	Message * m = new Message();
-	m->addCommandCode(IM_LOGGED);
-	c->send_message(m);
-	delete m;
+	Global::client = c;
 
 	SnowBross *pE = new SnowBross("Snow Bross");
 	pE->setScreenSize(SCREEN_WIDTH, SCREEN_HEIGHT);

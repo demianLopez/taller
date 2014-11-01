@@ -7,6 +7,9 @@
 
 #include "MainMenu.h"
 #include "engine/Game.h"
+#include "Global.h"
+#include <string>
+#include <sstream>
 
 
 MainMenu::MainMenu() {
@@ -36,12 +39,30 @@ void MainMenu::init(Game * game){
 	this->userName->setSize(530, 40);
 	pX = (game->getScreenWidth() - 530)/2;
 	this->userName->setPosition(pX, 135);
+
+	Global::mainMenu = this;
+
+	this->serverInfoAva = false;
+
+	Message * m = new Message();
+	m->addCommandCode(IM_LOGGED);
+	Client_handler * c = Global::client;
+	c->send_message(m);
+	delete m;
+
 }
 
 void MainMenu::exit(Game * game){
 	delete buttonConnect;
 	delete particleEmiter;
 	delete titleLabel;
+}
+
+void MainMenu::setServerInfo(char * mapName, char pPlaying, char pMax){
+	this->mapName = mapName;
+	this->playerPlaying = pPlaying;
+	this->maxPlayer = pMax;
+	this->serverInfoAva = true;
 }
 
 void MainMenu::render(Graphics * g,  Game * game){
@@ -62,6 +83,18 @@ void MainMenu::renderGUI(Graphics * g, Game * game){
 	this->titleLabel->render(g);
 	this->buttonConnect->render(g, mouseX, mouseY);
 	this->userName->render(g);
+
+	std::stringstream svData;
+	svData.clear();
+	svData.str("");
+
+	if(this->serverInfoAva){
+		svData<<this->mapName<<" - Jugando: "<<(int)this->playerPlaying<<"/"<<(int)this->maxPlayer;
+	} else {
+		svData<<"Servidor offline";
+	}
+	g->drawText(140, 200, svData.str().c_str());
+	svData.clear();
 }
 
 void MainMenu::update(unsigned int delta){

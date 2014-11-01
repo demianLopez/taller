@@ -31,9 +31,16 @@ public:
 	virtual void render(Graphics *g, Game * game);
 	virtual void update(unsigned int delta);
 	virtual void keyEvent(SDL_Event e, Game * game);
+
+	void setServerInfo(char * mapName, char pPlaying, char pMax);
 private:
 	int mouseX;
 	int mouseY;
+
+	char * mapName;
+	char playerPlaying;
+	char maxPlayer;
+	bool serverInfoAva;
 
 	void renderGUI(Graphics * g,  Game * game);
 	void connectToServer();
