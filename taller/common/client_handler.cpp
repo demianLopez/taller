@@ -26,22 +26,21 @@
 #include <chrono>
 #include <string>
 
-void Client_handler::threadFunction(Client_handler * client){
+void Client_handler::threadFunction(Client_handler * client) {
 	//signal(SIGPIPE, SIG_IGN);
-	while(client->isConnected()){
-		if(!client->runListen()){
+	while (client->isConnected()) {
+		if (!client->runListen()) {
 			client->stop();
 		}
 	}
 
-	std::cout<<"Fin thread cliente "<<client->userIndex<<std::endl;
+	std::cout << "Fin thread cliente " << client->userIndex << std::endl;
 
 }
 
-void Client_handler::waitThreadEnd(){
+void Client_handler::waitThreadEnd() {
 
-
-		this->clientThread.join();
+	this->clientThread.join();
 
 }
 
@@ -81,7 +80,7 @@ bool Client_handler::runListen() {
 	int fp = this->_socket.receive(l, 1);
 	int bytes_read;
 
-	if(fp <= 0){
+	if (fp <= 0) {
 		bytes_read = fp;
 	} else {
 		bytes_read = this->_socket.receive(message, l[0]);
