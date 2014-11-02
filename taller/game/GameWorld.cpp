@@ -6,6 +6,7 @@
  */
 
 #include "GameWorld.h"
+#include "entity/GameEntity.h"
 
 GameWorld::GameWorld(float tX, float tY) {
 	this->box2DSize = VectorXY(tX, tY);
@@ -23,15 +24,39 @@ void GameWorld::addEntity(GameEntity * entity){
 	this->entityList.push_back(entity);
 }
 
+void GameWorld::addUpdateRequest(UpdateRequest * update){
+	this->updatesList.push_back(update);
+}
+
 std::vector<GameEntity*> GameWorld::getEntityList(){
 	return this->entityList;
 }
 
 void GameWorld::generateGraphics(){
+	for(auto * e : entityList){
+		e->setWorld(this);
+		e->initialize();
+	}
+}
 
+VectorXY GameWorld::box2DToSDLSize(VectorXY * box2DCoord){
+	float sdlX = box2DCoord->x / box2DSize.x * 800;
+	float sdlY = box2DCoord->y / box2DSize.y * 600;
+	VectorXY sdlCoord(sdlX, sdlY);
+	return sdlCoord;
+}
+
+VectorXY GameWorld::box2DToSDL(VectorXY * box2DCoord){
+	float sdlX = box2DCoord->x / box2DSize.x * 800;
+	float sdlY = 600
+			- box2DCoord->y / box2DSize.y * 600;
+	VectorXY sdlCoord(sdlX, sdlY);
+	return sdlCoord;
 }
 
 GameWorld::~GameWorld() {
-
+	for(auto * e : entityList){
+		delete e;
+	}
 }
 

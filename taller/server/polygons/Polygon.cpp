@@ -41,6 +41,14 @@ vector<b2Vec2 *> Polygon::getPointList(){
 	return this->pointList;
 }
 
+void Polygon::setEntityIndex(int index){
+	this->entityIndex = index;
+}
+
+int Polygon::getEntityIndex(){
+	return entityIndex;
+}
+
 /*
 void Polygon::createSDLPoints() {
 
@@ -132,6 +140,10 @@ Polygon::~Polygon() {
 	pointList.clear();
 }
 
+
+float Polygon::getRotation(){
+	return this->body->GetAngle();
+}
 /*
 void Polygon::render(Graphics * g) {
 

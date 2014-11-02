@@ -48,9 +48,17 @@ public:
 	vector<Jugador*> getPlayerList();
 	Jugador * getPlayer(int userIndex);
 
+	int getAvavibleIndex();
 
 	virtual ~World();
+
+	void sendToWorldPlayers(Message * m);
+
+
 private:
+
+	void updatePolygon(Polygon * p);
+	void sendUpdates();
 
 	bool wordLoop;
 	static void worldLoop(World * world);
@@ -69,6 +77,8 @@ private:
 	b2Vec2 * gravity;
 
 	b2Vec2 * Box2DWorldSize;
+
+	int lastEntityIndex;
 };
 
 #endif /* WORLD_H_ */

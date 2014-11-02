@@ -17,6 +17,8 @@ public:
 	void closeConnection(Client_handler * client);
 	void errorConnection(Client_handler * client, int error);
 	virtual ~ClientData();
+private:
+	void backMainMenu();
 };
 
 #endif /* CLIENTDATA_H_ */

@@ -96,6 +96,22 @@ void Server::stopServer(){
 	this->removeInactives();
 }
 
+void Server::sendToAll(Message * message){
+	for(auto * user : clients){
+		if(user->isConnected()){
+			user->send_message(message);
+		}
+	}
+}
+
+void Server::sendToOthers(Message * message, int userIndex){
+	for(auto * user : clients){
+		if(user->isConnected() && (user->userIndex != userIndex)){
+			user->send_message(message);
+		}
+	}
+}
+
 bool Server::isOnLoop(){
 	return this->serverLoop;
 }

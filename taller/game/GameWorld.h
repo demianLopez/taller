@@ -10,7 +10,8 @@
 
 #include "VectorXY.h"
 #include <vector>
-#include <entity/GameEntity.h>
+class GameEntity;
+#include <UpdateRequest.h>
 
 class GameWorld {
 public:
@@ -26,6 +27,11 @@ public:
 
 	void generateGraphics();
 
+	VectorXY box2DToSDLSize(VectorXY * box2DCoord);
+	VectorXY box2DToSDL(VectorXY * box2DCoord);
+
+	void addUpdateRequest(UpdateRequest * update);
+
 
 	virtual ~GameWorld();
 private:
@@ -33,6 +39,8 @@ private:
 	VectorXY screenSize;
 
 	std::vector<GameEntity *> entityList;
+
+	std::vector<UpdateRequest *> updatesList;
 
 };
 

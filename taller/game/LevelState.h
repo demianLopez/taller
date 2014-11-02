@@ -36,6 +36,8 @@ private:
 	virtual void exit(Game * game);
 	void enter();
 
+	int centroX;
+	int centroY;
 
 	Image * worldImage;
 	Image * backgroundImage;

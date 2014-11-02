@@ -3,8 +3,9 @@
 #include <iostream>
 
 // Inicializa Jugador.
-Jugador::Jugador(int userIndex, char * name){
-	this->userIndex = userIndex;
+Jugador::Jugador(Client_handler * client, char * name){
+	this->client = client;
+	this->userIndex = client->userIndex;
 	this->name = name;
 }
 
@@ -14,6 +15,10 @@ char * Jugador::getName(){
 
 int Jugador::getIndex(){
 	return userIndex;
+}
+
+Client_handler * Jugador::getClient(){
+	return this->client;
 }
 
 

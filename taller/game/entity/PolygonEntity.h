@@ -11,6 +11,7 @@
 #include "GameEntity.h"
 #include <vector>
 #include <VectorXY.h>
+#include <engine/Image.h>
 
 using std::vector;
 
@@ -19,11 +20,16 @@ public:
 	PolygonEntity(int index);
 
 	void render(Graphics * g);
+	void initialize();
 	void addVertex(float x, float y);
+
+
 
 	virtual ~PolygonEntity();
 private:
 	vector<VectorXY *> vList;
+	Image * polygonImage;
+
 };
 
 #endif /* POLYGONENTITY_H_ */

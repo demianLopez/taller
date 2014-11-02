@@ -9,6 +9,7 @@
 #include "Personaje.h"
 #include "polygons/PolygonFactory.h"
 #include "polygons/Polygon.h"
+#include "Data.h"
 
 World::World(b2Vec2 * gravity) {
 	this->gravity = gravity;
@@ -16,6 +17,7 @@ World::World(b2Vec2 * gravity) {
 	this->Box2DWorldSize = new b2Vec2(0, 0);
 	this->box2DWorld = new b2World(*gravity);
 	this->Box2DWorldSize = NULL;
+	this->lastEntityIndex = 0;
 }
 
 b2World * World::getBox2DWorld() {
@@ -53,6 +55,7 @@ void World::setUnits(int wU, int hU) {
 }
 
 void World::addPolygon(Polygon * polygon) {
+	polygon->setEntityIndex(this->getAvavibleIndex());
 	this->polygonList.push_back(polygon);
 }
 
@@ -96,6 +99,12 @@ void World::worldStep(int delta) {
 	this->box2DWorld->Step(timeStep, velocityIterations, positionIterations);
 }
 
+int World::getAvavibleIndex(){
+	int p = lastEntityIndex;
+	lastEntityIndex ++;
+	return p;
+}
+
 bool World::isMainCharacterTouchingGround() {
 	return contactListener->getNumberOfContacts() > 0;
 }
@@ -125,11 +134,32 @@ bool World::isOnLoop(){
 }
 
 void World::worldLoop(World * word){
+	int tLoop = 50;
 	while(word->isOnLoop()){
-		//Word logic!
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+		std::this_thread::sleep_for(std::chrono::milliseconds(tLoop));
+		word->worldStep(tLoop);
+		word->sendUpdates();
 	}
+}
+
+void World::sendUpdates(){
+	for(auto * p : polygonList){
+		if(!p->isStatic()){
+			this->updatePolygon(p);
+		}
+	}
+}
+
+void World::updatePolygon(Polygon * p){
+	Message m;
+	m.addCommandCode(UPDATE_ENTITY);
+	m.addChar(p->getEntityIndex());
+	m.addFloat(&p->getPosition()->x);
+	m.addFloat(&p->getPosition()->y);
+	float rotation = p->getRotation();
+	m.addFloat(&rotation);
+
+	this->sendToWorldPlayers(&m);
 }
 
 World::~World() {
@@ -144,5 +174,13 @@ World::~World() {
 	}
 
 	polygonList.clear();
+}
+
+void World::sendToWorldPlayers(Message * m){
+	for(auto * p: this->playerList){
+		if(p->getClient()->isConnected()){
+			p->getClient()->send_message(m);
+		}
+	}
 }
 

@@ -9,14 +9,30 @@
 #define GAMEENTITY_H_
 
 #include <engine/Graphics.h>
+#include <VectorXY.h>
+#include <GameWorld.h>
 
 class GameEntity {
 public:
 	GameEntity(int index);
 	virtual ~GameEntity();
 	virtual void render(Graphics * g) = 0;
+
+	void setRotation(float rotation);
+
+	void setWorld(GameWorld * gameWorld);
+	virtual void initialize() = 0;
+	void setPosition(float x, float y);
+	VectorXY getPosition();
+
+	int getIndex();
 private:
-	int index;
+	int entityIndex;
+
+protected:
+	VectorXY position;
+	GameWorld * gameWorld;
+	float rotation;
 };
 
 #endif /* GAMEENTITY_H_ */

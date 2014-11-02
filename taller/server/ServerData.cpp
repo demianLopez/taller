@@ -23,7 +23,7 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 	//std::cout<<"Re: "<<m->getMessageLength()<<" bytes - "<<m->getMessageData()<<std::endl;
 	char cCode = m->getCommandCode();
 	if(cCode == IM_LOGGED){
-
+		std::cout<<"loged"<<endl;
 		envio.addCommandCode(SERVER_DATA);
 		envio.addCharArray("Un mapa de snowBross\0", 21);
 		envio.addChar(4); //Max player
@@ -53,11 +53,6 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 			}
 		}
 
-		/*
-		Jugador * j = new Jugador(client->userIndex, playerName);
-		Data::world->addPlayer(j);
-		 */
-
 		//Mandamos un mensaje por poligono!
 		envio.addCommandCode(INITIALIZE_MAP);
 		envio.addFloat(&Data::world->getBox2DWorldSize()->x);
@@ -74,7 +69,12 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 			mapData->addCommandCode(ADD_MAP_DATA);
 
 			char vNum = p->getPointList().size();
+			mapData->addChar(p->getEntityIndex());
 			mapData->addChar(vNum);
+			mapData->addFloat(&p->getPosition()->x);
+			mapData->addFloat(&p->getPosition()->y);
+			float rotation = p->getRotation();
+			mapData->addFloat(&rotation);
 
 			for(auto * ver : p->getPointList()){
 				mapData->addFloat(&ver->x);
@@ -89,6 +89,10 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 		finalData->addCommandCode(INITIALIZE_GRAPHICS);
 		client->send_message(finalData);
 		delete finalData;
+
+		Jugador * j = new Jugador(client, playerName);
+		Data::world->addPlayer(j);
+
 		return;
 	}
 }

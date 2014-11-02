@@ -3,6 +3,7 @@
 
 #include "Personaje.h"
 #include "BolaDeNieve.h"
+#include <client_handler.h>
 
 // Jugador principal
 class Jugador {
@@ -12,6 +13,7 @@ private:
 	char * name;
 	int userIndex;
 
+	Client_handler * client;
 
 	/*
 	 const float VELOCIDAD_MAXIMA_BUFF_X = VELOCIDAD_MAXIMA_DEFAULT_X * 1.5;
@@ -19,10 +21,11 @@ private:
 
 public:
 
-	Jugador(int userIndex, char * name);
+	Jugador(Client_handler * client, char * name);
 	char * getName();
 	int getIndex();
 
+	Client_handler * getClient();
 };
 
 #endif /* JUGADOR_H_ */

@@ -9,6 +9,7 @@
 #include "VectorXY.h"
 #include <iostream>
 #include "Global.h"
+#include "entity/GameEntity.h"
 
 
 const float ZOOM_INCREMENT = 0.02;
@@ -21,6 +22,8 @@ LevelState::LevelState() {
 	this->zoomScale = 1;
 	this->minZoomScale = 1;
 	this->lightAnimationX = 0;
+	this->centroX = 0;
+	this->centroY = 0;
 	//Se recalcula despues, sabiendo los datos del mundo y la pantalla
 	this->maxZoomScale = 1;
 
@@ -139,13 +142,13 @@ void LevelState::render(Graphics *g, Game * game){
 	g->clearRenderObject();
 	g->setColor(0, 0, 0, 255);
 
-	/*
-	vector<Polygon *> polList = this->gameWorld->getPolygonList();
-	for(auto *polygon : polList){
-		//polygon->render(g);
+
+	vector<GameEntity *> entityList = this->gameWorld->getEntityList();
+	for(auto * e : entityList){
+		e->render(g);
 	}
 
-	*/
+
 
 	g->drawAtCenter(true);
 
@@ -162,7 +165,7 @@ void LevelState::render(Graphics *g, Game * game){
 	g->drawAtCenter(false);
 
 	//g->drawImage(this->worldImage, 0, 0, tXo, tYo,tdX, tdY, screenW, screenH);
-	g->drawImage(this->worldImage, 0, 0, 0, 0,screenW, screenH, screenW, screenH);
+	g->drawImage(this->worldImage, 0, 0, centroX, centroY,screenW, screenH, screenW, screenH);
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
@@ -237,8 +240,8 @@ void LevelState::update(unsigned int delta){
 
 void LevelState::enter(){
 	VectorXY wSize = this->gameWorld->getBox2DWorldSize();
-	std::cout<<wSize.x<<std::endl;
 	this->worldImage = new Image(wSize.x * 20, wSize.y * 20);
+	this->gameWorld->generateGraphics();
 }
 
 LevelState::~LevelState() {

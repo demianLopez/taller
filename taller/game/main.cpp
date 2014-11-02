@@ -84,7 +84,6 @@ int mainCliente(){
 	c->setDataObserver(new ClientData());
 
 	Global::client = c;
-
 	SnowBross *pE = new SnowBross("Snow Bross");
 	Global::game = pE;
 	pE->setScreenSize(SCREEN_WIDTH, SCREEN_HEIGHT);

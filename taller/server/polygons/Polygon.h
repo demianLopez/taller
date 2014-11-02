@@ -36,9 +36,13 @@ public:
 
 	b2Vec2 * getPosition();
 	b2Body * getBody();
+	float getRotation();
 
 	bool isStatic();
 	vector<b2Vec2 *> getPointList();
+
+	void setEntityIndex(int index);
+	int getEntityIndex();
 
 protected:
 
@@ -56,6 +60,7 @@ protected:
 private:
 	vector<b2Vec2 *> pointList;
 	int body_def;
+	int entityIndex;
 };
 
 #endif /* MODEL_POLYGON_H_ */

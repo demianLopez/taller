@@ -15,6 +15,7 @@
 #include <thread>
 #include <chrono>
 #include <mutex>
+#include <Message.h>
 
 using std::list;
 using std::cout;
@@ -36,6 +37,12 @@ public:
 	void waitServerThread();
 
 	Client_handler * getUser(char userIndex);
+
+	//Envia el mensaje a todos
+	void sendToAll(Message * message);
+
+	//Envia el mensaje a todos menos a "me"
+	void sendToOthers(Message * message, int userIndex);
 
 	virtual ~Server();
 private:

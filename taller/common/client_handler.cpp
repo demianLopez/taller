@@ -126,7 +126,7 @@ bool Client_handler::runListen() {
 		}
 	}
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(20));
+	//std::this_thread::sleep_for(std::chrono::milliseconds(20));
 	return true;
 }
 
@@ -142,6 +142,7 @@ void Client_handler::stop() {
 }
 
 bool Client_handler::send_message(Message * msg){
+	//this->sendingMutex.lock();
 	if(_socket.is_valid()){
 		int sent = -1;
 
@@ -149,11 +150,13 @@ bool Client_handler::send_message(Message * msg){
 
 		if (sent < 1) {
 			this->stop();
+			//this->sendingMutex.unlock();
 			return false;
 		}
-
+		//this->sendingMutex.unlock();
 		return true;
 	}
+	//this->sendingMutex.unlock();
 	return false;
 }
 

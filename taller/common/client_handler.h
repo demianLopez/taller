@@ -25,10 +25,11 @@
 #include <thread>
 #include <signal.h>
 #include "Message.h"
+#include <mutex>
 
 using std::thread;
 class DataObserver;
-
+using std::mutex;
 
 typedef char status_t;
 
@@ -67,6 +68,7 @@ public:
 	void setDataObserver(DataObserver *dO);
 private:
 	DataObserver * dataObserver;
+	//mutex sendingMutex;
 };
 
 #endif /* CLIENT_HANDLER_H_ */

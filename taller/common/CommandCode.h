@@ -18,5 +18,6 @@ const CommandCode ADD_MAP_DATA = 4;
 const CommandCode END_MAP_DATA = 5;
 const CommandCode INITIALIZE_MAP = 6;
 const CommandCode INITIALIZE_GRAPHICS = 7;
+const CommandCode UPDATE_ENTITY = 8;
 
 #endif /* COMMANDCODE_H_ */

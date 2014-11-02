@@ -9,17 +9,27 @@
 #include <iostream>
 #include "Global.h"
 #include "entity/PolygonEntity.h"
+#include <UpdateRequest.h>
 
 ClientData::ClientData() {
 	// TODO Auto-generated constructor stub
 }
 
 void ClientData::closeConnection(Client_handler * client){
-
+	this->backMainMenu();
 }
 
 void ClientData::dataArribal(Message * m, Client_handler * client){
 	char cCode = m->getCommandCode();
+
+	if(cCode == UPDATE_ENTITY){
+		UpdateRequest * uR = new UpdateRequest();
+		uR->index = m->getChar();
+		uR->posX = m->getFloat();
+		uR->posY = m->getFloat();
+		uR->rotation = m->getFloat();
+		Global::gameWorld->addUpdateRequest(uR);
+	}
 
 	if(cCode == SERVER_DATA){
 		char * serverName;
@@ -50,8 +60,17 @@ void ClientData::dataArribal(Message * m, Client_handler * client){
 	}
 
 	if(cCode == ADD_MAP_DATA){
+		int index = m->getChar();
 		int t = m->getChar();
-		PolygonEntity * pEnt = new PolygonEntity(0);
+		float pX = m->getFloat();
+		float pY = m->getFloat();
+
+		float rotation = m->getFloat();
+
+		PolygonEntity * pEnt = new PolygonEntity(index);
+		pEnt->setPosition(pX, pY);
+		pEnt->setRotation(rotation);
+
 		for(int i = 0; i< t; i++){
 			float tX = m->getFloat();
 			float tY = m->getFloat();
@@ -72,7 +91,13 @@ void ClientData::dataArribal(Message * m, Client_handler * client){
 }
 
 void ClientData::errorConnection(Client_handler * client, int error){
+	this->backMainMenu();
+}
 
+void ClientData::backMainMenu(){
+	Global::game->enterState(0);
+	Global::game->showErrorMessage("Error de conexion",
+			"Se perdio la conexion con el servidor.");
 }
 
 ClientData::~ClientData() {
