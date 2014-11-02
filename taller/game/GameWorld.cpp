@@ -21,10 +21,13 @@ VectorXY GameWorld::getBox2DWorldSize(){
 }
 
 void GameWorld::addEntity(GameEntity * entity){
+	this->updateMutex.lock();
 	this->entityList.push_back(entity);
+	this->updateMutex.unlock();
 }
 
 void GameWorld::update(){
+	this->updateMutex.lock();
 	for(auto * update : this->updatesList){
 		for(auto * entity : this->entityList){
 			if(entity->getIndex() == update->index){
@@ -37,6 +40,7 @@ void GameWorld::update(){
 	}
 
 	this->updatesList.clear();
+	this->updateMutex.unlock();
 }
 
 void GameWorld::addUpdateRequest(UpdateRequest * update){

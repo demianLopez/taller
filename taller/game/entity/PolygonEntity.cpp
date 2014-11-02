@@ -14,6 +14,11 @@ PolygonEntity::PolygonEntity(int index) : GameEntity(index) {
 
 }
 
+void PolygonEntity::update(UpdateRequest * u){
+	this->position = VectorXY(u->posX, u->posY);
+	this->rotation = u->rotation;
+}
+
 void PolygonEntity::render(Graphics * g){
 
 	if(this->polygonImage == NULL){
@@ -23,7 +28,7 @@ void PolygonEntity::render(Graphics * g){
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 
 	g->drawAtCenter(true);
-	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y, rotation * 57);
+	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y, -rotation * 57);
 	g->drawAtCenter(false);
 }
 

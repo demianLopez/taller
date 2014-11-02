@@ -158,6 +158,7 @@ void World::updatePolygon(Polygon * p){
 	m.addFloat(&p->getPosition()->y);
 	float rotation = p->getRotation();
 	m.addFloat(&rotation);
+	m.addChar('f');
 
 	this->sendToWorldPlayers(&m);
 }

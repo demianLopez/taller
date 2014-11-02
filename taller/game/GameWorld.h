@@ -12,6 +12,7 @@
 #include <vector>
 class GameEntity;
 #include <UpdateRequest.h>
+#include <mutex>
 
 class GameWorld {
 public:
@@ -42,6 +43,8 @@ private:
 	std::vector<GameEntity *> entityList;
 
 	std::vector<UpdateRequest *> updatesList;
+
+	std::mutex updateMutex;
 
 };
 

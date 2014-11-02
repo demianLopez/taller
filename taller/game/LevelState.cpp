@@ -223,6 +223,8 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 
 void LevelState::update(unsigned int delta){
 
+	this->gameWorld->update();
+
 	this->backParticleEmiter->update(delta);
 	this->frontParticleEmiter->update(delta);
 	//this->gameWorld->getMainCharacter()->update();
