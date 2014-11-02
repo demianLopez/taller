@@ -11,12 +11,14 @@
 #include <engine/Graphics.h>
 #include <VectorXY.h>
 #include <GameWorld.h>
+#include <UpdateRequest.h>
 
 class GameEntity {
 public:
 	GameEntity(int index);
 	virtual ~GameEntity();
 	virtual void render(Graphics * g) = 0;
+	virtual void update(UpdateRequest * u) = 0;
 
 	void setRotation(float rotation);
 

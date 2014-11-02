@@ -32,6 +32,7 @@ public:
 
 	void addUpdateRequest(UpdateRequest * update);
 
+	void update();
 
 	virtual ~GameWorld();
 private:

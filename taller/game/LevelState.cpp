@@ -26,7 +26,6 @@ LevelState::LevelState() {
 	this->centroY = 0;
 	//Se recalcula despues, sabiendo los datos del mundo y la pantalla
 	this->maxZoomScale = 1;
-
 }
 
 

@@ -23,6 +23,8 @@ public:
 	void initialize();
 	void addVertex(float x, float y);
 
+	void update(UpdateRequest * u);
+
 
 
 	virtual ~PolygonEntity();

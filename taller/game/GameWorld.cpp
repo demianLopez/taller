@@ -24,6 +24,21 @@ void GameWorld::addEntity(GameEntity * entity){
 	this->entityList.push_back(entity);
 }
 
+void GameWorld::update(){
+	for(auto * update : this->updatesList){
+		for(auto * entity : this->entityList){
+			if(entity->getIndex() == update->index){
+				entity->update(update);
+				break;
+			}
+		}
+
+		delete update;
+	}
+
+	this->updatesList.clear();
+}
+
 void GameWorld::addUpdateRequest(UpdateRequest * update){
 	this->updatesList.push_back(update);
 }
