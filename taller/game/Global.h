@@ -14,6 +14,7 @@
 #include <Message.h>
 #include <CommandCode.h>
 #include <engine/Game.h>
+#include <Resources.h>
 
 class Global {
 public:
@@ -23,6 +24,7 @@ public:
 	static MainMenu * mainMenu;
 	static Game * game;
 	static GameWorld * gameWorld;
+	static Resources * gameResources;
 
 };
 

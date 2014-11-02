@@ -16,6 +16,8 @@ public:
 	virtual ~SnowBross();
 protected:
 	void initializeGameStates();
+	void initGame();
+	void exitGame();
 
 };
 

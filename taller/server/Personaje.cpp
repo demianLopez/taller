@@ -3,12 +3,34 @@
 #include "engine/Animation.h"
 #include "CosaConMovimiento.h"
 #include <iostream>
-Personaje::Personaje(b2World * gameWorld) :
-		CosaConMovimiento(gameWorld) {
-	listenerTouchingGround = NULL;
+
+Personaje::Personaje()  {
+	//listenerTouchingGround = NULL;
 }
 
+void Personaje::setBox2DDefinitions(b2Body * body, b2Fixture * fixture){
+	this->body = body;
+	this->fixture = fixture;
+}
+
+int Personaje::getIndex(){
+	return userIndex;
+}
+
+int Personaje::getCurrentAnimation(){
+	return 0;
+}
+
+b2Vec2 * Personaje::getPosition(){
+	return (b2Vec2*) &this->body->GetPosition();
+}
+
+void Personaje::setEntityIndex(int index){
+	this->userIndex = index;
+}
+/*
 void Personaje::jump() {
+
 	if (listenerTouchingGround->getNumberOfContacts() == 0)
 		return; //Esto medio que esta repetido, ya se checkea en SnowBross.
 	b2Vec2 currentVel = this->body->GetLinearVelocity();
@@ -18,8 +40,10 @@ void Personaje::jump() {
 	//body->ApplyForceToCenter(b2Vec2(0,1006), true);
 	this->goingUp = true;
 
+
 }
 
+/*
 void Personaje::setListenerTouchingGround(ContactListener *aListener) {
 	listenerTouchingGround = aListener;
 }
@@ -51,6 +75,8 @@ Animation * Personaje::getAnimation(Resources * resources) {
 		}
 	}
 }
+
+*/
 
 Personaje::~Personaje() {
 	//delete this->mainCharacterBody;

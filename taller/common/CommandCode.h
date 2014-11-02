@@ -20,5 +20,7 @@ const CommandCode INITIALIZE_MAP = 6;
 const CommandCode INITIALIZE_GRAPHICS = 7;
 const CommandCode UPDATE_ENTITY = 8;
 const CommandCode END_CHAR = 9;
+const CommandCode UPDATE_PLAYER_ENTITY = 10;
+const CommandCode ADD_PLAYER_DATA = 11;
 
 #endif /* COMMANDCODE_H_ */

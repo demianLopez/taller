@@ -69,7 +69,6 @@ void Client_handler::setDataObserver(DataObserver * dO) {
 bool Client_handler::runListen() {
 	//Threadear la escucha que es lo que pasa menos seguido
 	char message[256];
-	char auxbuff[256];
 
 	//Send from socketa
 
@@ -165,6 +164,10 @@ bool Client_handler::send_message(Message * msg){
 
 		sent = _socket.send_message(msg->getMessageData(),
 				msg->getMessageLength());
+
+		if(sent < msg->getMessageLength()){
+			std::cout<<"WARNING: SEND "<<sent<<" OF "<<msg->getMessageLength()<<std::endl;
+		}
 
 		if (sent < 1) {
 			this->stop();

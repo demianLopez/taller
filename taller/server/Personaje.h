@@ -11,18 +11,34 @@
 class Animation;
 class Resources;
 
-class Personaje: public CosaConMovimiento {
+class Personaje {
 protected:
-	ContactListener *listenerTouchingGround;
+	//ContactListener *listenerTouchingGround;
 public:
-	Personaje(b2World * gameWorld);
+	Personaje();
 	virtual ~Personaje();
 
+	void setBox2DDefinitions(b2Body * body, b2Fixture * fixture);
+	void setEntityIndex(int index);
+
+	virtual int getCurrentAnimation();
+
+	b2Vec2 * getPosition();
+
+	int getIndex();
+
+	/*
 	void jump();
 	void setListenerTouchingGround(ContactListener *aListener);
 	bool isOnAir(); //se sobreescribe la de CosaConMovimiento para agregar el listener
 
 	Animation * getAnimation(Resources * resources);
+	*/
+private:
+	b2Body * body;
+	b2Fixture * fixture;
+
+	int userIndex;
 };
 
 #endif /* PERSONAJE_H_ */

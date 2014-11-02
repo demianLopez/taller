@@ -78,6 +78,8 @@ private:
 	std::mutex mutexGame;
 protected:
 	virtual void initializeGameStates() = 0;
+	virtual void initGame() = 0;
+	virtual void exitGame() = 0;
 
 };
 

@@ -6,12 +6,11 @@
 #include <client_handler.h>
 
 // Jugador principal
-class Jugador {
+class Jugador : public Personaje {
 private:
 
 
 	char * name;
-	int userIndex;
 
 	Client_handler * client;
 
@@ -23,7 +22,7 @@ public:
 
 	Jugador(Client_handler * client, char * name);
 	char * getName();
-	int getIndex();
+
 
 	Client_handler * getClient();
 };

@@ -12,4 +12,5 @@
 	MainMenu * Global::mainMenu;
 	Game * Global::game;
 	GameWorld * Global::gameWorld;
+	Resources * Global::gameResources;
 

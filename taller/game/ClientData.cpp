@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Global.h"
 #include "entity/PolygonEntity.h"
+#include "entity/PlayerEntity.h"
 #include <UpdateRequest.h>
 
 ClientData::ClientData() {
@@ -33,6 +34,16 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		uR->posX = m->getFloat();
 		uR->posY = m->getFloat();
 		uR->rotation = m->getFloat();
+		Global::gameWorld->addUpdateRequest(uR);
+		return cCode;
+	}
+
+	if(cCode == UPDATE_PLAYER_ENTITY){
+		UpdateRequest * uR = new UpdateRequest();
+		uR->index = m->getChar();
+		uR->posX = m->getFloat();
+		uR->posY = m->getFloat();
+		uR->animation = m->getChar();
 		Global::gameWorld->addUpdateRequest(uR);
 		return cCode;
 	}
@@ -62,6 +73,20 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		float tX = m->getFloat();
 		float tY = m->getFloat();
 		Global::gameWorld = new GameWorld(tX, tY);
+		return cCode;
+	}
+
+	if(cCode == ADD_PLAYER_DATA){
+		char index = m->getChar();
+		float pX = m->getFloat();
+		float pY = m->getFloat();
+		char anim = m->getChar();
+
+		PlayerEntity * pEntity = new PlayerEntity(index);
+		pEntity->setPosition(pX, pY);
+		pEntity->setAnimation(anim);
+
+		Global::gameWorld->addEntity(pEntity);
 		return cCode;
 	}
 

@@ -48,17 +48,25 @@ public:
 	vector<Jugador*> getPlayerList();
 	Jugador * getPlayer(int userIndex);
 
+	void releaseEntityIndex(int index);
+
 	int getAvavibleIndex();
 
 	virtual ~World();
 
 	void sendToWorldPlayers(Message * m);
 
+	void instantiatePlayer(Personaje * p, Client_handler * client);
+
 
 private:
 
 	void updatePolygon(Polygon * p);
+	void updatePeople(Personaje * p);
+
 	void sendUpdates();
+
+	void initializePlayerBody(Jugador * player);
 
 	bool wordLoop;
 	static void worldLoop(World * world);

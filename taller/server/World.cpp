@@ -28,6 +28,31 @@ b2Vec2 * World::getBox2DWorldSize() {
 	return this->Box2DWorldSize;
 }
 
+void World::initializePlayerBody(Jugador * player){
+	b2PolygonShape box_shape;
+	box_shape.SetAsBox(1, 2); //seteo los vertices del poligono
+
+	b2FixtureDef body_fixture;
+	body_fixture.shape = &box_shape;
+	body_fixture.density = 1;
+	body_fixture.friction = 0;
+
+	b2BodyDef body_definition;
+	body_definition.type = b2_dynamicBody;
+	body_definition.position.Set(20, 20);
+
+	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
+	b2Fixture *fixture = body->CreateFixture(&body_fixture);
+
+	//TODO: MAX fijate que comente esto por las dudas, desp vemos
+	//fixture->SetUserData((void*) 1); // Le ponemos a los poligonos el tag "1". (Para detectar colisiones)
+
+	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
+	body->SetFixedRotation(true);
+
+	player->setBox2DDefinitions(body, fixture);
+}
+
 Jugador * World::getPlayer(int userIndex){
 	for(auto * user : this->playerList){
 		if(user->getIndex() == userIndex){
@@ -44,6 +69,23 @@ void World::waitWorldThread(){
 
 void World::addPlayer(Jugador * jugador){
 	this->playerList.push_back(jugador);
+	jugador->setEntityIndex(this->getAvavibleIndex());
+	this->initializePlayerBody(jugador);
+
+	for(auto * p : playerList){
+		if(p->getIndex() != jugador->getIndex()){
+			//Le avisamos a los demas que alguien se conecto
+			this->instantiatePlayer(jugador, p->getClient());
+		}
+
+		//Te mandamos la informacion de los demas player conectados
+		//incluyendote
+		this->instantiatePlayer(p, jugador->getClient());
+	}
+}
+
+void World::releaseEntityIndex(int index){
+
 }
 
 vector<Jugador *> World::getPlayerList(){
@@ -99,6 +141,18 @@ void World::worldStep(int delta) {
 	this->box2DWorld->Step(timeStep, velocityIterations, positionIterations);
 }
 
+void World::instantiatePlayer(Personaje * p, Client_handler * client){
+	Message m;
+	m.addCommandCode(ADD_PLAYER_DATA);
+	m.addChar(p->getIndex());
+	m.addFloat(&p->getPosition()->x);
+	m.addFloat(&p->getPosition()->y);
+	m.addChar(p->getCurrentAnimation());
+	m.addEndChar();
+
+	client->send_message(&m);
+}
+
 int World::getAvavibleIndex(){
 	int p = lastEntityIndex;
 	lastEntityIndex ++;
@@ -148,6 +202,10 @@ void World::sendUpdates(){
 			this->updatePolygon(p);
 		}
 	}
+
+	for(auto * j : playerList){
+		this->updatePeople(j);
+	}
 }
 
 void World::updatePolygon(Polygon * p){
@@ -161,6 +219,17 @@ void World::updatePolygon(Polygon * p){
 
 	m.addEndChar();
 
+	this->sendToWorldPlayers(&m);
+}
+
+void World::updatePeople(Personaje * p){
+	Message m;
+	m.addCommandCode(UPDATE_PLAYER_ENTITY);
+	m.addChar(p->getIndex());
+	m.addFloat(&p->getPosition()->x);
+	m.addFloat(&p->getPosition()->y);
+	m.addChar(p->getCurrentAnimation());
+	m.addEndChar();
 
 	this->sendToWorldPlayers(&m);
 }

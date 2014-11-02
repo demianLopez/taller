@@ -14,9 +14,9 @@ public:
 	float posX;
 	float posY;
 	float rotation;
+	int animation;
 	UpdateRequest();
 	virtual ~UpdateRequest();
-
 };
 
 #endif /* UPDATEREQUEST_H_ */

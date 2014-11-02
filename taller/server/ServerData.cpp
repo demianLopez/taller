@@ -62,8 +62,6 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 		envio.addEndChar();
 		client->send_message(&envio);
 
-		char polNumber = Data::world->getPolygonList().size();
-
 		vector<Polygon*> polList = Data::world->getPolygonList();
 
 		for(auto * p : polList){

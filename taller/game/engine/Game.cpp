@@ -155,6 +155,7 @@ void Game::endGame() {
 
 void Game::gameCicle(){
 
+	this->initGame();
 	this->initializeGameStates();
 
 	Logger::customLog("Game.cpp", Logger::INFO, "Comenzando el ciclo de juego");
@@ -247,6 +248,7 @@ void Game::gameCicle(){
 	for(auto * state : this->stateList){
 		state->exit(this);
 	}
+	this->exitGame();
 	Logger::customLog("Game.cpp", Logger::INFO, "Funcion de cierre finalizada");
 	Logger::customLog("Game.cpp", Logger::INFO, "Cerrando componentes de SDL");
 	this->gameClose();
