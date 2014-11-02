@@ -14,12 +14,12 @@ void Server::run_server(Server * server) {
 	}
 }
 
-void Server::waitServerThread(){
+void Server::waitServerThread() {
 	this->server_thread.join();
 }
 
-void Server::listen(){
-	if(queue.is_open()){
+void Server::listen() {
+	if (queue.is_open()) {
 
 		Client_handler * client = NULL;
 		client = queue.accept_client();
@@ -40,10 +40,10 @@ Server::Server() {
 	this->lastIndex = 0;
 }
 
-Client_handler * Server::getUser(char userIndex){
+Client_handler * Server::getUser(char userIndex) {
 	this->userListMutex.lock();
-	for(auto * user : clients){
-		if(user->userIndex == userIndex){
+	for (auto * user : clients) {
+		if (user->userIndex == userIndex) {
 			return user;
 		}
 	}
@@ -52,19 +52,19 @@ Client_handler * Server::getUser(char userIndex){
 	return NULL;
 }
 
-void Server::removeInactives(){
+void Server::removeInactives() {
 
 	//TODO: DESCONFIO DE LA EFECTIVIDAD DE ESTA FUNCION, TIRA VARIOS SEG FAULT
 
-	for(auto * client : clients){
+	for (auto * client : clients) {
 
-		std::cout << "B " << client<< std::endl;
-		if(client != NULL){
+		std::cout << "B " << client << std::endl;
+		if (client != NULL) {
 			if (!client->isConnected()) {
 				std::cout << "C" << std::endl;
 
 				client->waitThreadEnd();
-				std::cout<<"Borr"<<std::endl;
+				std::cout << "Borr" << std::endl;
 				delete client; //este delete rompe todo!
 				client = NULL;
 			}
@@ -73,34 +73,34 @@ void Server::removeInactives(){
 	}
 }
 
-void Server::stopQueue(){
+void Server::stopQueue() {
 	queue.close();
 }
 
-void Server::stopClients(){
-	for(auto * client : clients){
-		if(client != NULL){
+void Server::stopClients() {
+	for (auto * client : clients) {
+		if (client != NULL) {
 			client->stop();
 			client->waitThreadEnd();
 		}
 	}
 }
 
-void Server::stopServer(){
+void Server::stopServer() {
 	this->serverLoop = false;
 	this->stopQueue();
 	server_thread.join();
-	cout<<"Starting stop"<<endl;
+	cout << "Starting stop" << endl;
 	this->stopClients();
-	cout<<"Clients stoped"<<endl;
+	cout << "Clients stoped" << endl;
 	this->removeInactives();
 }
 
-bool Server::isOnLoop(){
+bool Server::isOnLoop() {
 	return this->serverLoop;
 }
 
-void Server::starServer(int port){
+void Server::starServer(int port) {
 	this->serverLoop = true;
 	queue.initialize(port);
 	server_thread = thread(Server::run_server, this);

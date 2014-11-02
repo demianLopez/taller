@@ -119,7 +119,7 @@ bool Client_handler::runListen() {
 			std::string mess = std::string(message);
 
 			std::cout << "El gil del thread -" << std::this_thread::get_id()
-			<< "- dice:" << mess << std::endl;
+					<< "- dice:" << mess << std::endl;
 		}
 	}
 

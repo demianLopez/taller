@@ -25,7 +25,6 @@ public:
 	char getChar();
 	float getFloat();
 
-
 	virtual ~Message();
 
 	char * getMessageData();

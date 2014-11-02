@@ -7,9 +7,9 @@
 
 #include <Global.h>
 
-	Client_handler * Global::client;
-	LevelState * Global::levelState;
-	MainMenu * Global::mainMenu;
-	Game * Global::game;
-	GameWorld * Global::gameWorld;
+Client_handler * Global::client;
+LevelState * Global::levelState;
+MainMenu * Global::mainMenu;
+Game * Global::game;
+GameWorld * Global::gameWorld;
 

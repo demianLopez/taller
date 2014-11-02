@@ -48,7 +48,6 @@ public:
 	vector<Jugador*> getPlayerList();
 	Jugador * getPlayer(int userIndex);
 
-
 	virtual ~World();
 private:
 
@@ -56,7 +55,6 @@ private:
 	static void worldLoop(World * world);
 
 	vector<Jugador*> playerList;
-
 
 	ContactListener *contactListener;
 

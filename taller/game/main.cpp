@@ -12,7 +12,6 @@
 #include "ClientData.h"
 #include <Global.h>
 
-
 #include <LectorJson.h>
 #include <GestorEscenario.h>
 #include <Data.h>
@@ -21,10 +20,10 @@ using namespace std;
 int const SCREEN_WIDTH = 800;
 int const SCREEN_HEIGHT = 600;
 
-int mainServer(){
+int mainServer() {
 
 	LectorJson * lj = new LectorJson();
-	cout<<"Cargando mapa tp0"<<endl;
+	cout << "Cargando mapa tp0" << endl;
 	lj->cargarEscenario("Maps/tp0.json");
 	GestorEscenario * ge = lj->obtenerGestorEscenario();
 	World * w = ge->obtenerMundo();
@@ -32,50 +31,47 @@ int mainServer(){
 	delete lj;
 
 	w->start();
-	cout<<"Mapa iniciado - Esperando jugadores"<<endl;
+	cout << "Mapa iniciado - Esperando jugadores" << endl;
 
 	Server * sv = new Server();
 	sv->starServer(8080);
 
-
 	bool commandLoop = true;
 	string command;
 
-	cout<<"Iniciado servidor en puerto 8080"<<endl;
+	cout << "Iniciado servidor en puerto 8080" << endl;
 
 	Data::server = sv;
 	Data::world = w;
 
+	while (commandLoop) {
+		cin >> command;
 
-	while (commandLoop){
-		cin>>command;
-
-		if(command.compare("shutdown") == 0){
+		if (command.compare("shutdown") == 0) {
 			commandLoop = false;
 		}
 
-		if(command.compare("playerlist") == 0){
-			std::cout<<"Jugadores Online:"<<endl;
-			for(auto p : w->getPlayerList()){
-				std::cout<<p->getName()<<endl;
+		if (command.compare("playerlist") == 0) {
+			std::cout << "Jugadores Online:" << endl;
+			for (auto p : w->getPlayerList()) {
+				std::cout << p->getName() << endl;
 			}
 		}
 	}
 
-
-	std::cout<<"Cerrando server"<<endl;
+	std::cout << "Cerrando server" << endl;
 	sv->stopServer();
-	std::cout<<"Cerrando World;"<<endl;
+	std::cout << "Cerrando World;" << endl;
 	w->stop();
 
 	w->waitWorldThread();
-	std::cout<<"a borrar"<<std::endl;
+	std::cout << "a borrar" << std::endl;
 	delete sv;
 	delete w;
 	return 0;
 }
 
-int mainCliente(){
+int mainCliente() {
 	Logger::initializeCustomLogs();
 	signal(SIGPIPE, SIG_IGN);
 	Socket s = Socket(8080);
@@ -102,13 +98,13 @@ int mainCliente(){
 	c->waitThreadEnd();
 
 	delete c;
-		//delete lector; //estamos perdiendo memoria con esto, pero falla si lo descomento..
+	//delete lector; //estamos perdiendo memoria con esto, pero falla si lo descomento..
 
 	return 0;
 }
 
-int main(int argc, char *argv[]){
-	if(argc > 1){
+int main(int argc, char *argv[]) {
+	if (argc > 1) {
 		return mainServer();
 	}
 

@@ -14,21 +14,21 @@ ClientData::ClientData() {
 	// TODO Auto-generated constructor stub
 }
 
-void ClientData::closeConnection(Client_handler * client){
+void ClientData::closeConnection(Client_handler * client) {
 
 }
 
-void ClientData::dataArribal(Message * m, Client_handler * client){
+void ClientData::dataArribal(Message * m, Client_handler * client) {
 	char cCode = m->getCommandCode();
 
-	if(cCode == SERVER_DATA){
+	if (cCode == SERVER_DATA) {
 		char * serverName;
 		char l = m->getCharArray(&serverName);
 		Global::mainMenu->setServerInfo(serverName, m->getChar(), m->getChar());
 		return;
 	}
 
-	if(cCode == ERROR_MESSAGE){
+	if (cCode == ERROR_MESSAGE) {
 		char * msg;
 		char * title;
 
@@ -42,17 +42,17 @@ void ClientData::dataArribal(Message * m, Client_handler * client){
 		return;
 	}
 
-	if(cCode == INITIALIZE_MAP){
+	if (cCode == INITIALIZE_MAP) {
 		float tX = m->getFloat();
 		float tY = m->getFloat();
 		Global::gameWorld = new GameWorld(tX, tY);
 		return;
 	}
 
-	if(cCode == ADD_MAP_DATA){
+	if (cCode == ADD_MAP_DATA) {
 		int t = m->getChar();
 		PolygonEntity * pEnt = new PolygonEntity(0);
-		for(int i = 0; i< t; i++){
+		for (int i = 0; i < t; i++) {
 			float tX = m->getFloat();
 			float tY = m->getFloat();
 
@@ -63,7 +63,7 @@ void ClientData::dataArribal(Message * m, Client_handler * client){
 		return;
 	}
 
-	if(cCode == INITIALIZE_GRAPHICS){
+	if (cCode == INITIALIZE_GRAPHICS) {
 		Global::levelState->setWorld(Global::gameWorld);
 		Global::game->enterState(1);
 		return;
@@ -71,7 +71,7 @@ void ClientData::dataArribal(Message * m, Client_handler * client){
 
 }
 
-void ClientData::errorConnection(Client_handler * client, int error){
+void ClientData::errorConnection(Client_handler * client, int error) {
 
 }
 

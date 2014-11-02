@@ -32,7 +32,6 @@ public:
 
 	void removeInactives();
 
-
 	void waitServerThread();
 
 	Client_handler * getUser(char userIndex);

@@ -3,17 +3,16 @@
 #include <iostream>
 
 // Inicializa Jugador.
-Jugador::Jugador(int userIndex, char * name){
+Jugador::Jugador(int userIndex, char * name) {
 	this->userIndex = userIndex;
 	this->name = name;
 }
 
-char * Jugador::getName(){
+char * Jugador::getName() {
 	return this->name;
 }
 
-int Jugador::getIndex(){
+int Jugador::getIndex() {
 	return userIndex;
 }
-
 

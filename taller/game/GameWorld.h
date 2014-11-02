@@ -26,7 +26,6 @@ public:
 
 	void generateGraphics();
 
-
 	virtual ~GameWorld();
 private:
 	VectorXY box2DSize;

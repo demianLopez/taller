@@ -99,7 +99,7 @@ SDL_Surface* Image::loadSurface(const char *pFile) {
 
 	if (loadedSurface == NULL) {
 		printf("Unable to load image %s! SDL_image Error: %s\n", pFile,
-		IMG_GetError());
+				IMG_GetError());
 	} else {
 		//Convert surface to screen format
 		optimizedSurface = SDL_ConvertSurface(loadedSurface,

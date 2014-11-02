@@ -36,7 +36,6 @@ private:
 	virtual void exit(Game * game);
 	void enter();
 
-
 	Image * worldImage;
 	Image * backgroundImage;
 

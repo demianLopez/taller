@@ -9,11 +9,12 @@
 #include "MainMenu.h"
 #include "LevelState.h"
 
-SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
+SnowBross::SnowBross(const char *pTitle) :
+		Game(pTitle) {
 
 }
 
-void SnowBross::initializeGameStates(){
+void SnowBross::initializeGameStates() {
 	this->addState(new MainMenu());
 	this->addState(new LevelState());
 

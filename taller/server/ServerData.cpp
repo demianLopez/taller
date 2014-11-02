@@ -14,15 +14,15 @@ ServerData::ServerData(Server * sv) {
 	this->sv = sv;
 }
 
-void ServerData::closeConnection(Client_handler * client){
+void ServerData::closeConnection(Client_handler * client) {
 
 }
 
-void ServerData::dataArribal(Message * m, Client_handler * client){
+void ServerData::dataArribal(Message * m, Client_handler * client) {
 	Message envio = Message();
 	//std::cout<<"Re: "<<m->getMessageLength()<<" bytes - "<<m->getMessageData()<<std::endl;
 	char cCode = m->getCommandCode();
-	if(cCode == IM_LOGGED){
+	if (cCode == IM_LOGGED) {
 
 		envio.addCommandCode(SERVER_DATA);
 		envio.addCharArray("Un mapa de snowBross\0", 21);
@@ -33,7 +33,7 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 		return;
 	}
 
-	if(cCode == LOGGIN_GAME){
+	if (cCode == LOGGIN_GAME) {
 
 		vector<Jugador *> lPlayer = Data::world->getPlayerList();
 		char * playerName;
@@ -41,21 +41,23 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 
 		string nm(playerName);
 
-		for(auto * p : lPlayer){
+		for (auto * p : lPlayer) {
 			string oPlayer(p->getName());
 
-			if(oPlayer.compare(nm) == 0){
+			if (oPlayer.compare(nm) == 0) {
 				envio.addCommandCode(ERROR_MESSAGE);
 				envio.addCharArray("Jugador Online\0", 15);
-				envio.addCharArray("El nombre que intenta utilizar se encuentra en uso\0", 51);
+				envio.addCharArray(
+						"El nombre que intenta utilizar se encuentra en uso\0",
+						51);
 				client->send_message(&envio);
 				return;
 			}
 		}
 
 		/*
-		Jugador * j = new Jugador(client->userIndex, playerName);
-		Data::world->addPlayer(j);
+		 Jugador * j = new Jugador(client->userIndex, playerName);
+		 Data::world->addPlayer(j);
 		 */
 
 		//Mandamos un mensaje por poligono!
@@ -69,14 +71,14 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 
 		vector<Polygon*> polList = Data::world->getPolygonList();
 
-		for(auto * p : polList){
+		for (auto * p : polList) {
 			Message * mapData = new Message();
 			mapData->addCommandCode(ADD_MAP_DATA);
 
 			char vNum = p->getPointList().size();
 			mapData->addChar(vNum);
 
-			for(auto * ver : p->getPointList()){
+			for (auto * ver : p->getPointList()) {
 				mapData->addFloat(&ver->x);
 				mapData->addFloat(&ver->y);
 			}
@@ -93,11 +95,9 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 	}
 }
 
-void ServerData::errorConnection(Client_handler * client, int error){
+void ServerData::errorConnection(Client_handler * client, int error) {
 
 }
-
-
 
 ServerData::~ServerData() {
 	// TODO Auto-generated destructor stub

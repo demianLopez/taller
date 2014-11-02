@@ -29,7 +29,6 @@
 using std::thread;
 class DataObserver;
 
-
 typedef char status_t;
 
 class Client_handler {
@@ -44,7 +43,6 @@ private:
 
 public:
 	char userIndex;
-
 
 	Client_handler(Socket& socket);
 	virtual ~Client_handler();

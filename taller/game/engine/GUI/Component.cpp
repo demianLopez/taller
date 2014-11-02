@@ -15,19 +15,19 @@ Component::Component() {
 	this->height = 0;
 }
 
-void Component::setSize(int width, int height){
+void Component::setSize(int width, int height) {
 	this->width = width;
 	this->height = height;
 }
 
-bool Component::isClicked(int xClick, int yClick){
+bool Component::isClicked(int xClick, int yClick) {
 	bool hoverX = xClick > posX && xClick < (posX + width);
 	bool hoverY = yClick > posY && yClick < (posY + height);
 
 	return hoverX && hoverY;
 }
 
-void Component::setPosition(int x, int y){
+void Component::setPosition(int x, int y) {
 	this->posX = x;
 	this->posY = y;
 }

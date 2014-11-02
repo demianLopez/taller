@@ -11,23 +11,23 @@ GameWorld::GameWorld(float tX, float tY) {
 	this->box2DSize = VectorXY(tX, tY);
 }
 
-void GameWorld::setScreenSize(VectorXY screenSize){
+void GameWorld::setScreenSize(VectorXY screenSize) {
 	this->screenSize = screenSize;
 }
 
-VectorXY GameWorld::getBox2DWorldSize(){
+VectorXY GameWorld::getBox2DWorldSize() {
 	return this->box2DSize;
 }
 
-void GameWorld::addEntity(GameEntity * entity){
+void GameWorld::addEntity(GameEntity * entity) {
 	this->entityList.push_back(entity);
 }
 
-std::vector<GameEntity*> GameWorld::getEntityList(){
+std::vector<GameEntity*> GameWorld::getEntityList() {
 	return this->entityList;
 }
 
-void GameWorld::generateGraphics(){
+void GameWorld::generateGraphics() {
 
 }
 

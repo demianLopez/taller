@@ -21,51 +21,51 @@ Message::Message(char *data, char size) {
 	read = 0;
 }
 
-void Message::addFloat(float * f){
+void Message::addFloat(float * f) {
 	memcpy(&message[pointer], f, sizeof(float));
 	pointer += sizeof(float);
 }
 
-char Message::getSpace(){
+char Message::getSpace() {
 	return 256 - this->getMessageLength();
 }
 
-void Message::addChar(char c){
+void Message::addChar(char c) {
 	message[pointer] = c;
 	pointer++;
 }
 
-void Message::addCharArray(const char * array, char length){
+void Message::addCharArray(const char * array, char length) {
 	this->addChar(length);
 	memcpy(&message[pointer], array, length);
 	pointer += length;
 }
 
-void Message::addCommandCode(CommandCode commandCode){
+void Message::addCommandCode(CommandCode commandCode) {
 	message[pointer] = commandCode;
 	pointer++;
 }
 
-CommandCode Message::getCommandCode(){
+CommandCode Message::getCommandCode() {
 	char cD = message[read];
-	read ++;
+	read++;
 	return cD;
 }
 
-char Message::getChar(){
+char Message::getChar() {
 	char a = message[read];
-	read ++;
+	read++;
 	return a;
 }
 
-float Message::getFloat(){
+float Message::getFloat() {
 	float p;
 	memcpy(&p, &message[read], sizeof(float));
-	read+= sizeof(float);
+	read += sizeof(float);
 	return p;
 }
 
-char Message::getCharArray(char ** array){
+char Message::getCharArray(char ** array) {
 	char size = this->getChar();
 	*array = new char[size];
 	memcpy(*array, &message[read], size);
@@ -73,13 +73,13 @@ char Message::getCharArray(char ** array){
 	return size;
 }
 
-char * Message::getMessageData(){
+char * Message::getMessageData() {
 	//message[pointer] = '\0';
-	message[0] = pointer -1;
+	message[0] = pointer - 1;
 	return this->message;
 }
 
-int Message::getMessageLength(){
+int Message::getMessageLength() {
 	return pointer;
 }
 

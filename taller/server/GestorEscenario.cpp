@@ -102,7 +102,6 @@ World * GestorEscenario::obtenerMundo() {
 	world = new World(new b2Vec2(0, -20));
 	world->setUnits(elEscenario.anchoun, elEscenario.altoun);
 
-
 	b2Vec2 SDLCharPos = b2Vec2(elEscenario.personajeX, elEscenario.personajeY);
 
 	for (auto objeto : objetos) {

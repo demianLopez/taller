@@ -11,8 +11,6 @@
 typedef struct _user {
 	const char * name;
 	char userIndex;
-}User;
-
-
+} User;
 
 #endif /* USER_H_ */

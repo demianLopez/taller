@@ -21,9 +21,13 @@ public:
 	//Llamado al inicio de toda la api
 	virtual void init(Game * game) = 0;
 	//llamado cuando entra al state
-	virtual void enter() {};
+	virtual void enter() {
+	}
+	;
 	//llamado cuando sale del state
-	virtual void leave() {};
+	virtual void leave() {
+	}
+	;
 	//Llamado al final de toda la api
 	virtual void exit(Game * game) = 0;
 

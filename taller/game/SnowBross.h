@@ -12,7 +12,7 @@
 
 class SnowBross: public Game {
 public:
-	SnowBross( const char *pTitle);
+	SnowBross(const char *pTitle);
 	virtual ~SnowBross();
 protected:
 	void initializeGameStates();
