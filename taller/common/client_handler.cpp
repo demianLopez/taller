@@ -209,8 +209,6 @@ void Client_handler::send_message(message_command_t& message) {
 	delete[] message_buffer;
 
 	if (sent < 0) {
-		Logger::customLog("client_handler.cpp", Logger::ERROR,
-				"No se pudo enviar el mensaje al cliente");
 
 		return;
 	}
