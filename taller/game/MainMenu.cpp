@@ -115,7 +115,9 @@ void MainMenu::keyEvent(SDL_Event e, Game * game){
 		if(this->buttonConnect->isClicked(mouseX, mouseY)){
 			Message * m = new Message();
 			m->addCommandCode(LOGGIN_GAME);
+
 			m->addCharArray(userName->getText(), userName->getLength());
+
 			Client_handler * c = Global::client;
 			m->addEndChar();
 			c->send_message(m);

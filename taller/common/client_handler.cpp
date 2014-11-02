@@ -69,6 +69,7 @@ void Client_handler::setDataObserver(DataObserver * dO) {
 bool Client_handler::runListen() {
 	//Threadear la escucha que es lo que pasa menos seguido
 	char message[256];
+	char auxbuff[256];
 
 	//Send from socketa
 
@@ -84,6 +85,15 @@ bool Client_handler::runListen() {
 		bytes_read = fp;
 	} else {
 		bytes_read = this->_socket.receive(message, l[0]);
+
+		/*
+		int need = l[0];
+		int read = bytes_read;
+		while(read < need && bytes_read > 0){
+			bytes_read = this->_socket.receive(auxbuff, need - read);
+			read += bytes_read;
+			std::cout<<"Se recupero "<<bytes_read<<std::endl;
+		}*/
 	}
 
 	if (bytes_read < 0) {

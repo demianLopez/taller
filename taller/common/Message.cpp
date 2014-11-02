@@ -7,6 +7,7 @@
 
 #include <Message.h>
 #include <cstring>
+#include <iostream>
 
 Message::Message() {
 	this->message = new char[256];
@@ -40,9 +41,10 @@ void Message::addChar(char c){
 }
 
 void Message::addCharArray(const char * array, char length){
-	this->addChar(length);
+	this->addChar(length + 1);
 	memcpy(&message[pointer], array, length);
 	pointer += length;
+	this->addChar('\0');
 }
 
 void Message::addCommandCode(CommandCode commandCode){
@@ -73,7 +75,8 @@ char Message::getCharArray(char ** array){
 	char size = this->getChar();
 	*array = new char[size + 1];
 	memcpy(*array, &message[read], size);
-	array[size] = '\0';
+	//*array[size -1] = 0;
+	//std::cout<<(int) size<<"-"<<*array<<std::endl;
 	read += size;
 	return size;
 }
