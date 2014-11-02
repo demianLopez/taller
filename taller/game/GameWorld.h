@@ -16,23 +16,32 @@ class GameEntity;
 
 class GameWorld {
 public:
+	/* Crea un GameWorld.
+	 * Recibe el tamanyo del mundo de box2d. */
 	GameWorld(float tX, float tY);
 
+	/* Setea tamanyo de la pantalla. */
 	void setScreenSize(VectorXY screenSize);
 
+	/* Devuelve entityList. */
 	std::vector<GameEntity *> getEntityList();
 
+	/* Agrega un GameEntity. */
 	void addEntity(GameEntity * entity);
 
+	/* Devuelve el tamanyo del mundo de box2d. */
 	VectorXY getBox2DWorldSize();
 
+	/* Inicializa los componentes graficos. */
 	void generateGraphics();
 
 	VectorXY box2DToSDLSize(VectorXY * box2DCoord);
 	VectorXY box2DToSDL(VectorXY * box2DCoord);
 
+	/* Agrega pedido de request. */
 	void addUpdateRequest(UpdateRequest * update);
 
+	/* Realiza los updates. */
 	void update();
 
 	virtual ~GameWorld();

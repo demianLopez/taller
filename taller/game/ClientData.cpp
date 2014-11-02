@@ -15,10 +15,15 @@ ClientData::ClientData() {
 	// TODO Auto-generated constructor stub
 }
 
+/* Cierra la conexion cuando se pierde la conexion con el server.
+ * Vuelve al menu principal. */
 void ClientData::closeConnection(Client_handler * client){
 	this->backMainMenu();
 }
 
+/* Procesa la informacion proveniente del server.
+ * Realiza distintas acciones dependiendo del codigo que traiga
+ * el mensaje. */
 void ClientData::dataArribal(Message * m, Client_handler * client){
 	char cCode = m->getCommandCode();
 
@@ -90,10 +95,16 @@ void ClientData::dataArribal(Message * m, Client_handler * client){
 
 }
 
+/* Cierra la conexion cuando se pierde la conexion con el server.
+ * Vuelve al menu principal.
+ * FIXME: Hace exactamente lo mismo que closeConnection, solo
+ * que ademas recibe error. */
 void ClientData::errorConnection(Client_handler * client, int error){
 	this->backMainMenu();
 }
 
+/* Cambia el estado del juego y muestra un mensaje de error
+ * de conexion. */
 void ClientData::backMainMenu(){
 	Global::game->enterState(0);
 	Global::game->showErrorMessage("Error de conexion",
