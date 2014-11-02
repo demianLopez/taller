@@ -10,15 +10,24 @@
 
 Message::Message() {
 	this->message = new char[256];
-	pointer = 0;
-	read = 0;
+	pointer = 1;
+	read = 1;
 }
 
 Message::Message(char *data, char size) {
 	this->message = new char[256];
-	memcpy(message, data, size - 1);
-	this->pointer = size - 1;
+	memcpy(message, data, size);
+	this->pointer = size;
 	read = 0;
+}
+
+void Message::addFloat(float * f){
+	memcpy(&message[pointer], f, sizeof(float));
+	pointer += sizeof(float);
+}
+
+char Message::getSpace(){
+	return 256 - this->getMessageLength();
 }
 
 void Message::addChar(char c){
@@ -49,6 +58,13 @@ char Message::getChar(){
 	return a;
 }
 
+float Message::getFloat(){
+	float p;
+	memcpy(&p, &message[read], sizeof(float));
+	read+= sizeof(float);
+	return p;
+}
+
 char Message::getCharArray(char ** array){
 	char size = this->getChar();
 	*array = new char[size];
@@ -58,12 +74,13 @@ char Message::getCharArray(char ** array){
 }
 
 char * Message::getMessageData(){
-	message[pointer] = '\0';
+	//message[pointer] = '\0';
+	message[0] = pointer -1;
 	return this->message;
 }
 
 int Message::getMessageLength(){
-	return pointer + 1;
+	return pointer;
 }
 
 Message::~Message() {

@@ -21,6 +21,7 @@ public:
 
 	Jugador(int userIndex, char * name);
 	char * getName();
+	int getIndex();
 
 };
 

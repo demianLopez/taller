@@ -53,19 +53,23 @@ Client_handler * Server::getUser(char userIndex){
 }
 
 void Server::removeInactives(){
-	size_t n_client = 0;
 
 	//TODO: DESCONFIO DE LA EFECTIVIDAD DE ESTA FUNCION, TIRA VARIOS SEG FAULT
 
 	for(auto * client : clients){
 
 		std::cout << "B " << client<< std::endl;
-		if (!client->isConnected()) {
-			std::cout << "C" << std::endl;
-			delete client; //ACA TIRA SEG FAULT
+		if(client != NULL){
+			if (!client->isConnected()) {
+				std::cout << "C" << std::endl;
+
+				client->waitThreadEnd();
+				std::cout<<"Borr"<<std::endl;
+				delete client; //este delete rompe todo!
+				client = NULL;
+			}
 		}
 
-		n_client++;
 	}
 }
 
@@ -73,13 +77,12 @@ void Server::stopQueue(){
 	queue.close();
 }
 
-
 void Server::stopClients(){
-	size_t n_client = 0;
 	for(auto * client : clients){
-		client->stop();
-		client->waitThreadEnd();
-		n_client++;
+		if(client != NULL){
+			client->stop();
+			client->waitThreadEnd();
+		}
 	}
 }
 
@@ -87,6 +90,7 @@ void Server::stopServer(){
 	this->serverLoop = false;
 	this->stopQueue();
 	server_thread.join();
+	cout<<"Starting stop"<<endl;
 	this->stopClients();
 	cout<<"Clients stoped"<<endl;
 	this->removeInactives();
@@ -100,7 +104,6 @@ void Server::starServer(int port){
 	this->serverLoop = true;
 	queue.initialize(port);
 	server_thread = thread(Server::run_server, this);
-
 }
 
 Server::~Server() {

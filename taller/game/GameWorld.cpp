@@ -7,8 +7,8 @@
 
 #include "GameWorld.h"
 
-GameWorld::GameWorld(VectorXY box2DWorldSize) {
-	this->box2DSize = box2DWorldSize;
+GameWorld::GameWorld(float tX, float tY) {
+	this->box2DSize = VectorXY(tX, tY);
 }
 
 void GameWorld::setScreenSize(VectorXY screenSize){
@@ -19,11 +19,19 @@ VectorXY GameWorld::getBox2DWorldSize(){
 	return this->box2DSize;
 }
 
-std::vector<Polygon*> GameWorld::getPolygonList(){
-	return this->polygonList;
+void GameWorld::addEntity(GameEntity * entity){
+	this->entityList.push_back(entity);
+}
+
+std::vector<GameEntity*> GameWorld::getEntityList(){
+	return this->entityList;
+}
+
+void GameWorld::generateGraphics(){
+
 }
 
 GameWorld::~GameWorld() {
-	// TODO Auto-generated destructor stub
+
 }
 

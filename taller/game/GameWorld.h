@@ -10,19 +10,21 @@
 
 #include "VectorXY.h"
 #include <vector>
-#include <polygons/Polygon.h>
+#include <entity/GameEntity.h>
 
 class GameWorld {
 public:
-	GameWorld(VectorXY box2DWorldSize);
+	GameWorld(float tX, float tY);
 
 	void setScreenSize(VectorXY screenSize);
 
-	std::vector<Polygon *> getPolygonList();
+	std::vector<GameEntity *> getEntityList();
 
-	void addPolygon(Polygon * polygon);
+	void addEntity(GameEntity * entity);
 
 	VectorXY getBox2DWorldSize();
+
+	void generateGraphics();
 
 
 	virtual ~GameWorld();
@@ -30,7 +32,7 @@ private:
 	VectorXY box2DSize;
 	VectorXY screenSize;
 
-	std::vector<Polygon *> polygonList;
+	std::vector<GameEntity *> entityList;
 
 };
 

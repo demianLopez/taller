@@ -22,6 +22,7 @@ public:
 	static LevelState * levelState;
 	static MainMenu * mainMenu;
 	static Game * game;
+	static GameWorld * gameWorld;
 
 };
 

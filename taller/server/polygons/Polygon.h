@@ -38,6 +38,7 @@ public:
 	b2Body * getBody();
 
 	bool isStatic();
+	vector<b2Vec2 *> getPointList();
 
 protected:
 

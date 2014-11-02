@@ -11,4 +11,5 @@
 	LevelState * Global::levelState;
 	MainMenu * Global::mainMenu;
 	Game * Global::game;
+	GameWorld * Global::gameWorld;
 

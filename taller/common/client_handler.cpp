@@ -26,18 +26,23 @@
 #include <chrono>
 #include <string>
 
-void Client_handler::threadFunction(Client_handler * client) {
-	signal(SIGPIPE, SIG_IGN);
-	while (client->isConnected()) {
-		if (!client->runListen()) {
+void Client_handler::threadFunction(Client_handler * client){
+	//signal(SIGPIPE, SIG_IGN);
+	while(client->isConnected()){
+		if(!client->runListen()){
 			client->stop();
 		}
 	}
 
+	std::cout<<"Fin thread cliente "<<client->userIndex<<std::endl;
+
 }
 
-void Client_handler::waitThreadEnd() {
-	this->clientThread.join();
+void Client_handler::waitThreadEnd(){
+
+
+		this->clientThread.join();
+
 }
 
 Client_handler::Client_handler(Socket& socket) {
@@ -50,6 +55,7 @@ Client_handler::Client_handler(Socket& socket) {
 Client_handler::~Client_handler() {
 	if (dataObserver != NULL) {
 		delete dataObserver;
+		dataObserver = NULL;
 	}
 }
 
@@ -71,7 +77,15 @@ bool Client_handler::runListen() {
 	//int bytes_read = this->_socket.receive(longMensaje, 1);
 	//std::cout<<longMensaje<<std::endl;
 
-	int bytes_read = this->_socket.receive(message, 256);
+	char l[5];
+	int fp = this->_socket.receive(l, 1);
+	int bytes_read;
+
+	if(fp <= 0){
+		bytes_read = fp;
+	} else {
+		bytes_read = this->_socket.receive(message, l[0]);
+	}
 
 	if (bytes_read < 0) {
 		if (dataObserver != NULL) {

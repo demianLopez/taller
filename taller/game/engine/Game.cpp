@@ -55,8 +55,10 @@ void Game::addState(GameState * state){
 }
 
 void Game::enterState(int id){
+	this->mutexGame.lock();
 	this->nextState = id;
 	this->changingState = true;
+	this->mutexGame.unlock();
 }
 
 void Game::showErrorMessage(char * title, char * error){
@@ -180,15 +182,18 @@ void Game::gameCicle(){
 	Logger::customLog("Game.cpp", Logger::INFO, "Inicializacion realizada exitosamente");
 
 	while(!this->quit) {
+		this->mutexGame.lock();
 		if(this->changingState){
+
 			if(this->currentState != NULL){
 				this->currentState->leave();
 			}
+
 			this->currentState = this->stateList[this->nextState];
 			this->currentState->enter();
 			this->changingState = false;
 		}
-
+		this->mutexGame.unlock();
 		while( SDL_PollEvent( &e ) != 0 ){
 			//User requests quit
 			if (e.type == SDL_QUIT) {
