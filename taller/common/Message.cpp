@@ -61,11 +61,24 @@ void Message::addCommandCode(CommandCode commandCode){
 	pointer++;
 }
 
+void Message::addKeyEventCode(KeyCode keyCode){
+	message[pointer] = keyCode;
+	pointer++;
+}
+
+
+
 /* Lee el codigo de comando.
  * Se debe estar posicionado en el lugar donde esta guardado
  * el mismo.
  * Aumenta el indice de lectura. */
 CommandCode Message::getCommandCode(){
+	char cD = message[read];
+	read ++;
+	return cD;
+}
+
+KeyCode Message::getKeyCode(){
 	char cD = message[read];
 	read ++;
 	return cD;

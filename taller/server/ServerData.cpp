@@ -34,6 +34,13 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 		return cCode;
 	}
 
+	if(cCode == KEY_EVENT){
+		Jugador * j = Data::world->getPlayer(client->userIndex);
+
+		j->addKeyCode(m->getKeyCode());
+		return cCode;
+	}
+
 	if(cCode == LOGGIN_GAME){
 
 		vector<Jugador *> lPlayer = Data::world->getPlayerList();

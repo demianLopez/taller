@@ -19,6 +19,7 @@ public:
 
 	/* Asigna un codigo de comando al mensaje.*/
 	void addCommandCode(CommandCode commandCode);
+	void addKeyEventCode(KeyCode keyCode);
 	/* Agrega un char al mensaje. */
 	void addChar(char c);
 	/* Agrega una cantidad de chars al mensaje. Al final de lo copiado
@@ -32,6 +33,7 @@ public:
 	 * el mismo.
 	 * Aumenta el indice de lectura. */
 	CommandCode getCommandCode();
+	KeyCode getKeyCode();
 	/* Lee un array de chars.
 	 * Aumenta el indice de lectura. */
 	char getCharArray(char ** array);

@@ -173,19 +173,25 @@ void LevelState::render(Graphics *g, Game * game){
 
 void LevelState::keyEvent(SDL_Event e, Game * game) {
 	if (e.type == SDL_KEYDOWN) {
+		Message m;
+		m.addCommandCode(KEY_EVENT);
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				//this->gameWorld->getMainCharacter()->setMovingLeft(true);
+				m.addKeyEventCode(MOVE_LEFT);
+				m.addEndChar();
+				Global::client->send_message(&m);
 				break;
 
 			case SDLK_RIGHT:
-				//this->gameWorld->getMainCharacter()->setMovingRight(true);
+				m.addKeyEventCode(MOVE_RIGHT);
+				m.addEndChar();
+				Global::client->send_message(&m);
 				break;
 
 			case SDLK_UP:
-				/*if(this->gameWorld->isMainCharacterTouchingGround()){
-					this->gameWorld->getMainCharacter()->jump();
-				}*/
+				m.addKeyEventCode(JUMP);
+				m.addEndChar();
+				Global::client->send_message(&m);
 				break;
 			case SDLK_KP_MINUS:
 				this->zoomScale += ZOOM_INCREMENT;

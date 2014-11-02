@@ -9,6 +9,7 @@
 #define COMMANDCODE_H_
 
 typedef char CommandCode;
+typedef char KeyCode;
 
 const CommandCode IM_LOGGED = 0;
 const CommandCode SERVER_DATA = 1;
@@ -22,5 +23,11 @@ const CommandCode UPDATE_ENTITY = 8;
 const CommandCode END_CHAR = 9;
 const CommandCode UPDATE_PLAYER_ENTITY = 10;
 const CommandCode ADD_PLAYER_DATA = 11;
+const CommandCode KEY_EVENT = 12;
+
+const KeyCode MOVE_LEFT = 0;
+const KeyCode MOVE_RIGHT = 1;
+const KeyCode JUMP = 2;
+const KeyCode NOTHING = 3;
 
 #endif /* COMMANDCODE_H_ */

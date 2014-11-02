@@ -21,6 +21,23 @@ int Personaje::getCurrentAnimation(){
 	return 0;
 }
 
+void Personaje::moveLeft(){
+	body->ApplyLinearImpulse(
+			b2Vec2(-15 - body->GetLinearVelocity().x * 2, 0),
+			body->GetWorldCenter(), true);
+
+}
+
+void Personaje::moveRight(){
+	body->ApplyLinearImpulse(
+			b2Vec2(15 - body->GetLinearVelocity().x * 2, 0),
+			body->GetWorldCenter(), true);
+}
+
+void Personaje::jump(){
+	body->ApplyLinearImpulse(b2Vec2(0,body->GetMass() * 8), body->GetWorldCenter(), true);
+}
+
 b2Vec2 * Personaje::getPosition(){
 	return (b2Vec2*) &this->body->GetPosition();
 }

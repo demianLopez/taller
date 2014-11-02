@@ -35,7 +35,7 @@ void World::initializePlayerBody(Jugador * player){
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &box_shape;
 	body_fixture.density = 1;
-	body_fixture.friction = 0;
+	body_fixture.friction = 0.2;
 
 	b2BodyDef body_definition;
 	body_definition.type = b2_dynamicBody;
@@ -69,7 +69,9 @@ void World::waitWorldThread(){
 
 void World::addPlayer(Jugador * jugador){
 	this->playerList.push_back(jugador);
-	jugador->setEntityIndex(this->getAvavibleIndex());
+	int avavibleIndex = this->getAvavibleIndex();
+	jugador->setEntityIndex(avavibleIndex);
+	jugador->getClient()->userIndex = avavibleIndex;
 	this->initializePlayerBody(jugador);
 
 	for(auto * p : playerList){
@@ -188,8 +190,13 @@ bool World::isOnLoop(){
 }
 
 void World::worldLoop(World * word){
-	int tLoop = 50;
+	int tLoop = 25;
 	while(word->isOnLoop()){
+
+		for(auto * j : word->getPlayerList()){
+			j->apllyCodes();
+		}
+
 		std::this_thread::sleep_for(std::chrono::milliseconds(tLoop));
 		word->worldStep(tLoop);
 		word->sendUpdates();
