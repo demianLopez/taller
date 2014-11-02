@@ -16,7 +16,7 @@ public:
 	/* Procesa la informacion proveniente del server.
 	 * Realiza distintas acciones dependiendo del codigo que traiga
 	 * el mensaje. */
-	void dataArribal(Message * m, Client_handler * client);
+	char dataArribal(Message * m, Client_handler * client);
 	/* Cierra la conexion cuando se pierde la conexion con el server.
 	 * Vuelve al menu principal. */
 	void closeConnection(Client_handler * client);

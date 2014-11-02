@@ -24,7 +24,7 @@ void ClientData::closeConnection(Client_handler * client){
 /* Procesa la informacion proveniente del server.
  * Realiza distintas acciones dependiendo del codigo que traiga
  * el mensaje. */
-void ClientData::dataArribal(Message * m, Client_handler * client){
+char ClientData::dataArribal(Message * m, Client_handler * client){
 	char cCode = m->getCommandCode();
 
 	if(cCode == UPDATE_ENTITY){
@@ -34,13 +34,14 @@ void ClientData::dataArribal(Message * m, Client_handler * client){
 		uR->posY = m->getFloat();
 		uR->rotation = m->getFloat();
 		Global::gameWorld->addUpdateRequest(uR);
+		return cCode;
 	}
 
 	if(cCode == SERVER_DATA){
 		char * serverName;
 		char l = m->getCharArray(&serverName);
 		Global::mainMenu->setServerInfo(serverName, m->getChar(), m->getChar());
-		return;
+		return cCode;
 	}
 
 	if(cCode == ERROR_MESSAGE){
@@ -54,14 +55,14 @@ void ClientData::dataArribal(Message * m, Client_handler * client){
 
 		delete[] msg;
 		delete[] title;
-		return;
+		return cCode;
 	}
 
 	if(cCode == INITIALIZE_MAP){
 		float tX = m->getFloat();
 		float tY = m->getFloat();
 		Global::gameWorld = new GameWorld(tX, tY);
-		return;
+		return cCode;
 	}
 
 	if(cCode == ADD_MAP_DATA){
@@ -84,14 +85,16 @@ void ClientData::dataArribal(Message * m, Client_handler * client){
 		}
 
 		Global::gameWorld->addEntity(pEnt);
-		return;
+		return cCode;
 	}
 
 	if(cCode == INITIALIZE_GRAPHICS){
 		Global::levelState->setWorld(Global::gameWorld);
 		Global::game->enterState(1);
-		return;
+		return cCode;
 	}
+
+	std::cout<<"WARNING: LOOSING cCode: "<<(int)cCode<<endl;
 
 }
 

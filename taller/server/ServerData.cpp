@@ -18,7 +18,7 @@ void ServerData::closeConnection(Client_handler * client){
 
 }
 
-void ServerData::dataArribal(Message * m, Client_handler * client){
+char ServerData::dataArribal(Message * m, Client_handler * client){
 	Message envio = Message();
 	//std::cout<<"Re: "<<m->getMessageLength()<<" bytes - "<<m->getMessageData()<<std::endl;
 	char cCode = m->getCommandCode();
@@ -31,7 +31,7 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 		envio.addChar(jugando); //Jugando!
 		envio.addEndChar();
 		client->send_message(&envio);
-		return;
+		return cCode;
 	}
 
 	if(cCode == LOGGIN_GAME){
@@ -51,7 +51,7 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 				envio.addCharArray("El nombre que intenta utilizar se encuentra en uso\0", 51);
 				envio.addEndChar();
 				client->send_message(&envio);
-				return;
+				return cCode;
 			}
 		}
 
@@ -59,7 +59,7 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 		envio.addCommandCode(INITIALIZE_MAP);
 		envio.addFloat(&Data::world->getBox2DWorldSize()->x);
 		envio.addFloat(&Data::world->getBox2DWorldSize()->y);
-
+		envio.addEndChar();
 		client->send_message(&envio);
 
 		char polNumber = Data::world->getPolygonList().size();
@@ -99,8 +99,11 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 		Jugador * j = new Jugador(client, playerName);
 		Data::world->addPlayer(j);
 
-		return;
+		return cCode;
 	}
+
+	std::cout<<"WARNING: LOOSING cCode: "<<(int)cCode<<endl;
+	return cCode;
 }
 
 void ServerData::errorConnection(Client_handler * client, int error){

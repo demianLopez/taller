@@ -21,6 +21,7 @@
 #include <string>
 
 #include <arpa/inet.h>
+#include <iostream>
 
 using std::string;
 
@@ -86,7 +87,8 @@ Socket::Socket() {
 
 int Socket::send_message(const char* message, size_t message_len) {
 
-	int res = send(sockfd, message, message_len, message_len);
+	int res = write(sockfd, message, message_len);
+
 	if (res == -1) {
 		//Logger::customLog("socket.cpp", Logger::ERROR,
 			//	"No se pudo enviar el mensaje por el socket");
@@ -97,12 +99,8 @@ int Socket::send_message(const char* message, size_t message_len) {
 
 int Socket::receive(char* buff, size_t bytes_to_read) {
 	//ssize_t numbytes = recv(sockfd, buff, bytes_to_read, 0);
-	ssize_t numbytes = recv(sockfd, buff, bytes_to_read, 0);
-	if (numbytes <= 0) {
-		//Logger::customLog("socket.cpp", Logger::ERROR,
-			//	"No se pudo recibir el mensaje");
-		return numbytes;
-	}
+	ssize_t numbytes = read(sockfd, buff, bytes_to_read);
+
 	return numbytes;
 }
 

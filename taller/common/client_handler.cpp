@@ -78,15 +78,22 @@ bool Client_handler::runListen() {
 	//std::cout<<longMensaje<<std::endl;
 
 	char l[5];
-	int fp = this->_socket.receive(l, 1);
 	int bytes_read;
 
-	if (fp <= 0) {
-		bytes_read = fp;
-	} else {
-		bytes_read = this->_socket.receive(message, l[0]);
+	bytes_read = this->_socket.receive(l, 1);
 
-		/*
+	int need = l[0];
+	int readed = 0;
+	int toRead = need;
+
+	while(readed < need && bytes_read > 0){
+
+		bytes_read = this->_socket.receive(&message[readed], toRead);
+		readed += bytes_read;
+		toRead -= bytes_read;
+	}
+
+	/*
 		int need = l[0];
 		int read = bytes_read;
 		while(read < need && bytes_read > 0){
@@ -94,7 +101,7 @@ bool Client_handler::runListen() {
 			read += bytes_read;
 			std::cout<<"Se recupero "<<bytes_read<<std::endl;
 		}*/
-	}
+
 
 	if (bytes_read < 0) {
 		if (dataObserver != NULL) {
@@ -122,7 +129,11 @@ bool Client_handler::runListen() {
 
 		if (dataObserver != NULL) {
 			Message * m = new Message(message, bytes_read);
-			dataObserver->dataArribal(m, this);
+			char c = dataObserver->dataArribal(m, this);
+
+			if(m->getCommandCode() != END_CHAR){
+				std::cout<<"!WARNING NOT END CHAR FUND ON cCode "<<(int)c<<std::endl;
+			}
 			delete m;
 		} else {
 

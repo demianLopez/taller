@@ -14,7 +14,7 @@
 class ServerData: public DataObserver {
 public:
 	ServerData(Server * sv);
-	void dataArribal(Message * m, Client_handler * client);
+	char dataArribal(Message * m, Client_handler * client);
 	void closeConnection(Client_handler * client);
 	void errorConnection(Client_handler * client, int error);
 	virtual ~ServerData();

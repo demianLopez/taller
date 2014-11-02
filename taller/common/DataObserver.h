@@ -14,7 +14,7 @@
 
 class DataObserver {
 public:
-	virtual void dataArribal(Message * msg, Client_handler * client) = 0;
+	virtual char dataArribal(Message * msg, Client_handler * client) = 0;
 	virtual void closeConnection(Client_handler * client) = 0;
 	virtual void errorConnection(Client_handler * client, int error) = 0;
 };
