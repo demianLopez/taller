@@ -17,6 +17,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 #include "accept_queue.h"
+#include "../common/Logger.h"
 
 #define QUEUE_SIZE 20
 
@@ -32,7 +33,9 @@ Accept_queue::~Accept_queue() {
 Client_handler* Accept_queue::accept_client() {
 	Socket socket = this->queue.accept_connection();
 
-	if(!socket.is_valid()){
+	if (!socket.is_valid()) {
+		Logger::customLog("accept_queue.cpp", Logger::WARNING,
+				"Error al aceptar una conexion del cliente");
 		return NULL;
 	}
 
@@ -45,12 +48,20 @@ bool Accept_queue::is_open() {
 
 void Accept_queue::initialize(int port) {
 	this->queue.init(port);
-	if (!this->queue.is_valid())
+	if (!this->queue.is_valid()) {
+		Logger::customLog("accept_queue.cpp", Logger::WARNING,
+				"La cola de clientes no se inicio correctamente");
 		return;
+	}
 	this->queue.listen_connection(QUEUE_SIZE);
+	Logger::customLog("accept_queue.cpp", Logger::INFO,
+			"Servicio de cola de clientes iniciado exitosamente");
+
 }
 
 void Accept_queue::close() {
 	this->queue.shutdown_socket();
 	this->queue.close_port();
+	Logger::customLog("accept_queue.cpp", Logger::INFO,
+			"Servicio de cola de clientes cerrado exitosamente");
 }

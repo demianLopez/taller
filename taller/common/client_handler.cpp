@@ -26,22 +26,21 @@
 #include <chrono>
 #include <string>
 
-void Client_handler::threadFunction(Client_handler * client){
+void Client_handler::threadFunction(Client_handler * client) {
 	//signal(SIGPIPE, SIG_IGN);
-	while(client->isConnected()){
-		if(!client->runListen()){
+	while (client->isConnected()) {
+		if (!client->runListen()) {
 			client->stop();
 		}
 	}
 
-	std::cout<<"Fin thread cliente "<<client->userIndex<<std::endl;
+	std::cout << "Fin thread cliente " << client->userIndex << std::endl;
 
 }
 
-void Client_handler::waitThreadEnd(){
+void Client_handler::waitThreadEnd() {
 
-
-		this->clientThread.join();
+	this->clientThread.join();
 
 }
 
@@ -53,7 +52,7 @@ Client_handler::Client_handler(Socket& socket) {
 }
 
 Client_handler::~Client_handler() {
-	if(dataObserver != NULL){
+	if (dataObserver != NULL) {
 		delete dataObserver;
 		dataObserver = NULL;
 	}
@@ -63,13 +62,13 @@ bool Client_handler::is_valid() {
 	return this->_socket.is_valid(); //TODO: agregar mas condiciones
 }
 
-void Client_handler::setDataObserver(DataObserver * dO){
+void Client_handler::setDataObserver(DataObserver * dO) {
 	this->dataObserver = dO;
 }
 
 bool Client_handler::runListen() {
 	//Threadear la escucha que es lo que pasa menos seguido
-	char  message[256];
+	char message[256];
 
 	//Send from socketa
 
@@ -81,43 +80,41 @@ bool Client_handler::runListen() {
 	int fp = this->_socket.receive(l, 1);
 	int bytes_read;
 
-	if(fp <= 0){
+	if (fp <= 0) {
 		bytes_read = fp;
 	} else {
 		bytes_read = this->_socket.receive(message, l[0]);
 	}
 
 	if (bytes_read < 0) {
-		if(dataObserver != NULL){
+		if (dataObserver != NULL) {
 			dataObserver->errorConnection(this, bytes_read);
 		} else {
 			std::cout << "Error de conexion con el cliente. Desconexion"
-				<< std::endl;
+					<< std::endl;
 		}
 		return false;
 	}
 
-	if(bytes_read == 0){
-		if(this->threadLoop){
-			if(dataObserver != NULL){
+	if (bytes_read == 0) {
+		if (this->threadLoop) {
+			if (dataObserver != NULL) {
 				dataObserver->closeConnection(this);
 			} else {
-				std::cout << "Se perdio la conexion"
-					<< std::endl;
+				std::cout << "Se perdio la conexion" << std::endl;
 			}
 		}
 		return false;
 	}
 
-	if(bytes_read > 0) {
+	if (bytes_read > 0) {
 		message[bytes_read] = '\0';
 
-		if(dataObserver != NULL){
+		if (dataObserver != NULL) {
 			Message * m = new Message(message, bytes_read);
 			dataObserver->dataArribal(m, this);
 			delete m;
 		} else {
-
 
 			std::string mess = std::string(message);
 
@@ -130,8 +127,7 @@ bool Client_handler::runListen() {
 	return true;
 }
 
-
-bool Client_handler::isConnected(){
+bool Client_handler::isConnected() {
 	return this->threadLoop;
 }
 
@@ -146,7 +142,8 @@ bool Client_handler::send_message(Message * msg){
 	if(_socket.is_valid()){
 		int sent = -1;
 
-		sent = _socket.send_message(msg->getMessageData(), msg->getMessageLength());
+		sent = _socket.send_message(msg->getMessageData(),
+				msg->getMessageLength());
 
 		if (sent < 1) {
 			this->stop();
@@ -160,8 +157,8 @@ bool Client_handler::send_message(Message * msg){
 	return false;
 }
 
-bool Client_handler::send_message(const char * msg, int size){
-	if(_socket.is_valid()){
+bool Client_handler::send_message(const char * msg, int size) {
+	if (_socket.is_valid()) {
 		int sent = -1;
 
 		sent = _socket.send_message(msg, size);
@@ -177,7 +174,8 @@ bool Client_handler::send_message(const char * msg, int size){
 }
 
 void Client_handler::send_message(message_command_t& message) {
-	if (!_socket.is_valid()) return;
+	if (!_socket.is_valid())
+		return;
 
 	size_t command_len = sizeof(command_id_type_t);
 	size_t message_len = command_len;
@@ -189,16 +187,18 @@ void Client_handler::send_message(message_command_t& message) {
 
 	char* message_buffer = new char[message_len];
 
-	memcpy (message_buffer,&message.command,command_len);
-	memcpy (message_buffer+command_len,&message.args_len,command_len_len);
-	memcpy (message_buffer+command_len+command_len_len,message.command_args,message.args_len);
+	memcpy(message_buffer, &message.command, command_len);
+	memcpy(message_buffer + command_len, &message.args_len, command_len_len);
+	memcpy(message_buffer + command_len + command_len_len, message.command_args,
+			message.args_len);
 
 	int sent = 0;
 
-	while (sent<message_len){
-		int bytes_sent = _socket.send_message(message_buffer+sent,message_len-sent);
+	while (sent < message_len) {
+		int bytes_sent = _socket.send_message(message_buffer + sent,
+				message_len - sent);
 
-		if (bytes_sent < 0){
+		if (bytes_sent < 0) {
 			sent = bytes_sent;
 			break;
 		}
@@ -208,10 +208,11 @@ void Client_handler::send_message(message_command_t& message) {
 
 	delete[] message_buffer;
 
-	if (sent < 0){
-		//handle error;
+	if (sent < 0) {
+		Logger::customLog("client_handler.cpp", Logger::ERROR,
+				"No se pudo enviar el mensaje al cliente");
+
 		return;
 	}
 }
-
 

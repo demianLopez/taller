@@ -72,9 +72,11 @@ Socket::Socket(int port, const string& host) {
 	int res = connect(sockfd, (struct sockaddr *) &address,
 			sizeof(struct sockaddr));
 
-	if (res == -1)
-		return; //TODO: LOGUEAR error
-
+	if (res == -1) {
+		Logger::customLog("socket.cpp", Logger::ERROR,
+				"No se pudo conectar el socket");
+		return;
+	}
 	this->_port = port;
 }
 
@@ -85,24 +87,29 @@ Socket::Socket() {
 int Socket::send_message(const char* message, size_t message_len) {
 
 	int res = send(sockfd, message, message_len, message_len);
-	if (res == -1)
-		return res; //TODO: LOGUEAR error
+	if (res == -1) {
+		Logger::customLog("socket.cpp", Logger::ERROR,
+				"No se pudo enviar el mensaje por el socket");
+	}
 	return res;
 }
 
 int Socket::receive(char* buff, size_t bytes_to_read) {
 	//ssize_t numbytes = recv(sockfd, buff, bytes_to_read, 0);
 	ssize_t numbytes = recv(sockfd, buff, bytes_to_read, 0);
-	if (numbytes <= 0)
-		return numbytes; //TODO: LOGUEAR error
-
+	if (numbytes <= 0) {
+		Logger::customLog("socket.cpp", Logger::ERROR,
+				"No se pudo recibir el mensaje");
+	}
 	return numbytes;
 }
 
 SocketQueue::SocketQueue() {
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
-	if (sockfd == -1)
-		return; //TODO: LOGUEAR error
+	if (sockfd == -1) {
+		Logger::customLog("socket.cpp", Logger::ERROR,
+				"Fallo la creacion de la cola de sockets");
+	}
 }
 
 void SocketQueue::init(int port, in_addr_t address) {
@@ -120,9 +127,11 @@ void SocketQueue::init(int port, in_addr_t address) {
 
 	int res = bind(sockfd, (const struct sockaddr*) &cli_addr, cli_len);
 
-	if (res == -1)
-		return; //TODO: Loguear error
-
+	if (res == -1) {
+		Logger::customLog("socket.cpp", Logger::ERROR,
+				"No se pudo vincular la cola de sockets con la direccion/puerto solicitados");
+		return;
+	}
 	this->_port = port;
 	this->binded = true;
 }
@@ -137,7 +146,10 @@ Socket SocketQueue::accept_connection() {
 	unsigned int sin_size = sizeof(struct sockaddr_in);
 	int client = accept(sockfd, (struct sockaddr *) &their_addr, &sin_size);
 
-	//if (client == -1) TODO: manejar el error y loguearlo
+	if (client == -1) {
+		Logger::customLog("socket.cpp", Logger::WARNING,
+				"Fallo la recepcion de conexiones en la cola de sockets. Se genera un socket invalido.");
+	}
 
 	return Socket(client, their_addr);
 }
