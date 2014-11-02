@@ -18,16 +18,19 @@ public:
 	void addCommandCode(CommandCode commandCode);
 	void addChar(char c);
 	void addCharArray(const char * array, char length);
+	void addFloat(float * f);
 
 	CommandCode getCommandCode();
 	char getCharArray(char ** array);
 	char getChar();
+	float getFloat();
 
 
 	virtual ~Message();
 
 	char * getMessageData();
 	int getMessageLength();
+	char getSpace();
 private:
 	char * message;
 	char pointer;

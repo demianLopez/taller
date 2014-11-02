@@ -37,6 +37,10 @@ void Polygon::addB2DPoint(double x, double y) {
 	this->pointList.push_back(new b2Vec2(x, y));
 }
 
+vector<b2Vec2 *> Polygon::getPointList(){
+	return this->pointList;
+}
+
 /*
 void Polygon::createSDLPoints() {
 

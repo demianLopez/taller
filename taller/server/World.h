@@ -46,6 +46,7 @@ public:
 
 	void addPlayer(Jugador * jugador);
 	vector<Jugador*> getPlayerList();
+	Jugador * getPlayer(int userIndex);
 
 
 	virtual ~World();

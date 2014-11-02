@@ -12,4 +12,8 @@ char * Jugador::getName(){
 	return this->name;
 }
 
+int Jugador::getIndex(){
+	return userIndex;
+}
+
 

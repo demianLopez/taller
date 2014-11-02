@@ -34,6 +34,7 @@ private:
 	virtual void keyEvent(SDL_Event e, Game * game);
 	virtual void init(Game * game);
 	virtual void exit(Game * game);
+	void enter();
 
 
 	Image * worldImage;

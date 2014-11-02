@@ -26,6 +26,16 @@ b2Vec2 * World::getBox2DWorldSize() {
 	return this->Box2DWorldSize;
 }
 
+Jugador * World::getPlayer(int userIndex){
+	for(auto * user : this->playerList){
+		if(user->getIndex() == userIndex){
+			return user;
+		}
+	}
+
+	return NULL;
+}
+
 void World::waitWorldThread(){
 	this->worldThread.join();
 }

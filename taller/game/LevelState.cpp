@@ -7,6 +7,8 @@
 
 #include "LevelState.h"
 #include "VectorXY.h"
+#include <iostream>
+#include "Global.h"
 
 
 const float ZOOM_INCREMENT = 0.02;
@@ -29,6 +31,8 @@ void LevelState::init(Game * game){
 	//ADICIONALES!
 	//Estos son extras, despues hay que cambiarlos!
 
+	Global::levelState = this;
+
 	this->backgroundImage = new Image("Resources/font1.png");
 	this->backParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
 	this->backParticleEmiter->setMaxParticles(20);
@@ -45,21 +49,20 @@ void LevelState::init(Game * game){
 		this->lightAnimation->addFrame(this->spriteLightAnimation->getSubImage(i, 0), 25);
 	}
 
-	VectorXY wSize = this->gameWorld->getBox2DWorldSize();
-	this->worldImage = new Image(wSize.x * 20, wSize.y * 20);
+
 
 	//Recalculamos con datos
 	//TODO: Cambiar! por el valor de la pantalla no harcodeado
 	//float xMax = ((float)wSize->x * 20)/this->getScreenWidth();
 	//float yMax = ((float)wSize->y * 20)/this->getScreenHeight();
-	float xMax = ((float)wSize.x * 20)/800;
-	float yMax = ((float)wSize.y * 20)/600;
+	//float xMax = ((float)wSize.x * 20)/800;
+	//float yMax = ((float)wSize.y * 20)/600;
 	//---------------------------------------------
-	if(xMax > yMax){
+	/*if(xMax > yMax){
 		this->maxZoomScale = yMax;
 	} else {
 		this->maxZoomScale = xMax;
-	}
+	}*/
 
 }
 
@@ -136,12 +139,13 @@ void LevelState::render(Graphics *g, Game * game){
 	g->clearRenderObject();
 	g->setColor(0, 0, 0, 255);
 
+	/*
 	vector<Polygon *> polList = this->gameWorld->getPolygonList();
 	for(auto *polygon : polList){
 		//polygon->render(g);
 	}
 
-
+	*/
 
 	g->drawAtCenter(true);
 
@@ -229,6 +233,12 @@ void LevelState::update(unsigned int delta){
 		}
 	}
 
+}
+
+void LevelState::enter(){
+	VectorXY wSize = this->gameWorld->getBox2DWorldSize();
+	std::cout<<wSize.x<<std::endl;
+	this->worldImage = new Image(wSize.x * 20, wSize.y * 20);
 }
 
 LevelState::~LevelState() {

@@ -15,8 +15,10 @@
 #include <string>
 #include <sstream>
 #include "GameState.h"
+#include <mutex>
 
 class Graphics;
+
 
 class Game {
 public:
@@ -71,8 +73,9 @@ private:
 
 	bool sfps; //SHOW FPS
 	std::stringstream fpsText;
-
 	std::vector<GameState *> stateList;
+
+	std::mutex mutexGame;
 protected:
 	virtual void initializeGameStates() = 0;
 
