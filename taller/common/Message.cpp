@@ -21,6 +21,10 @@ Message::Message(char *data, char size) {
 	read = 0;
 }
 
+void Message::addEndChar(){
+	this->addChar(END_CHAR);
+}
+
 void Message::addFloat(float * f){
 	memcpy(&message[pointer], f, sizeof(float));
 	pointer += sizeof(float);
@@ -67,8 +71,9 @@ float Message::getFloat(){
 
 char Message::getCharArray(char ** array){
 	char size = this->getChar();
-	*array = new char[size];
+	*array = new char[size + 1];
 	memcpy(*array, &message[read], size);
+	array[size] = '\0';
 	read += size;
 	return size;
 }

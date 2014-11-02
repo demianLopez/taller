@@ -29,6 +29,7 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 		envio.addChar(4); //Max player
 		char jugando = Data::world->getPlayerList().size();
 		envio.addChar(jugando); //Jugando!
+		envio.addEndChar();
 		client->send_message(&envio);
 		return;
 	}
@@ -48,6 +49,7 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 				envio.addCommandCode(ERROR_MESSAGE);
 				envio.addCharArray("Jugador Online\0", 15);
 				envio.addCharArray("El nombre que intenta utilizar se encuentra en uso\0", 51);
+				envio.addEndChar();
 				client->send_message(&envio);
 				return;
 			}
@@ -81,12 +83,16 @@ void ServerData::dataArribal(Message * m, Client_handler * client){
 				mapData->addFloat(&ver->y);
 			}
 
+			mapData->addEndChar();
 			client->send_message(mapData);
+
+
 			delete mapData;
 		}
 
 		Message * finalData = new Message();
 		finalData->addCommandCode(INITIALIZE_GRAPHICS);
+		finalData->addEndChar();
 		client->send_message(finalData);
 		delete finalData;
 

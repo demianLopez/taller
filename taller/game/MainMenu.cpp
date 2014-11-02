@@ -47,6 +47,7 @@ void MainMenu::init(Game * game){
 	Message * m = new Message();
 	m->addCommandCode(IM_LOGGED);
 	Client_handler * c = Global::client;
+	m->addEndChar();
 	c->send_message(m);
 	delete m;
 
@@ -116,6 +117,7 @@ void MainMenu::keyEvent(SDL_Event e, Game * game){
 			m->addCommandCode(LOGGIN_GAME);
 			m->addCharArray(userName->getText(), userName->getLength());
 			Client_handler * c = Global::client;
+			m->addEndChar();
 			c->send_message(m);
 			delete m;
 		}

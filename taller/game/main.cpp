@@ -35,7 +35,7 @@ int mainServer(){
 	cout<<"Mapa iniciado - Esperando jugadores"<<endl;
 
 	Server * sv = new Server();
-	sv->starServer(8080);
+	sv->starServer(12345);
 
 
 	bool commandLoop = true;
@@ -78,7 +78,7 @@ int mainServer(){
 int mainCliente(){
 	Logger::initializeCustomLogs();
 	signal(SIGPIPE, SIG_IGN);
-	Socket s = Socket(8080);
+	Socket s = Socket(12345);
 
 	Client_handler * c = new Client_handler(s);
 	c->setDataObserver(new ClientData());

@@ -25,6 +25,8 @@ public:
 	char getChar();
 	float getFloat();
 
+	void addEndChar();
+
 
 	virtual ~Message();
 
