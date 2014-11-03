@@ -186,7 +186,7 @@ void LevelState::render(Graphics *g, Game * game){
 	}
 
 	if(yScreen < 100){
-		globalY += 5;
+		globalY -= 5;
 	}
 
 	if(yScreen > 500){
@@ -212,13 +212,13 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 			case SDLK_LEFT:
 				m.addKeyEventCode(MOVE_LEFT_DOWN);
 				m.addEndChar();
-				Global::client->send_message(&m);
+				//Global::client->send_message(&m);
 				break;
 
 			case SDLK_RIGHT:
 				m.addKeyEventCode(MOVE_RIGHT_DOWN);
 				m.addEndChar();
-				Global::client->send_message(&m);
+				//Global::client->send_message(&m);
 				break;
 
 			case SDLK_UP:
@@ -250,13 +250,13 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 			case SDLK_LEFT:
 				m.addKeyEventCode(MOVE_LEFT_UP);
 				m.addEndChar();
-				Global::client->send_message(&m);
+				//Global::client->send_message(&m);
 				break;
 
 			case SDLK_RIGHT:
 				m.addKeyEventCode(MOVE_RIGHT_UP);
 				m.addEndChar();
-				Global::client->send_message(&m);
+				//Global::client->send_message(&m);
 				break;
 		}
 	}

@@ -92,7 +92,9 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		pEntity->setPosition(pX, pY);
 		pEntity->setAnimation(anim);
 
+		pEntity->setWorld(Global::gameWorld);
 		Global::gameWorld->addEntity(pEntity);
+
 		return cCode;
 	}
 
