@@ -21,14 +21,15 @@ int Personaje::getCurrentAnimation(){
 	return 0;
 }
 
-void Personaje::moveLeft(){
+void Personaje::moveLeft(bool isButtonDown){
+	cout<<"left "<<isButtonDown<<endl;
 	body->ApplyLinearImpulse(
 			b2Vec2(-15 - body->GetLinearVelocity().x * 2, 0),
 			body->GetWorldCenter(), true);
 
 }
 
-void Personaje::moveRight(){
+void Personaje::moveRight(bool isButtonDown){
 	body->ApplyLinearImpulse(
 			b2Vec2(15 - body->GetLinearVelocity().x * 2, 0),
 			body->GetWorldCenter(), true);

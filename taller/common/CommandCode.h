@@ -24,10 +24,13 @@ const CommandCode END_CHAR = 9;
 const CommandCode UPDATE_PLAYER_ENTITY = 10;
 const CommandCode ADD_PLAYER_DATA = 11;
 const CommandCode KEY_EVENT = 12;
+const CommandCode UPDATE_TIMING = 13;
 
-const KeyCode MOVE_LEFT = 0;
-const KeyCode MOVE_RIGHT = 1;
+const KeyCode MOVE_LEFT_DOWN = 0;
+const KeyCode MOVE_RIGHT_DOWN = 1;
 const KeyCode JUMP = 2;
 const KeyCode NOTHING = 3;
+const KeyCode MOVE_LEFT_UP = 4;
+const KeyCode MOVE_RIGHT_UP = 5;
 
 #endif /* COMMANDCODE_H_ */

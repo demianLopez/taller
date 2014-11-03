@@ -19,6 +19,7 @@
 class Global {
 public:
 
+	static int serverUpdateTiming;
 	static Client_handler * client;
 	static LevelState * levelState;
 	static MainMenu * mainMenu;

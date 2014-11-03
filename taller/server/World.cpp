@@ -190,29 +190,63 @@ bool World::isOnLoop(){
 }
 
 void World::worldLoop(World * word){
-	int tLoop = 25;
+	int ups = 20;
+	int sleepTime = 1000/ups;
+
+	clock_t lastClock = clock();
+
+	int upCount = 0;
+	int updateTime = 0;
+
 	while(word->isOnLoop()){
 
 		for(auto * j : word->getPlayerList()){
 			j->apllyCodes();
 		}
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(tLoop));
-		word->worldStep(tLoop);
+		clock_t current = clock();
+		int elapsedTime = (current - lastClock) / CLOCKS_PER_SEC * 1000 + sleepTime;
+		lastClock = current;
+
+		updateTime += elapsedTime;
+
+
+		if(updateTime > 1000){
+			updateTime = 0;
+			word->updatesPerSecond = upCount;
+			upCount = 0;
+		}
+
+		upCount++;
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+
+		word->worldStep(sleepTime);
 		word->sendUpdates();
 	}
 }
 
 void World::sendUpdates(){
+	for(auto * j : playerList){
+		//this->updateTiming(j);
+		this->updatePeople(j);
+	}
+
 	for(auto * p : polygonList){
 		if(!p->isStatic()){
 			this->updatePolygon(p);
 		}
 	}
+}
 
-	for(auto * j : playerList){
-		this->updatePeople(j);
-	}
+void World::updateTiming(Jugador * j){
+	Message m;
+	m.addCommandCode(UPDATE_TIMING);
+	char timing = 1000/(this->updatesPerSecond + 1);
+	m.addChar(timing);
+	m.addEndChar();
+
+	j->getClient()->send_message(&m);
 }
 
 void World::updatePolygon(Polygon * p){

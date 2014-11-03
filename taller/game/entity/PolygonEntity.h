@@ -32,6 +32,9 @@ private:
 	vector<VectorXY *> vList;
 	Image * polygonImage;
 
+	VectorXY lastPosition;
+	int elapsedTime;
+
 };
 
 #endif /* POLYGONENTITY_H_ */

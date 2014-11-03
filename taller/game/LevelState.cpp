@@ -177,13 +177,13 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 		m.addCommandCode(KEY_EVENT);
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				m.addKeyEventCode(MOVE_LEFT);
+				m.addKeyEventCode(MOVE_LEFT_DOWN);
 				m.addEndChar();
 				Global::client->send_message(&m);
 				break;
 
 			case SDLK_RIGHT:
-				m.addKeyEventCode(MOVE_RIGHT);
+				m.addKeyEventCode(MOVE_RIGHT_DOWN);
 				m.addEndChar();
 				Global::client->send_message(&m);
 				break;
@@ -211,16 +211,20 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 	}
 
 	if (e.type == SDL_KEYUP) {
+		Message m;
+		m.addCommandCode(KEY_EVENT);
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				//this->gameWorld->getMainCharacter()->setMovingLeft(false);
+				m.addKeyEventCode(MOVE_LEFT_UP);
+				m.addEndChar();
+				Global::client->send_message(&m);
 				break;
 
 			case SDLK_RIGHT:
-				//this->gameWorld->getMainCharacter()->setMovingRight(false);
+				m.addKeyEventCode(MOVE_RIGHT_UP);
+				m.addEndChar();
+				Global::client->send_message(&m);
 				break;
-
-
 		}
 	}
 

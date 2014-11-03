@@ -48,6 +48,12 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		return cCode;
 	}
 
+	if(cCode == UPDATE_TIMING){
+		char timing = m->getChar();
+		Global::serverUpdateTiming = timing;
+		return cCode;
+	}
+
 	if(cCode == SERVER_DATA){
 		char * serverName;
 		char l = m->getCharArray(&serverName);

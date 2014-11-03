@@ -23,6 +23,8 @@ class World {
 public:
 	World(b2Vec2 * gravity);
 
+	int updatesPerSecond;
+
 	void setUnits(int wU, int hU);
 	b2Vec2 * getBox2DWorldSize();
 
@@ -59,8 +61,10 @@ public:
 	void instantiatePlayer(Personaje * p, Client_handler * client);
 
 
-private:
 
+
+private:
+	void updateTiming(Jugador * j);
 	void updatePolygon(Polygon * p);
 	void updatePeople(Personaje * p);
 

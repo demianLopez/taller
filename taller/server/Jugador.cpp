@@ -20,11 +20,17 @@ void Jugador::apllyCodes(){
 	for(auto code : keyCode){
 		switch(code)
 		{
-		case MOVE_LEFT:
-			this->moveLeft();
+		case MOVE_LEFT_DOWN:
+			this->moveLeft(true);
 			break;
-		case MOVE_RIGHT:
-			this->moveRight();
+		case MOVE_RIGHT_DOWN:
+			this->moveRight(true);
+			break;
+		case MOVE_LEFT_UP:
+			this->moveLeft(false);
+			break;
+		case MOVE_RIGHT_UP:
+			this->moveRight(false);
 			break;
 		case JUMP:
 			this->jump();

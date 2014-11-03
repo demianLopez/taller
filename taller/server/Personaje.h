@@ -21,8 +21,8 @@ public:
 	void setBox2DDefinitions(b2Body * body, b2Fixture * fixture);
 	void setEntityIndex(int index);
 
-	void moveLeft();
-	void moveRight();
+	void moveLeft(bool isButtonDown);
+	void moveRight(bool isButtonDown);
 	void jump();
 
 	virtual int getCurrentAnimation();

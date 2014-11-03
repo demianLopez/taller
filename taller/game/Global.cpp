@@ -13,4 +13,4 @@
 	Game * Global::game;
 	GameWorld * Global::gameWorld;
 	Resources * Global::gameResources;
-
+	int Global::serverUpdateTiming;

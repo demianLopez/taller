@@ -60,6 +60,10 @@ int mainServer(){
 				std::cout<<p->getName()<<endl;
 			}
 		}
+
+		if(command.compare("ups") == 0){
+			std::cout<<"Updates por segundo "<<w->updatesPerSecond<<std::endl;
+		}
 	}
 
 

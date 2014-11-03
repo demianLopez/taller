@@ -8,15 +8,16 @@
 
 #include "PolygonEntity.h"
 
-
 PolygonEntity::PolygonEntity(int index) : GameEntity(index) {
 	this->polygonImage = NULL;
 
 }
 
 void PolygonEntity::update(UpdateRequest * u){
+	this->lastPosition = this->position;
 	this->position = VectorXY(u->posX, u->posY);
 	this->rotation = u->rotation;
+	this->elapsedTime = 0;
 }
 
 void PolygonEntity::render(Graphics * g){
@@ -24,6 +25,11 @@ void PolygonEntity::render(Graphics * g){
 	if(this->polygonImage == NULL){
 		return;
 	}
+
+	//float iPosX = lastPosition.x + (position.x - lastPosition.x) * elapsedTime / Global::serverUpdateTiming;
+	//float iPosY = lastPosition.y + (position.y - lastPosition.x) * elapsedTime / Global::serverUpdateTiming;
+
+	elapsedTime += 25;
 
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 
