@@ -9,8 +9,9 @@ ContactListener::ContactListener() {
 void ContactListener::BeginContact(b2Contact* contact) {
 	ContactContainer* first = (ContactContainer*) contact->GetFixtureA()->GetUserData();
 	ContactContainer* second = (ContactContainer*) contact->GetFixtureA()->GetUserData();
+
 	if(first == NULL || second == NULL) return;
-	//if (first == 3 || second == 3) return; //Es un contacto con un contact listener..
+
 	Jugador *aPlayer;
 	if(first->type == ContactContainer::JUGADOR && second->type == ContactContainer::POLYGON){
 		aPlayer = (Jugador*) first->containedThing;
@@ -29,7 +30,8 @@ void ContactListener::EndContact(b2Contact* contact) {
 	ContactContainer* first = (ContactContainer*) contact->GetFixtureA()->GetUserData();
 	ContactContainer* second = (ContactContainer*) contact->GetFixtureA()->GetUserData();
 
-	//if (first == 3 || second == 3) return; //Es un contacto con un contact listener..
+	if(first == NULL || second == NULL) return;
+
 	Jugador *aPlayer;
 	if(first->type == ContactContainer::JUGADOR && second->type == ContactContainer::POLYGON){
 		aPlayer = (Jugador*) first->containedThing;

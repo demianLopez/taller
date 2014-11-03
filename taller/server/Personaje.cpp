@@ -56,7 +56,7 @@ void Personaje::setEntityIndex(int index){
 }
 
 void Personaje::update() {
-	cout << "cantidad de contactos: " << listenerTouchingGround->getNumberOfContacts() << endl;
+	//cout << "cantidad de contactos: " << listenerTouchingGround->getNumberOfContacts() << endl;
 	b2Vec2 currentVel = this->body->GetLinearVelocity();
 
 	if (currentVel.y < 1 && currentVel.y > -1) { // Quieto en Y
