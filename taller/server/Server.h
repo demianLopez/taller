@@ -10,14 +10,14 @@
 
 #include "accept_queue.h"
 #include <client_handler.h>
-#include <list>
+#include <vector>
 #include <iostream>
 #include <thread>
 #include <chrono>
 #include <mutex>
 #include <Message.h>
 
-using std::list;
+using std::vector;
 using std::cout;
 using std::endl;
 using std::thread;
@@ -30,9 +30,6 @@ public:
 	bool isOnLoop();
 
 	void stopServer();
-
-	void removeInactives();
-
 
 	void waitServerThread();
 
@@ -52,7 +49,8 @@ private:
 	void stopClients();
 
 	Accept_queue queue;
-	list<Client_handler *> clients;
+
+	vector<Client_handler *> clients;
 
 	thread server_thread;
 
@@ -63,6 +61,8 @@ private:
 	mutex userListMutex;
 
 	char lastIndex;
+
+	int maxConnections;
 };
 
 #endif /* SERVER_H_ */

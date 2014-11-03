@@ -30,16 +30,16 @@ Accept_queue::~Accept_queue() {
 	// TODO Auto-generated destructor stub
 }
 
-Client_handler* Accept_queue::accept_client() {
-	Socket socket = this->queue.accept_connection();
+Socket * Accept_queue::accept_client() {
+	Socket * socket = this->queue.accept_connection();
 
-	if (!socket.is_valid()) {
-		Logger::customLog("accept_queue.cpp", Logger::WARNING,
-				"Error al aceptar una conexion del cliente");
+	if (!socket->is_valid()) {
+		//Logger::customLog("accept_queue.cpp", Logger::WARNING,
+			//	"Error al aceptar una conexion del cliente");
 		return NULL;
 	}
 
-	return new Client_handler(socket);
+	return socket;
 }
 
 bool Accept_queue::is_open() {

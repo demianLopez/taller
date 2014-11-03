@@ -67,13 +67,13 @@ int mainServer(){
 	}
 
 
-	std::cout<<"Cerrando server"<<endl;
+	std::cout<<"Cerrando Server"<<endl;
 	sv->stopServer();
-	std::cout<<"Cerrando World;"<<endl;
+	std::cout<<"Cerrando World"<<endl;
 	w->stop();
 
 	w->waitWorldThread();
-	std::cout<<"a borrar"<<std::endl;
+
 	delete sv;
 	delete w;
 	return 0;
@@ -82,10 +82,12 @@ int mainServer(){
 int mainCliente(){
 	Logger::initializeCustomLogs();
 	signal(SIGPIPE, SIG_IGN);
-	Socket s = Socket(12345);
+	Socket * s = new Socket(12345);
 
-	Client_handler * c = new Client_handler(s);
+	Client_handler * c = new Client_handler();
 	c->setDataObserver(new ClientData());
+	c->setSocket(s);
+	c->startLoop();
 
 	Global::client = c;
 	SnowBross *pE = new SnowBross("Snow Bross");

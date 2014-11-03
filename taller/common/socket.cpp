@@ -141,7 +141,7 @@ void SocketQueue::init(int port, const char* address) {
 	this->init(port, addr);
 }
 
-Socket SocketQueue::accept_connection() {
+Socket  * SocketQueue::accept_connection() {
 	sockaddr_in_s their_addr;
 	unsigned int sin_size = sizeof(struct sockaddr_in);
 	int client = accept(sockfd, (struct sockaddr *) &their_addr, &sin_size);
@@ -151,7 +151,7 @@ Socket SocketQueue::accept_connection() {
 			//	"Fallo la recepcion de conexiones en la cola de sockets. Se genera un socket invalido.");
 	}
 
-	return Socket(client, their_addr);
+	return new Socket(client, their_addr);
 }
 
 void SocketQueue::listen_connection(int backlog) {

@@ -32,7 +32,7 @@ public:
 
 public:
 	void initialize(int port);
-	Client_handler* accept_client();
+	Socket * accept_client();
 
 	bool is_open();
 

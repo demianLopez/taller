@@ -21,16 +21,22 @@ void Server::waitServerThread(){
 void Server::listen(){
 	if(queue.is_open()){
 
-		Client_handler * client = NULL;
-		client = queue.accept_client();
+		Socket * newConection = NULL;
+		newConection = queue.accept_client();
 
-		if (client != NULL) {
+		if (newConection != NULL) {
 			this->userListMutex.lock();
-			clients.push_back(client);
-			client->userIndex = lastIndex;
-			lastIndex++;
-			client->setDataObserver(new ServerData(this));
-			this->removeInactives();
+
+			for(auto * client : clients){
+				if(client->isEmpty()){
+					client->setSocket(newConection);
+					client->startLoop();
+					client->userIndex = lastIndex;
+					lastIndex++;
+
+					break;
+				}
+			}
 			this->userListMutex.unlock();
 		}
 	}
@@ -38,6 +44,7 @@ void Server::listen(){
 
 Server::Server() {
 	this->lastIndex = 0;
+	this->maxConnections = 8;
 }
 
 Client_handler * Server::getUser(char userIndex){
@@ -52,37 +59,17 @@ Client_handler * Server::getUser(char userIndex){
 	return NULL;
 }
 
-void Server::removeInactives(){
-
-	//TODO: DESCONFIO DE LA EFECTIVIDAD DE ESTA FUNCION, TIRA VARIOS SEG FAULT
-
-	for(auto * client : clients){
-
-		std::cout << "B " << client<< std::endl;
-		if(client != NULL){
-			if (!client->isConnected()) {
-				std::cout << "C" << std::endl;
-
-				client->waitThreadEnd();
-				std::cout<<"Borr"<<std::endl;
-				delete client; //este delete rompe todo!
-				client = NULL;
-			}
-		}
-
-	}
-}
-
 void Server::stopQueue(){
 	queue.close();
 }
 
 void Server::stopClients(){
 	for(auto * client : clients){
-		if(client != NULL){
+		if(!client->isEmpty()){
 			client->stop();
-			client->waitThreadEnd();
 		}
+		client->waitThreadEnd();
+		delete client;
 	}
 }
 
@@ -90,10 +77,7 @@ void Server::stopServer(){
 	this->serverLoop = false;
 	this->stopQueue();
 	server_thread.join();
-	cout<<"Starting stop"<<endl;
 	this->stopClients();
-	cout<<"Clients stoped"<<endl;
-	this->removeInactives();
 }
 
 void Server::sendToAll(Message * message){
@@ -117,6 +101,12 @@ bool Server::isOnLoop(){
 }
 
 void Server::starServer(int port){
+	for(int i = 0; i < this->maxConnections; i++){
+		Client_handler * client = new Client_handler();
+		clients.push_back(client);
+		client->setDataObserver(new ServerData(this));
+	}
+
 	this->serverLoop = true;
 	queue.initialize(port);
 	server_thread = thread(Server::run_server, this);

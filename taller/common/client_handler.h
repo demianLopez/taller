@@ -37,7 +37,7 @@ class Client_handler {
 
 private:
 
-	Socket _socket;
+	Socket * _socket;
 	thread clientThread;
 	bool threadLoop;
 
@@ -47,22 +47,24 @@ public:
 	char userIndex;
 
 
-	Client_handler(Socket& socket);
+	Client_handler();
 	virtual ~Client_handler();
 
+	void setSocket(Socket * socket);
 	bool isConnected();
+
+	bool isEmpty();
+
+	void startLoop();
 
 	bool runListen();
 
 	void waitThreadEnd();
 
-	bool send_message(const char * msg, int size);
-
 	bool is_valid();
 
 	void stop();
 
-	void send_message(message_command_t& message);
 	bool send_message(Message * msg);
 
 	void setDataObserver(DataObserver *dO);
