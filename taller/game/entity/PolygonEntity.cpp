@@ -10,14 +10,18 @@
 
 PolygonEntity::PolygonEntity(int index) : GameEntity(index) {
 	this->polygonImage = NULL;
-
 }
 
 void PolygonEntity::update(UpdateRequest * u){
 	this->lastPosition = this->position;
 	this->position = VectorXY(u->posX, u->posY);
+	this->lastRotation = this->rotation;
 	this->rotation = u->rotation;
-	this->elapsedTime = 0;
+
+	Global::game->getElapsedTime();
+
+	std::cout<<elapsedTime<<std::endl;
+
 }
 
 void PolygonEntity::render(Graphics * g){

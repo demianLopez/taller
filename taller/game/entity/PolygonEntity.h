@@ -33,6 +33,8 @@ private:
 	Image * polygonImage;
 
 	VectorXY lastPosition;
+	float lastRotation;
+
 	int elapsedTime;
 
 };

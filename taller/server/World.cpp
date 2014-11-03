@@ -202,6 +202,7 @@ void World::worldLoop(World * word){
 
 		for(auto * j : word->getPlayerList()){
 			j->apllyCodes();
+			j->update();
 		}
 
 		clock_t current = clock();
