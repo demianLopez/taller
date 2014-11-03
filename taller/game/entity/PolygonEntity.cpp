@@ -7,6 +7,7 @@
 
 
 #include "PolygonEntity.h"
+#include <Global.h>
 
 PolygonEntity::PolygonEntity(int index) : GameEntity(index) {
 	this->polygonImage = NULL;
@@ -18,9 +19,9 @@ void PolygonEntity::update(UpdateRequest * u){
 	this->lastRotation = this->rotation;
 	this->rotation = u->rotation;
 
-	//Global::game->getElapsedTime();
-
-	std::cout<<elapsedTime<<std::endl;
+	int currentTime = Global::game->getElapsedTime();
+	this->elapsedTime = currentTime - this->lastUpdateTime;
+	this->lastUpdateTime = currentTime;
 
 }
 
@@ -30,11 +31,15 @@ void PolygonEntity::render(Graphics * g){
 		return;
 	}
 
-	//float iPosX = lastPosition.x + (position.x - lastPosition.x) * elapsedTime / Global::serverUpdateTiming;
-	//float iPosY = lastPosition.y + (position.y - lastPosition.x) * elapsedTime / Global::serverUpdateTiming;
+	int renderTime = this->lastUpdateTime - Global::game->getElapsedTime();
 
-	elapsedTime += 25;
+	float iPosX = lastPosition.x + (position.x - lastPosition.x) * renderTime/elapsedTime;
+	float iPosY = lastPosition.y + (position.y - lastPosition.x) * renderTime/elapsedTime;
 
+
+
+	//VectorXY interpolatedPos(iPosX, iPosY);
+	//VectorXY sdlPos = this->gameWorld->box2DToSDL(&interpolatedPos);
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 
 	g->drawAtCenter(true);

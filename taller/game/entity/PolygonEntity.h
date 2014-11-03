@@ -36,6 +36,7 @@ private:
 	float lastRotation;
 
 	int elapsedTime;
+	int lastUpdateTime;
 
 };
 
