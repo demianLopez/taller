@@ -25,6 +25,7 @@ const CommandCode UPDATE_PLAYER_ENTITY = 10;
 const CommandCode ADD_PLAYER_DATA = 11;
 const CommandCode KEY_EVENT = 12;
 const CommandCode UPDATE_TIMING = 13;
+const CommandCode LOCK_CAMERA_ENTITY = 14;
 
 const KeyCode MOVE_LEFT_DOWN = 0;
 const KeyCode MOVE_RIGHT_DOWN = 1;

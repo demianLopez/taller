@@ -22,8 +22,8 @@ LevelState::LevelState() {
 	this->zoomScale = 1;
 	this->minZoomScale = 1;
 	this->lightAnimationX = 0;
-	this->centroX = 0;
-	this->centroY = 0;
+	this->globalX = 0;
+	this->globalY = 0;
 	//Se recalcula despues, sabiendo los datos del mundo y la pantalla
 	this->maxZoomScale = 1;
 }
@@ -83,12 +83,23 @@ void LevelState::exit(Game * game){
 	delete this->backgroundImage;
 }
 
+void LevelState::restartCameraPosition(){
+	int screenW = Global::game->getScreenWidth();
+	int screenH = Global::game->getScreenHeight();
+	VectorXY mainEntityPos = Global::gameWorld->getMainEntity()->getPosition();
+	VectorXY mainEntitySdlPos = Global::gameWorld->box2DToSDL(&mainEntityPos);
+
+	this->globalX = mainEntitySdlPos.x - screenW/2;
+	this->globalY = mainEntitySdlPos.y - screenH/2;
+}
+
 void LevelState::render(Graphics *g, Game * game){
 	//CALCULOS PREVIOS A RENDER!
 
-	VectorXY box2dWorld = gameWorld->getBox2DWorldSize();
+
+
 	//b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
-	VectorXY playerPos(10, 10);
+
 
 	//TODO SCROLLING MAL ARMADO CORREGIR!
 	/*
@@ -159,16 +170,38 @@ void LevelState::render(Graphics *g, Game * game){
 
 
 	*/
-	g->setRendererObject(NULL);
 
+	VectorXY mainEntPos = gameWorld->getMainEntity()->getPosition();
+	VectorXY mainEntSdlPos = gameWorld->box2DToSDL(&mainEntPos);
+
+	float xScreen = mainEntSdlPos.x - globalX;
+	float yScreen = mainEntSdlPos.y - globalY;
+
+	if(xScreen < 200){
+		globalX -= 5;
+	}
+
+	if(xScreen > 600){
+		globalX += 5;
+	}
+
+	if(yScreen < 100){
+		globalY += 5;
+	}
+
+	if(yScreen > 500){
+		globalY += 5;
+	}
+
+	g->setRendererObject(NULL);
 	g->drawAtCenter(false);
 
+
 	//g->drawImage(this->worldImage, 0, 0, tXo, tYo,tdX, tdY, screenW, screenH);
-	g->drawImage(this->worldImage, 0, 0, centroX, centroY,screenW, screenH, screenW, screenH);
+	g->drawImage(this->worldImage, 0, 0, globalX, globalY, screenW, screenH, screenW, screenH);
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
-
 }
 
 void LevelState::keyEvent(SDL_Event e, Game * game) {

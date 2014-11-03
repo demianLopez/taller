@@ -24,6 +24,7 @@ public:
 	void addVertex(float x, float y);
 
 	void update(UpdateRequest * u);
+	void setStatic(bool isStatic);
 
 
 
@@ -32,8 +33,7 @@ private:
 	vector<VectorXY *> vList;
 	Image * polygonImage;
 
-	VectorXY lastPosition;
-	float lastRotation;
+	bool isStatic;
 
 	int elapsedTime;
 	int lastUpdateTime;

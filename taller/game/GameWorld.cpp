@@ -7,11 +7,18 @@
 
 #include "GameWorld.h"
 #include "entity/GameEntity.h"
+#include "Global.h"
 
 /* Crea un GameWorld.
  * Recibe el tamanyo del mundo de box2d. */
 GameWorld::GameWorld(float tX, float tY) {
 	this->box2DSize = VectorXY(tX, tY);
+	this->sdlWorldSize = VectorXY(tX * 20, tY * 20);
+	this->mainEntity = NULL;
+}
+
+GameEntity * GameWorld::getMainEntity(){
+	return this->mainEntity;
 }
 
 /* Setea tamanyo de la pantalla. */
@@ -22,6 +29,21 @@ void GameWorld::setScreenSize(VectorXY screenSize){
 /* Devuelve el tamanyo del mundo de box2d. */
 VectorXY GameWorld::getBox2DWorldSize(){
 	return this->box2DSize;
+}
+
+
+void GameWorld::setMainEntity(int index){
+	this->mainEntity = this->searchEntity(index);
+}
+
+GameEntity * GameWorld::searchEntity(int index){
+	for(auto * e : entityList){
+		if(e->getIndex() == index){
+			return e;
+		}
+	}
+
+	return NULL;
 }
 
 /* Agrega un GameEntity. */
@@ -70,16 +92,26 @@ void GameWorld::generateGraphics(){
 }
 
 VectorXY GameWorld::box2DToSDLSize(VectorXY * box2DCoord){
-	float sdlX = box2DCoord->x / box2DSize.x * 800;
-	float sdlY = box2DCoord->y / box2DSize.y * 600;
+	int screenW = this->sdlWorldSize.x;
+	int screenH = this->sdlWorldSize.y;
+
+	float sdlX = box2DCoord->x / box2DSize.x * screenW;
+	float sdlY = box2DCoord->y / box2DSize.y * screenH;
 	VectorXY sdlCoord(sdlX, sdlY);
 	return sdlCoord;
 }
 
+VectorXY GameWorld::getSdlWorldSize(){
+	return this->sdlWorldSize;
+}
+
 VectorXY GameWorld::box2DToSDL(VectorXY * box2DCoord){
-	float sdlX = box2DCoord->x / box2DSize.x * 800;
-	float sdlY = 600
-			- box2DCoord->y / box2DSize.y * 600;
+	int screenW = this->sdlWorldSize.x;
+	int screenH = this->sdlWorldSize.y;
+
+	float sdlX = box2DCoord->x / box2DSize.x * screenW;
+	float sdlY = screenH
+			- box2DCoord->y / box2DSize.y * screenH;
 	VectorXY sdlCoord(sdlX, sdlY);
 	return sdlCoord;
 }

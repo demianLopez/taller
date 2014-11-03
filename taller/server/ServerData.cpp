@@ -77,6 +77,7 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 
 			char vNum = p->getPointList().size();
 			mapData->addChar(p->getEntityIndex());
+			mapData->addChar(p->isStatic());
 			mapData->addChar(vNum);
 			mapData->addFloat(&p->getPosition()->x);
 			mapData->addFloat(&p->getPosition()->y);
@@ -95,14 +96,22 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 			delete mapData;
 		}
 
+		Jugador * j = new Jugador(client, playerName);
+		Data::world->addPlayer(j);
+
+		Message * mainEntity = new Message();
+		mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
+		char mEntity = j->getIndex();
+		mainEntity->addChar(mEntity);
+		mainEntity->addEndChar();
+		client->send_message(mainEntity);
+		delete mainEntity;
+
 		Message * finalData = new Message();
 		finalData->addCommandCode(INITIALIZE_GRAPHICS);
 		finalData->addEndChar();
 		client->send_message(finalData);
 		delete finalData;
-
-		Jugador * j = new Jugador(client, playerName);
-		Data::world->addPlayer(j);
 
 		return cCode;
 	}

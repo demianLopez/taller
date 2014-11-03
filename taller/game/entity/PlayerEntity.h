@@ -21,6 +21,9 @@ public:
 	void setAnimation(int animation);
 private:
 	int animation;
+
+	int elapsedTime;
+	int lastUpdateTime;
 };
 
 #endif /* PLAYERENTITY_H_ */
