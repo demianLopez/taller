@@ -18,7 +18,7 @@ void PolygonEntity::update(UpdateRequest * u){
 	this->lastRotation = this->rotation;
 	this->rotation = u->rotation;
 
-	Global::game->getElapsedTime();
+	//Global::game->getElapsedTime();
 
 	std::cout<<elapsedTime<<std::endl;
 
