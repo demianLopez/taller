@@ -28,6 +28,7 @@ public:
 	virtual ~LevelState();
 
 	void setWorld(GameWorld * world);
+	void restartCameraPosition();
 private:
 	virtual void update(unsigned int delta);
 	virtual void render(Graphics *g, Game * game);
@@ -35,9 +36,6 @@ private:
 	virtual void init(Game * game);
 	virtual void exit(Game * game);
 	void enter();
-
-	int centroX;
-	int centroY;
 
 	Image * worldImage;
 	Image * backgroundImage;
@@ -54,6 +52,9 @@ private:
 	float zoomScale;
 	float maxZoomScale;
 	float minZoomScale;
+
+	int globalX;
+	int globalY;
 };
 
 #endif /* LEVELSTATE_H_ */

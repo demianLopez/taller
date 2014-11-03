@@ -16,13 +16,19 @@ PolygonEntity::PolygonEntity(int index) : GameEntity(index) {
 void PolygonEntity::update(UpdateRequest * u){
 	this->lastPosition = this->position;
 	this->position = VectorXY(u->posX, u->posY);
+
+	this->interpolatedPosition = this->lastPosition;
+
 	this->lastRotation = this->rotation;
 	this->rotation = u->rotation;
 
 	int currentTime = Global::game->getElapsedTime();
 	this->elapsedTime = currentTime - this->lastUpdateTime;
 	this->lastUpdateTime = currentTime;
+}
 
+void PolygonEntity::setStatic(bool isStatic){
+	this->isStatic = isStatic;
 }
 
 void PolygonEntity::render(Graphics * g){
@@ -31,19 +37,29 @@ void PolygonEntity::render(Graphics * g){
 		return;
 	}
 
-	int renderTime = this->lastUpdateTime - Global::game->getElapsedTime();
+	VectorXY sdlPos;
+	float finalRotation;
 
-	float iPosX = lastPosition.x + (position.x - lastPosition.x) * renderTime/elapsedTime;
-	float iPosY = lastPosition.y + (position.y - lastPosition.x) * renderTime/elapsedTime;
+	if(!this->isStatic){
+		int renderTime = Global::game->getElapsedTime() - this->lastUpdateTime;
+		float d = (float)(renderTime)/(float) (elapsedTime);
 
+		if(d > 1) { d = 1; }
+		float iPosX = lastPosition.x + (position.x - lastPosition.x) * d;
+		float iPosY = lastPosition.y + (position.y - lastPosition.y) * d;
+		finalRotation = lastRotation + (rotation - lastRotation) * d;
 
-
-	//VectorXY interpolatedPos(iPosX, iPosY);
-	//VectorXY sdlPos = this->gameWorld->box2DToSDL(&interpolatedPos);
-	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
+		interpolatedPosition = VectorXY(iPosX, iPosY);
+		sdlPos = this->gameWorld->box2DToSDL(&interpolatedPosition);
+	} else {
+		interpolatedPosition = position;
+		lastPosition = position;
+		sdlPos = this->gameWorld->box2DToSDL(&position);
+		finalRotation = rotation;
+	}
 
 	g->drawAtCenter(true);
-	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y, -rotation * 57);
+	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y, -finalRotation * 57);
 	g->drawAtCenter(false);
 }
 

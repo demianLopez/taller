@@ -35,6 +35,11 @@ protected:
 	VectorXY position;
 	GameWorld * gameWorld;
 	float rotation;
+
+
+	VectorXY lastPosition;
+	float lastRotation;
+	VectorXY interpolatedPosition;
 };
 
 #endif /* GAMEENTITY_H_ */

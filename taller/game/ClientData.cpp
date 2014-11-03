@@ -98,6 +98,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 
 	if(cCode == ADD_MAP_DATA){
 		int index = m->getChar();
+		char isStatic = m->getChar();
 		int t = m->getChar();
 		float pX = m->getFloat();
 		float pY = m->getFloat();
@@ -105,6 +106,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		float rotation = m->getFloat();
 
 		PolygonEntity * pEnt = new PolygonEntity(index);
+		pEnt->setStatic(isStatic);
 		pEnt->setPosition(pX, pY);
 		pEnt->setRotation(rotation);
 
@@ -122,6 +124,13 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 	if(cCode == INITIALIZE_GRAPHICS){
 		Global::levelState->setWorld(Global::gameWorld);
 		Global::game->enterState(1);
+		return cCode;
+	}
+
+	if(cCode == LOCK_CAMERA_ENTITY){
+		char entityIndex = m->getChar();
+		Global::gameWorld->setMainEntity(entityIndex);
+		Global::levelState->restartCameraPosition();
 		return cCode;
 	}
 

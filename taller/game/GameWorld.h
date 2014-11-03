@@ -38,22 +38,32 @@ public:
 	VectorXY box2DToSDLSize(VectorXY * box2DCoord);
 	VectorXY box2DToSDL(VectorXY * box2DCoord);
 
+	VectorXY getSdlWorldSize();
+
 	/* Agrega pedido de request. */
 	void addUpdateRequest(UpdateRequest * update);
 
 	/* Realiza los updates. */
 	void update();
 
+	GameEntity * searchEntity(int index);
+	void setMainEntity(int index);
+
+	GameEntity * getMainEntity();
+
 	virtual ~GameWorld();
 private:
 	VectorXY box2DSize;
 	VectorXY screenSize;
+	VectorXY sdlWorldSize;
 
 	std::vector<GameEntity *> entityList;
 
 	std::vector<UpdateRequest *> updatesList;
 
 	std::mutex updateMutex;
+
+	GameEntity * mainEntity;
 
 };
 

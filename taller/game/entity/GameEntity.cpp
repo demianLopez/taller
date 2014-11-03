@@ -13,7 +13,7 @@ GameEntity::GameEntity(int index) {
 }
 
 VectorXY GameEntity::getPosition(){
-	return this->position;
+	return this->interpolatedPosition;
 }
 
 int GameEntity::getIndex(){
@@ -21,10 +21,13 @@ int GameEntity::getIndex(){
 }
 void GameEntity::setPosition(float x, float y){
 	this->position = VectorXY(x, y);
+	this->interpolatedPosition = VectorXY(x, y);
+	this->lastPosition = VectorXY(x, y);
 }
 
 void GameEntity::setRotation(float rotation){
 	this->rotation = rotation;
+	this->lastRotation = rotation;
 }
 
 void GameEntity::setWorld(GameWorld * gameWorld){
