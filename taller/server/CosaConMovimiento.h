@@ -27,10 +27,12 @@ protected:
 
 	// Cosa en box2d
 	b2Body * body;
+	b2Fixture * fixture;
 
 public:
 	// Inicializa cosa.
 	CosaConMovimiento(b2World * gameWorld);
+	CosaConMovimiento();
 	~CosaConMovimiento();
 
 	// Frena la cosa en X y/o Y

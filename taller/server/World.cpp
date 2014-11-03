@@ -190,7 +190,7 @@ bool World::isOnLoop(){
 }
 
 void World::worldLoop(World * word){
-	int ups = 20;
+	int ups = 40;
 	int sleepTime = 1000/ups;
 
 	clock_t lastClock = clock();

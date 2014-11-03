@@ -3,6 +3,28 @@
 // Inicializa cosa quieta en (x,y), (0,0) por defecto.
 float const TOLERANCIA_VELOCIDAD = 1;
 
+CosaConMovimiento::CosaConMovimiento(){
+	body = NULL; // DEBE SOBREESCRIBIRSE EN LA CLASE HIJA
+
+	this->movingLeft = false;
+	this->movingRight = false;
+
+	this->stopAtHit = false;
+
+	this->goingUp = false;
+	this->goingDown = true;
+	this->onTopJump = false;
+
+	// Esto puede redefinirse en cada hijo, por defecto vale esto.
+	this->movementSpeedX = MOVEMENT_SPEED_X_DEFAULT;
+	this->movementSpeedY = MOVEMENT_SPEED_Y_DEFAULT;
+
+	this->mirandoParaLaDerecha = true;
+	this->wasMovingLeftFirst = false;
+
+	this->lastVelocity = b2Vec2(0, 0);;
+}
+
 CosaConMovimiento::CosaConMovimiento(b2World * gameWorld) {
 	body = NULL; // DEBE SOBREESCRIBIRSE EN LA CLASE HIJA
 

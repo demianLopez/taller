@@ -11,7 +11,7 @@
 class Animation;
 class Resources;
 
-class Personaje {
+class Personaje : public CosaConMovimiento{
 protected:
 	//ContactListener *listenerTouchingGround;
 public:
@@ -39,9 +39,6 @@ public:
 	Animation * getAnimation(Resources * resources);
 	*/
 private:
-	b2Body * body;
-	b2Fixture * fixture;
-
 	int userIndex;
 };
 
