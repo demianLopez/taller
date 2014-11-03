@@ -12,6 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <CommandCode.h>
+#include <mutex>
 
 #include "engine/Image.h"
 #include "engine/SpriteSheet.h"
@@ -24,6 +25,8 @@
 #include "engine/Image.h" //Provisional
 #include "GameWorld.h"
 
+using std::mutex;
+
 class LevelState: public GameState {
 public:
 	LevelState();
@@ -33,6 +36,7 @@ public:
 	void restartCameraPosition();
 
 	void sendKeyData();
+	std::vector<KeyCode> getKeyCodeData();
 private:
 	virtual void update(unsigned int delta);
 	virtual void render(Graphics *g, Game * game);
@@ -61,6 +65,7 @@ private:
 	int globalY;
 
 	std::vector<KeyCode> keyCodeData;
+	mutex levelStateMutex;
 };
 
 #endif /* LEVELSTATE_H_ */

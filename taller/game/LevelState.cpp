@@ -94,6 +94,7 @@ void LevelState::restartCameraPosition(){
 }
 
 void LevelState::render(Graphics *g, Game * game){
+	levelStateMutex.lock();
 	//CALCULOS PREVIOS A RENDER!
 
 
@@ -198,13 +199,16 @@ void LevelState::render(Graphics *g, Game * game){
 
 
 	//g->drawImage(this->worldImage, 0, 0, tXo, tYo,tdX, tdY, screenW, screenH);
+
 	g->drawImage(this->worldImage, 0, 0, globalX, globalY, screenW, screenH, screenW, screenH);
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
+	levelStateMutex.unlock();
 }
 
 void LevelState::keyEvent(SDL_Event e, Game * game) {
+	levelStateMutex.lock();
 	if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
@@ -230,6 +234,7 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 
 				break;
 		}
+		levelStateMutex.unlock();
 		return;
 	}
 
@@ -245,26 +250,40 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 				break;
 		}
 	}
-
+	levelStateMutex.unlock();
 }
 
 void LevelState::sendKeyData(){
-	Message m;
+	levelStateMutex.lock();
+	Message *m = new Message();;
 
-	m.addCommandCode(KEY_EVENT);
-	m.addChar(keyCodeData.size());
-
-	for(auto keyCode : keyCodeData){
-		m.addKeyEventCode(keyCode);
+	if(keyCodeData.size() == 0){
+		levelStateMutex.unlock();
+		return;
 	}
 
-	m.addEndChar();
-	Global::client->send_message(&m);
+	m->addCommandCode(KEY_EVENT);
+	m->addChar(keyCodeData.size());
+
+	for(auto keyCode : keyCodeData){
+		m->addKeyEventCode(keyCode);
+	}
+
+	m->addEndChar();
+	Global::client->send_message(m);
+	delete m;
+
+	keyCodeData.clear();
+	levelStateMutex.unlock();
+}
+
+std::vector<KeyCode> LevelState::getKeyCodeData(){
+	return keyCodeData;
 }
 
 
 void LevelState::update(unsigned int delta){
-
+	levelStateMutex.lock();
 	this->gameWorld->update();
 
 	this->backParticleEmiter->update(delta);
@@ -278,7 +297,7 @@ void LevelState::update(unsigned int delta){
 			//this->lightAnimationX = ((float) rand())/RAND_MAX * this->getScreenWidth();
 		}
 	}
-
+	levelStateMutex.unlock();
 }
 
 void LevelState::enter(){
