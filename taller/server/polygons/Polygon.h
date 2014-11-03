@@ -44,6 +44,7 @@ public:
 	void setEntityIndex(int index);
 	int getEntityIndex();
 
+	char tipoDeObjeto;
 protected:
 
 	b2Body* body;

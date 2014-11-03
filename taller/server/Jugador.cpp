@@ -6,6 +6,8 @@
 Jugador::Jugador(Client_handler * client, char * name){
 	this->client = client;
 	this->name = name;
+
+	this->tipoDeObjeto = 2; // Para los contactos. Los jugadores tienen valor 2.
 }
 
 char * Jugador::getName(){
@@ -21,16 +23,16 @@ void Jugador::apllyCodes(){
 		switch(code)
 		{
 		case MOVE_LEFT_DOWN:
-			this->moveLeft(true);
+			this->setMovingLeft(true);
 			break;
 		case MOVE_RIGHT_DOWN:
-			this->moveRight(true);
+			this->setMovingRight(true);
 			break;
 		case MOVE_LEFT_UP:
-			this->moveLeft(false);
+			this->setMovingLeft(false);
 			break;
 		case MOVE_RIGHT_UP:
-			this->moveRight(false);
+			this->setMovingRight(false);
 			break;
 		case JUMP:
 			this->jump();

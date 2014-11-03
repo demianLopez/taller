@@ -32,6 +32,8 @@ public:
 	void apllyCodes();
 
 	Client_handler * getClient();
+
+	char tipoDeObjeto; // Para contact listener.
 };
 
 #endif /* JUGADOR_H_ */

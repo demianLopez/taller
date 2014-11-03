@@ -1,6 +1,5 @@
 #include "CosaConMovimiento.h"
 
-// Inicializa cosa quieta en (x,y), (0,0) por defecto.
 float const TOLERANCIA_VELOCIDAD = 1;
 
 CosaConMovimiento::CosaConMovimiento(){
@@ -25,26 +24,9 @@ CosaConMovimiento::CosaConMovimiento(){
 	this->lastVelocity = b2Vec2(0, 0);;
 }
 
-CosaConMovimiento::CosaConMovimiento(b2World * gameWorld) {
-	body = NULL; // DEBE SOBREESCRIBIRSE EN LA CLASE HIJA
-
-	this->movingLeft = false;
-	this->movingRight = false;
-
-	this->stopAtHit = false;
-
-	this->goingUp = false;
-	this->goingDown = true;
-	this->onTopJump = false;
-
-	// Esto puede redefinirse en cada hijo, por defecto vale esto.
-	this->movementSpeedX = MOVEMENT_SPEED_X_DEFAULT;
-	this->movementSpeedY = MOVEMENT_SPEED_Y_DEFAULT;
-
-	this->mirandoParaLaDerecha = true;
-	this->wasMovingLeftFirst = false;
-
-	this->lastVelocity = b2Vec2(0, 0);
+void CosaConMovimiento::setBox2DDefinitions(b2Body * body, b2Fixture * fixture){
+	this->body = body;
+	this->fixture = fixture;
 }
 
 bool CosaConMovimiento::isGoingUp() {
@@ -56,52 +38,7 @@ bool CosaConMovimiento::isGoingDown() {
 }
 
 void CosaConMovimiento::update() {
-	b2Vec2 currentVel = this->body->GetLinearVelocity();
 
-	if (currentVel.y < 1 && currentVel.y > -1) { // Quieto en Y
-		if (this->goingUp) {
-			this->goingUp = false;
-			this->onTopJump = true;
-		}
-
-		if (this->goingDown) {
-			this->goingDown = false;
-			if (stopAtHit) {
-				this->stop();
-				this->stopAtHit = false;
-			}
-		}
-
-	}
-
-	if (currentVel.y < -1) { // Cayendo
-		if (this->onTopJump) {
-			this->onTopJump = false;
-			this->goingDown = true;
-		}
-	}
-
-	//Movimiento hacia los lados
-	if (movingRight) {
-		if (!movingLeft || !wasMovingLeftFirst) {
-			body->ApplyLinearImpulse(
-					b2Vec2(15 - body->GetLinearVelocity().x * 2, 0),
-					body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
-			mirandoParaLaDerecha = true;
-			return;
-		}
-	}
-	if (movingLeft) {
-		if (!movingRight || wasMovingLeftFirst) {
-			body->ApplyLinearImpulse(
-					b2Vec2(-15 - body->GetLinearVelocity().x * 2, 0),
-					body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
-			mirandoParaLaDerecha = false;
-			return;
-		}
-	}
-
-	stop(true, false);
 }
 
 void CosaConMovimiento::setFreezeRotation(bool freezeRotation) {

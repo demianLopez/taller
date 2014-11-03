@@ -20,12 +20,15 @@
 
 #include <Box2D/Box2D.h>
 #include <math.h>
+#include "../ContactContainer.h"
 
 Polygon::Polygon(int body_def) {
 
 	this->body_def = body_def;
 	this->body = NULL;
 	this->world = NULL;
+
+	this->tipoDeObjeto = 1; // Para los contactos. Los poligonos tienen valor 1.
 }
 
 
@@ -173,7 +176,7 @@ void Polygon::create_body(b2BodyDef* body_definition,
 	this->body = bWorld->CreateBody(body_definition);
 	b2Fixture *fixture = this->body->CreateFixture(body_fixture);
 
-	fixture->SetUserData((void*) 1); // Le ponemos a los poligonos el tag "1". (Para detectar colisiones)
+	fixture->SetUserData(new ContactContainer(ContactContainer::POLYGON, this)); // Para detectar colisiones.
 
 	this->body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 }

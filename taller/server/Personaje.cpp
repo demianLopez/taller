@@ -5,12 +5,7 @@
 #include <iostream>
 
 Personaje::Personaje()  {
-	//listenerTouchingGround = NULL;
-}
-
-void Personaje::setBox2DDefinitions(b2Body * body, b2Fixture * fixture){
-	this->body = body;
-	this->fixture = fixture;
+	listenerTouchingGround = NULL;
 }
 
 int Personaje::getIndex(){
@@ -22,21 +17,34 @@ int Personaje::getCurrentAnimation(){
 }
 
 void Personaje::moveLeft(bool isButtonDown){
-	cout<<"left "<<isButtonDown<<endl;
 	body->ApplyLinearImpulse(
-			b2Vec2(-15 - body->GetLinearVelocity().x * 2, 0),
+			b2Vec2(-50 - body->GetLinearVelocity().x * 2, 0),
 			body->GetWorldCenter(), true);
 
 }
 
 void Personaje::moveRight(bool isButtonDown){
 	body->ApplyLinearImpulse(
-			b2Vec2(15 - body->GetLinearVelocity().x * 2, 0),
+			b2Vec2(50 - body->GetLinearVelocity().x * 2, 0),
 			body->GetWorldCenter(), true);
 }
 
+ContactListener* Personaje::getListenerTouchingGround(){
+	return listenerTouchingGround;
+}
+
+void Personaje::setListenerTouchingGround(ContactListener *aListener){
+	listenerTouchingGround = aListener;
+}
+
 void Personaje::jump(){
-	body->ApplyLinearImpulse(b2Vec2(0,body->GetMass() * 8), body->GetWorldCenter(), true);
+	if(listenerTouchingGround->getNumberOfContacts() == 0) return; //Esto medio que esta repetido, ya se checkea en SnowBross.
+	b2Vec2 currentVel = this->body->GetLinearVelocity();
+	this->body->SetLinearVelocity(b2Vec2(currentVel.x, movementSpeedY));
+
+	//body->ApplyLinearImpulse(b2Vec2(0,body->GetMass() * 8), body->GetWorldCenter(), true);
+	//body->ApplyForceToCenter(b2Vec2(0,1006), true);
+	this->goingUp = true;
 }
 
 b2Vec2 * Personaje::getPosition(){
@@ -46,6 +54,57 @@ b2Vec2 * Personaje::getPosition(){
 void Personaje::setEntityIndex(int index){
 	this->userIndex = index;
 }
+
+void Personaje::update() {
+	cout << "cantidad de contactos: " << listenerTouchingGround->getNumberOfContacts() << endl;
+	b2Vec2 currentVel = this->body->GetLinearVelocity();
+
+	if (currentVel.y < 1 && currentVel.y > -1) { // Quieto en Y
+		if (this->goingUp) {
+			this->goingUp = false;
+			this->onTopJump = true;
+		}
+
+		if (this->goingDown) {
+			this->goingDown = false;
+			if (stopAtHit) {
+				this->stop();
+				this->stopAtHit = false;
+			}
+		}
+
+	}
+
+	if (currentVel.y < -1) { // Cayendo
+		if (this->onTopJump) {
+			this->onTopJump = false;
+			this->goingDown = true;
+		}
+	}
+
+	//Movimiento hacia los lados
+	if (movingRight) {
+		if (!movingLeft || !wasMovingLeftFirst) {
+			body->ApplyLinearImpulse(
+					b2Vec2(25 - body->GetLinearVelocity().x * 2, 0),
+					body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
+			mirandoParaLaDerecha = true;
+			return;
+		}
+	}
+	if (movingLeft) {
+		if (!movingRight || wasMovingLeftFirst) {
+			body->ApplyLinearImpulse(
+					b2Vec2(-25 - body->GetLinearVelocity().x * 2, 0),
+					body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
+			mirandoParaLaDerecha = false;
+			return;
+		}
+	}
+
+	stop(true, false);
+}
+
 /*
 void Personaje::jump() {
 

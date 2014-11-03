@@ -10,6 +10,7 @@
 #include "polygons/PolygonFactory.h"
 #include "polygons/Polygon.h"
 #include "Data.h"
+#include "ContactContainer.h"
 
 World::World(b2Vec2 * gravity) {
 	this->gravity = gravity;
@@ -45,12 +46,37 @@ void World::initializePlayerBody(Jugador * player){
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);
 
 	//TODO: MAX fijate que comente esto por las dudas, desp vemos
-	//fixture->SetUserData((void*) 1); // Le ponemos a los poligonos el tag "1". (Para detectar colisiones)
 
 	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 	body->SetFixedRotation(true);
 
 	player->setBox2DDefinitions(body, fixture);
+
+	b2PolygonShape dynamicBox;
+
+	double longX = 1.4f;
+	double longY = 1.8f;
+
+	dynamicBox.SetAsBox(longX, longY);
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1;
+	fixtureDef.friction = 0;
+
+	b2Fixture *bodyFixture = body->CreateFixture(&fixtureDef);
+	bodyFixture->SetUserData(new ContactContainer(ContactContainer::SENSORDELPIE,NULL));
+
+	dynamicBox.SetAsBox( longX - 0.1 , 0.4, b2Vec2(0,-longY), 0);
+	fixtureDef.density = 0;
+	fixtureDef.isSensor = true;
+	b2Fixture * footSensor = body->CreateFixture(&fixtureDef);
+	footSensor->SetUserData(new ContactContainer(ContactContainer::JUGADOR, this));
+	ContactListener * footListener = new ContactListener();
+
+	player->setListenerTouchingGround(footListener);
+	box2DWorld->SetContactListener(new ContactListener());
+
 }
 
 Jugador * World::getPlayer(int userIndex){
@@ -190,7 +216,7 @@ bool World::isOnLoop(){
 }
 
 void World::worldLoop(World * word){
-	int ups = 1;
+	int ups = 40;
 	int sleepTime = 1000/ups;
 
 	clock_t lastClock = clock();

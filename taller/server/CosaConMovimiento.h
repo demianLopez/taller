@@ -9,7 +9,7 @@
 class CosaConMovimiento {	// No puedo pensar un nombre mejor.
 private:
 	const float MOVEMENT_SPEED_X_DEFAULT = 4;
-	const float MOVEMENT_SPEED_Y_DEFAULT = 6;
+	const float MOVEMENT_SPEED_Y_DEFAULT = 15;
 
 	b2Vec2 lastVelocity;
 
@@ -30,9 +30,9 @@ protected:
 	b2Fixture * fixture;
 
 public:
-	// Inicializa cosa.
-	CosaConMovimiento(b2World * gameWorld);
+	// Inicializa cosa. Necesita llamar a setBox2DDefinitions.
 	CosaConMovimiento();
+	void setBox2DDefinitions(b2Body * body, b2Fixture * fixture);
 	~CosaConMovimiento();
 
 	// Frena la cosa en X y/o Y

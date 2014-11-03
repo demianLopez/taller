@@ -13,12 +13,11 @@ class Resources;
 
 class Personaje : public CosaConMovimiento{
 protected:
-	//ContactListener *listenerTouchingGround;
+	ContactListener *listenerTouchingGround;
 public:
 	Personaje();
 	virtual ~Personaje();
 
-	void setBox2DDefinitions(b2Body * body, b2Fixture * fixture);
 	void setEntityIndex(int index);
 
 	void moveLeft(bool isButtonDown);
@@ -31,11 +30,12 @@ public:
 
 	int getIndex();
 
-	/*
-	void jump();
+	ContactListener* getListenerTouchingGround();
 	void setListenerTouchingGround(ContactListener *aListener);
 	bool isOnAir(); //se sobreescribe la de CosaConMovimiento para agregar el listener
 
+	void update();
+/*
 	Animation * getAnimation(Resources * resources);
 	*/
 private:
