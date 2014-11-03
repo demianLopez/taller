@@ -48,6 +48,11 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		return cCode;
 	}
 
+	if(cCode == REQUEST_KEY_DATA){
+		Global::levelState->sendKeyData();
+		return cCode;
+	}
+
 	if(cCode == UPDATE_TIMING){
 		char timing = m->getChar();
 		Global::serverUpdateTiming = timing;

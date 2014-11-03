@@ -93,6 +93,13 @@ void World::waitWorldThread(){
 	this->worldThread.join();
 }
 
+void World::requestKeyData(Jugador * j){
+	Message m;
+	m.addCommandCode(REQUEST_KEY_DATA);
+	m.addEndChar();
+	j->getClient()->send_message(&m);
+}
+
 void World::addPlayer(Jugador * jugador){
 	this->playerList.push_back(jugador);
 	int avavibleIndex = this->getAvavibleIndex();
@@ -247,6 +254,11 @@ void World::worldLoop(World * word){
 		upCount++;
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+
+		for(auto * j : word->getPlayerList()){
+			word->requestKeyData(j);
+		}
+
 
 		word->worldStep(sleepTime);
 		word->sendUpdates();

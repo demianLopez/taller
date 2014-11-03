@@ -60,7 +60,7 @@ public:
 
 	void instantiatePlayer(Personaje * p, Client_handler * client);
 
-
+	void requestKeyData(Jugador * j);
 
 
 private:
@@ -69,6 +69,7 @@ private:
 	void updatePeople(Personaje * p);
 
 	void sendUpdates();
+
 
 	void initializePlayerBody(Jugador * player);
 

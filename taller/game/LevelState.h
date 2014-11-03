@@ -10,6 +10,8 @@
 
 #include "engine/GameState.h"
 #include <iostream>
+#include <vector>
+#include <CommandCode.h>
 
 #include "engine/Image.h"
 #include "engine/SpriteSheet.h"
@@ -29,6 +31,8 @@ public:
 
 	void setWorld(GameWorld * world);
 	void restartCameraPosition();
+
+	void sendKeyData();
 private:
 	virtual void update(unsigned int delta);
 	virtual void render(Graphics *g, Game * game);
@@ -55,6 +59,8 @@ private:
 
 	int globalX;
 	int globalY;
+
+	std::vector<KeyCode> keyCodeData;
 };
 
 #endif /* LEVELSTATE_H_ */

@@ -206,25 +206,15 @@ void LevelState::render(Graphics *g, Game * game){
 
 void LevelState::keyEvent(SDL_Event e, Game * game) {
 	if (e.type == SDL_KEYDOWN) {
-		Message m;
-		m.addCommandCode(KEY_EVENT);
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				m.addKeyEventCode(MOVE_LEFT_DOWN);
-				m.addEndChar();
-				//Global::client->send_message(&m);
+				this->keyCodeData.push_back(MOVE_LEFT_DOWN);
 				break;
-
 			case SDLK_RIGHT:
-				m.addKeyEventCode(MOVE_RIGHT_DOWN);
-				m.addEndChar();
-				//Global::client->send_message(&m);
+				this->keyCodeData.push_back(MOVE_RIGHT_DOWN);
 				break;
-
 			case SDLK_UP:
-				m.addKeyEventCode(JUMP);
-				m.addEndChar();
-				Global::client->send_message(&m);
+				this->keyCodeData.push_back(JUMP);
 				break;
 			case SDLK_KP_MINUS:
 				this->zoomScale += ZOOM_INCREMENT;
@@ -248,19 +238,28 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 		m.addCommandCode(KEY_EVENT);
 		switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				m.addKeyEventCode(MOVE_LEFT_UP);
-				m.addEndChar();
-				//Global::client->send_message(&m);
+				this->keyCodeData.push_back(MOVE_LEFT_UP);
 				break;
-
 			case SDLK_RIGHT:
-				m.addKeyEventCode(MOVE_RIGHT_UP);
-				m.addEndChar();
-				//Global::client->send_message(&m);
+				this->keyCodeData.push_back(MOVE_RIGHT_UP);
 				break;
 		}
 	}
 
+}
+
+void LevelState::sendKeyData(){
+	Message m;
+
+	m.addCommandCode(KEY_EVENT);
+	m.addChar(keyCodeData.size());
+
+	for(auto keyCode : keyCodeData){
+		m.addKeyEventCode(keyCode);
+	}
+
+	m.addEndChar();
+	Global::client->send_message(&m);
 }
 
 
