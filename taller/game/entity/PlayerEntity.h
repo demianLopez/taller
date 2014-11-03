@@ -14,8 +14,8 @@ class PlayerEntity: public GameEntity {
 public:
 	PlayerEntity(int index);
 	virtual ~PlayerEntity();
-	void render(Graphics * g);
-	void update(UpdateRequest * u);
+	void render(Graphics * g, unsigned int delta);
+	void update(UpdateRequest * u, unsigned int elapsedTime);
 	void initialize();
 
 	void setAnimation(int animation);
@@ -24,6 +24,13 @@ private:
 
 	int elapsedTime;
 	int lastUpdateTime;
+
+	int renderTimeCount;
+
+
+	VectorXY lastPosition;
+	float lastRotation;
+	VectorXY nextPosition;
 };
 
 #endif /* PLAYERENTITY_H_ */

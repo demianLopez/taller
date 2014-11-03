@@ -39,7 +39,7 @@ public:
 	std::vector<KeyCode> getKeyCodeData();
 private:
 	virtual void update(unsigned int delta);
-	virtual void render(Graphics *g, Game * game);
+	virtual void render(Graphics *g, Game * game, unsigned int delta);
 	virtual void keyEvent(SDL_Event e, Game * game);
 	virtual void init(Game * game);
 	virtual void exit(Game * game);

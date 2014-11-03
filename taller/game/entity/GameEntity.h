@@ -17,8 +17,8 @@ class GameEntity {
 public:
 	GameEntity(int index);
 	virtual ~GameEntity();
-	virtual void render(Graphics * g) = 0;
-	virtual void update(UpdateRequest * u) = 0;
+	virtual void render(Graphics * g, unsigned int delta) = 0;
+	virtual void update(UpdateRequest * u, unsigned int elapsedTime) = 0;
 
 	void setRotation(float rotation);
 
@@ -36,10 +36,6 @@ protected:
 	GameWorld * gameWorld;
 	float rotation;
 
-
-	VectorXY lastPosition;
-	float lastRotation;
-	VectorXY interpolatedPosition;
 };
 
 #endif /* GAMEENTITY_H_ */

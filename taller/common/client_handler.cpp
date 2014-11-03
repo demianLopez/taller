@@ -142,8 +142,6 @@ bool Client_handler::runListen() {
 			<< "- dice:" << mess << std::endl;
 		}
 	}
-
-	//std::this_thread::sleep_for(std::chrono::milliseconds(20));
 	return true;
 }
 
@@ -174,6 +172,8 @@ bool Client_handler::send_message(Message * msg){
 			//this->sendingMutex.unlock();
 			return false;
 		}
+
+		//std::this_thread::sleep_for(std::chrono::milliseconds(0));
 		//this->sendingMutex.unlock();
 		return true;
 	}

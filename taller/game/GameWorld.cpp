@@ -54,12 +54,13 @@ void GameWorld::addEntity(GameEntity * entity){
 }
 
 /* Realiza los updates. */
-void GameWorld::update(){
+void GameWorld::update(unsigned int delta){
 	this->updateMutex.lock();
+	int currentTime = Global::game->getElapsedTime();
 	for(auto * update : this->updatesList){
 		for(auto * entity : this->entityList){
 			if(entity->getIndex() == update->index){
-				entity->update(update);
+				entity->update(update, currentTime);
 				break;
 			}
 		}

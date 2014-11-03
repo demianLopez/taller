@@ -13,36 +13,41 @@ PlayerEntity::PlayerEntity(int index) : GameEntity(index) {
 
 }
 
-void PlayerEntity::update(UpdateRequest * u){
-	this->lastPosition = this->position;
-	this->position = VectorXY(u->posX, u->posY);
+void PlayerEntity::update(UpdateRequest * u,  unsigned int elapsedTime){
+	this->lastPosition = this->nextPosition;
+	this->nextPosition = VectorXY(u->posX, u->posY);
+
 	this->animation = u->animation;
 
 	int currentTime = Global::game->getElapsedTime();
 	this->elapsedTime = currentTime - this->lastUpdateTime;
 	this->lastUpdateTime = currentTime;
-
+	this->renderTimeCount = 0;
 }
 
 void PlayerEntity::initialize(){
 
 }
 
-void PlayerEntity::render(Graphics * g){
-	g->drawAtCenter(true);
+void PlayerEntity::render(Graphics * g, unsigned int delta){
 
-	int renderTime = Global::game->getElapsedTime() - this->lastUpdateTime;
-	float d = (float)(renderTime)/(float) (elapsedTime);
+
+	//int renderTime = Global::game->getElapsedTime() - this->lastUpdateTime;
+	this->renderTimeCount+= delta;
+	float d = (float)(renderTimeCount)/(float) (elapsedTime);
 
 	if(d > 1) { d = 1; }
-	float iPosX = lastPosition.x + (position.x - lastPosition.x) * d;
-	float iPosY = lastPosition.y + (position.y - lastPosition.y) * d;
+	float iPosX = lastPosition.x + (nextPosition.x - lastPosition.x) * d;
+	float iPosY = lastPosition.y + (nextPosition.y - lastPosition.y) * d;
 
 
-	interpolatedPosition = VectorXY(iPosX, iPosY);
-	VectorXY sdlPos = this->gameWorld->box2DToSDL(&interpolatedPosition);
+	position = VectorXY(iPosX, iPosY);
+	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 
-	g->drawAnimation(Global::gameResources->getPlayerAnimationLeft(), sdlPos.x, sdlPos.y);
+
+	//VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
+	g->drawAtCenter(true);
+	g->drawAnimation(Global::gameResources->getPlayerWalkLeft(), sdlPos.x, sdlPos.y);
 	g->drawAtCenter(false);
 }
 

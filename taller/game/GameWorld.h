@@ -44,7 +44,7 @@ public:
 	void addUpdateRequest(UpdateRequest * update);
 
 	/* Realiza los updates. */
-	void update();
+	void update(unsigned int delta);
 
 	GameEntity * searchEntity(int index);
 	void setMainEntity(int index);

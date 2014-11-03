@@ -66,7 +66,7 @@ void MainMenu::setServerInfo(char * mapName, char pPlaying, char pMax){
 	this->serverInfoAva = true;
 }
 
-void MainMenu::render(Graphics * g,  Game * game){
+void MainMenu::render(Graphics * g,  Game * game, unsigned int delta){
 	g->drawImage(this->backgroundImage);
 
 	this->particleEmiter->render(g);

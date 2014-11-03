@@ -13,47 +13,52 @@ PolygonEntity::PolygonEntity(int index) : GameEntity(index) {
 	this->polygonImage = NULL;
 }
 
-void PolygonEntity::update(UpdateRequest * u){
-	this->lastPosition = this->position;
-	this->position = VectorXY(u->posX, u->posY);
+void PolygonEntity::update(UpdateRequest * u,  unsigned int elapsedTime){
 
-	this->interpolatedPosition = this->lastPosition;
+	this->lastPosition = nextPosition;
+	this->nextPosition = VectorXY(u->posX, u->posY);
+
 
 	this->lastRotation = this->rotation;
 	this->rotation = u->rotation;
 
-	int currentTime = Global::game->getElapsedTime();
-	this->elapsedTime = currentTime - this->lastUpdateTime;
-	this->lastUpdateTime = currentTime;
+
+	this->elapsedTime = elapsedTime - this->lastUpdateTime;
+	this->lastUpdateTime = elapsedTime;
+	this->renderTimeCount = 0;
 }
 
 void PolygonEntity::setStatic(bool isStatic){
 	this->isStatic = isStatic;
 }
 
-void PolygonEntity::render(Graphics * g){
+void PolygonEntity::render(Graphics * g, unsigned int delta){
 
 	if(this->polygonImage == NULL){
 		return;
 	}
 
+	renderTimeCount += delta;
+
 	VectorXY sdlPos;
 	float finalRotation;
 
-	if(!this->isStatic){
-		int renderTime = Global::game->getElapsedTime() - this->lastUpdateTime;
-		float d = (float)(renderTime)/(float) (elapsedTime);
+
+	if(!isStatic){
+
+		float d = (float)(renderTimeCount)/(float) (elapsedTime);
 
 		if(d > 1) { d = 1; }
-		float iPosX = lastPosition.x + (position.x - lastPosition.x) * d;
-		float iPosY = lastPosition.y + (position.y - lastPosition.y) * d;
+		if(d < 0) { d = 0; }
+		float iPosX = lastPosition.x + (nextPosition.x - lastPosition.x) * d;
+		float iPosY = lastPosition.y + (nextPosition.y - lastPosition.y) * d;
 		finalRotation = lastRotation + (rotation - lastRotation) * d;
 
-		interpolatedPosition = VectorXY(iPosX, iPosY);
-		sdlPos = this->gameWorld->box2DToSDL(&interpolatedPosition);
+		position = VectorXY(iPosX, iPosY);
+		sdlPos = this->gameWorld->box2DToSDL(&position);
 	} else {
-		interpolatedPosition = position;
 		lastPosition = position;
+		nextPosition = position;
 		sdlPos = this->gameWorld->box2DToSDL(&position);
 		finalRotation = rotation;
 	}

@@ -93,7 +93,7 @@ void LevelState::restartCameraPosition(){
 	this->globalY = mainEntitySdlPos.y - screenH/2;
 }
 
-void LevelState::render(Graphics *g, Game * game){
+void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 	levelStateMutex.lock();
 	//CALCULOS PREVIOS A RENDER!
 
@@ -156,7 +156,7 @@ void LevelState::render(Graphics *g, Game * game){
 
 	vector<GameEntity *> entityList = this->gameWorld->getEntityList();
 	for(auto * e : entityList){
-		e->render(g);
+		e->render(g, delta);
 	}
 
 
@@ -180,19 +180,28 @@ void LevelState::render(Graphics *g, Game * game){
 
 	if(xScreen < 200){
 		globalX -= 5;
-	}
-
-	if(xScreen > 600){
+	} if(xScreen > 600){
 		globalX += 5;
-	}
-
-	if(yScreen < 100){
+	} if(yScreen < 100){
 		globalY -= 5;
-	}
-
-	if(yScreen > 500){
+	} if(yScreen > 500){
 		globalY += 5;
 	}
+
+	VectorXY sdlWorldSize = this->gameWorld->getSdlWorldSize();
+
+	if(globalX < 0){
+		globalX = 0;
+	} if(globalY < 0){
+		globalY = 0;
+	} if(globalX > (sdlWorldSize.x - screenW)){
+		globalX = sdlWorldSize.x - screenW;
+	} if(globalY > (sdlWorldSize.y - screenH)){
+		globalY = sdlWorldSize.y - screenH;
+	}
+
+
+
 
 	g->setRendererObject(NULL);
 	g->drawAtCenter(false);
@@ -255,23 +264,22 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 
 void LevelState::sendKeyData(){
 	levelStateMutex.lock();
-	Message *m = new Message();;
+	Message m;
 
 	if(keyCodeData.size() == 0){
 		levelStateMutex.unlock();
 		return;
 	}
 
-	m->addCommandCode(KEY_EVENT);
-	m->addChar(keyCodeData.size());
+	m.addCommandCode(KEY_EVENT);
+	m.addChar(keyCodeData.size());
 
 	for(auto keyCode : keyCodeData){
-		m->addKeyEventCode(keyCode);
+		m.addKeyEventCode(keyCode);
 	}
 
-	m->addEndChar();
-	Global::client->send_message(m);
-	delete m;
+	m.addEndChar();
+	Global::client->send_message(&m);
 
 	keyCodeData.clear();
 	levelStateMutex.unlock();
@@ -284,7 +292,7 @@ std::vector<KeyCode> LevelState::getKeyCodeData(){
 
 void LevelState::update(unsigned int delta){
 	levelStateMutex.lock();
-	this->gameWorld->update();
+	this->gameWorld->update(delta);
 
 	this->backParticleEmiter->update(delta);
 	this->frontParticleEmiter->update(delta);

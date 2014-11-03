@@ -19,11 +19,11 @@ class PolygonEntity: public GameEntity {
 public:
 	PolygonEntity(int index);
 
-	void render(Graphics * g);
+	void render(Graphics * g, unsigned int delta);
 	void initialize();
 	void addVertex(float x, float y);
 
-	void update(UpdateRequest * u);
+	void update(UpdateRequest * u,  unsigned int elapsedTime);
 	void setStatic(bool isStatic);
 
 
@@ -38,6 +38,13 @@ private:
 	int elapsedTime;
 	int lastUpdateTime;
 
+	int renderTimeCount;
+
+
+
+	VectorXY lastPosition;
+	VectorXY nextPosition;
+	float lastRotation;
 };
 
 #endif /* POLYGONENTITY_H_ */
