@@ -71,7 +71,7 @@ void World::initializePlayerBody(Jugador * player){
 	fixtureDef.density = 0;
 	fixtureDef.isSensor = true;
 	b2Fixture * footSensor = body->CreateFixture(&fixtureDef);
-	footSensor->SetUserData(new ContactContainer(ContactContainer::JUGADOR, this));
+	footSensor->SetUserData(new ContactContainer(ContactContainer::JUGADOR, player));
 	ContactListener * footListener = new ContactListener();
 
 	player->setListenerTouchingGround(footListener);

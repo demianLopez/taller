@@ -31,13 +31,11 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	if(first->type == ContactContainer::JUGADOR && second->type == ContactContainer::POLYGON){
 		aPlayer = (Jugador*) first->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts++;
-		cout << "SHDASHD " << aPlayer->getListenerTouchingGround()->getNumberOfContacts() << endl;
 		return;
 	}
 	if(first->type == ContactContainer::POLYGON && second->type == ContactContainer::JUGADOR){
 		aPlayer = (Jugador*) second->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts++;
-		cout << "SHDASHD " << aPlayer->getListenerTouchingGround()->getNumberOfContacts() << endl;
 	}
 
 
