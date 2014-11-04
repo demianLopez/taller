@@ -81,12 +81,14 @@ bool Client_handler::runListen() {
 	//Threadear la escucha que es lo que pasa menos seguido
 	char message[256];
 
-	char l[5];
+	char l[5] = {0,0,0,0,0};
 	int bytes_read;
 
 	bytes_read = this->_socket->receive(l, 1);
 
-	int need = l[0];
+	int need = -1;
+	if(bytes_read > 0) need = l[0];
+
 	int readed = 0;
 	int toRead = need;
 
@@ -149,7 +151,7 @@ void Client_handler::stop() {
 
 bool Client_handler::send_message(Message * msg){
 	//this->sendingMutex.lock();
-	if(_socket->is_valid()){
+	if(_socket && _socket->is_valid()){
 		int sent = -1;
 
 		sent = _socket->send_message(msg->getMessageData(),
