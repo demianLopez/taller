@@ -34,6 +34,17 @@
 				"ancho": 15.0,
 				"alto": 2.8 
 			},
+			{
+				"tipo": "rect",
+				"x": 23.5, 
+				"y": 10.3, 
+				"color": "#000033",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 15.0,
+				"alto": 2.8 
+			},
 			{ 
 				"tipo": "paral",
 				"x": 36.0, 

@@ -43,13 +43,19 @@ b2Vec2 * World::getBox2DWorldSize() {
 }
 
 void World::initializePlayerBody(Jugador * player){
+
+	double longX = 1.2f;
+	double longY = 1.8f;
+
 	b2PolygonShape box_shape;
-	box_shape.SetAsBox(1, 2); //seteo los vertices del poligono
+	box_shape.SetAsBox(longX, longY); //seteo los vertices del poligono
 
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &box_shape;
 	body_fixture.density = 1;
 	body_fixture.friction = 0.2;
+	body_fixture.filter.categoryBits = 0x0002; // Categoria para evitar que 2 jugadores colisionen.
+	body_fixture.filter.groupIndex = -2;
 
 	b2BodyDef body_definition;
 	body_definition.type = b2_dynamicBody;
@@ -67,8 +73,6 @@ void World::initializePlayerBody(Jugador * player){
 
 	b2PolygonShape dynamicBox;
 
-	double longX = 1.4f;
-	double longY = 1.8f;
 
 	dynamicBox.SetAsBox(longX, longY);
 
@@ -78,10 +82,11 @@ void World::initializePlayerBody(Jugador * player){
 	fixtureDef.friction = 0;
 
 	b2Fixture *bodyFixture = body->CreateFixture(&fixtureDef);
-	bodyFixture->SetUserData(new ContactContainer(ContactContainer::SENSORDELPIE,NULL));
+	bodyFixture->SetUserData(new ContactContainer(ContactContainer::SENSORDELPIE,player));
 
-	dynamicBox.SetAsBox( longX - 0.1 , 0.4, b2Vec2(0,-longY), 0);
+	dynamicBox.SetAsBox( longX - 0.2 , 0.4, b2Vec2(0,-longY), 0);
 	fixtureDef.density = 0;
+	bodyFixture->SetSensor(true);
 	fixtureDef.isSensor = true;
 	b2Fixture * footSensor = body->CreateFixture(&fixtureDef);
 	footSensor->SetUserData(new ContactContainer(ContactContainer::JUGADOR, player));
