@@ -20,6 +20,7 @@ public:
 
 	void setAnimation(AnimationCode animation);
 	void setOffline(bool offline);
+
 private:
 	AnimationCode animation;
 

@@ -35,6 +35,7 @@ void PolygonEntity::setStatic(bool isStatic){
 void PolygonEntity::render(Graphics * g, unsigned int delta){
 
 
+
 	renderTimeCount += delta;
 
 	VectorXY sdlPos;
@@ -137,17 +138,70 @@ void PolygonEntity::initialize(){
 	}
 
 	this->polygonImage = new Image(sdlSize.x, sdlSize.y);
-	Image * borderImage = new Image("Resources/border.png");
+
+	if(this->type == P_RECTANGLE){
+		this->buildRectangle(vX, vY);
+	} else {
+		Graphics * g = GameElements::getGraphicsInstance();
+		g->setColor(0, 0, 0, 0);
+		g->setRendererObject(this->polygonImage);
+		g->clearRenderObject();
+		g->drawFillPolygon(vX, vY, pointSize, 0, 255, 0);
+		delete g;
+	}
+
+	delete[] vX;
+	delete[] vY;
+}
+
+void PolygonEntity::buildRectangle(short int * vX,short int * vY){
+	int tileX = 1;
+	int tileY = 0;
+	Image * borderImage = new Image("Resources/tile.png");
 	Graphics * g = GameElements::getGraphicsInstance();
 	g->setColor(0, 0, 0, 0);
 	g->setRendererObject(this->polygonImage);
 	g->clearRenderObject();
-	g->drawFillPolygon(vX, vY, pointSize, 0, 255, 0);
 
-	delete[] vX;
-	delete[] vY;
+	short int supBorder = vX[1] - vX[0];
+	short int sidBorder = vY[2] - vY[1];
+
+	int iterationX = supBorder/16 + 1;
+	int iterationY = sidBorder/16 + 1;
+
+	for(int x = 0; x < iterationX; x++){
+		for(int y = 0; y < iterationY; y++){
+			int tX = x * 16 + vX[0];
+			int tY = y * 16 + vY[0];
+			int iTx = 16;
+			int iTy = 16;
+
+			if(y == 0){
+				iTy = 0;
+			} else if(y == (iterationY - 1)){
+				iTy = 48;
+			} else {
+				iTy = (y * 16) % 32 + 16;
+			}
+
+
+			if(x == 0){
+				iTx = 0;
+			} else if(x == (iterationX - 1)){
+				iTx = 48;
+			} else {
+				iTx = (x * 16) % 32 + 16;
+			}
+
+			g->drawImage(borderImage, tX, tY, iTx + tileX * 64, iTy + tileY * 64, 16, 16, 16, 16);
+		}
+	}
+
+
 	delete g;
 	delete borderImage;
+
+
 }
 
 void PolygonEntity::addVertex(float x, float y){

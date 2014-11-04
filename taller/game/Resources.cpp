@@ -152,7 +152,7 @@ void Resources::loadAnimations() {
 
 	this->sleepingEmoticon = new Animation();
 
-	for(int i = 1; i < 8; i++){
+	for(int i = 0; i < 8; i++){
 		sleepingEmoticon->addFrame(emoticons->getSubImage(i, 9), 150);
 	}
 

@@ -26,7 +26,7 @@ public:
 	void update(UpdateRequest * u,  unsigned int elapsedTime);
 	void setStatic(bool isStatic);
 
-
+	void buildRectangle(short int * vX, short int * vY);
 
 	virtual ~PolygonEntity();
 private:
