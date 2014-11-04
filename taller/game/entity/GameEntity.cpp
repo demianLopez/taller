@@ -19,6 +19,11 @@ VectorXY GameEntity::getPosition(){
 int GameEntity::getIndex(){
 	return entityIndex;
 }
+
+void GameEntity::setType(EntityType type){
+	this->type = type;
+}
+
 void GameEntity::setPosition(float x, float y){
 	this->position = VectorXY(x, y);
 

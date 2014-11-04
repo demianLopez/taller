@@ -28,6 +28,8 @@ public:
 	void setPosition(float x, float y);
 	VectorXY getPosition();
 
+	void setType(EntityType type);
+
 	int getIndex();
 private:
 	int entityIndex;
@@ -36,6 +38,8 @@ protected:
 	VectorXY position;
 	GameWorld * gameWorld;
 	float rotation;
+
+	EntityType type;
 
 };
 

@@ -22,6 +22,7 @@ Rectangle::Rectangle(double width, double height, double density, double posX,
 		double posY, double angle, int body_type, World * world) :
 		Polygon(body_type) {
 
+	this->type = P_RECTANGLE;
 	this->size = new b2Vec2(width, height);
 
 	b2PolygonShape box_shape;

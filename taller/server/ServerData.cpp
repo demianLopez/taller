@@ -108,6 +108,7 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 			char vNum = p->getPointList().size();
 			mapData->addChar(p->getEntityIndex());
 			mapData->addChar(p->isStatic());
+			mapData->addChar(p->getType());
 			mapData->addChar(vNum);
 			mapData->addFloat(&p->getPosition()->x);
 			mapData->addFloat(&p->getPosition()->y);

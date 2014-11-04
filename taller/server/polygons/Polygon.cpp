@@ -24,6 +24,7 @@
 
 Polygon::Polygon(int body_def) {
 
+	this->type = P_SOLID;
 	this->body_def = body_def;
 	this->body = NULL;
 	this->world = NULL;
@@ -160,6 +161,12 @@ void Polygon::render(Graphics * g) {
 
 }
 */
+
+EntityType Polygon::getType(){
+	return this->type;
+}
+
+
 
 bool Polygon::isStatic() {
 	return body->GetType() == b2_staticBody;
