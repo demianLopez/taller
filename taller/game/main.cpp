@@ -87,7 +87,7 @@ int mainCliente(){
 	c->setDataObserver(new ClientData());
 	if (s == NULL) cout << "Socket es NULL." << endl;
 	c->setSocket(s);
-	c->startLoop();
+
 
 	Global::client = c;
 	SnowBross *pE = new SnowBross("Snow Bross");
@@ -95,6 +95,8 @@ int mainCliente(){
 	pE->setScreenSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	pE->instantiate();
 
+	c->startLoop();
+	
 	//TODO: World ahora se tiene que venir via internet, alguien lo tiene que generar!
 	//pE->setWorld(gE->obtenerMundo());
 	//delete lector;
