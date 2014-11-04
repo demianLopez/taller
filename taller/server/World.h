@@ -73,7 +73,7 @@ public:
 private:
 	void updateTiming(Jugador * j);
 	void updatePolygon(Polygon * p);
-	void updatePeople(Personaje * p);
+	void updatePeople(Jugador * p);
 
 	void sendUpdates();
 

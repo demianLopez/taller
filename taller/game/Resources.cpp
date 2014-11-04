@@ -13,6 +13,7 @@
 static const char * PLAYER_ANIM_PATH = "Resources/mainChar.png";
 static const char * PLAYER_WALK_PATH = "Resources/mainCharWalk.png";
 static const char * PLAYER_JUMP_PATH = "Resources/mainCharJump.png";
+static const char * EMOTICONS_PATH = "Resources/balloon-emoticons-go.png";
 
 Resources::Resources() {
 	this->backgroundImage = NULL;
@@ -31,6 +32,9 @@ Resources::Resources() {
 	this->characterAirRight = NULL;
 	this->topJumpLeft = NULL;
 	this->topJumpRight = NULL;
+
+	this->emoticons = NULL;
+	this->sleepingEmoticon = NULL;
 }
 
 void Resources::loadBackground(const char *bPath) {
@@ -144,6 +148,14 @@ void Resources::loadAnimations() {
 	this->topJumpRight->addFrame(this->characterJump->getSubImage(1, 1), 50);
 	this->topJumpRight->addFrame(this->characterJump->getSubImage(0, 1), 50);
 
+	this->emoticons = new SpriteSheet(EMOTICONS_PATH, 32, 32);
+
+	this->sleepingEmoticon = new Animation();
+
+	for(int i = 1; i < 8; i++){
+		sleepingEmoticon->addFrame(emoticons->getSubImage(i, 9), 150);
+	}
+
 }
 
 Image * Resources::getBackground() {
@@ -182,6 +194,10 @@ Animation * Resources::getTopJumpRight() {
 	return this->topJumpRight;
 }
 
+Animation * Resources::getSleepingEmoticon(){
+	return this->sleepingEmoticon;
+}
+
 Resources::~Resources() {
 	if (this->backgroundImage != NULL) {
 		delete backgroundImage;
@@ -205,6 +221,9 @@ Resources::~Resources() {
 	delete this->topJumpRight;
 
 	delete this->characterJump;
+
+	delete this->sleepingEmoticon;
+	delete this->emoticons;
 
 }
 

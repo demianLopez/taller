@@ -19,8 +19,11 @@ public:
 	void initialize();
 
 	void setAnimation(AnimationCode animation);
+	void setOffline(bool offline);
 private:
 	AnimationCode animation;
+
+	bool offline;
 
 	int elapsedTime;
 	int lastUpdateTime;

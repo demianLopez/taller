@@ -16,6 +16,7 @@ public:
 	float posY;
 	float rotation;
 	AnimationCode animation;
+	bool offline;
 	UpdateRequest();
 	virtual ~UpdateRequest();
 };

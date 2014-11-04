@@ -326,13 +326,14 @@ void World::updatePolygon(Polygon * p){
 	this->sendToWorldPlayers(&m);
 }
 
-void World::updatePeople(Personaje * p){
+void World::updatePeople(Jugador * p){
 	Message m;
 	m.addCommandCode(UPDATE_PLAYER_ENTITY);
 	m.addChar(p->getIndex());
 	m.addFloat(&p->getPosition()->x);
 	m.addFloat(&p->getPosition()->y);
 	m.addAnimationCode(p->getCurrentAnimation());
+	m.addChar(p->isOffline());
 	m.addEndChar();
 
 	this->sendToWorldPlayers(&m);

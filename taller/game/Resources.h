@@ -39,6 +39,8 @@ public:
 
 	Animation * getAnimationByAnimationCode(AnimationCode animationCode);
 
+	Animation * getSleepingEmoticon();
+
 	Image * getBackground();
 
 	virtual ~Resources();
@@ -61,6 +63,9 @@ private:
 
 	Animation * topJumpRight;
 	Animation * topJumpLeft;
+
+	SpriteSheet * emoticons;
+	Animation * sleepingEmoticon;
 };
 
 #endif /* RESOURCES_H_ */

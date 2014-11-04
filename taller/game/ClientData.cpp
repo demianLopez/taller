@@ -48,6 +48,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		uR->posX = m->getFloat();
 		uR->posY = m->getFloat();
 		uR->animation = m->getAnimationCode();
+		uR->offline = m->getChar();
 		Global::gameWorld->addUpdateRequest(uR);
 		return cCode;
 	}

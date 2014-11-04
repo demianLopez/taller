@@ -18,11 +18,16 @@ void PlayerEntity::update(UpdateRequest * u,  unsigned int elapsedTime){
 	this->nextPosition = VectorXY(u->posX, u->posY);
 
 	this->animation = u->animation;
+	this->offline = u->offline;
 
 	int currentTime = Global::game->getElapsedTime();
 	this->elapsedTime = currentTime - this->lastUpdateTime;
 	this->lastUpdateTime = currentTime;
 	this->renderTimeCount = 0;
+}
+
+void PlayerEntity::setOffline(bool offline){
+	this->offline = offline;
 }
 
 void PlayerEntity::initialize(){
@@ -47,6 +52,9 @@ void PlayerEntity::render(Graphics * g, unsigned int delta){
 
 	//VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 	g->drawAtCenter(true);
+	if(offline){
+		g->drawAnimation(Global::gameResources->getSleepingEmoticon(), sdlPos.x + 10, sdlPos.y - 50);
+	}
 	g->drawAnimation(Global::gameResources->getAnimationByAnimationCode(animation), sdlPos.x, sdlPos.y);
 	g->drawAtCenter(false);
 }
