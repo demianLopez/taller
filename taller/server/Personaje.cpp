@@ -6,14 +6,15 @@
 
 Personaje::Personaje()  {
 	listenerTouchingGround = NULL;
+	this->currentAnimation = A_STAND_LEFT;
 }
 
 int Personaje::getIndex(){
 	return userIndex;
 }
 
-int Personaje::getCurrentAnimation(){
-	return 0;
+AnimationCode Personaje::getCurrentAnimation(){
+	return this->currentAnimation;
 }
 
 void Personaje::moveLeft(bool isButtonDown){
@@ -35,6 +36,37 @@ ContactListener* Personaje::getListenerTouchingGround(){
 
 void Personaje::setListenerTouchingGround(ContactListener *aListener){
 	listenerTouchingGround = aListener;
+}
+
+void Personaje::evaluateAnimation(){
+	if(this->mirandoParaLaDerecha){
+		if(this->isOnAir()){
+			currentAnimation = A_JUMP_RIGHT;
+			return;
+		}
+
+		if(this->isMovingRight()){
+			currentAnimation = A_WALK_RIGHT;
+			return;
+		}
+
+		currentAnimation = A_STAND_RIGHT;
+		return;
+	}
+
+	if(this->isOnAir()){
+		currentAnimation = A_JUMP_LEFT;
+		return;
+	}
+
+	if(this->isMovingLeft()){
+		currentAnimation = A_WALK_LEFT;
+		return;
+	}
+
+	currentAnimation = A_STAND_LEFT;
+	return;
+
 }
 
 void Personaje::jump(){
@@ -89,6 +121,7 @@ void Personaje::update() {
 					b2Vec2(25 - body->GetLinearVelocity().x * 2, 0),
 					body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
 			mirandoParaLaDerecha = true;
+			this->evaluateAnimation();
 			return;
 		}
 	}
@@ -98,11 +131,15 @@ void Personaje::update() {
 					b2Vec2(-25 - body->GetLinearVelocity().x * 2, 0),
 					body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
 			mirandoParaLaDerecha = false;
+			this->evaluateAnimation();
 			return;
 		}
 	}
 
+
+
 	stop(true, false);
+	this->evaluateAnimation();
 }
 
 /*

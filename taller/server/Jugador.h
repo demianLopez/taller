@@ -33,6 +33,7 @@ public:
 	Jugador(Client_handler * client, char * name);
 	char * getName();
 
+
 	void addKeyCode(KeyCode keyCode);
 	void apllyCodes();
 

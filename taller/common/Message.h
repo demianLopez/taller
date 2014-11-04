@@ -20,6 +20,8 @@ public:
 	/* Asigna un codigo de comando al mensaje.*/
 	void addCommandCode(CommandCode commandCode);
 	void addKeyEventCode(KeyCode keyCode);
+	void addAnimationCode(AnimationCode animationCode);
+
 	/* Agrega un char al mensaje. */
 	void addChar(char c);
 	/* Agrega una cantidad de chars al mensaje. Al final de lo copiado
@@ -34,6 +36,7 @@ public:
 	 * Aumenta el indice de lectura. */
 	CommandCode getCommandCode();
 	KeyCode getKeyCode();
+	AnimationCode getAnimationCode();
 	/* Lee un array de chars.
 	 * Aumenta el indice de lectura. */
 	char getCharArray(char ** array);

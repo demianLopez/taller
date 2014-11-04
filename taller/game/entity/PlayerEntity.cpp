@@ -47,11 +47,11 @@ void PlayerEntity::render(Graphics * g, unsigned int delta){
 
 	//VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 	g->drawAtCenter(true);
-	g->drawAnimation(Global::gameResources->getPlayerWalkLeft(), sdlPos.x, sdlPos.y);
+	g->drawAnimation(Global::gameResources->getAnimationByAnimationCode(animation), sdlPos.x, sdlPos.y);
 	g->drawAtCenter(false);
 }
 
-void PlayerEntity::setAnimation(int animation){
+void PlayerEntity::setAnimation(AnimationCode animation){
 	this->animation = animation;
 }
 

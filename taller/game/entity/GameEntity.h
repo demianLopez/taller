@@ -12,6 +12,7 @@
 #include <VectorXY.h>
 #include <GameWorld.h>
 #include <UpdateRequest.h>
+#include <CommandCode.h>
 
 class GameEntity {
 public:

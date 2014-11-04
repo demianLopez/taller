@@ -34,9 +34,6 @@ void PolygonEntity::setStatic(bool isStatic){
 
 void PolygonEntity::render(Graphics * g, unsigned int delta){
 
-	if(this->polygonImage == NULL){
-		return;
-	}
 
 	renderTimeCount += delta;
 
@@ -72,6 +69,7 @@ void PolygonEntity::initialize(){
 	//Buscamos el ancho y largo maximo!!
 
 	if(this->vList.size() < 3){
+		this->polygonImage = new Image("Resources/bola.png");
 		return;
 	}
 

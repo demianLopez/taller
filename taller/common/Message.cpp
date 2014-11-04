@@ -66,6 +66,11 @@ void Message::addKeyEventCode(KeyCode keyCode){
 	pointer++;
 }
 
+void Message::addAnimationCode(AnimationCode animationCode){
+	message[pointer] = animationCode;
+	pointer++;
+}
+
 
 
 /* Lee el codigo de comando.
@@ -73,6 +78,12 @@ void Message::addKeyEventCode(KeyCode keyCode){
  * el mismo.
  * Aumenta el indice de lectura. */
 CommandCode Message::getCommandCode(){
+	char cD = message[read];
+	read ++;
+	return cD;
+}
+
+AnimationCode Message::getAnimationCode(){
 	char cD = message[read];
 	read ++;
 	return cD;

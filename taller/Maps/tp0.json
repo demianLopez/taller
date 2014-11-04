@@ -65,7 +65,7 @@
 				"rot": 90.0, 
 				"masa": 2.0, 
 				"estatico": false,
-				"radio": 1.0
+				"radio": 1.9
 			}, 
 			{
 				"tipo": "rect",

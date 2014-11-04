@@ -4,6 +4,7 @@
 #include "VectorXY.h"
 #include "CosaConMovimiento.h"
 #include "ContactListener.h"
+#include <CommandCode.h>
 
 #include <Box2D/Box2D.h>
 
@@ -11,9 +12,11 @@
 class Animation;
 class Resources;
 
+
 class Personaje : public CosaConMovimiento{
 protected:
 	ContactListener *listenerTouchingGround;
+	AnimationCode currentAnimation;
 public:
 	Personaje();
 	virtual ~Personaje();
@@ -24,7 +27,7 @@ public:
 	void moveRight(bool isButtonDown);
 	void jump();
 
-	virtual int getCurrentAnimation();
+	AnimationCode getCurrentAnimation();
 
 	b2Vec2 * getPosition();
 
@@ -32,13 +35,16 @@ public:
 
 	ContactListener* getListenerTouchingGround();
 	void setListenerTouchingGround(ContactListener *aListener);
-	bool isOnAir(); //se sobreescribe la de CosaConMovimiento para agregar el listener
 
 	void update();
 /*
 	Animation * getAnimation(Resources * resources);
 	*/
 private:
+
+
+	virtual void evaluateAnimation();
+
 	int userIndex;
 };
 

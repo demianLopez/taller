@@ -12,6 +12,8 @@ class Image;
 class SpriteSheet;
 class Animation;
 
+#include "CommandCode.h"
+
 class Resources {
 public:
 	Resources();
@@ -34,6 +36,8 @@ public:
 
 	Animation * getTopJumpRight();
 	Animation * getTopJumpLeft();
+
+	Animation * getAnimationByAnimationCode(AnimationCode animationCode);
 
 	Image * getBackground();
 

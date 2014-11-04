@@ -18,9 +18,9 @@ public:
 	void update(UpdateRequest * u, unsigned int elapsedTime);
 	void initialize();
 
-	void setAnimation(int animation);
+	void setAnimation(AnimationCode animation);
 private:
-	int animation;
+	AnimationCode animation;
 
 	int elapsedTime;
 	int lastUpdateTime;

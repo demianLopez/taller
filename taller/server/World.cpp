@@ -199,7 +199,7 @@ void World::instantiatePlayer(Personaje * p, Client_handler * client){
 	m.addChar(p->getIndex());
 	m.addFloat(&p->getPosition()->x);
 	m.addFloat(&p->getPosition()->y);
-	m.addChar(p->getCurrentAnimation());
+	m.addAnimationCode(p->getCurrentAnimation());
 	m.addEndChar();
 
 	client->send_message(&m);
@@ -327,7 +327,7 @@ void World::updatePeople(Personaje * p){
 	m.addChar(p->getIndex());
 	m.addFloat(&p->getPosition()->x);
 	m.addFloat(&p->getPosition()->y);
-	m.addChar(p->getCurrentAnimation());
+	m.addAnimationCode(p->getCurrentAnimation());
 	m.addEndChar();
 
 	this->sendToWorldPlayers(&m);

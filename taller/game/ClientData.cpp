@@ -47,7 +47,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		uR->index = m->getChar();
 		uR->posX = m->getFloat();
 		uR->posY = m->getFloat();
-		uR->animation = m->getChar();
+		uR->animation = m->getAnimationCode();
 		Global::gameWorld->addUpdateRequest(uR);
 		return cCode;
 	}
@@ -95,7 +95,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		char index = m->getChar();
 		float pX = m->getFloat();
 		float pY = m->getFloat();
-		char anim = m->getChar();
+		AnimationCode anim = m->getAnimationCode();
 
 		PlayerEntity * pEntity = new PlayerEntity(index);
 		pEntity->setPosition(pX, pY);
@@ -146,7 +146,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 	}
 
 	std::cout<<"WARNING: LOOSING cCode: "<<(int)cCode<<endl;
-
+	return cCode;
 }
 
 /* Cierra la conexion cuando se pierde la conexion con el server.

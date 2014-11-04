@@ -45,6 +45,27 @@ Animation * Resources::getPlayerAnimationRight() {
 	return this->characterAnimationRight;
 }
 
+Animation * Resources::getAnimationByAnimationCode(AnimationCode animationCode){
+
+	switch(animationCode){
+		case A_STAND_RIGHT:
+			return this->characterStaticRight;
+		case A_STAND_LEFT:
+			return this->characterStaticLeft;
+		case A_WALK_RIGHT:
+			return this->characterWalkRight;
+			break;
+		case A_WALK_LEFT:
+			return this->characterWalkLeft;
+			break;
+		case A_JUMP_RIGHT:
+			return this->characterAirRight;
+		case A_JUMP_LEFT:
+			return this->characterAirLeft;
+	}
+
+}
+
 void Resources::loadAnimations() {
 	this->characterSpriteSheet = new SpriteSheet(PLAYER_ANIM_PATH, 70, 80);
 	this->characterAnimationLeft = new Animation();

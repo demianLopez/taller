@@ -10,6 +10,7 @@
 
 typedef char CommandCode;
 typedef char KeyCode;
+typedef char AnimationCode;
 
 const CommandCode IM_LOGGED = 0;
 const CommandCode SERVER_DATA = 1;
@@ -35,5 +36,12 @@ const KeyCode JUMP = 2;
 const KeyCode NOTHING = 3;
 const KeyCode MOVE_LEFT_UP = 4;
 const KeyCode MOVE_RIGHT_UP = 5;
+
+const AnimationCode A_STAND_RIGHT = 0;
+const AnimationCode A_STAND_LEFT = 1;
+const AnimationCode A_WALK_RIGHT = 2;
+const AnimationCode A_WALK_LEFT = 3;
+const AnimationCode A_JUMP_RIGHT = 4;
+const AnimationCode A_JUMP_LEFT = 5;
 
 #endif /* COMMANDCODE_H_ */

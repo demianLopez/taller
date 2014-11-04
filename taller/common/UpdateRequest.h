@@ -7,6 +7,7 @@
 
 #ifndef UPDATEREQUEST_H_
 #define UPDATEREQUEST_H_
+#include "CommandCode.h"
 
 class UpdateRequest {
 public:
@@ -14,7 +15,7 @@ public:
 	float posX;
 	float posY;
 	float rotation;
-	int animation;
+	AnimationCode animation;
 	UpdateRequest();
 	virtual ~UpdateRequest();
 };
