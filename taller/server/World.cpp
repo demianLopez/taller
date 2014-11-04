@@ -44,7 +44,7 @@ b2Vec2 * World::getBox2DWorldSize() {
 
 void World::initializePlayerBody(Jugador * player){
 
-	double longX = 1.4f;
+	double longX = 1.2f;
 	double longY = 1.8f;
 
 	b2PolygonShape box_shape;
