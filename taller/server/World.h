@@ -14,7 +14,9 @@
 #include "polygons/Polygon.h"
 #include "ContactListener.h"
 #include <thread>
+#include <string.h>
 
+using std::string;
 using std::thread;
 
 class Polygon;
@@ -24,6 +26,11 @@ public:
 	World(b2Vec2 * gravity);
 
 	int updatesPerSecond;
+
+	string * getWorldName();
+	int getMaxPlayers();
+
+	void setMapData(string * mapName, int maxPlayers);
 
 	void setUnits(int wU, int hU);
 	b2Vec2 * getBox2DWorldSize();
@@ -90,6 +97,9 @@ private:
 	b2Vec2 * gravity;
 
 	b2Vec2 * Box2DWorldSize;
+
+	string * mapName;
+	int maxPlayers;
 
 	int lastEntityIndex;
 };

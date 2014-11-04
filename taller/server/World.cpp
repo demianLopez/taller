@@ -25,6 +25,19 @@ b2World * World::getBox2DWorld() {
 	return this->box2DWorld;
 }
 
+string * World::getWorldName(){
+	return this->mapName;
+}
+
+void World::setMapData(string * mapName, int maxPlayers){
+	this->mapName = mapName;
+	this->maxPlayers = maxPlayers;
+}
+
+int World::getMaxPlayers(){
+	return this->maxPlayers;
+}
+
 b2Vec2 * World::getBox2DWorldSize() {
 	return this->Box2DWorldSize;
 }

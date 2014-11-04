@@ -27,6 +27,8 @@ private:
 			string codigoObjeto);
 	string validarColor(string miembro, Value raiz, string valorDefecto,
 			string codigoObjeto);
+	string validarNombreMapa(string miembro, Value raiz,
+			string valorDefecto, string codigoObjeto);
 	string validarImagen(string miembro, Value raiz, string valorDefecto,
 			string codigoObjeto);
 	bool validarBool(string miembro, Value raiz, bool valorDefecto,

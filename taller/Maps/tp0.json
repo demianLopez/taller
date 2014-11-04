@@ -1,9 +1,11 @@
 {
-	"escenario": { 
+	"escenario": {
+		"nombreMapa": "Un lindo mapa de SnowBros",
+		"cantidadJugadores": 4,
 		"altopx": 600,
 		"anchopx": 800,
-		"altoun": 30,
-		"anchoun": 40,
+		"altoun": 60,
+		"anchoun": 80,
 		"imagen_fondo": "Resources/font1.png",
 		"personaje": {
 			"x": 500,

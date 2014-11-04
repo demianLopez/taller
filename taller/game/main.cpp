@@ -82,7 +82,7 @@ int mainServer(){
 int mainCliente(){
 	Logger::initializeCustomLogs();
 	signal(SIGPIPE, SIG_IGN);
-	Socket * s = new Socket(12345);
+	Socket * s = new Socket(12345, "127.0.0.1");
 
 	Client_handler * c = new Client_handler();
 	c->setDataObserver(new ClientData());

@@ -25,10 +25,10 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 	if(cCode == IM_LOGGED){
 		std::cout<<"loged"<<endl;
 		envio.addCommandCode(SERVER_DATA);
-		envio.addCharArray("Un mapa de snowBross\0", 21);
-		envio.addChar(4); //Max player
-		char jugando = Data::world->getPlayerList().size();
-		envio.addChar(jugando); //Jugando!
+		envio.addCharArray(Data::world->getWorldName()->c_str(), Data::world->getWorldName()->size());
+		envio.addChar(Data::world->getMaxPlayers()); //Maxima cantidad de jugadores permitida
+		char cantidadJugando = Data::world->getPlayerList().size();
+		envio.addChar(cantidadJugando);
 		envio.addEndChar();
 		client->send_message(&envio);
 		return cCode;
@@ -54,6 +54,17 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 
 		string nm(playerName);
 
+		// Ver si ya esta lleno.
+		if (Data::world->getPlayerList().size() >= Data::world->getMaxPlayers()){
+			envio.addCommandCode(ERROR_MESSAGE);
+			envio.addCharArray("Lugares\0", 8);
+			envio.addCharArray("No hay mas lugar\0", 17);
+			envio.addEndChar();
+			client->send_message(&envio);
+			return cCode;
+		}
+
+		// Comparacion para ver si ya existe el nombre en uso.
 		for(auto * p : lPlayer){
 			string oPlayer(p->getName());
 

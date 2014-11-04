@@ -53,6 +53,7 @@ Socket::Socket(int sockfd, sockaddr_in_s address) {
 Socket::Socket(int port, const string& host) {
 	struct hostent *he;
 	sockaddr_in_s address; 	// información de la dirección de destino
+
 	he = gethostbyname(host.c_str());
 
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);

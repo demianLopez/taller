@@ -18,6 +18,7 @@ const int ANCHOPX_MIN_D = 50;
 const int ALTOUN_D = 100;
 const int ANCHOUN_D = 50;
 const string IMAGEN_FONDO_D = "Resources/font1.png";
+const int CANTIDADJUGADORES_D = 4;
 
 //Valores por defecto personaje
 const int POSX_D = 100;
@@ -163,6 +164,28 @@ string LectorJson::validarColor(string miembro, Value raiz, string valorDefecto,
 	return col;
 }
 
+string LectorJson::validarNombreMapa(string miembro, Value raiz,
+		string valorDefecto, string codigoObjeto) {
+	Value texto = raiz[miembro];
+	if (texto.isNull()) {
+
+		cout << "asdasdasdas123123123123123 " << endl;
+		logger->reportarProblema(
+				"No existe el miembro '" + miembro + "' en objeto: "
+						+ codigoObjeto + ". Cargo texto por defecto.",
+				WARNING);
+		return valorDefecto;
+	}
+	if (!texto.isString()) {
+		cout << "asdasdasdas " << endl;
+		logger->reportarProblema(
+				"Formato de texto invalido. Carga texto por defecto", WARNING);
+		return valorDefecto;
+	}
+
+	return (texto.asString());
+}
+
 string LectorJson::validarImagen(string miembro, Value raiz,
 		string valorDefecto, string codigoObjeto) {
 	Value imagen = raiz[miembro];
@@ -234,8 +257,13 @@ void LectorJson::obtenerEscenario(Value raiz) {
 			x = validarInt("x", personaje, POSX_D, "personaje");
 			y = validarInt("y", personaje, POSY_D, "personaje");
 		}
+		int cantidadJugadores = validarInt("cantidadJugadores", escenario, CANTIDADJUGADORES_D,"escenario");
+		if (cantidadJugadores <= 0) cantidadJugadores = CANTIDADJUGADORES_D;
+
+		string nombreMapa = validarNombreMapa("nombreMapa", escenario, string("Un mapa"), "escenario");
+
 		this->elEscenario->configurarEscenerio(altopx, anchopx, altoun, anchoun,
-				imagen, x, y);
+				imagen, x, y, cantidadJugadores, nombreMapa);
 		this->obtenerObjetos(escenario);
 	}
 
