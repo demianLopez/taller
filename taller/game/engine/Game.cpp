@@ -42,6 +42,10 @@ int Game::getScreenWidth() {
 	return this->width;
 }
 
+bool Game::isOnState(int stateIndex){
+	return this->nextState == stateIndex;
+}
+
 void Game::showFPS(bool showFPS) {
 	this->sfps = showFPS;
 }

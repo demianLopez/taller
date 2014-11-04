@@ -18,6 +18,14 @@ void Jugador::addKeyCode(KeyCode keyCode){
 	this->keyCode.push_back(keyCode);
 }
 
+void Jugador::setOffline(bool isOffline){
+	this->offline = isOffline;
+}
+
+bool Jugador::isOffline(){
+	return offline;
+}
+
 void Jugador::apllyCodes(){
 	for(auto code : keyCode){
 		switch(code)

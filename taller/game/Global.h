@@ -13,7 +13,7 @@
 #include <MainMenu.h>
 #include <Message.h>
 #include <CommandCode.h>
-#include <engine/Game.h>
+#include <SnowBross.h>
 #include <Resources.h>
 
 class Global {
@@ -23,7 +23,7 @@ public:
 	static Client_handler * client;
 	static LevelState * levelState;
 	static MainMenu * mainMenu;
-	static Game * game;
+	static SnowBross * game;
 	static GameWorld * gameWorld;
 	static Resources * gameResources;
 

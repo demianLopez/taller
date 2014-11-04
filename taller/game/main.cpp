@@ -35,7 +35,7 @@ int mainServer(){
 	cout<<"Mapa iniciado - Esperando jugadores"<<endl;
 
 	Server * sv = new Server();
-	sv->starServer(12345);
+	sv->starServer(8080);
 
 
 	bool commandLoop = true;
@@ -71,7 +71,6 @@ int mainServer(){
 	sv->stopServer();
 	std::cout<<"Cerrando World"<<endl;
 	w->stop();
-
 	w->waitWorldThread();
 
 	delete sv;
@@ -82,7 +81,7 @@ int mainServer(){
 int mainCliente(){
 	Logger::initializeCustomLogs();
 	signal(SIGPIPE, SIG_IGN);
-	Socket * s = new Socket(12345, "127.0.0.1");
+	Socket * s = new Socket(8080, "127.0.0.1");
 
 	Client_handler * c = new Client_handler();
 	c->setDataObserver(new ClientData());
@@ -107,6 +106,7 @@ int mainCliente(){
 	c->waitThreadEnd();
 
 	delete c;
+	delete pE;
 		//delete lector; //estamos perdiendo memoria con esto, pero falla si lo descomento..
 
 	return 0;

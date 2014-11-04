@@ -28,6 +28,10 @@ void ClientData::closeConnection(Client_handler * client){
 char ClientData::dataArribal(Message * m, Client_handler * client){
 	char cCode = m->getCommandCode();
 
+	if(Global::game->isClosing()){
+		return CLOSING_GAME;
+	}
+
 	if(cCode == UPDATE_ENTITY){
 		UpdateRequest * uR = new UpdateRequest();
 		uR->index = m->getChar();
@@ -157,8 +161,10 @@ void ClientData::errorConnection(Client_handler * client, int error){
  * de conexion. */
 void ClientData::backMainMenu(){
 	Global::game->enterState(0);
+	if(!Global::game->isClosing()){
 	Global::game->showErrorMessage("Error de conexion",
 			"Se perdio la conexion con el servidor.");
+	}
 }
 
 ClientData::~ClientData() {

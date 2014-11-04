@@ -10,7 +10,7 @@
 	Client_handler * Global::client;
 	LevelState * Global::levelState;
 	MainMenu * Global::mainMenu;
-	Game * Global::game;
+	SnowBross * Global::game;
 	GameWorld * Global::gameWorld;
 	Resources * Global::gameResources;
 	int Global::serverUpdateTiming;

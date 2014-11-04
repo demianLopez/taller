@@ -28,9 +28,13 @@ void SnowBross::initGame(){
 
 	Global::gameResources = resources;
 }
-
+bool SnowBross::isClosing(){
+	return this->closingGame;
+}
 void SnowBross::exitGame(){
+	//Global::client->stop();
 	delete Global::gameResources;
+	closingGame = true;
 }
 
 SnowBross::~SnowBross() {

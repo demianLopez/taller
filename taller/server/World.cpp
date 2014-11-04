@@ -269,7 +269,9 @@ void World::worldLoop(World * word){
 		std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
 
 		for(auto * j : word->getPlayerList()){
-			word->requestKeyData(j);
+			if(!j->isOffline()){
+				word->requestKeyData(j);
+			}
 		}
 
 
@@ -343,7 +345,7 @@ World::~World() {
 
 void World::sendToWorldPlayers(Message * m){
 	for(auto * p: this->playerList){
-		if(p->getClient()->isConnected()){
+		if(!p->isOffline()){
 			p->getClient()->send_message(m);
 		}
 	}

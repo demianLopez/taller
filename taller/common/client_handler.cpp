@@ -108,13 +108,12 @@ bool Client_handler::runListen() {
 	}
 
 	if (bytes_read == 0) {
-		if (this->threadLoop) {
-			if (dataObserver != NULL) {
-				dataObserver->closeConnection(this);
-			} else {
-				std::cout << "Se perdio la conexion" << std::endl;
-			}
+		if (dataObserver != NULL) {
+			dataObserver->closeConnection(this);
+		} else {
+			std::cout << "Se perdio la conexion" << std::endl;
 		}
+
 		return false;
 	}
 
@@ -125,7 +124,7 @@ bool Client_handler::runListen() {
 			Message * m = new Message(message, bytes_read);
 			char c = dataObserver->dataArribal(m, this);
 
-			if(m->getCommandCode() != END_CHAR){
+			if(m->getCommandCode() != END_CHAR && c != CLOSING_GAME){
 				std::cout<<"!WARNING NOT END CHAR FUND ON cCode "<<(int)c<<std::endl;
 			}
 			delete m;

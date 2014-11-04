@@ -17,6 +17,7 @@ private:
 	vector<KeyCode> keyCode;
 	Client_handler * client;
 
+	bool offline;
 
 
 	/*
@@ -24,6 +25,10 @@ private:
 	 */
 
 public:
+
+
+	void setOffline(bool isOffline);
+	bool isOffline();
 
 	Jugador(Client_handler * client, char * name);
 	char * getName();

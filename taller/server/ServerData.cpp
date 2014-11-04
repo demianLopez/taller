@@ -15,7 +15,10 @@ ServerData::ServerData(Server * sv) {
 }
 
 void ServerData::closeConnection(Client_handler * client){
-
+	Jugador * j = Data::world->getPlayer(client->userIndex);
+	if(j != NULL){
+		j->setOffline(true);
+	}
 }
 
 char ServerData::dataArribal(Message * m, Client_handler * client){
@@ -23,7 +26,6 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 	//std::cout<<"Re: "<<m->getMessageLength()<<" bytes - "<<m->getMessageData()<<std::endl;
 	char cCode = m->getCommandCode();
 	if(cCode == IM_LOGGED){
-		std::cout<<"loged"<<endl;
 		envio.addCommandCode(SERVER_DATA);
 		envio.addCharArray(Data::world->getWorldName()->c_str(), Data::world->getWorldName()->size());
 		envio.addChar(Data::world->getMaxPlayers()); //Maxima cantidad de jugadores permitida
@@ -137,7 +139,10 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 }
 
 void ServerData::errorConnection(Client_handler * client, int error){
-
+	Jugador * j = Data::world->getPlayer(client->userIndex);
+	if(j != NULL){
+		j->setOffline(true);
+	}
 }
 
 

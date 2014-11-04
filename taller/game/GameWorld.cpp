@@ -74,9 +74,9 @@ void GameWorld::update(unsigned int delta){
 
 /* Agrega pedido de request. */
 void GameWorld::addUpdateRequest(UpdateRequest * update){
-	this->updateMutex.lock();
+	//this->updateMutex.lock();
 	this->updatesList.push_back(update);
-	this->updateMutex.unlock();
+	//this->updateMutex.unlock();
 }
 
 /* Devuelve entityList. */

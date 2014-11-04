@@ -27,6 +27,7 @@ const CommandCode KEY_EVENT = 12;
 const CommandCode UPDATE_TIMING = 13;
 const CommandCode LOCK_CAMERA_ENTITY = 14;
 const CommandCode REQUEST_KEY_DATA = 15;
+const CommandCode CLOSING_GAME = 16;
 
 const KeyCode MOVE_LEFT_DOWN = 0;
 const KeyCode MOVE_RIGHT_DOWN = 1;

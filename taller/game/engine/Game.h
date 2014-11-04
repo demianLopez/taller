@@ -41,6 +41,8 @@ public:
 	void showFPS(bool showFPS);
 	void showErrorMessage(char * title, char * error);
 
+	bool isOnState(int stateIndex);
+
 	virtual ~Game();
 private:
 	int height;
