@@ -118,17 +118,21 @@ void World::requestKeyData(Jugador * j){
 	j->getClient()->send_message(&m);
 }
 
-void World::addPlayer(Jugador * jugador){
-	this->playerList.push_back(jugador);
-	int avavibleIndex = this->getAvavibleIndex();
-	jugador->setEntityIndex(avavibleIndex);
-	jugador->getClient()->userIndex = avavibleIndex;
-	this->initializePlayerBody(jugador);
+void World::addPlayer(Jugador * jugador, bool reconecting){
+	if(!reconecting){
+		this->playerList.push_back(jugador);
+		int avavibleIndex = this->getAvavibleIndex();
+		jugador->setEntityIndex(avavibleIndex);
+		jugador->getClient()->userIndex = avavibleIndex;
+		this->initializePlayerBody(jugador);
+	}
 
 	for(auto * p : playerList){
-		if(p->getIndex() != jugador->getIndex()){
-			//Le avisamos a los demas que alguien se conecto
-			this->instantiatePlayer(jugador, p->getClient());
+		if(!reconecting){
+			if(p->getIndex() != jugador->getIndex()){
+				//Le avisamos a los demas que alguien se conecto
+				this->instantiatePlayer(jugador, p->getClient());
+			}
 		}
 
 		//Te mandamos la informacion de los demas player conectados

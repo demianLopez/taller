@@ -53,7 +53,7 @@ public:
 
 	void waitWorldThread();
 
-	void addPlayer(Jugador * jugador);
+	void addPlayer(Jugador * jugador, bool reconecting);
 	vector<Jugador*> getPlayerList();
 	Jugador * getPlayer(int userIndex);
 

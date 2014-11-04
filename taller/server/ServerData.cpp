@@ -56,24 +56,36 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 
 		string nm(playerName);
 
-		// Ver si ya esta lleno.
-		if (Data::world->getPlayerList().size() >= Data::world->getMaxPlayers()){
-			envio.addCommandCode(ERROR_MESSAGE);
-			envio.addCharArray("Lugares\0", 8);
-			envio.addCharArray("No hay mas lugar\0", 17);
-			envio.addEndChar();
-			client->send_message(&envio);
-			return cCode;
-		}
-
 		// Comparacion para ver si ya existe el nombre en uso.
+		bool reconecting = false;
+		Jugador * reconectedPlayer = NULL;
+
 		for(auto * p : lPlayer){
 			string oPlayer(p->getName());
 
 			if(oPlayer.compare(nm) == 0){
+
+				if(p->isOffline()){
+					reconecting = true;
+					reconectedPlayer = p;
+					break;
+				} else {
+					envio.addCommandCode(ERROR_MESSAGE);
+					envio.addCharArray("Jugador Online\0", 15);
+					envio.addCharArray("El nombre que intenta utilizar se encuentra en uso\0", 51);
+					envio.addEndChar();
+					client->send_message(&envio);
+					return cCode;
+				}
+			}
+		}
+
+		// Ver si ya esta lleno.
+		if(!reconecting){
+			if (Data::world->getPlayerList().size() >= Data::world->getMaxPlayers()){
 				envio.addCommandCode(ERROR_MESSAGE);
-				envio.addCharArray("Jugador Online\0", 15);
-				envio.addCharArray("El nombre que intenta utilizar se encuentra en uso\0", 51);
+				envio.addCharArray("Lugares\0", 8);
+				envio.addCharArray("No hay mas lugar\0", 17);
 				envio.addEndChar();
 				client->send_message(&envio);
 				return cCode;
@@ -114,8 +126,17 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 			delete mapData;
 		}
 
-		Jugador * j = new Jugador(client, playerName);
-		Data::world->addPlayer(j);
+		Jugador * j;
+
+		if(!reconecting){
+			j = new Jugador(client, playerName);
+		} else {
+			client->userIndex = reconectedPlayer->getIndex();
+			j = reconectedPlayer;
+			j->setOffline(false);
+		}
+
+		Data::world->addPlayer(j, reconecting);
 
 		Message * mainEntity = new Message();
 		mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
