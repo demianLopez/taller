@@ -19,6 +19,7 @@ private:
 
 	bool offline;
 
+	void evaluateAnimation();
 
 	/*
 	 const float VELOCIDAD_MAXIMA_BUFF_X = VELOCIDAD_MAXIMA_DEFAULT_X * 1.5;

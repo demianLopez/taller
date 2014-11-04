@@ -39,34 +39,7 @@ void Personaje::setListenerTouchingGround(ContactListener *aListener){
 }
 
 void Personaje::evaluateAnimation(){
-	if(this->mirandoParaLaDerecha){
-		if(this->isOnAir()){
-			currentAnimation = A_JUMP_RIGHT;
-			return;
-		}
-
-		if(this->isMovingRight()){
-			currentAnimation = A_WALK_RIGHT;
-			return;
-		}
-
-		currentAnimation = A_STAND_RIGHT;
-		return;
-	}
-
-	if(this->isOnAir()){
-		currentAnimation = A_JUMP_LEFT;
-		return;
-	}
-
-	if(this->isMovingLeft()){
-		currentAnimation = A_WALK_LEFT;
-		return;
-	}
-
-	currentAnimation = A_STAND_LEFT;
-	return;
-
+// redefinir en cada personaje
 }
 
 void Personaje::jump(){

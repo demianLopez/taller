@@ -53,7 +53,7 @@ void World::initializePlayerBody(Jugador * player){
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &box_shape;
 	body_fixture.density = 1;
-	body_fixture.friction = 0.2;
+	body_fixture.friction = 0.05;
 	body_fixture.filter.categoryBits = 0x0002; // Categoria para evitar que 2 jugadores colisionen.
 	body_fixture.filter.groupIndex = -2;
 

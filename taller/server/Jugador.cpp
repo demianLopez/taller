@@ -56,4 +56,35 @@ Client_handler * Jugador::getClient(){
 	return this->client;
 }
 
+void Jugador::evaluateAnimation(){
+	if(this->mirandoParaLaDerecha){
+			if(this->isOnAir() && this->getListenerTouchingGround()->getNumberOfContacts() == 0){
+				currentAnimation = A_JUMP_RIGHT;
+				return;
+			}
+
+			if(this->isMovingRight()){
+				currentAnimation = A_WALK_RIGHT;
+				return;
+			}
+
+			currentAnimation = A_STAND_RIGHT;
+			return;
+		}
+
+		if(this->isOnAir() && this->getListenerTouchingGround()->getNumberOfContacts() == 0){
+			currentAnimation = A_JUMP_LEFT;
+			return;
+		}
+
+		if(this->isMovingLeft()){
+			currentAnimation = A_WALK_LEFT;
+			return;
+		}
+
+		currentAnimation = A_STAND_LEFT;
+		return;
+
+}
+
 
