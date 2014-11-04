@@ -111,6 +111,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 	if(cCode == ADD_MAP_DATA){
 		int index = m->getChar();
 		char isStatic = m->getChar();
+		char type = m->getChar();
 		int t = m->getChar();
 		float pX = m->getFloat();
 		float pY = m->getFloat();
@@ -121,6 +122,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		pEnt->setStatic(isStatic);
 		pEnt->setPosition(pX, pY);
 		pEnt->setRotation(rotation);
+		pEnt->setType(type);
 
 		for(int i = 0; i< t; i++){
 			float tX = m->getFloat();

@@ -22,6 +22,7 @@
 #include <Box2D/Box2D.h>
 #include <World.h>
 #include <vector>
+#include <CommandCode.h>
 
 class World;
 
@@ -44,8 +45,13 @@ public:
 	void setEntityIndex(int index);
 	int getEntityIndex();
 
+	EntityType getType();
+	void setType(EntityType type);
+
 	char tipoDeObjeto;
 protected:
+
+	EntityType type;
 
 	b2Body* body;
 	World * world;

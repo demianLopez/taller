@@ -11,6 +11,7 @@
 typedef char CommandCode;
 typedef char KeyCode;
 typedef char AnimationCode;
+typedef char EntityType;
 
 const CommandCode IM_LOGGED = 0;
 const CommandCode SERVER_DATA = 1;
@@ -43,5 +44,8 @@ const AnimationCode A_WALK_RIGHT = 2;
 const AnimationCode A_WALK_LEFT = 3;
 const AnimationCode A_JUMP_RIGHT = 4;
 const AnimationCode A_JUMP_LEFT = 5;
+
+const EntityType P_SOLID = 0;
+const EntityType P_RECTANGLE = 1;
 
 #endif /* COMMANDCODE_H_ */
