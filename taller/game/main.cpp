@@ -85,6 +85,7 @@ int mainCliente(){
 
 	Client_handler * c = new Client_handler();
 	c->setDataObserver(new ClientData());
+	if (s == NULL) cout << "Socket es NULL." << endl;
 	c->setSocket(s);
 	c->startLoop();
 

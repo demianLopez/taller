@@ -130,6 +130,7 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 
 		if(!reconecting){
 			j = new Jugador(client, playerName);
+			j->setOffline(false); //FIXME: agregue esto porque sino queda sin inicializar. No se si va en false..
 		} else {
 			client->userIndex = reconectedPlayer->getIndex();
 			j = reconectedPlayer;
