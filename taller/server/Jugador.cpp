@@ -6,7 +6,7 @@
 Jugador::Jugador(Client_handler * client, char * name){
 	this->client = client;
 	this->name = name;
-
+	this->body = NULL;
 	this->tipoDeObjeto = 2; // Para los contactos. Los jugadores tienen valor 2.
 }
 
@@ -27,6 +27,7 @@ char * Jugador::getPlayerName(){
 }
 
 void Jugador::setOffline(bool isOffline){
+	if (body) body->SetActive(!isOffline);
 	this->offline = isOffline;
 }
 
