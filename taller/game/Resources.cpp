@@ -151,9 +151,17 @@ void Resources::loadAnimations() {
 	this->emoticons = new SpriteSheet(EMOTICONS_PATH, 32, 32);
 
 	this->sleepingEmoticon = new Animation();
+	this->heartAnimation = new Animation();
 
 	for(int i = 0; i < 8; i++){
 		sleepingEmoticon->addFrame(emoticons->getSubImage(i, 9), 150);
+		if( i != 0){
+			heartAnimation->addFrame(emoticons->getSubImage(i, 3), 150);
+		}
+	}
+
+	for(int i = 7; i > 0; i--) {
+		heartAnimation->addFrame(emoticons->getSubImage(i, 3), 150);
 	}
 
 	this->nameFonts = TTF_OpenFont("Resources/font.ttf", 18);
@@ -204,6 +212,10 @@ TTF_Font * Resources::getNameFont(){
 	return this->nameFonts;
 }
 
+Animation * Resources::getHeartAnimation(){
+	return this->heartAnimation;
+}
+
 Resources::~Resources() {
 	if (this->backgroundImage != NULL) {
 		delete backgroundImage;
@@ -229,6 +241,7 @@ Resources::~Resources() {
 	delete this->characterJump;
 
 	delete this->sleepingEmoticon;
+	delete this->heartAnimation;
 	delete this->emoticons;
 	delete this->nameFonts;
 

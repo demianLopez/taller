@@ -46,6 +46,8 @@ public:
 
 	TTF_Font * getNameFont();
 
+	Animation * getHeartAnimation();
+
 	virtual ~Resources();
 private:
 	Image * backgroundImage;
@@ -69,6 +71,7 @@ private:
 
 	SpriteSheet * emoticons;
 	Animation * sleepingEmoticon;
+	Animation * heartAnimation;
 
 	TTF_Font * nameFonts;
 };

@@ -220,6 +220,9 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 	g->setFont(Global::gameResources->getNameFont());
 
 	g->drawText(635, 15, "Puntaje: 0");
+	for(int i = 0; i < 5; i++){
+		g->drawAnimation(Global::gameResources->getHeartAnimation(), 10 + i* 32, 14);
+	}
 	levelStateMutex.unlock();
 }
 
