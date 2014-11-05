@@ -117,9 +117,6 @@ void World::requestKeyData(Jugador * j){
 	m.addCommandCode(REQUEST_KEY_DATA);
 	m.addEndChar();
 	j->getClient()->send_message(&m);
-	j->keyRequestSend++;
-
-
 }
 
 void World::addPlayer(Jugador * jugador, bool reconecting){
@@ -305,9 +302,11 @@ void World::worldLoop(World * word){
 
 			for(auto * j : word->getPlayerList()){
 				if(!j->isOffline()){
-					if(j->keyRequestSend >= 10){
-						j->setOffline(true);
+					if(j->keyRequestSend >= 0){
+						std::cout<<j->keyRequestSend<<endl;
+						/*j->setOffline(true);
 
+						std::cout<<"fasda"<<std::endl;
 						Message m;
 						m.addCommandCode(SHOW_MESSAGE);
 						string pM("");
@@ -317,6 +316,7 @@ void World::worldLoop(World * word){
 						m.addEndChar();
 
 						Data::world->sendToWorldPlayers(&m);
+						*/
 					}
 				}
 			}
@@ -331,6 +331,9 @@ void World::sendUpdates(){
 	for(auto * j : playerList){
 		//this->updateTiming(j);
 		this->updatePeople(j);
+		if(!j->isOffline()){
+			j->keyRequestSend++;
+		}
 	}
 
 	for(auto * p : polygonList){

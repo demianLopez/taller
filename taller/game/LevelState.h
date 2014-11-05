@@ -73,6 +73,8 @@ private:
 	int messageTime;
 	bool hasMessage;
 	int messageSize;
+
+	int aliveTime;
 };
 
 #endif /* LEVELSTATE_H_ */

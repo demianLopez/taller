@@ -327,7 +327,7 @@ void LevelState::update(unsigned int delta){
 			//this->lightAnimationX = ((float) rand())/RAND_MAX * this->getScreenWidth();
 		}
 	}
-	levelStateMutex.unlock();
+
 
 	if(this->hasMessage){
 		this->messageTime += delta;
@@ -335,6 +335,17 @@ void LevelState::update(unsigned int delta){
 			this->hasMessage = false;
 		}
 	}
+
+	this->aliveTime += delta;
+
+	if(this->aliveTime > 1000){
+		Message m;
+		m.addCommandCode(IM_ALIVE);
+		m.addEndChar();
+		Global::client->send_message(&m);
+		aliveTime = 0;
+	}
+	levelStateMutex.unlock();
 }
 
 void LevelState::setMessage(char * message){

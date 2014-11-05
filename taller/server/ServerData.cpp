@@ -60,8 +60,12 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 			j->addKeyCode(m->getKeyCode());
 		}
 
-		j->keyRequestSend --;
+		return cCode;
+	}
 
+	if(cCode == IM_ALIVE){
+		Jugador * j = Data::world->getPlayer(client->userIndex);
+		j->keyRequestSend = 0;
 		return cCode;
 	}
 
