@@ -11,6 +11,7 @@
 #include "polygons/Polygon.h"
 #include "Data.h"
 #include "ContactContainer.h"
+#include "ServerData.h"
 
 World::World(b2Vec2 * gravity) {
 	this->gravity = gravity;
@@ -116,6 +117,9 @@ void World::requestKeyData(Jugador * j){
 	m.addCommandCode(REQUEST_KEY_DATA);
 	m.addEndChar();
 	j->getClient()->send_message(&m);
+	j->keyRequestSend++;
+
+
 }
 
 void World::addPlayer(Jugador * jugador, bool reconecting){
@@ -298,6 +302,24 @@ void World::worldLoop(World * word){
 			word->worldStep(sleepTime);
 			eCode = 6;
 			word->sendUpdates();
+
+			for(auto * j : word->getPlayerList()){
+				if(!j->isOffline()){
+					if(j->keyRequestSend >= 10){
+						j->setOffline(true);
+
+						Message m;
+						m.addCommandCode(SHOW_MESSAGE);
+						string pM("");
+						pM.append(j->getName());
+						pM.append(" se ha desconectado");
+						m.addCharArray(pM.c_str(), pM.size());
+						m.addEndChar();
+
+						Data::world->sendToWorldPlayers(&m);
+					}
+				}
+			}
 		}
 	} catch (const std::exception& e){
 		std::cout<<e.what()<<" - Producido en WorldLoop - tCode: "<<eCode<<std::endl;

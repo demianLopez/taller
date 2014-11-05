@@ -249,12 +249,14 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 			case SDLK_UP:
 				this->keyCodeData.push_back(JUMP);
 				break;
+			case SDLK_z:
 			case SDLK_KP_MINUS:
 				this->zoomScale += ZOOM_INCREMENT;
 				if(this->zoomScale > this->maxZoomScale){
 					this->zoomScale = this->maxZoomScale;
 				}
 				break;
+			case SDLK_x:
 			case SDLK_KP_PLUS:
 				this->zoomScale -= ZOOM_INCREMENT;
 				if(this->zoomScale < this->minZoomScale){

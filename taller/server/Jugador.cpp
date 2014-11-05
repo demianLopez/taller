@@ -7,7 +7,8 @@ Jugador::Jugador(Client_handler * client, char * name){
 	this->client = client;
 	this->name = name;
 	this->body = NULL;
-	this->tipoDeObjeto = 2; // Para los contactos. Los jugadores tienen valor 2.
+	this->tipoDeObjeto = 2; // Para los contactos. Los jugadores tienen valor
+	this->keyRequestSend = 0;
 }
 
 char * Jugador::getName(){

@@ -57,6 +57,20 @@ void GameWorld::addEntity(GameEntity * entity){
 void GameWorld::update(unsigned int delta){
 	this->updateMutex.lock();
 	int currentTime = Global::game->getElapsedTime();
+
+	if(updatesList.size() == 0){
+		this->afkTime += delta;
+
+		if(this->afkTime > 1000){
+			Global::game->showErrorMessage("Problema de conexion", "Se ha interrumpido la conexion con el servidor");
+			Global::game->endGame();
+		}
+
+		this->updateMutex.unlock();
+		return;
+	}
+
+	this->afkTime = 0;
 	for(auto * update : this->updatesList){
 		for(auto * entity : this->entityList){
 			if(entity->getIndex() == update->index){

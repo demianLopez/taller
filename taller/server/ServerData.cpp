@@ -60,6 +60,8 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 			j->addKeyCode(m->getKeyCode());
 		}
 
+		j->keyRequestSend --;
+
 		return cCode;
 	}
 

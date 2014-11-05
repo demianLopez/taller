@@ -27,6 +27,7 @@ private:
 
 public:
 
+	int keyRequestSend;
 
 	void setOffline(bool isOffline);
 	bool isOffline();

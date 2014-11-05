@@ -65,6 +65,7 @@ private:
 
 	GameEntity * mainEntity;
 
+	int afkTime;
 };
 
 #endif /* GAMEWORLD_H_ */
