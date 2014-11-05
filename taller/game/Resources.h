@@ -38,7 +38,7 @@ public:
 	Animation * getTopJumpRight();
 	Animation * getTopJumpLeft();
 
-	Animation * getAnimationByAnimationCode(AnimationCode animationCode);
+	Animation * getAnimationByAnimationCode(AnimationCode animationCode, bool offline = false);
 
 	Animation * getSleepingEmoticon();
 
@@ -51,7 +51,8 @@ public:
 	virtual ~Resources();
 private:
 	Image * backgroundImage;
-
+	/***** Animacion personaje *****/
+	/*Color*/
 	SpriteSheet * characterSpriteSheet;
 	Animation * characterAnimationLeft;
 	Animation * characterAnimationRight;
@@ -68,12 +69,33 @@ private:
 
 	Animation * topJumpRight;
 	Animation * topJumpLeft;
+	/*B&W*/
+	SpriteSheet * characterSpriteSheetBW;
+	Animation * characterAnimationLeftBW;
+	Animation * characterAnimationRightBW;
+
+	SpriteSheet * characterWalkBW;
+	Animation * characterWalkRightBW;
+	Animation * characterWalkLeftBW;
+
+	SpriteSheet * characterJumpBW;
+	Animation * characterStaticLeftBW;
+	Animation * characterStaticRightBW;
+	Animation * characterAirLeftBW;
+	Animation * characterAirRightBW;
+
+	Animation * topJumpRightBW;
+	Animation * topJumpLeftBW;
+	/***** Fin animacion personaje*****/
 
 	SpriteSheet * emoticons;
 	Animation * sleepingEmoticon;
 	Animation * heartAnimation;
 
 	TTF_Font * nameFonts;
+
+	void loadColoredAnimations();
+	void loadBWAnimations();
 };
 
 #endif /* RESOURCES_H_ */

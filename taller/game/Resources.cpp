@@ -13,6 +13,9 @@
 static const char * PLAYER_ANIM_PATH = "Resources/mainChar.png";
 static const char * PLAYER_WALK_PATH = "Resources/mainCharWalk.png";
 static const char * PLAYER_JUMP_PATH = "Resources/mainCharJump.png";
+static const char * PLAYER_ANIM_BW_PATH = "Resources/mainCharBW.png";
+static const char * PLAYER_WALK_BW_PATH = "Resources/mainCharWalkBW.png";
+static const char * PLAYER_JUMP_BW_PATH = "Resources/mainCharJumpBW.png";
 static const char * EMOTICONS_PATH = "Resources/balloon-emoticons-go.png";
 
 Resources::Resources() {
@@ -49,28 +52,46 @@ Animation * Resources::getPlayerAnimationRight() {
 	return this->characterAnimationRight;
 }
 
-Animation * Resources::getAnimationByAnimationCode(AnimationCode animationCode){
-
-	switch(animationCode){
-		case A_STAND_RIGHT:
-			return this->characterStaticRight;
-		case A_STAND_LEFT:
-			return this->characterStaticLeft;
-		case A_WALK_RIGHT:
-			return this->characterWalkRight;
-			break;
-		case A_WALK_LEFT:
-			return this->characterWalkLeft;
-			break;
-		case A_JUMP_RIGHT:
-			return this->characterAirRight;
-		case A_JUMP_LEFT:
-			return this->characterAirLeft;
+Animation * Resources::getAnimationByAnimationCode(AnimationCode animationCode, bool offline){
+	if(!offline){
+		switch(animationCode){
+			case A_STAND_RIGHT:
+				return this->characterStaticRight;
+			case A_STAND_LEFT:
+				return this->characterStaticLeft;
+			case A_WALK_RIGHT:
+				return this->characterWalkRight;
+				break;
+			case A_WALK_LEFT:
+				return this->characterWalkLeft;
+				break;
+			case A_JUMP_RIGHT:
+				return this->characterAirRight;
+			case A_JUMP_LEFT:
+				return this->characterAirLeft;
+		}
+	}else{
+		switch(animationCode){
+			case A_STAND_RIGHT:
+				return this->characterStaticRightBW;
+			case A_STAND_LEFT:
+				return this->characterStaticLeftBW;
+			case A_WALK_RIGHT:
+				return this->characterStaticRightBW;
+				break;
+			case A_WALK_LEFT:
+				return this->characterStaticLeftBW;
+				break;
+			case A_JUMP_RIGHT:
+				return this->characterAirRightBW;
+			case A_JUMP_LEFT:
+				return this->characterAirLeftBW;
+		}
 	}
-
+	return NULL; //Si llego aca algo esta mal
 }
 
-void Resources::loadAnimations() {
+void Resources::loadColoredAnimations(){
 	this->characterSpriteSheet = new SpriteSheet(PLAYER_ANIM_PATH, 70, 80);
 	this->characterAnimationLeft = new Animation();
 	this->characterAnimationRight = new Animation();
@@ -147,6 +168,91 @@ void Resources::loadAnimations() {
 	this->topJumpRight->addFrame(this->characterJump->getSubImage(2, 1), 50);
 	this->topJumpRight->addFrame(this->characterJump->getSubImage(1, 1), 50);
 	this->topJumpRight->addFrame(this->characterJump->getSubImage(0, 1), 50);
+}
+
+void Resources::loadBWAnimations(){
+	this->characterSpriteSheetBW = new SpriteSheet(PLAYER_ANIM_BW_PATH, 70, 80);
+	this->characterAnimationLeftBW = new Animation();
+	this->characterAnimationRightBW = new Animation();
+
+	this->characterAnimationLeftBW->addFrame(
+			this->characterSpriteSheetBW->getSubImage(0, 0), 75);
+	this->characterAnimationLeftBW->addFrame(
+			this->characterSpriteSheetBW->getSubImage(1, 0), 75);
+	this->characterAnimationLeftBW->addFrame(
+			this->characterSpriteSheetBW->getSubImage(2, 0), 75);
+	this->characterAnimationLeftBW->addFrame(
+			this->characterSpriteSheetBW->getSubImage(3, 0), 75);
+
+	this->characterAnimationRightBW->addFrame(
+			this->characterSpriteSheetBW->getSubImage(0, 1), 75);
+	this->characterAnimationRightBW->addFrame(
+			this->characterSpriteSheetBW->getSubImage(1, 1), 75);
+	this->characterAnimationRightBW->addFrame(
+			this->characterSpriteSheetBW->getSubImage(2, 1), 75);
+	this->characterAnimationRightBW->addFrame(
+			this->characterSpriteSheetBW->getSubImage(3, 1), 75);
+
+	this->characterWalkBW = new SpriteSheet(PLAYER_WALK_BW_PATH, 46, 78);
+	this->characterWalkRightBW = new Animation();
+	this->characterWalkLeftBW = new Animation();
+
+	this->characterWalkRightBW->addFrame(this->characterWalkBW->getSubImage(0, 1),
+			75);
+	this->characterWalkRightBW->addFrame(this->characterWalkBW->getSubImage(1, 1),
+			75);
+	this->characterWalkRightBW->addFrame(this->characterWalkBW->getSubImage(2, 1),
+			75);
+	this->characterWalkRightBW->addFrame(this->characterWalkBW->getSubImage(3, 1),
+			75);
+
+	this->characterWalkLeftBW->addFrame(this->characterWalkBW->getSubImage(0, 0),
+			75);
+	this->characterWalkLeftBW->addFrame(this->characterWalkBW->getSubImage(1, 0),
+			75);
+	this->characterWalkLeftBW->addFrame(this->characterWalkBW->getSubImage(2, 0),
+			75);
+	this->characterWalkLeftBW->addFrame(this->characterWalkBW->getSubImage(3, 0),
+			75);
+
+	this->characterJumpBW = new SpriteSheet(PLAYER_JUMP_BW_PATH, 55, 83);
+
+	this->characterStaticLeftBW = new Animation();
+	this->characterStaticRightBW = new Animation();
+
+	this->characterAirLeftBW = new Animation();
+	this->characterAirRightBW = new Animation();
+
+	this->topJumpLeftBW = new Animation();
+	this->topJumpRightBW = new Animation();
+
+	this->characterStaticLeftBW->addFrame(this->characterJumpBW->getSubImage(1, 0),
+			1000);
+	this->characterStaticRightBW->addFrame(this->characterJumpBW->getSubImage(6, 1),
+			1000);
+
+	this->characterAirLeftBW->addFrame(this->characterJumpBW->getSubImage(0, 0),
+			1000);
+	this->characterAirRightBW->addFrame(this->characterJumpBW->getSubImage(7, 1),
+			1000);
+
+	this->topJumpLeftBW->addFrame(this->characterJumpBW->getSubImage(3, 0), 75);
+	this->topJumpLeftBW->addFrame(this->characterJumpBW->getSubImage(4, 0), 75);
+	this->topJumpLeftBW->addFrame(this->characterJumpBW->getSubImage(5, 0), 75);
+	this->topJumpLeftBW->addFrame(this->characterJumpBW->getSubImage(6, 0), 75);
+	this->topJumpLeftBW->addFrame(this->characterJumpBW->getSubImage(7, 0), 75);
+
+	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(4, 1), 50);
+	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(3, 1), 50);
+	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(2, 1), 50);
+	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(1, 1), 50);
+	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(0, 1), 50);
+}
+
+void Resources::loadAnimations() {
+	//Animaciones del pj en color y en B&W
+	loadColoredAnimations();
+	loadBWAnimations();
 
 	this->emoticons = new SpriteSheet(EMOTICONS_PATH, 32, 32);
 
