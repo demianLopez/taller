@@ -14,6 +14,10 @@ char * Jugador::getName(){
 	return this->name;
 }
 
+void Jugador::setClient(Client_handler * client){
+	this->client = client;
+}
+
 void Jugador::addKeyCode(KeyCode keyCode){
 	this->keyCode.push_back(keyCode);
 }

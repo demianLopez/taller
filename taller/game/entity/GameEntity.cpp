@@ -10,6 +10,9 @@
 GameEntity::GameEntity(int index) {
 	this->entityIndex = index;
 	this->rotation = 0;
+	this->position = VectorXY(0, 0);
+	this->gameWorld = NULL;
+	this->type = 0;
 }
 
 VectorXY GameEntity::getPosition(){

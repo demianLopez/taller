@@ -32,6 +32,9 @@ public:
 	bool isOffline();
 
 	Jugador(Client_handler * client, char * name);
+
+	void setClient(Client_handler * client);
+
 	char * getName();
 
 

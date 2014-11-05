@@ -125,9 +125,11 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 		g->drawImage(this->backgroundImage, 0, 0,0,0, screenW, screenH, screenW, screenH);
 	}
 
+	/*
 	if(!this->lightAnimation->isFinished()){
 		g->drawAnimation(this->lightAnimation, this->lightAnimationX, 0);
 	}
+	*/
 	this->backParticleEmiter->render(g);
 
 

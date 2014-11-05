@@ -10,6 +10,9 @@
 
 PlayerEntity::PlayerEntity(int index) : GameEntity(index) {
 	// TODO Auto-generated constructor stub
+	this->lastUpdateTime = 0;
+	this->renderTimeCount = 0;
+	this->lName = 0;
 
 }
 

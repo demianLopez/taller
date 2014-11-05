@@ -49,7 +49,6 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 	}
 
 	if(cCode == LOGGIN_GAME){
-
 		vector<Jugador *> lPlayer = Data::world->getPlayerList();
 		char * playerName;
 		m->getCharArray(&playerName);
@@ -134,6 +133,7 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 			j->setOffline(false); //FIXME: agregue esto porque sino queda sin inicializar. No se si va en false..
 		} else {
 			client->userIndex = reconectedPlayer->getIndex();
+			reconectedPlayer->setClient(client);
 			j = reconectedPlayer;
 			j->setOffline(false);
 		}
