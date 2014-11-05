@@ -12,7 +12,7 @@
 #include "Resources.h"
 
 SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
-
+	this->closingGame = false;
 }
 
 void SnowBross::initializeGameStates(){
