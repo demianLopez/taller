@@ -335,6 +335,8 @@ Resources::~Resources() {
 		delete backgroundImage;
 	}
 
+	/* Animaciones pj */
+	//Color
 	delete this->characterAnimationLeft;
 	delete this->characterAnimationRight;
 	delete this->characterSpriteSheet;
@@ -353,6 +355,26 @@ Resources::~Resources() {
 	delete this->topJumpRight;
 
 	delete this->characterJump;
+	//B&N
+	delete this->characterAnimationLeftBW;
+	delete this->characterAnimationRightBW;
+	delete this->characterSpriteSheetBW;
+
+	delete this->characterWalkLeftBW;
+	delete this->characterWalkRightBW;
+
+	delete this->characterWalkBW;
+
+	delete this->characterStaticLeftBW;
+	delete this->characterStaticRightBW;
+	delete this->characterAirLeftBW;
+	delete this->characterAirRightBW;
+
+	delete this->topJumpLeftBW;
+	delete this->topJumpRightBW;
+
+	delete this->characterJumpBW;
+	/* Fin animaciones pj */
 
 	delete this->sleepingEmoticon;
 	delete this->exclamationAnimation;
