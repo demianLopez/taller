@@ -302,11 +302,8 @@ void World::worldLoop(World * word){
 
 			for(auto * j : word->getPlayerList()){
 				if(!j->isOffline()){
-					if(j->keyRequestSend >= 0){
-						std::cout<<j->keyRequestSend<<endl;
-						/*j->setOffline(true);
-
-						std::cout<<"fasda"<<std::endl;
+					if(j->keyRequestSend >= 60){
+						j->setOffline(true);
 						Message m;
 						m.addCommandCode(SHOW_MESSAGE);
 						string pM("");
@@ -316,7 +313,7 @@ void World::worldLoop(World * word){
 						m.addEndChar();
 
 						Data::world->sendToWorldPlayers(&m);
-						*/
+
 					}
 				}
 			}
