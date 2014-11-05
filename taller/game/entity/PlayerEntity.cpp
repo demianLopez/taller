@@ -62,8 +62,10 @@ void PlayerEntity::render(Graphics * g, unsigned int delta){
 	g->drawAtCenter(true);
 	if(offline){
 		g->drawAnimation(Global::gameResources->getSleepingEmoticon(), sdlPos.x + 10, sdlPos.y - 50);
+		g->drawAnimation(Global::gameResources->getAnimationByAnimationCode(animation, true), sdlPos.x, sdlPos.y);
+	}else{
+		g->drawAnimation(Global::gameResources->getAnimationByAnimationCode(animation), sdlPos.x, sdlPos.y);
 	}
-	g->drawAnimation(Global::gameResources->getAnimationByAnimationCode(animation), sdlPos.x, sdlPos.y);
 	g->setFont(Global::gameResources->getNameFont());
 
 
