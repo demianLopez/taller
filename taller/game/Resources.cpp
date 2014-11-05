@@ -358,7 +358,7 @@ Resources::~Resources() {
 	//delete this->exclamationAnimation;
 	delete this->heartAnimation;
 	delete this->emoticons;
-	delete this->nameFonts;
+	TTF_CloseFont(nameFonts);
 
 }
 
