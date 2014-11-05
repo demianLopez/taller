@@ -248,7 +248,7 @@ void Game::gameCicle(){
 			fpsText.clear();
 			fpsText.str("");
 			fpsText << this->getFPS() << " FPS";
-			g->drawText(10, 10, fpsText.str().c_str());
+			g->drawText(this->width - 100, this->height - 40, fpsText.str().c_str());
 		}
 
 		SDL_RenderPresent(gRenderer);

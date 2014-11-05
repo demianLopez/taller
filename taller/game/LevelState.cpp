@@ -186,10 +186,6 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 
 	VectorXY sdlWorldSize = this->gameWorld->getSdlWorldSize();
 
-
-
-
-
 	if((auGlobalX) < 0){
 		auGlobalX = 0;
 	} if((auGlobalY) < 0){
@@ -210,8 +206,18 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
 	g->setColor(0, 255, 0);
-	g->drawFillRect()
+	g->drawFillRect(10, 10, 160, 40);
+	g->drawFillRect(190, 10, 420, 40);
+	g->drawFillRect(630, 10 , 160, 40);
+	g->setColor(0, 0, 0);
+	g->drawRect(11, 11, 158, 38);
+	g->drawRect(191, 11, 418, 38);
+	g->drawRect(631, 11, 158, 38);
 
+	g->setColor(255, 0, 0);
+	g->setFont(Global::gameResources->getNameFont());
+
+	g->drawText(635, 15, "Puntaje: 0");
 	levelStateMutex.unlock();
 }
 

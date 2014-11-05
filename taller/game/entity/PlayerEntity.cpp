@@ -63,9 +63,12 @@ void PlayerEntity::render(Graphics * g, unsigned int delta){
 	g->drawAnimation(Global::gameResources->getAnimationByAnimationCode(animation), sdlPos.x, sdlPos.y);
 	g->setFont(Global::gameResources->getNameFont());
 
-	g->setColor(0, 0, 0);
+
 
 	if(!offline){
+		g->setColor(0, 0, 0, 150);
+		g->drawFillRect(sdlPos.x - this->lName * 5 - 7, sdlPos.y - 56, this->lName * 10 + 20, 20);
+		g->setColor(255, 255, 255);
 		g->drawText(sdlPos.x - this->lName * 5, sdlPos.y - 60, this->pName);
 	}
 
