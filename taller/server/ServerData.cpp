@@ -23,17 +23,17 @@ void ServerData::closeConnection(Client_handler * client){
 void ServerData::disconnectPlayer(Jugador * j){
 	if(j != NULL){
 		j->setOffline(true);
+
+		Message m;
+		m.addCommandCode(SHOW_MESSAGE);
+		string pM("");
+		pM.append(j->getName());
+		pM.append(" se ha desconectado");
+		m.addCharArray(pM.c_str(), pM.size());
+		m.addEndChar();
+
+		Data::world->sendToWorldPlayers(&m);
 	}
-
-	Message m;
-	m.addCommandCode(SHOW_MESSAGE);
-	string pM("");
-	pM.append(j->getName());
-	pM.append(" se ha desconectado");
-	m.addCharArray(pM.c_str(), pM.size());
-	m.addEndChar();
-
-	Data::world->sendToWorldPlayers(&m);
 }
 
 char ServerData::dataArribal(Message * m, Client_handler * client){

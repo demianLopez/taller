@@ -355,7 +355,7 @@ Resources::~Resources() {
 	delete this->characterJump;
 
 	delete this->sleepingEmoticon;
-	delete this->exclamationAnimation;
+	//delete this->exclamationAnimation;
 	delete this->heartAnimation;
 	delete this->emoticons;
 	delete this->nameFonts;

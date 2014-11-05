@@ -339,6 +339,7 @@ void LevelState::setMessage(char * message){
 	levelStateMutex.lock();
 	if(serverMessage != NULL){
 		delete serverMessage;
+		serverMessage = NULL;
 	}
 	this->serverMessage = message;
 	this->messageSize = strlen(message);
