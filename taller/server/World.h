@@ -15,9 +15,11 @@
 #include "ContactListener.h"
 #include <thread>
 #include <string.h>
+#include <mutex>
 
 using std::string;
 using std::thread;
+using std::mutex;
 
 class Polygon;
 
@@ -102,6 +104,8 @@ private:
 	int maxPlayers;
 
 	int lastEntityIndex;
+
+	mutex worldMutex;
 };
 
 #endif /* WORLD_H_ */

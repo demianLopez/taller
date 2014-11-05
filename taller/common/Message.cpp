@@ -16,6 +16,10 @@ Message::Message() {
 	read = 1;
 }
 
+CommandCode Message::getFirstCommandCode(){
+	return message[0];
+}
+
 /* Crea un nuevo mensaje y le copia data. */
 Message::Message(char *data, char size) {
 	this->message = new char[256];

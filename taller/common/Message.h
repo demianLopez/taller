@@ -53,6 +53,8 @@ public:
 
 	virtual ~Message();
 
+	CommandCode getFirstCommandCode();
+
 	/* Devuelve el mensaje entero.
 	 * Asigna la longitud al primer lugar antes de hacerlo. */
 	char * getMessageData();

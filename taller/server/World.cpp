@@ -100,10 +100,10 @@ void World::initializePlayerBody(Jugador * player){
 Jugador * World::getPlayer(int userIndex){
 	for(auto * user : this->playerList){
 		if(user->getIndex() == userIndex){
+
 			return user;
 		}
 	}
-
 	return NULL;
 }
 
@@ -119,6 +119,7 @@ void World::requestKeyData(Jugador * j){
 }
 
 void World::addPlayer(Jugador * jugador, bool reconecting){
+	worldMutex.lock();
 	if(!reconecting){
 		this->playerList.push_back(jugador);
 		int avavibleIndex = this->getAvavibleIndex();
@@ -139,6 +140,7 @@ void World::addPlayer(Jugador * jugador, bool reconecting){
 		//incluyendote
 		this->instantiatePlayer(p, jugador->getClient());
 	}
+	worldMutex.unlock();
 }
 
 void World::releaseEntityIndex(int index){
@@ -245,47 +247,60 @@ bool World::isOnLoop(){
 }
 
 void World::worldLoop(World * word){
-	int ups = 25;
-	int sleepTime = 1000/ups;
+	char eCode = 0;
+	try{
+		int ups = 25;
+		int sleepTime = 1000/ups;
 
-	clock_t lastClock = clock();
+		clock_t lastClock = clock();
 
-	int upCount = 0;
-	int updateTime = 0;
+		int upCount = 0;
+		int updateTime = 0;
 
-	while(word->isOnLoop()){
+		while(word->isOnLoop()){
+			eCode = 0;
 
-		for(auto * j : word->getPlayerList()){
-			j->apllyCodes();
-			j->update();
-		}
-
-		clock_t current = clock();
-		int elapsedTime = (current - lastClock) / CLOCKS_PER_SEC * 1000 + sleepTime;
-		lastClock = current;
-
-		updateTime += elapsedTime;
-
-
-		if(updateTime > 1000){
-			updateTime = 0;
-			word->updatesPerSecond = upCount;
-			upCount = 0;
-		}
-
-		upCount++;
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-
-		for(auto * j : word->getPlayerList()){
-			if(!j->isOffline()){
-				word->requestKeyData(j);
+			for(auto * j : word->getPlayerList()){
+				j->apllyCodes();
+				j->update();
 			}
+
+			eCode = 1;
+			clock_t current = clock();
+			int elapsedTime = (current - lastClock) / CLOCKS_PER_SEC * 1000 + sleepTime;
+			lastClock = current;
+
+			updateTime += elapsedTime;
+
+			eCode = 2;
+			if(updateTime > 1000){
+				updateTime = 0;
+				word->updatesPerSecond = upCount;
+				upCount = 0;
+			}
+
+			upCount++;
+
+			eCode = 3;
+			std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+
+			//worldMutex.lock();
+			eCode = 4;
+			for(auto * j : word->getPlayerList()){
+				if(!j->isOffline()){
+					word->requestKeyData(j);
+				}
+			}
+			//worldMutex.unlock();
+
+			eCode = 5;
+			word->worldStep(sleepTime);
+			eCode = 6;
+			word->sendUpdates();
 		}
-
-
-		word->worldStep(sleepTime);
-		word->sendUpdates();
+	} catch (const std::exception& e){
+		std::cout<<e.what()<<" - Producido en WorldLoop - tCode: "<<eCode<<std::endl;
+		exit(-1);
 	}
 }
 

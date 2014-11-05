@@ -51,21 +51,6 @@ void LevelState::init(Game * game){
 		this->lightAnimation->addFrame(this->spriteLightAnimation->getSubImage(i, 0), 25);
 	}
 
-
-
-	//Recalculamos con datos
-	//TODO: Cambiar! por el valor de la pantalla no harcodeado
-	//float xMax = ((float)wSize->x * 20)/this->getScreenWidth();
-	//float yMax = ((float)wSize->y * 20)/this->getScreenHeight();
-	//float xMax = ((float)wSize.x * 20)/800;
-	//float yMax = ((float)wSize.y * 20)/600;
-	//---------------------------------------------
-	/*if(xMax > yMax){
-		this->maxZoomScale = yMax;
-	} else {
-		this->maxZoomScale = xMax;
-	}*/
-
 }
 
 void LevelState::setWorld(GameWorld * world){
@@ -175,41 +160,52 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 	VectorXY mainEntPos = gameWorld->getMainEntity()->getPosition();
 	VectorXY mainEntSdlPos = gameWorld->box2DToSDL(&mainEntPos);
 
-	float xScreen = mainEntSdlPos.x - globalX;
-	float yScreen = mainEntSdlPos.y - globalY;
+
+
+	int dTx = screenW * this->zoomScale;
+	int dTy = screenH * this->zoomScale;
+
+	int difTx = (screenW - dTx)/2;
+	int difTy = (screenH - dTy)/2;
+
+	int auGlobalX = globalX +difTx;
+	int auGlobalY = globalY +difTy;
+
+	float xScreen = mainEntSdlPos.x - auGlobalX;
+	float yScreen = mainEntSdlPos.y - auGlobalX;
 
 	if(xScreen < 200){
 		globalX -= 5;
-	} if(xScreen > 600){
+	} if(xScreen > dTx - 200){
 		globalX += 5;
 	} if(yScreen < 100){
 		globalY -= 5;
-	} if(yScreen > 500){
+	} if(yScreen > dTy - 100){
 		globalY += 5;
 	}
 
 	VectorXY sdlWorldSize = this->gameWorld->getSdlWorldSize();
 
-	if(globalX < 0){
-		globalX = 0;
-	} if(globalY < 0){
-		globalY = 0;
-	} if(globalX > (sdlWorldSize.x - screenW)){
-		globalX = sdlWorldSize.x - screenW;
-	} if(globalY > (sdlWorldSize.y - screenH)){
-		globalY = sdlWorldSize.y - screenH;
-	}
 
+
+
+
+	if((auGlobalX) < 0){
+		auGlobalX = 0;
+	} if((auGlobalY) < 0){
+		auGlobalY = 0;
+	} if(auGlobalX > (sdlWorldSize.x - dTx)){
+		auGlobalX = sdlWorldSize.x - dTx;
+	} if(auGlobalY > (sdlWorldSize.y - dTy)){
+		auGlobalY = sdlWorldSize.y - dTy;
+	}
 
 
 
 	g->setRendererObject(NULL);
 	g->drawAtCenter(false);
 
-
-	//g->drawImage(this->worldImage, 0, 0, tXo, tYo,tdX, tdY, screenW, screenH);
-
-	g->drawImage(this->worldImage, 0, 0, globalX, globalY, screenW, screenH, screenW, screenH);
+	g->drawImage(this->worldImage, 0, 0, auGlobalX, auGlobalY, dTx, dTy, screenW, screenH);
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
@@ -312,6 +308,19 @@ void LevelState::enter(){
 	VectorXY wSize = this->gameWorld->getBox2DWorldSize();
 	this->worldImage = new Image(wSize.x * 20, wSize.y * 20);
 	this->gameWorld->generateGraphics();
+
+	//Recalculamos con datos
+	//TODO: Cambiar! por el valor de la pantalla no harcodeado
+	float xMax = ((float)wSize.x * 20)/Global::game->getScreenWidth();
+	float yMax = ((float)wSize.y * 20)/Global::game->getScreenHeight();
+
+	//---------------------------------------------
+
+	if(xMax > yMax){
+		this->maxZoomScale = yMax;
+	} else {
+		this->maxZoomScale = xMax;
+	}
 }
 
 LevelState::~LevelState() {

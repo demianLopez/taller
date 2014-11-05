@@ -219,7 +219,12 @@ void Game::gameCicle(){
 		g->resetGraphics();
 
 		int delta = SDL_GetTicks() - this->lastUpdateTime;
-		this->currentState->update(delta);
+		try{
+			this->currentState->update(delta);
+		} catch(const std::exception& e){
+			std::cout<<e.what()<<" - Producido en game render - State: "<<this->nextState<<std::endl;
+			exit(-1);
+		}
 		this->lastUpdateTime = SDL_GetTicks();
 
 		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);

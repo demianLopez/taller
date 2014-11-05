@@ -124,12 +124,17 @@ bool Client_handler::runListen() {
 
 		if (dataObserver != NULL) {
 			Message * m = new Message(message, bytes_read);
-			char c = dataObserver->dataArribal(m, this);
+			try {
+				char c = dataObserver->dataArribal(m, this);
 
-			if(m->getCommandCode() != END_CHAR && c != CLOSING_GAME){
-				std::cout<<"!WARNING NOT END CHAR FUND ON cCode "<<(int)c<<std::endl;
+				if(m->getCommandCode() != END_CHAR && c != CLOSING_GAME){
+					std::cout<<"!WARNING NOT END CHAR FUND ON cCode "<<(int)c<<std::endl;
+				}
+				delete m;
+			} catch (const std::exception&e){
+				std::cout<<e.what()<<" - "<<"producido en DataArribal - cCode: "<<m->getFirstCommandCode()<<std::endl;
+				exit(-1);
 			}
-			delete m;
 		}
 	}
 	return true;
