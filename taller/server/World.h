@@ -67,7 +67,7 @@ public:
 
 	void sendToWorldPlayers(Message * m);
 
-	void instantiatePlayer(Personaje * p, Client_handler * client);
+	void instantiatePlayer(Jugador * j, Client_handler * client);
 
 	void requestKeyData(Jugador * j);
 

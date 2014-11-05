@@ -200,13 +200,14 @@ void World::worldStep(int delta) {
 	this->box2DWorld->Step(timeStep, velocityIterations, positionIterations);
 }
 
-void World::instantiatePlayer(Personaje * p, Client_handler * client){
+void World::instantiatePlayer(Jugador * p, Client_handler * client){
 	Message m;
 	m.addCommandCode(ADD_PLAYER_DATA);
 	m.addChar(p->getIndex());
 	m.addFloat(&p->getPosition()->x);
 	m.addFloat(&p->getPosition()->y);
 	m.addAnimationCode(p->getCurrentAnimation());
+	m.addCharArray(p->getName(), strlen(p->getName()));
 	m.addEndChar();
 
 	client->send_message(&m);

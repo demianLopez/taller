@@ -21,6 +21,7 @@ public:
 	void setAnimation(AnimationCode animation);
 	void setOffline(bool offline);
 
+	void setPlayerName(char * name);
 private:
 	AnimationCode animation;
 
@@ -31,6 +32,9 @@ private:
 
 	int renderTimeCount;
 
+
+	char * pName;
+	int lName;
 
 	VectorXY lastPosition;
 	float lastRotation;

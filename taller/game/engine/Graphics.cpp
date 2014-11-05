@@ -41,8 +41,12 @@ void Graphics::drawAtCenter(bool dAtCenter) {
 	this->dAtCenter = dAtCenter;
 }
 
+void Graphics::setFont(TTF_Font * font){
+	this->currentFont = font;
+}
+
 void Graphics::drawText(int x, int y, const char * text) {
-	SDL_Color textColor = { 255, 255, 255, 255 };
+	SDL_Color textColor = {r, g, b, 255 };
 
 	SDL_Surface* textSurface = TTF_RenderText_Solid(currentFont, text,
 			textColor);
@@ -56,6 +60,8 @@ void Graphics::drawText(int x, int y, const char * text) {
 }
 
 void Graphics::resetGraphics() {
+	this->setColor(255, 255, 255);
+	this->currentFont = GameElements::gFont;
 	this->dAtCenter = false;
 	SDL_SetRenderTarget(GameElements::gRenderer, NULL);
 }
@@ -146,6 +152,10 @@ void Graphics::drawFillCircle(int x, int y, int rad, int r, int g, int b) {
 
 void Graphics::setColor(unsigned char red, unsigned char green,
 		unsigned char blue, unsigned char alpha) {
+	this->r = red;
+	this->g = green;
+	this->b = blue;
+
 	SDL_SetRenderDrawColor(GameElements::gRenderer, red, green, blue, alpha);
 }
 

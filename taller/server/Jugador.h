@@ -38,6 +38,8 @@ public:
 	void addKeyCode(KeyCode keyCode);
 	void apllyCodes();
 
+	char * getPlayerName();
+
 	Client_handler * getClient();
 
 	char tipoDeObjeto; // Para contact listener.

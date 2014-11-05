@@ -216,6 +216,8 @@ PolygonEntity::~PolygonEntity() {
 	if(polygonImage != NULL){
 		delete this->polygonImage;
 	}
+
+
 }
 
 

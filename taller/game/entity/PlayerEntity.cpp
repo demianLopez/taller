@@ -13,6 +13,11 @@ PlayerEntity::PlayerEntity(int index) : GameEntity(index) {
 
 }
 
+void PlayerEntity::setPlayerName(char * name){
+	this->pName = name;
+	this->lName = strlen(name);
+}
+
 void PlayerEntity::update(UpdateRequest * u,  unsigned int elapsedTime){
 	this->lastPosition = this->nextPosition;
 	this->nextPosition = VectorXY(u->posX, u->posY);
@@ -56,6 +61,10 @@ void PlayerEntity::render(Graphics * g, unsigned int delta){
 		g->drawAnimation(Global::gameResources->getSleepingEmoticon(), sdlPos.x + 10, sdlPos.y - 50);
 	}
 	g->drawAnimation(Global::gameResources->getAnimationByAnimationCode(animation), sdlPos.x, sdlPos.y);
+	g->setFont(Global::gameResources->getNameFont());
+
+	g->setColor(0, 0, 0);
+	g->drawText(sdlPos.x - this->lName * 5, sdlPos.y - 60, this->pName);
 	g->drawAtCenter(false);
 }
 
@@ -64,6 +73,6 @@ void PlayerEntity::setAnimation(AnimationCode animation){
 }
 
 PlayerEntity::~PlayerEntity() {
-	// TODO Auto-generated destructor stub
+	delete this->pName;
 }
 

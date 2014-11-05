@@ -63,6 +63,8 @@ public:
 	void drawFillPolygon(short int* vx, short int* vy, int n, int r, int g,
 			int b);
 
+	void setFont(TTF_Font * font);
+
 	//Setea el color
 	void setColor(unsigned char red, unsigned char green, unsigned char blue);
 	void setColor(unsigned char red, unsigned char green, unsigned char blue,
@@ -70,6 +72,10 @@ public:
 private:
 	TTF_Font *currentFont;
 	bool dAtCenter;
+
+	int r;
+	int g;
+	int b;
 };
 
 #endif /* GRAPHICS_H_ */

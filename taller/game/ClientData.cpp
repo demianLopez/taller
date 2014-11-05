@@ -97,10 +97,13 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		float pX = m->getFloat();
 		float pY = m->getFloat();
 		AnimationCode anim = m->getAnimationCode();
+		char * pName;
+		m->getCharArray(&pName);
 
 		PlayerEntity * pEntity = new PlayerEntity(index);
 		pEntity->setPosition(pX, pY);
 		pEntity->setAnimation(anim);
+		pEntity->setPlayerName(pName);
 
 		pEntity->setWorld(Global::gameWorld);
 		Global::gameWorld->addEntity(pEntity);

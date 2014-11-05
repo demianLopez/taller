@@ -18,6 +18,10 @@ void Jugador::addKeyCode(KeyCode keyCode){
 	this->keyCode.push_back(keyCode);
 }
 
+char * Jugador::getPlayerName(){
+	return this->name;
+}
+
 void Jugador::setOffline(bool isOffline){
 	this->offline = isOffline;
 }

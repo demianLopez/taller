@@ -216,8 +216,6 @@ void Game::gameCicle(){
 			}
 		}
 
-		g->resetGraphics();
-
 		int delta = SDL_GetTicks() - this->lastUpdateTime;
 		try{
 			this->currentState->update(delta);
@@ -231,6 +229,7 @@ void Game::gameCicle(){
 		SDL_RenderClear(gRenderer);
 
 		this->currentState->render(g, this, delta);
+		g->resetGraphics();
 		this->lastRenderTime = SDL_GetTicks();
 
 		this->renderCount++;

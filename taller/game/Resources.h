@@ -13,6 +13,7 @@ class SpriteSheet;
 class Animation;
 
 #include "CommandCode.h"
+#include "engine/LibIncludes.h"
 
 class Resources {
 public:
@@ -43,6 +44,8 @@ public:
 
 	Image * getBackground();
 
+	TTF_Font * getNameFont();
+
 	virtual ~Resources();
 private:
 	Image * backgroundImage;
@@ -66,6 +69,8 @@ private:
 
 	SpriteSheet * emoticons;
 	Animation * sleepingEmoticon;
+
+	TTF_Font * nameFonts;
 };
 
 #endif /* RESOURCES_H_ */

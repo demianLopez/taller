@@ -172,7 +172,7 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 	int auGlobalY = globalY +difTy;
 
 	float xScreen = mainEntSdlPos.x - auGlobalX;
-	float yScreen = mainEntSdlPos.y - auGlobalX;
+	float yScreen = mainEntSdlPos.y - auGlobalY;
 
 	if(xScreen < 200){
 		globalX -= 5;

@@ -156,6 +156,8 @@ void Resources::loadAnimations() {
 		sleepingEmoticon->addFrame(emoticons->getSubImage(i, 9), 150);
 	}
 
+	this->nameFonts = TTF_OpenFont("Resources/font.ttf", 18);
+
 }
 
 Image * Resources::getBackground() {
@@ -198,6 +200,10 @@ Animation * Resources::getSleepingEmoticon(){
 	return this->sleepingEmoticon;
 }
 
+TTF_Font * Resources::getNameFont(){
+	return this->nameFonts;
+}
+
 Resources::~Resources() {
 	if (this->backgroundImage != NULL) {
 		delete backgroundImage;
@@ -224,6 +230,7 @@ Resources::~Resources() {
 
 	delete this->sleepingEmoticon;
 	delete this->emoticons;
+	delete this->nameFonts;
 
 }
 
