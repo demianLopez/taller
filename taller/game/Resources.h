@@ -41,6 +41,7 @@ public:
 	Animation * getAnimationByAnimationCode(AnimationCode animationCode);
 
 	Animation * getSleepingEmoticon();
+	Animation * getExclamationAnimation();
 
 	Image * getBackground();
 
@@ -72,6 +73,8 @@ private:
 	SpriteSheet * emoticons;
 	Animation * sleepingEmoticon;
 	Animation * heartAnimation;
+	Animation * exclamationAnimation;
+
 
 	TTF_Font * nameFonts;
 };

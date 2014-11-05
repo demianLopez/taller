@@ -151,6 +151,13 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		return cCode;
 	}
 
+	if(cCode == SHOW_MESSAGE){
+		char * message;
+		m->getCharArray(&message);
+		Global::levelState->setMessage(message);
+		return cCode;
+	}
+
 	std::cout<<"WARNING: LOOSING cCode: "<<(int)cCode<<endl;
 	return cCode;
 }

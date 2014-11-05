@@ -152,21 +152,29 @@ void Resources::loadAnimations() {
 
 	this->sleepingEmoticon = new Animation();
 	this->heartAnimation = new Animation();
+	this->exclamationAnimation = new Animation();
 
 	for(int i = 0; i < 8; i++){
 		sleepingEmoticon->addFrame(emoticons->getSubImage(i, 9), 150);
 		if( i != 0){
 			heartAnimation->addFrame(emoticons->getSubImage(i, 3), 150);
+			exclamationAnimation->addFrame(emoticons->getSubImage(i, 0), 150);
 		}
 	}
 
 	for(int i = 7; i > 0; i--) {
 		heartAnimation->addFrame(emoticons->getSubImage(i, 3), 150);
+		exclamationAnimation->addFrame(emoticons->getSubImage(i, 0), 150);
 	}
 
 	this->nameFonts = TTF_OpenFont("Resources/font.ttf", 18);
 
 }
+
+Animation * Resources::getExclamationAnimation(){
+	return this->exclamationAnimation;
+}
+
 
 Image * Resources::getBackground() {
 	return this->backgroundImage;
@@ -241,6 +249,7 @@ Resources::~Resources() {
 	delete this->characterJump;
 
 	delete this->sleepingEmoticon;
+	delete this->exclamationAnimation;
 	delete this->heartAnimation;
 	delete this->emoticons;
 	delete this->nameFonts;

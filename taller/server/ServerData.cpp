@@ -10,15 +10,30 @@
 #include "Data.h"
 #include <string>
 
+using std::string;
+
 ServerData::ServerData(Server * sv) {
 	this->sv = sv;
 }
 
 void ServerData::closeConnection(Client_handler * client){
-	Jugador * j = Data::world->getPlayer(client->userIndex);
+	this->disconnectPlayer(Data::world->getPlayer(client->userIndex));
+}
+
+void ServerData::disconnectPlayer(Jugador * j){
 	if(j != NULL){
 		j->setOffline(true);
 	}
+
+	Message m;
+	m.addCommandCode(SHOW_MESSAGE);
+	string pM("");
+	pM.append(j->getName());
+	pM.append(" se ha desconectado");
+	m.addCharArray(pM.c_str(), pM.size());
+	m.addEndChar();
+
+	Data::world->sendToWorldPlayers(&m);
 }
 
 char ServerData::dataArribal(Message * m, Client_handler * client){
@@ -129,9 +144,29 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 		Jugador * j;
 
 		if(!reconecting){
+			Message m;
+			m.addCommandCode(SHOW_MESSAGE);
+			string pM("");
+			pM.append(playerName);
+			pM.append(" se ha conectado");
+			m.addCharArray(pM.c_str(), pM.size());
+			m.addEndChar();
+			Data::world->sendToWorldPlayers(&m);
+
 			j = new Jugador(client, playerName);
 			j->setOffline(false); //FIXME: agregue esto porque sino queda sin inicializar. No se si va en false..
+
+
 		} else {
+			Message m;
+			m.addCommandCode(SHOW_MESSAGE);
+			string pM("");
+			pM.append(reconectedPlayer->getName());
+			pM.append(" se ha reconectado");
+			m.addCharArray(pM.c_str(), pM.size());
+			m.addEndChar();
+
+			Data::world->sendToWorldPlayers(&m);
 			client->userIndex = reconectedPlayer->getIndex();
 			reconectedPlayer->setClient(client);
 			j = reconectedPlayer;
@@ -162,10 +197,7 @@ char ServerData::dataArribal(Message * m, Client_handler * client){
 }
 
 void ServerData::errorConnection(Client_handler * client, int error){
-	Jugador * j = Data::world->getPlayer(client->userIndex);
-	if(j != NULL){
-		j->setOffline(true);
-	}
+	this->disconnectPlayer(Data::world->getPlayer(client->userIndex));
 }
 
 

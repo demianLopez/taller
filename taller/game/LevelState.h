@@ -37,6 +37,8 @@ public:
 
 	void sendKeyData();
 	std::vector<KeyCode> getKeyCodeData();
+
+	void setMessage(char * message);
 private:
 	virtual void update(unsigned int delta);
 	virtual void render(Graphics *g, Game * game, unsigned int delta);
@@ -66,6 +68,11 @@ private:
 
 	std::vector<KeyCode> keyCodeData;
 	mutex levelStateMutex;
+
+	char * serverMessage;
+	int messageTime;
+	bool hasMessage;
+	int messageSize;
 };
 
 #endif /* LEVELSTATE_H_ */

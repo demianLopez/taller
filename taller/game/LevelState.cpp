@@ -26,6 +26,9 @@ LevelState::LevelState() {
 	this->globalY = 0;
 	//Se recalcula despues, sabiendo los datos del mundo y la pantalla
 	this->maxZoomScale = 1;
+	this->hasMessage = false;
+	this->messageTime = 0;
+	this->serverMessage = NULL;
 }
 
 
@@ -180,7 +183,7 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 		globalX -= 5;
 	} if(xScreen > dTx - 200){
 		globalX += 5;
-	} if(yScreen < 100){
+	} if(yScreen < 200){
 		globalY -= 5;
 	} if(yScreen > dTy - 100){
 		globalY += 5;
@@ -218,6 +221,13 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 
 	g->setColor(255, 0, 0);
 	g->setFont(Global::gameResources->getNameFont());
+
+	if(this->hasMessage){
+		g->drawText(400 - messageSize * 5, 15, serverMessage);
+		g->drawAnimation(Global::gameResources->getExclamationAnimation(), 400 - messageSize * 5 - 36, 14);
+		g->drawAnimation(Global::gameResources->getExclamationAnimation(), 400 + messageSize * 5, 14);
+
+	}
 
 	g->drawText(635, 15, "Puntaje: 0");
 	for(int i = 0; i < 5; i++){
@@ -316,6 +326,25 @@ void LevelState::update(unsigned int delta){
 		}
 	}
 	levelStateMutex.unlock();
+
+	if(this->hasMessage){
+		this->messageTime += delta;
+		if(this->messageTime > 10000){
+			this->hasMessage = false;
+		}
+	}
+}
+
+void LevelState::setMessage(char * message){
+	levelStateMutex.lock();
+	if(serverMessage != NULL){
+		delete serverMessage;
+	}
+	this->serverMessage = message;
+	this->messageSize = strlen(message);
+	this->hasMessage = true;
+	this->messageTime = 0;
+	levelStateMutex.unlock();
 }
 
 void LevelState::enter(){
@@ -338,6 +367,8 @@ void LevelState::enter(){
 }
 
 LevelState::~LevelState() {
-
+	if(serverMessage != NULL){
+		delete serverMessage;
+	}
 }
 

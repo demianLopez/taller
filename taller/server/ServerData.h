@@ -10,6 +10,7 @@
 
 #include <DataObserver.h>
 #include "Server.h"
+#include "Jugador.h"
 
 class ServerData: public DataObserver {
 public:
@@ -18,6 +19,8 @@ public:
 	void closeConnection(Client_handler * client);
 	void errorConnection(Client_handler * client, int error);
 	virtual ~ServerData();
+
+	void disconnectPlayer(Jugador * j);
 private:
 	Server * sv;
 };
