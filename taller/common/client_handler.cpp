@@ -152,10 +152,15 @@ void Client_handler::stop() {
 	_socket->shutdown_socket();
 	_socket->close_port();
 	delete _socket;
+	_socket = NULL;
 }
 
 bool Client_handler::send_message(Message * msg){
 	//this->sendingMutex.lock();
+	if(_socket == NULL){
+		return false;
+	}
+
 	if(_socket && _socket->is_valid()){
 		int sent = -1;
 

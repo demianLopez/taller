@@ -64,7 +64,11 @@ void PlayerEntity::render(Graphics * g, unsigned int delta){
 	g->setFont(Global::gameResources->getNameFont());
 
 	g->setColor(0, 0, 0);
-	g->drawText(sdlPos.x - this->lName * 5, sdlPos.y - 60, this->pName);
+
+	if(!offline){
+		g->drawText(sdlPos.x - this->lName * 5, sdlPos.y - 60, this->pName);
+	}
+
 	g->drawAtCenter(false);
 }
 

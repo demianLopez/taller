@@ -209,6 +209,9 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
+	g->setColor(0, 255, 0);
+	g->drawFillRect()
+
 	levelStateMutex.unlock();
 }
 

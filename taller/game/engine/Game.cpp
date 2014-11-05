@@ -173,6 +173,7 @@ void Game::gameCicle(){
 	}
 
 	Graphics *g = new Graphics(this->gFont);
+	g->resetGraphics();
 
 	SDL_Event e;
 
@@ -188,6 +189,7 @@ void Game::gameCicle(){
 
 	while(!this->quit) {
 		this->mutexGame.lock();
+
 		if(this->changingState){
 
 			if(this->currentState != NULL){
@@ -207,6 +209,8 @@ void Game::gameCicle(){
 				this->currentState->keyEvent(e, this);
 			}
 		}
+
+		g->resetGraphics();
 
 		if (this->limitedFPS) {
 			int renderTime = 1000 / this->maxFPS;
