@@ -23,7 +23,8 @@ public:
 	void initialize();
 	void addVertex(float x, float y);
 
-	void update(UpdateRequest * u,  unsigned int elapsedTime);
+	void update(unsigned int delta);
+	void addUpdateRequest(UpdateRequest * u,  unsigned int elapsedTime);
 	void setStatic(bool isStatic);
 
 	void buildRectangle(short int * vX, short int * vY);

@@ -280,7 +280,7 @@ void World::worldLoop(World * word){
 			word->worldStep(sleepTime);
 			eCode = 6;
 
-			if((updateCount % 2) == 0){
+			if((updateCount % 1) == 0){
 				word->sendUpdates();
 			}
 			updateCount ++;

@@ -10,10 +10,16 @@
 
 PlayerEntity::PlayerEntity(int index) : GameEntity(index) {
 	// TODO Auto-generated constructor stub
-	this->lastUpdateTime = 0;
 	this->renderTimeCount = 0;
 	this->lName = 0;
 
+	currentUpdate = 0;
+	lastAddUpdate = 0;
+
+	this->updateTimeArray = new int[10];
+	this->updateRequestArray = new UpdateRequest*[10];
+
+	firstUpdate = false;
 }
 
 void PlayerEntity::setPlayerName(char * name){
@@ -21,17 +27,62 @@ void PlayerEntity::setPlayerName(char * name){
 	this->lName = strlen(name);
 }
 
-void PlayerEntity::update(UpdateRequest * u,  unsigned int elapsedTime){
-	this->lastPosition = this->nextPosition;
-	this->nextPosition = VectorXY(u->posX, u->posY);
+void PlayerEntity::update(unsigned int delta){
+	if(!this->firstUpdate){
+		return;
+	}
 
-	this->animation = u->animation;
-	this->offline = u->offline;
+	this->renderTimeCount += delta;
 
-	int currentTime = Global::game->getElapsedTime();
-	this->elapsedTime = currentTime - this->lastUpdateTime;
-	this->lastUpdateTime = currentTime;
-	this->renderTimeCount = 0;
+	if(renderTimeCount > this->updateTimeArray[currentUpdate]){
+
+		int nextUpdate = (currentUpdate + 1)%10;
+
+		if(updateRequestArray[nextUpdate] == NULL){
+			this->renderTimeCount = this->updateTimeArray[currentUpdate];
+			return;
+		}
+
+		renderTimeCount -= this->updateTimeArray[currentUpdate];
+
+		delete this->updateRequestArray[currentUpdate];
+		this->updateRequestArray[currentUpdate] = NULL;
+
+		currentUpdate = nextUpdate;
+		UpdateRequest * u = this->updateRequestArray[currentUpdate];
+
+		this->lastPosition = this->nextPosition;
+		this->nextPosition = VectorXY(u->posX, u->posY);
+
+		this->animation = u->animation;
+		this->offline = u->offline;
+	}
+
+
+	float d = (float)(renderTimeCount)/(float) (updateTimeArray[currentUpdate]);
+
+	if(d > 1) { d = 1; }
+	float iPosX = lastPosition.x + (nextPosition.x - lastPosition.x) * d;
+	float iPosY = lastPosition.y + (nextPosition.y - lastPosition.y) * d;
+
+	position = VectorXY(iPosX, iPosY);
+}
+
+void PlayerEntity::addUpdateRequest(UpdateRequest * u,  unsigned int elapsedTime){
+
+
+	this->updateTimeArray[lastAddUpdate] = elapsedTime - this->lastUpdateTime;
+	this->lastUpdateTime = elapsedTime;
+	this->updateRequestArray[lastAddUpdate] = u;
+
+	lastAddUpdate = (lastAddUpdate + 1)%10;
+
+	if(!firstUpdate && (lastAddUpdate > 1)){
+		this->currentUpdate = 1;
+		this->lastPosition = VectorXY(updateRequestArray[0]->posX, updateRequestArray[0]->posY);
+		this->nextPosition = VectorXY(u->posX, u->posY);
+		this->firstUpdate = true;
+	}
 }
 
 void PlayerEntity::setOffline(bool offline){
@@ -46,17 +97,8 @@ void PlayerEntity::render(Graphics * g, unsigned int delta){
 
 
 	//int renderTime = Global::game->getElapsedTime() - this->lastUpdateTime;
-	this->renderTimeCount+= delta;
-	float d = (float)(renderTimeCount)/(float) (elapsedTime);
 
-	if(d > 1) { d = 1; }
-	float iPosX = lastPosition.x + (nextPosition.x - lastPosition.x) * d;
-	float iPosY = lastPosition.y + (nextPosition.y - lastPosition.y) * d;
-
-
-	position = VectorXY(iPosX, iPosY);
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
-
 
 	//VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 	g->drawAtCenter(true);
@@ -86,5 +128,8 @@ void PlayerEntity::setAnimation(AnimationCode animation){
 
 PlayerEntity::~PlayerEntity() {
 	delete this->pName;
+
+	delete[] this->updateTimeArray;
+	delete[] this->updateRequestArray;
 }
 

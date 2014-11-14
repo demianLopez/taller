@@ -13,7 +13,12 @@ PolygonEntity::PolygonEntity(int index) : GameEntity(index) {
 	this->polygonImage = NULL;
 }
 
-void PolygonEntity::update(UpdateRequest * u,  unsigned int elapsedTime){
+void PolygonEntity::update(unsigned int delta){
+
+
+}
+
+void PolygonEntity::addUpdateRequest(UpdateRequest * u,  unsigned int elapsedTime){
 
 	this->lastPosition = nextPosition;
 	this->nextPosition = VectorXY(u->posX, u->posY);

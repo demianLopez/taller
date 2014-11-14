@@ -18,8 +18,9 @@ class GameEntity {
 public:
 	GameEntity(int index);
 	virtual ~GameEntity();
-	virtual void render(Graphics * g, unsigned int delta) = 0;
-	virtual void update(UpdateRequest * u, unsigned int elapsedTime) = 0;
+	virtual void render(Graphics * g, unsigned int dela) = 0;
+	virtual void update(unsigned int delta) = 0;
+	virtual void addUpdateRequest(UpdateRequest * u, unsigned int currentTime) = 0;
 
 	void setRotation(float rotation);
 

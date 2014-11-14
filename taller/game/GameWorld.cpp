@@ -37,19 +37,13 @@ void GameWorld::setMainEntity(int index){
 }
 
 GameEntity * GameWorld::searchEntity(int index){
-	for(auto * e : entityList){
-		if(e->getIndex() == index){
-			return e;
-		}
-	}
-
-	return NULL;
+	return this->entityMap[index];
 }
 
 /* Agrega un GameEntity. */
 void GameWorld::addEntity(GameEntity * entity){
 	this->updateMutex.lock();
-	this->entityList.push_back(entity);
+	this->entityMap[entity->getIndex()] = entity;
 	this->updateMutex.unlock();
 }
 
@@ -58,6 +52,7 @@ void GameWorld::update(unsigned int delta){
 	this->updateMutex.lock();
 	int currentTime = Global::game->getElapsedTime();
 
+	/*
 	if(updatesList.size() == 0){
 		this->afkTime += delta;
 
@@ -69,40 +64,36 @@ void GameWorld::update(unsigned int delta){
 		this->updateMutex.unlock();
 		return;
 	}
+	*/
 
 	this->afkTime = 0;
-	for(auto * update : this->updatesList){
-		for(auto * entity : this->entityList){
-			if(entity->getIndex() == update->index){
-				entity->update(update, currentTime);
-				break;
-			}
-		}
-
-		delete update;
+	for(auto entity : this->entityMap){
+		entity.second->update(delta);
 	}
 
-	this->updatesList.clear();
 	this->updateMutex.unlock();
 }
 
 /* Agrega pedido de request. */
 void GameWorld::addUpdateRequest(UpdateRequest * update){
 	//this->updateMutex.lock();
-	this->updatesList.push_back(update);
+
+	entityMap[update->index]->addUpdateRequest(update, Global::game->getElapsedTime());
+
 	//this->updateMutex.unlock();
 }
 
-/* Devuelve entityList. */
-std::vector<GameEntity*> GameWorld::getEntityList(){
-	return this->entityList;
+/* Devuelve entityList.*/
+std::map<int, GameEntity *> GameWorld::getEntityMap(){
+	return this->entityMap;
 }
+
 
 /* Inicializa los componentes graficos. */
 void GameWorld::generateGraphics(){
-	for(auto * e : entityList){
-		e->setWorld(this);
-		e->initialize();
+	for(auto entity : this->entityMap){
+		entity.second->setWorld(this);
+		entity.second->initialize();
 	}
 }
 
@@ -132,8 +123,8 @@ VectorXY GameWorld::box2DToSDL(VectorXY * box2DCoord){
 }
 
 GameWorld::~GameWorld() {
-	for(auto * e : entityList){
-		delete e;
+	for(auto e : entityMap){
+		delete e.second;
 	}
 }
 

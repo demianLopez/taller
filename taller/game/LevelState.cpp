@@ -144,9 +144,9 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 	g->setColor(0, 0, 0, 255);
 
 
-	vector<GameEntity *> entityList = this->gameWorld->getEntityList();
-	for(auto * e : entityList){
-		e->render(g, delta);
+	map<int, GameEntity *> entityMap = this->gameWorld->getEntityMap();
+	for(auto e : entityMap){
+		e.second->render(g, delta);
 	}
 
 

@@ -10,6 +10,7 @@
 
 #include "VectorXY.h"
 #include <vector>
+#include <map>
 class GameEntity;
 #include <UpdateRequest.h>
 #include <mutex>
@@ -24,7 +25,7 @@ public:
 	void setScreenSize(VectorXY screenSize);
 
 	/* Devuelve entityList. */
-	std::vector<GameEntity *> getEntityList();
+	std::map<int, GameEntity *> getEntityMap();
 
 	/* Agrega un GameEntity. */
 	void addEntity(GameEntity * entity);
@@ -57,9 +58,7 @@ private:
 	VectorXY screenSize;
 	VectorXY sdlWorldSize;
 
-	std::vector<GameEntity *> entityList;
-
-	std::vector<UpdateRequest *> updatesList;
+	std::map<int, GameEntity *> entityMap;
 
 	std::mutex updateMutex;
 

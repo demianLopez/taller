@@ -15,7 +15,8 @@ public:
 	PlayerEntity(int index);
 	virtual ~PlayerEntity();
 	void render(Graphics * g, unsigned int delta);
-	void update(UpdateRequest * u, unsigned int elapsedTime);
+	void update(unsigned int delta);
+	void addUpdateRequest(UpdateRequest * u, unsigned int currentTime);
 	void initialize();
 
 	void setAnimation(AnimationCode animation);
@@ -27,14 +28,19 @@ private:
 
 	bool offline;
 
-	int elapsedTime;
-	int lastUpdateTime;
-
 	int renderTimeCount;
 
+	int * updateTimeArray;
+	UpdateRequest ** updateRequestArray;
+	int currentUpdate;
+	int lastAddUpdate;
 
 	char * pName;
 	int lName;
+
+	unsigned int lastUpdateTime;
+
+	bool firstUpdate;
 
 	VectorXY lastPosition;
 	float lastRotation;
