@@ -338,7 +338,7 @@ void LevelState::update(unsigned int delta){
 
 	this->aliveTime += delta;
 
-	if(this->aliveTime > 1000){
+	if(this->aliveTime > 500){
 		Message m;
 		m.addCommandCode(IM_ALIVE);
 		m.addEndChar();

@@ -61,7 +61,7 @@ void GameWorld::update(unsigned int delta){
 	if(updatesList.size() == 0){
 		this->afkTime += delta;
 
-		if(this->afkTime > 1000){
+		if(this->afkTime > 3000){
 			Global::game->showErrorMessage("Problema de conexion", "Se ha interrumpido la conexion con el servidor");
 			Global::game->endGame();
 		}

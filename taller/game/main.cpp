@@ -78,10 +78,10 @@ int mainServer(){
 	return 0;
 }
 
-int mainCliente(){
+int mainCliente(const char * ip){
 	Logger::initializeCustomLogs();
 	signal(SIGPIPE, SIG_IGN);
-	Socket * s = new Socket(8080, "127.0.0.1");
+	Socket * s = new Socket(8080, ip);
 
 	Client_handler * c = new Client_handler();
 	c->setDataObserver(new ClientData());
@@ -117,8 +117,8 @@ int mainCliente(){
 
 int main(int argc, char *argv[]){
 	if(argc > 1){
-		return mainServer();
+		return mainCliente(argv[1]);
 	}
 
-	return mainCliente();
+	return mainServer();
 }

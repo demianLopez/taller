@@ -254,10 +254,7 @@ void World::worldLoop(World * word){
 		int ups = 25;
 		int sleepTime = 1000/ups;
 
-		clock_t lastClock = clock();
-
-		int upCount = 0;
-		int updateTime = 0;
+		unsigned int updateCount = 0;
 
 		while(word->isOnLoop()){
 			eCode = 0;
@@ -266,22 +263,6 @@ void World::worldLoop(World * word){
 				j->apllyCodes();
 				j->update();
 			}
-
-			eCode = 1;
-			clock_t current = clock();
-			int elapsedTime = (current - lastClock) / CLOCKS_PER_SEC * 1000 + sleepTime;
-			lastClock = current;
-
-			updateTime += elapsedTime;
-
-			eCode = 2;
-			if(updateTime > 1000){
-				updateTime = 0;
-				word->updatesPerSecond = upCount;
-				upCount = 0;
-			}
-
-			upCount++;
 
 			eCode = 3;
 			std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
@@ -298,7 +279,11 @@ void World::worldLoop(World * word){
 			eCode = 5;
 			word->worldStep(sleepTime);
 			eCode = 6;
-			word->sendUpdates();
+
+			if((updateCount % 2) == 0){
+				word->sendUpdates();
+			}
+			updateCount ++;
 
 			for(auto * j : word->getPlayerList()){
 				if(!j->isOffline()){
