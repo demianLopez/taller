@@ -8,7 +8,7 @@
 #ifndef ENEMY_H_
 #define ENEMY_H_
 
-#include "level_object.h"
+#include "../level_objects/level_object.h"
 
 class Enemy: public Level_object {
 public:

@@ -5,15 +5,21 @@ CPPFLAGS = -Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage
 CPPLDFLAGS = -lm -lstdc++ -lgcov -coverage -lpthread -pthread
 
 #ALL
-CLIENT_O = $(COMMON_O)
+OBJECTS = enemy.o enemy_factory.o level_object.o
 
-all: server client
+all: test
 
-client: $(CLIENT_O)
-	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(CLIENT_O) example_client.cpp -o Client
+test: $(OBJECTS)
+	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(OBJECTS) enemies_test.cpp -o test
+
+level_object.o: server/level_objects/level_object.h server/level_objects/level_object.cpp
+	$(CC) $(CPPLDFLAGS) -c server/level_objects/level_object.cpp
 	
-client_handler.o: server/client_handler.h server/client_handler.cpp
-	$(CC) $(CPPLDFLAGS) -c server/client_handler.cpp
+enemy.o: server/enemies/enemy.h server/enemies/enemy.cpp
+	$(CC) $(CPPLDFLAGS) -c server/enemies/enemy.cpp
+	
+enemy_factory.o: server/enemies/enemy_factory.h server/enemies/enemy_factory.cpp
+	$(CC) $(CPPLDFLAGS) -c server/enemies/enemy_factory.cpp
 	
 clean:
-	rm -f *.o *.gcno *.gcda  *~ Client Server
+	rm -f *.o *.gcno *.gcda  *~ test

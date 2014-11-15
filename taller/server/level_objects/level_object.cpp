@@ -9,6 +9,9 @@
 
 Level_object::Level_object() {
 	// TODO Auto-generated constructor stub
-
+	_is_alive = true;
 }
 
+bool Level_object::is_alive() {
+	return _is_alive;
+}

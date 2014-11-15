@@ -7,7 +7,7 @@
 
 #include "enemy.h"
 
-Enemy::Enemy() {
+Enemy::Enemy(){
 	// TODO Auto-generated constructor stub
 
 }

@@ -10,7 +10,7 @@
 
 class Level_object {
 private:
-	bool is_alive;
+	bool _is_alive;
 
 public:
 	Level_object();
