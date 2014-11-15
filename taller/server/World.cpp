@@ -252,7 +252,7 @@ bool World::isOnLoop() {
 void World::worldLoop(World * word) {
 	char eCode = 0;
 	try {
-		int ups = 25;
+		int ups = 30;
 		int sleepTime = 1000 / ups;
 
 		unsigned int updateCount = 0;
@@ -281,7 +281,7 @@ void World::worldLoop(World * word) {
 			word->worldStep(sleepTime);
 			eCode = 6;
 
-			if ((updateCount % 1) == 0) {
+			if ((updateCount % 2) == 0) {
 				word->sendUpdates();
 			}
 			updateCount++;
