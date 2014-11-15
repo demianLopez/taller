@@ -41,12 +41,12 @@ void Graphics::drawAtCenter(bool dAtCenter) {
 	this->dAtCenter = dAtCenter;
 }
 
-void Graphics::setFont(TTF_Font * font){
+void Graphics::setFont(TTF_Font * font) {
 	this->currentFont = font;
 }
 
 void Graphics::drawText(int x, int y, const char * text) {
-	SDL_Color textColor = {r, g, b, 255 };
+	SDL_Color textColor = { r, g, b, 255 };
 
 	SDL_Surface* textSurface = TTF_RenderText_Solid(currentFont, text,
 			textColor);

@@ -15,29 +15,29 @@ GameEntity::GameEntity(int index) {
 	this->type = 0;
 }
 
-VectorXY GameEntity::getPosition(){
+VectorXY GameEntity::getPosition() {
 	return this->position;
 }
 
-int GameEntity::getIndex(){
+int GameEntity::getIndex() {
 	return entityIndex;
 }
 
-void GameEntity::setType(EntityType type){
+void GameEntity::setType(EntityType type) {
 	this->type = type;
 }
 
-void GameEntity::setPosition(float x, float y){
+void GameEntity::setPosition(float x, float y) {
 	this->position = VectorXY(x, y);
 
 }
 
-void GameEntity::setRotation(float rotation){
+void GameEntity::setRotation(float rotation) {
 	this->rotation = rotation;
 
 }
 
-void GameEntity::setWorld(GameWorld * gameWorld){
+void GameEntity::setWorld(GameWorld * gameWorld) {
 	this->gameWorld = gameWorld;
 }
 

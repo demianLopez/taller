@@ -9,9 +9,8 @@
 
 using std::vector;
 // Jugador principal
-class Jugador : public Personaje {
+class Jugador: public Personaje {
 private:
-
 
 	char * name;
 	vector<KeyCode> keyCode;
@@ -37,7 +36,6 @@ public:
 	void setClient(Client_handler * client);
 
 	char * getName();
-
 
 	void addKeyCode(KeyCode keyCode);
 	void apllyCodes();

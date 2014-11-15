@@ -46,7 +46,6 @@ private:
 public:
 	char userIndex;
 
-
 	Client_handler();
 	virtual ~Client_handler();
 

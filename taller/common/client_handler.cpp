@@ -36,12 +36,12 @@ void Client_handler::threadFunction(Client_handler * client) {
 }
 
 void Client_handler::waitThreadEnd() {
-	if(this->clientThread.joinable()){
+	if (this->clientThread.joinable()) {
 		this->clientThread.join();
 	}
 }
 
-void Client_handler::startLoop(){
+void Client_handler::startLoop() {
 	this->threadLoop = true;
 	this->waitThreadEnd();
 	this->clientThread = thread(Client_handler::threadFunction, this);
@@ -54,11 +54,11 @@ Client_handler::Client_handler() {
 	this->userIndex = 0;
 }
 
-bool Client_handler::isEmpty(){
+bool Client_handler::isEmpty() {
 	return !this->threadLoop;
 }
 
-void Client_handler::setSocket(Socket * socket){
+void Client_handler::setSocket(Socket * socket) {
 	this->_socket = socket;
 }
 
@@ -81,18 +81,19 @@ bool Client_handler::runListen() {
 	//Threadear la escucha que es lo que pasa menos seguido
 	char message[256];
 
-	char l[5] = {0,0,0,0,0};
+	char l[5] = { 0, 0, 0, 0, 0 };
 	int bytes_read;
 
 	bytes_read = this->_socket->receive(l, 1);
 
 	int need = -1;
-	if(bytes_read > 0) need = l[0];
+	if (bytes_read > 0)
+		need = l[0];
 
 	int readed = 0;
 	int toRead = need;
 
-	while(readed < need && bytes_read > 0){
+	while (readed < need && bytes_read > 0) {
 
 		bytes_read = this->_socket->receive(&message[readed], toRead);
 		readed += bytes_read;
@@ -127,12 +128,15 @@ bool Client_handler::runListen() {
 			try {
 				char c = dataObserver->dataArribal(m, this);
 
-				if(m->getCommandCode() != END_CHAR && c != CLOSING_GAME){
-					std::cout<<"!WARNING NOT END CHAR FUND ON cCode "<<(int)c<<std::endl;
+				if (m->getCommandCode() != END_CHAR && c != CLOSING_GAME) {
+					std::cout << "!WARNING NOT END CHAR FUND ON cCode "
+							<< (int) c << std::endl;
 				}
 				delete m;
-			} catch (const std::exception&e){
-				std::cout<<e.what()<<" - "<<"producido en DataArribal - cCode: "<<m->getFirstCommandCode()<<std::endl;
+			} catch (const std::exception&e) {
+				std::cout << e.what() << " - "
+						<< "producido en DataArribal - cCode: "
+						<< m->getFirstCommandCode() << std::endl;
 				exit(-1);
 			}
 		}
@@ -145,7 +149,7 @@ bool Client_handler::isConnected() {
 }
 
 void Client_handler::stop() {
-	if(!threadLoop){
+	if (!threadLoop) {
 		return;
 	}
 	this->threadLoop = false;
@@ -155,20 +159,21 @@ void Client_handler::stop() {
 	_socket = NULL;
 }
 
-bool Client_handler::send_message(Message * msg){
+bool Client_handler::send_message(Message * msg) {
 	//this->sendingMutex.lock();
-	if(_socket == NULL){
+	if (_socket == NULL) {
 		return false;
 	}
 
-	if(_socket && _socket->is_valid()){
+	if (_socket && _socket->is_valid()) {
 		int sent = -1;
 
 		sent = _socket->send_message(msg->getMessageData(),
 				msg->getMessageLength());
 
-		if(sent < msg->getMessageLength()){
-			std::cout<<"WARNING: SEND "<<sent<<" OF "<<msg->getMessageLength()<<std::endl;
+		if (sent < msg->getMessageLength()) {
+			std::cout << "WARNING: SEND " << sent << " OF "
+					<< msg->getMessageLength() << std::endl;
 		}
 
 		if (sent < 1) {

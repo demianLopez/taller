@@ -18,21 +18,21 @@ ClientData::ClientData() {
 
 /* Cierra la conexion cuando se pierde la conexion con el server.
  * Vuelve al menu principal. */
-void ClientData::closeConnection(Client_handler * client){
+void ClientData::closeConnection(Client_handler * client) {
 	this->backMainMenu();
 }
 
 /* Procesa la informacion proveniente del server.
  * Realiza distintas acciones dependiendo del codigo que traiga
  * el mensaje. */
-char ClientData::dataArribal(Message * m, Client_handler * client){
+char ClientData::dataArribal(Message * m, Client_handler * client) {
 	char cCode = m->getCommandCode();
 
-	if(Global::game->isClosing()){
+	if (Global::game->isClosing()) {
 		return CLOSING_GAME;
 	}
 
-	if(cCode == UPDATE_ENTITY){
+	if (cCode == UPDATE_ENTITY) {
 		UpdateRequest * uR = new UpdateRequest();
 		uR->index = m->getChar();
 		uR->posX = m->getFloat();
@@ -42,7 +42,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		return cCode;
 	}
 
-	if(cCode == UPDATE_PLAYER_ENTITY){
+	if (cCode == UPDATE_PLAYER_ENTITY) {
 		UpdateRequest * uR = new UpdateRequest();
 		uR->index = m->getChar();
 		uR->posX = m->getFloat();
@@ -53,25 +53,25 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		return cCode;
 	}
 
-	if(cCode == REQUEST_KEY_DATA){
+	if (cCode == REQUEST_KEY_DATA) {
 		Global::levelState->sendKeyData();
 		return cCode;
 	}
 
-	if(cCode == UPDATE_TIMING){
+	if (cCode == UPDATE_TIMING) {
 		char timing = m->getChar();
 		Global::serverUpdateTiming = timing;
 		return cCode;
 	}
 
-	if(cCode == SERVER_DATA){
+	if (cCode == SERVER_DATA) {
 		char * serverName;
 		char l = m->getCharArray(&serverName);
 		Global::mainMenu->setServerInfo(serverName, m->getChar(), m->getChar());
 		return cCode;
 	}
 
-	if(cCode == ERROR_MESSAGE){
+	if (cCode == ERROR_MESSAGE) {
 		char * msg;
 		char * title;
 
@@ -85,14 +85,14 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		return cCode;
 	}
 
-	if(cCode == INITIALIZE_MAP){
+	if (cCode == INITIALIZE_MAP) {
 		float tX = m->getFloat();
 		float tY = m->getFloat();
 		Global::gameWorld = new GameWorld(tX, tY);
 		return cCode;
 	}
 
-	if(cCode == ADD_PLAYER_DATA){
+	if (cCode == ADD_PLAYER_DATA) {
 		char index = m->getChar();
 		float pX = m->getFloat();
 		float pY = m->getFloat();
@@ -111,7 +111,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		return cCode;
 	}
 
-	if(cCode == ADD_MAP_DATA){
+	if (cCode == ADD_MAP_DATA) {
 		int index = m->getChar();
 		char isStatic = m->getChar();
 		char type = m->getChar();
@@ -127,7 +127,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		pEnt->setRotation(rotation);
 		pEnt->setType(type);
 
-		for(int i = 0; i< t; i++){
+		for (int i = 0; i < t; i++) {
 			float tX = m->getFloat();
 			float tY = m->getFloat();
 
@@ -138,27 +138,27 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
 		return cCode;
 	}
 
-	if(cCode == INITIALIZE_GRAPHICS){
+	if (cCode == INITIALIZE_GRAPHICS) {
 		Global::levelState->setWorld(Global::gameWorld);
 		Global::game->enterState(1);
 		return cCode;
 	}
 
-	if(cCode == LOCK_CAMERA_ENTITY){
+	if (cCode == LOCK_CAMERA_ENTITY) {
 		char entityIndex = m->getChar();
 		Global::gameWorld->setMainEntity(entityIndex);
 		Global::levelState->restartCameraPosition();
 		return cCode;
 	}
 
-	if(cCode == SHOW_MESSAGE){
+	if (cCode == SHOW_MESSAGE) {
 		char * message;
 		m->getCharArray(&message);
 		Global::levelState->setMessage(message);
 		return cCode;
 	}
 
-	std::cout<<"WARNING: LOOSING cCode: "<<(int)cCode<<endl;
+	std::cout << "WARNING: LOOSING cCode: " << (int) cCode << endl;
 	return cCode;
 }
 
@@ -166,17 +166,17 @@ char ClientData::dataArribal(Message * m, Client_handler * client){
  * Vuelve al menu principal.
  * FIXME: Hace exactamente lo mismo que closeConnection, solo
  * que ademas recibe error. */
-void ClientData::errorConnection(Client_handler * client, int error){
+void ClientData::errorConnection(Client_handler * client, int error) {
 	this->backMainMenu();
 }
 
 /* Cambia el estado del juego y muestra un mensaje de error
  * de conexion. */
-void ClientData::backMainMenu(){
+void ClientData::backMainMenu() {
 	Global::game->enterState(0);
-	if(!Global::game->isClosing()){
-	Global::game->showErrorMessage("Error de conexion",
-			"Se perdio la conexion con el servidor.");
+	if (!Global::game->isClosing()) {
+		Global::game->showErrorMessage("Error de conexion",
+				"Se perdio la conexion con el servidor.");
 	}
 }
 

@@ -63,7 +63,6 @@ protected:
 
 	void addB2DPoint(double x, double y);
 
-
 private:
 	vector<b2Vec2 *> pointList;
 	int body_def;

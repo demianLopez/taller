@@ -13,7 +13,7 @@
 #include "../SpriteSheet.h"
 #include "../Image.h"
 
-class Button : public Component{
+class Button: public Component {
 public:
 	Button(const char * text);
 	void render(Graphics * g, int mouseX, int mouseY);

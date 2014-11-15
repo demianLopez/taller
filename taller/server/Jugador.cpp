@@ -3,7 +3,7 @@
 #include <iostream>
 
 // Inicializa Jugador.
-Jugador::Jugador(Client_handler * client, char * name){
+Jugador::Jugador(Client_handler * client, char * name) {
 	this->client = client;
 	this->name = name;
 	this->body = NULL;
@@ -11,35 +11,35 @@ Jugador::Jugador(Client_handler * client, char * name){
 	this->keyRequestSend = 0;
 }
 
-char * Jugador::getName(){
+char * Jugador::getName() {
 	return this->name;
 }
 
-void Jugador::setClient(Client_handler * client){
+void Jugador::setClient(Client_handler * client) {
 	this->client = client;
 }
 
-void Jugador::addKeyCode(KeyCode keyCode){
+void Jugador::addKeyCode(KeyCode keyCode) {
 	this->keyCode.push_back(keyCode);
 }
 
-char * Jugador::getPlayerName(){
+char * Jugador::getPlayerName() {
 	return this->name;
 }
 
-void Jugador::setOffline(bool isOffline){
-	if (body) body->SetActive(!isOffline);
+void Jugador::setOffline(bool isOffline) {
+	if (body)
+		body->SetActive(!isOffline);
 	this->offline = isOffline;
 }
 
-bool Jugador::isOffline(){
+bool Jugador::isOffline() {
 	return offline;
 }
 
-void Jugador::apllyCodes(){
-	for(auto code : keyCode){
-		switch(code)
-		{
+void Jugador::apllyCodes() {
+	for (auto code : keyCode) {
+		switch (code) {
 		case MOVE_LEFT_DOWN:
 			this->setMovingLeft(true);
 			break;
@@ -61,40 +61,41 @@ void Jugador::apllyCodes(){
 	keyCode.clear();
 }
 
-
-Client_handler * Jugador::getClient(){
+Client_handler * Jugador::getClient() {
 	return this->client;
 }
 
-void Jugador::evaluateAnimation(){
-	if(this->mirandoParaLaDerecha){
-			if(this->isOnAir() && this->getListenerTouchingGround()->getNumberOfContacts() == 0){
-				currentAnimation = A_JUMP_RIGHT;
-				return;
-			}
-
-			if(this->isMovingRight()){
-				currentAnimation = A_WALK_RIGHT;
-				return;
-			}
-
-			currentAnimation = A_STAND_RIGHT;
+void Jugador::evaluateAnimation() {
+	if (this->mirandoParaLaDerecha) {
+		if (this->isOnAir()
+				&& this->getListenerTouchingGround()->getNumberOfContacts()
+						== 0) {
+			currentAnimation = A_JUMP_RIGHT;
 			return;
 		}
 
-		if(this->isOnAir() && this->getListenerTouchingGround()->getNumberOfContacts() == 0){
-			currentAnimation = A_JUMP_LEFT;
+		if (this->isMovingRight()) {
+			currentAnimation = A_WALK_RIGHT;
 			return;
 		}
 
-		if(this->isMovingLeft()){
-			currentAnimation = A_WALK_LEFT;
-			return;
-		}
-
-		currentAnimation = A_STAND_LEFT;
+		currentAnimation = A_STAND_RIGHT;
 		return;
+	}
+
+	if (this->isOnAir()
+			&& this->getListenerTouchingGround()->getNumberOfContacts() == 0) {
+		currentAnimation = A_JUMP_LEFT;
+		return;
+	}
+
+	if (this->isMovingLeft()) {
+		currentAnimation = A_WALK_LEFT;
+		return;
+	}
+
+	currentAnimation = A_STAND_LEFT;
+	return;
 
 }
-
 

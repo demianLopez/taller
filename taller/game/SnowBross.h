@@ -12,7 +12,7 @@
 
 class SnowBross: public Game {
 public:
-	SnowBross( const char *pTitle);
+	SnowBross(const char *pTitle);
 	bool isClosing();
 	virtual ~SnowBross();
 protected:

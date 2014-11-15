@@ -4,46 +4,45 @@
 #include "CosaConMovimiento.h"
 #include <iostream>
 
-Personaje::Personaje()  {
+Personaje::Personaje() {
 	listenerTouchingGround = NULL;
 	this->currentAnimation = A_STAND_LEFT;
 }
 
-int Personaje::getIndex(){
+int Personaje::getIndex() {
 	return userIndex;
 }
 
-AnimationCode Personaje::getCurrentAnimation(){
+AnimationCode Personaje::getCurrentAnimation() {
 	return this->currentAnimation;
 }
 
-void Personaje::moveLeft(bool isButtonDown){
-	body->ApplyLinearImpulse(
-			b2Vec2(-50 - body->GetLinearVelocity().x * 2, 0),
+void Personaje::moveLeft(bool isButtonDown) {
+	body->ApplyLinearImpulse(b2Vec2(-50 - body->GetLinearVelocity().x * 2, 0),
 			body->GetWorldCenter(), true);
 
 }
 
-void Personaje::moveRight(bool isButtonDown){
-	body->ApplyLinearImpulse(
-			b2Vec2(50 - body->GetLinearVelocity().x * 2, 0),
+void Personaje::moveRight(bool isButtonDown) {
+	body->ApplyLinearImpulse(b2Vec2(50 - body->GetLinearVelocity().x * 2, 0),
 			body->GetWorldCenter(), true);
 }
 
-ContactListener* Personaje::getListenerTouchingGround(){
+ContactListener* Personaje::getListenerTouchingGround() {
 	return listenerTouchingGround;
 }
 
-void Personaje::setListenerTouchingGround(ContactListener *aListener){
+void Personaje::setListenerTouchingGround(ContactListener *aListener) {
 	listenerTouchingGround = aListener;
 }
 
-void Personaje::evaluateAnimation(){
+void Personaje::evaluateAnimation() {
 // redefinir en cada personaje
 }
 
-void Personaje::jump(){
-	if(listenerTouchingGround->getNumberOfContacts() == 0) return; //Esto medio que esta repetido, ya se checkea en SnowBross.
+void Personaje::jump() {
+	if (listenerTouchingGround->getNumberOfContacts() == 0)
+		return; //Esto medio que esta repetido, ya se checkea en SnowBross.
 	b2Vec2 currentVel = this->body->GetLinearVelocity();
 	this->body->SetLinearVelocity(b2Vec2(currentVel.x, movementSpeedY));
 
@@ -52,11 +51,11 @@ void Personaje::jump(){
 	this->goingUp = true;
 }
 
-b2Vec2 * Personaje::getPosition(){
+b2Vec2 * Personaje::getPosition() {
 	return (b2Vec2*) &this->body->GetPosition();
 }
 
-void Personaje::setEntityIndex(int index){
+void Personaje::setEntityIndex(int index) {
 	this->userIndex = index;
 }
 
@@ -109,61 +108,59 @@ void Personaje::update() {
 		}
 	}
 
-
-
 	stop(true, false);
 	this->evaluateAnimation();
 }
 
 /*
-void Personaje::jump() {
+ void Personaje::jump() {
 
-	if (listenerTouchingGround->getNumberOfContacts() == 0)
-		return; //Esto medio que esta repetido, ya se checkea en SnowBross.
-	b2Vec2 currentVel = this->body->GetLinearVelocity();
-	this->body->SetLinearVelocity(b2Vec2(currentVel.x, movementSpeedY));
+ if (listenerTouchingGround->getNumberOfContacts() == 0)
+ return; //Esto medio que esta repetido, ya se checkea en SnowBross.
+ b2Vec2 currentVel = this->body->GetLinearVelocity();
+ this->body->SetLinearVelocity(b2Vec2(currentVel.x, movementSpeedY));
 
-	//body->ApplyLinearImpulse(b2Vec2(0,body->GetMass() * 8), body->GetWorldCenter(), true);
-	//body->ApplyForceToCenter(b2Vec2(0,1006), true);
-	this->goingUp = true;
+ //body->ApplyLinearImpulse(b2Vec2(0,body->GetMass() * 8), body->GetWorldCenter(), true);
+ //body->ApplyForceToCenter(b2Vec2(0,1006), true);
+ this->goingUp = true;
 
 
-}
+ }
 
-/*
-void Personaje::setListenerTouchingGround(ContactListener *aListener) {
-	listenerTouchingGround = aListener;
-}
+ /*
+ void Personaje::setListenerTouchingGround(ContactListener *aListener) {
+ listenerTouchingGround = aListener;
+ }
 
-bool Personaje::isOnAir() {
-	return (listenerTouchingGround->getNumberOfContacts() == 0);
-}
+ bool Personaje::isOnAir() {
+ return (listenerTouchingGround->getNumberOfContacts() == 0);
+ }
 
-Animation * Personaje::getAnimation(Resources * resources) {
-	if (this->isOnAir()) {
-		if (mirandoParaLaDerecha) {
-			return resources->getPlayerAirRight();
-		} else {
-			return resources->getPlayerAirLeft();
-		}
-	}
+ Animation * Personaje::getAnimation(Resources * resources) {
+ if (this->isOnAir()) {
+ if (mirandoParaLaDerecha) {
+ return resources->getPlayerAirRight();
+ } else {
+ return resources->getPlayerAirLeft();
+ }
+ }
 
-	if (mirandoParaLaDerecha) {
-		if (this->movingRight) {
-			return resources->getPlayerWalkRight();
-		} else {
-			return resources->getPlayerStaticRight();
-		}
-	} else {
-		if (this->movingLeft) {
-			return resources->getPlayerWalkLeft();
-		} else {
-			return resources->getPlayerStaticLeft();
-		}
-	}
-}
+ if (mirandoParaLaDerecha) {
+ if (this->movingRight) {
+ return resources->getPlayerWalkRight();
+ } else {
+ return resources->getPlayerStaticRight();
+ }
+ } else {
+ if (this->movingLeft) {
+ return resources->getPlayerWalkLeft();
+ } else {
+ return resources->getPlayerStaticLeft();
+ }
+ }
+ }
 
-*/
+ */
 
 Personaje::~Personaje() {
 	//delete this->mainCharacterBody;

@@ -3,7 +3,6 @@
 #include <thread>
 #include <chrono>
 
-
 #include "server/accept_queue.h"
 #include "server/client_handler.h"
 
@@ -67,7 +66,8 @@ void run_server(Accept_queue* queue, list<thread*>* threads,
 		std::cout << "a" << std::endl;
 		if (client->is_valid()) {
 			clients->push_back(client);
-			threads->push_back(new thread(Client_handler::execute_listen, client));
+			threads->push_back(
+					new thread(Client_handler::execute_listen, client));
 		} else {
 			delete client;
 		}
@@ -89,15 +89,16 @@ int main() {
 
 	thread server_thread = thread(run_server, &queue, &threads, &clients);
 
-	while (fgetc(stdin) != EOF){
-		std::string message = "Well somebody told me you had a boyfriend, who looked like a girlfriend that I had in February of last year";
+	while (fgetc(stdin) != EOF) {
+		std::string message =
+				"Well somebody told me you had a boyfriend, who looked like a girlfriend that I had in February of last year";
 
 		message_command_t command_message;
 		command_message.command = SHOW_DEBUG_STRING;
 		command_message.args_len = message.size();
-		command_message.command_args = (char*)message.c_str();
+		command_message.command_args = (char*) message.c_str();
 
-		if (clients.size()){
+		if (clients.size()) {
 			clients.front()->send_message(command_message);
 		}
 

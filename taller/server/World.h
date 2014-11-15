@@ -71,7 +71,6 @@ public:
 
 	void requestKeyData(Jugador * j);
 
-
 private:
 	void updateTiming(Jugador * j);
 	void updatePolygon(Polygon * p);
@@ -79,14 +78,12 @@ private:
 
 	void sendUpdates();
 
-
 	void initializePlayerBody(Jugador * player);
 
 	bool wordLoop;
 	static void worldLoop(World * world);
 
 	vector<Jugador*> playerList;
-
 
 	ContactListener *contactListener;
 

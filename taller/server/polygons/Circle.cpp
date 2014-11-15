@@ -54,23 +54,23 @@ Circle::Circle(double diameter, double posX, double posY, double density,
 }
 
 /*
-void Circle::render(Graphics * g) {
+ void Circle::render(Graphics * g) {
 
-	if (!this->shouldIRender()) {
-		return; //Evitamos gastar recursos renderizando algo que no esta en pantalla
-	}
+ if (!this->shouldIRender()) {
+ return; //Evitamos gastar recursos renderizando algo que no esta en pantalla
+ }
 
-	b2Vec2 pos = this->body->GetPosition();
-	b2Vec2 SDLPos = this->world->box2DToSDL(&pos);
+ b2Vec2 pos = this->body->GetPosition();
+ b2Vec2 SDLPos = this->world->box2DToSDL(&pos);
 
-	b2Vec2 size = b2Vec2(this->diameter, this->diameter);
-	b2Vec2 SDLsize = this->world->box2DToSDL(&size);
+ b2Vec2 size = b2Vec2(this->diameter, this->diameter);
+ b2Vec2 SDLsize = this->world->box2DToSDL(&size);
 
-	g->drawAtCenter(true);
-	g->drawImage(this->circleImage, SDLPos.x, SDLPos.y, SDLsize.x,
-			SDLsize.y - this->world->getWindowSize()->y,
-			-this->body->GetAngle() * 57);
-	g->drawAtCenter(false);
+ g->drawAtCenter(true);
+ g->drawImage(this->circleImage, SDLPos.x, SDLPos.y, SDLsize.x,
+ SDLsize.y - this->world->getWindowSize()->y,
+ -this->body->GetAngle() * 57);
+ g->drawAtCenter(false);
 
-}
-*/
+ }
+ */

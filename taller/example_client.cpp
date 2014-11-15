@@ -54,11 +54,12 @@ static void recv_msj(Socket* socket, std::mutex* std_out_mutex) {
 	while (socket->is_valid()) {
 		//Obtengo el comando
 		size_t command_len = sizeof(command_id_type_t);
-		char* command_buffer = new char [command_len];
+		char* command_buffer = new char[command_len];
 		int bytes_read = 0;
-		while(bytes_read < command_len){
-			int read = socket->receive(command_buffer+bytes_read, command_len-bytes_read);
-			if (read<0){
+		while (bytes_read < command_len) {
+			int read = socket->receive(command_buffer + bytes_read,
+					command_len - bytes_read);
+			if (read < 0) {
 				bytes_read = read;
 				break;
 			}
@@ -70,16 +71,16 @@ static void recv_msj(Socket* socket, std::mutex* std_out_mutex) {
 			break;
 		}
 
-		command_id_type_t command = *((command_id_type_t*)command_buffer);
-
+		command_id_type_t command = *((command_id_type_t*) command_buffer);
 
 		//Obtengo la longitud de los parametros
 		size_t command_len_len = sizeof(command_len_type_t);
-		char* command_len_buffer = new char [command_len_len];
+		char* command_len_buffer = new char[command_len_len];
 		bytes_read = 0;
-		while(bytes_read < command_len_len){
-			int read = socket->receive(command_len_buffer+bytes_read, command_len_len-bytes_read);
-			if (read<0){
+		while (bytes_read < command_len_len) {
+			int read = socket->receive(command_len_buffer + bytes_read,
+					command_len_len - bytes_read);
+			if (read < 0) {
 				bytes_read = read;
 				break;
 			}
@@ -91,15 +92,16 @@ static void recv_msj(Socket* socket, std::mutex* std_out_mutex) {
 			break;
 		}
 
-		command_len_type_t args_len = *((command_len_type_t*)command_len_buffer);
-
+		command_len_type_t args_len =
+				*((command_len_type_t*) command_len_buffer);
 
 		//Obtengo los parametros
-		char* args_buffer = new char [args_len+10];
+		char* args_buffer = new char[args_len + 10];
 		bytes_read = 0;
-		while(bytes_read < args_len){
-			int read = socket->receive(args_buffer+bytes_read, args_len-bytes_read);
-			if (read<0){
+		while (bytes_read < args_len) {
+			int read = socket->receive(args_buffer + bytes_read,
+					args_len - bytes_read);
+			if (read < 0) {
 				bytes_read = read;
 				break;
 			}
@@ -111,13 +113,13 @@ static void recv_msj(Socket* socket, std::mutex* std_out_mutex) {
 			break;
 		}
 
-		command_args_type_t args = (command_args_type_t)args_buffer;
+		command_args_type_t args = (command_args_type_t) args_buffer;
 
 		//DEBUG
 
 		int a = command;
 		int b = args_len;
-		char* c = (char*)args;
+		char* c = (char*) args;
 
 		c[bytes_read] = '\0';
 		std::string mess = std::string(c);

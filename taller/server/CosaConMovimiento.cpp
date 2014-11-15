@@ -2,7 +2,7 @@
 
 float const TOLERANCIA_VELOCIDAD = 1;
 
-CosaConMovimiento::CosaConMovimiento(){
+CosaConMovimiento::CosaConMovimiento() {
 	body = NULL; // DEBE SOBREESCRIBIRSE EN LA CLASE HIJA
 
 	this->movingLeft = false;
@@ -21,10 +21,12 @@ CosaConMovimiento::CosaConMovimiento(){
 	this->mirandoParaLaDerecha = true;
 	this->wasMovingLeftFirst = false;
 
-	this->lastVelocity = b2Vec2(0, 0);;
+	this->lastVelocity = b2Vec2(0, 0);
+	;
 }
 
-void CosaConMovimiento::setBox2DDefinitions(b2Body * body, b2Fixture * fixture){
+void CosaConMovimiento::setBox2DDefinitions(b2Body * body,
+		b2Fixture * fixture) {
 	this->body = body;
 	this->fixture = fixture;
 }

@@ -172,8 +172,7 @@ string LectorJson::validarNombreMapa(string miembro, Value raiz,
 		cout << "asdasdasdas123123123123123 " << endl;
 		logger->reportarProblema(
 				"No existe el miembro '" + miembro + "' en objeto: "
-						+ codigoObjeto + ". Cargo texto por defecto.",
-				WARNING);
+						+ codigoObjeto + ". Cargo texto por defecto.", WARNING);
 		return valorDefecto;
 	}
 	if (!texto.isString()) {
@@ -257,10 +256,13 @@ void LectorJson::obtenerEscenario(Value raiz) {
 			x = validarInt("x", personaje, POSX_D, "personaje");
 			y = validarInt("y", personaje, POSY_D, "personaje");
 		}
-		int cantidadJugadores = validarInt("cantidadJugadores", escenario, CANTIDADJUGADORES_D,"escenario");
-		if (cantidadJugadores <= 0) cantidadJugadores = CANTIDADJUGADORES_D;
+		int cantidadJugadores = validarInt("cantidadJugadores", escenario,
+				CANTIDADJUGADORES_D, "escenario");
+		if (cantidadJugadores <= 0)
+			cantidadJugadores = CANTIDADJUGADORES_D;
 
-		string nombreMapa = validarNombreMapa("nombreMapa", escenario, string("Un mapa"), "escenario");
+		string nombreMapa = validarNombreMapa("nombreMapa", escenario,
+				string("Un mapa"), "escenario");
 
 		this->elEscenario->configurarEscenerio(altopx, anchopx, altoun, anchoun,
 				imagen, x, y, cantidadJugadores, nombreMapa);

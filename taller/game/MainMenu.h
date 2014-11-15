@@ -42,7 +42,7 @@ private:
 	char maxPlayer;
 	bool serverInfoAva;
 
-	void renderGUI(Graphics * g,  Game * game);
+	void renderGUI(Graphics * g, Game * game);
 
 	Image * backgroundImage;
 
@@ -53,7 +53,6 @@ private:
 	Button * buttonConnect;
 	Label * titleLabel;
 	TextBox * userName;
-
 
 };
 

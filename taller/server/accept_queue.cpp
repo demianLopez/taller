@@ -35,7 +35,7 @@ Socket * Accept_queue::accept_client() {
 
 	if (!socket->is_valid()) {
 		//Logger::customLog("accept_queue.cpp", Logger::WARNING,
-			//	"Error al aceptar una conexion del cliente");
+		//	"Error al aceptar una conexion del cliente");
 		return NULL;
 	}
 

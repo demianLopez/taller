@@ -11,7 +11,6 @@
 #include "Global.h"
 #include "entity/GameEntity.h"
 
-
 const float ZOOM_INCREMENT = 0.02;
 
 LevelState::LevelState() {
@@ -31,36 +30,38 @@ LevelState::LevelState() {
 	this->serverMessage = NULL;
 }
 
-
-void LevelState::init(Game * game){
+void LevelState::init(Game * game) {
 	//ADICIONALES!
 	//Estos son extras, despues hay que cambiarlos!
 
 	Global::levelState = this;
 
 	this->backgroundImage = new Image("Resources/font1.png");
-	this->backParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
+	this->backParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"),
+			10);
 	this->backParticleEmiter->setMaxParticles(20);
 
-	this->frontParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
+	this->frontParticleEmiter = new ParticleEmiter(new Image("Resources/p.png"),
+			10);
 	this->frontParticleEmiter->setMaxParticles(20);
 
-	this->spriteLightAnimation = new SpriteSheet("Resources/luz.png", 128,512);
+	this->spriteLightAnimation = new SpriteSheet("Resources/luz.png", 128, 512);
 	this->lightAnimation = new Animation();
 	this->lightAnimation->setOneDraw();
 	this->lightAnimation->setFinished(true);
 
-	for(int i = 0; i<8; i++){
-		this->lightAnimation->addFrame(this->spriteLightAnimation->getSubImage(i, 0), 25);
+	for (int i = 0; i < 8; i++) {
+		this->lightAnimation->addFrame(
+				this->spriteLightAnimation->getSubImage(i, 0), 25);
 	}
 
 }
 
-void LevelState::setWorld(GameWorld * world){
+void LevelState::setWorld(GameWorld * world) {
 	this->gameWorld = world;
 }
 
-void LevelState::exit(Game * game){
+void LevelState::exit(Game * game) {
 
 	delete this->lightAnimation;
 	delete this->spriteLightAnimation;
@@ -71,70 +72,66 @@ void LevelState::exit(Game * game){
 	delete this->backgroundImage;
 }
 
-void LevelState::restartCameraPosition(){
+void LevelState::restartCameraPosition() {
 	int screenW = Global::game->getScreenWidth();
 	int screenH = Global::game->getScreenHeight();
 	VectorXY mainEntityPos = Global::gameWorld->getMainEntity()->getPosition();
 	VectorXY mainEntitySdlPos = Global::gameWorld->box2DToSDL(&mainEntityPos);
 
-	this->globalX = mainEntitySdlPos.x - screenW/2;
-	this->globalY = mainEntitySdlPos.y - screenH/2;
+	this->globalX = mainEntitySdlPos.x - screenW / 2;
+	this->globalY = mainEntitySdlPos.y - screenH / 2;
 }
 
-void LevelState::render(Graphics *g, Game * game, unsigned int delta){
+void LevelState::render(Graphics *g, Game * game, unsigned int delta) {
 	levelStateMutex.lock();
 	//CALCULOS PREVIOS A RENDER!
 
-
-
 	//b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
-
 
 	//TODO SCROLLING MAL ARMADO CORREGIR!
 	/*
-	b2Vec2 fontPlayerPos(playerPos.x/box2dWorld->x * backImage->getWidth(),
-			backImage->getHeight() - playerPos.y/box2dWorld->y * backImage->getHeight());
+	 b2Vec2 fontPlayerPos(playerPos.x/box2dWorld->x * backImage->getWidth(),
+	 backImage->getHeight() - playerPos.y/box2dWorld->y * backImage->getHeight());
 
-	playerPos = gameWorld->box2DToSDL(&playerPos);
-	*/
+	 playerPos = gameWorld->box2DToSDL(&playerPos);
+	 */
 
 	//TODO: Corregir!
 	//int screenW = this->getScreenWidth();
 	//int screenH = this->getScreenHeight();
 
-
 	int screenW = game->getScreenWidth();
 	int screenH = game->getScreenHeight();
 	/*
-	//------------------------------------
+	 //------------------------------------
 
-	int tdX = screenW * this->zoomScale;
-	int tdY = screenH * this->zoomScale;
-	int tXo = playerPos.x - tdX/2;
-	int tYo = playerPos.y - tdY/2;
+	 int tdX = screenW * this->zoomScale;
+	 int tdY = screenH * this->zoomScale;
+	 int tXo = playerPos.x - tdX/2;
+	 int tYo = playerPos.y - tdY/2;
 
-	if((tXo + tdX) > worldImage->getWidth()){
-		tXo = worldImage->getWidth() - tdX;
-	}if(tXo < 0){
-		tXo = 0;
-	}if((tYo + tdY) > worldImage->getHeight()){
-		tYo = worldImage->getHeight() - tdY;
-	}if(tYo < 0){
-		tYo = 0;
-	}
-	*/
+	 if((tXo + tdX) > worldImage->getWidth()){
+	 tXo = worldImage->getWidth() - tdX;
+	 }if(tXo < 0){
+	 tXo = 0;
+	 }if((tYo + tdY) > worldImage->getHeight()){
+	 tYo = worldImage->getHeight() - tdY;
+	 }if(tYo < 0){
+	 tYo = 0;
+	 }
+	 */
 
-	if(this->backgroundImage != NULL){
-		g->drawImage(this->backgroundImage, 0, 0,0,0, screenW, screenH, screenW, screenH);
+	if (this->backgroundImage != NULL) {
+		g->drawImage(this->backgroundImage, 0, 0, 0, 0, screenW, screenH,
+				screenW, screenH);
 	}
 
 	/*
-	if(!this->lightAnimation->isFinished()){
-		g->drawAnimation(this->lightAnimation, this->lightAnimationX, 0);
-	}
-	*/
+	 if(!this->lightAnimation->isFinished()){
+	 g->drawAnimation(this->lightAnimation, this->lightAnimationX, 0);
+	 }
+	 */
 	this->backParticleEmiter->render(g);
-
 
 	//ALL THE MAP RENDERING!
 	//--------------------------------------------------------------------
@@ -143,77 +140,77 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 	g->clearRenderObject();
 	g->setColor(0, 0, 0, 255);
 
-
 	map<int, GameEntity *> entityMap = this->gameWorld->getEntityMap();
-	for(auto e : entityMap){
+	for (auto e : entityMap) {
 		e.second->render(g, delta);
 	}
-
-
 
 	g->drawAtCenter(true);
 
 	/* TODO: PLAYER MOVIMIENTO CORREGIR!
-	b2Vec2 playerSize = this->gameWorld->getMainCharacter()->getSize();
-	playerSize =  this->gameWorld->box2DToSDLSize(&playerSize);
+	 b2Vec2 playerSize = this->gameWorld->getMainCharacter()->getSize();
+	 playerSize =  this->gameWorld->box2DToSDLSize(&playerSize);
 
-	g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources), playerPos.x, playerPos.y, playerSize.x, playerSize.y);
+	 g->drawAnimation(gameWorld->getMainCharacter()->getAnimation(resources), playerPos.x, playerPos.y, playerSize.x, playerSize.y);
 
 
-	*/
+	 */
 
 	VectorXY mainEntPos = gameWorld->getMainEntity()->getPosition();
 	VectorXY mainEntSdlPos = gameWorld->box2DToSDL(&mainEntPos);
 
-
-
 	int dTx = screenW * this->zoomScale;
 	int dTy = screenH * this->zoomScale;
 
-	int difTx = (screenW - dTx)/2;
-	int difTy = (screenH - dTy)/2;
+	int difTx = (screenW - dTx) / 2;
+	int difTy = (screenH - dTy) / 2;
 
-	int auGlobalX = globalX +difTx;
-	int auGlobalY = globalY +difTy;
+	int auGlobalX = globalX + difTx;
+	int auGlobalY = globalY + difTy;
 
 	float xScreen = mainEntSdlPos.x - auGlobalX;
 	float yScreen = mainEntSdlPos.y - auGlobalY;
 
-	if(xScreen < 200){
+	if (xScreen < 200) {
 		globalX -= 5;
-	} if(xScreen > dTx - 200){
+	}
+	if (xScreen > dTx - 200) {
 		globalX += 5;
-	} if(yScreen < 200){
+	}
+	if (yScreen < 200) {
 		globalY -= 5;
-	} if(yScreen > dTy - 100){
+	}
+	if (yScreen > dTy - 100) {
 		globalY += 5;
 	}
 
 	VectorXY sdlWorldSize = this->gameWorld->getSdlWorldSize();
 
-	if((auGlobalX) < 0){
+	if ((auGlobalX) < 0) {
 		auGlobalX = 0;
-	} if((auGlobalY) < 0){
+	}
+	if ((auGlobalY) < 0) {
 		auGlobalY = 0;
-	} if(auGlobalX > (sdlWorldSize.x - dTx)){
+	}
+	if (auGlobalX > (sdlWorldSize.x - dTx)) {
 		auGlobalX = sdlWorldSize.x - dTx;
-	} if(auGlobalY > (sdlWorldSize.y - dTy)){
+	}
+	if (auGlobalY > (sdlWorldSize.y - dTy)) {
 		auGlobalY = sdlWorldSize.y - dTy;
 	}
-
-
 
 	g->setRendererObject(NULL);
 	g->drawAtCenter(false);
 
-	g->drawImage(this->worldImage, 0, 0, auGlobalX, auGlobalY, dTx, dTy, screenW, screenH);
+	g->drawImage(this->worldImage, 0, 0, auGlobalX, auGlobalY, dTx, dTy,
+			screenW, screenH);
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
 	g->setColor(0, 255, 0);
 	g->drawFillRect(10, 10, 160, 40);
 	g->drawFillRect(190, 10, 420, 40);
-	g->drawFillRect(630, 10 , 160, 40);
+	g->drawFillRect(630, 10, 160, 40);
 	g->setColor(0, 0, 0);
 	g->drawRect(11, 11, 158, 38);
 	g->drawRect(191, 11, 418, 38);
@@ -222,16 +219,19 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta){
 	g->setColor(255, 0, 0);
 	g->setFont(Global::gameResources->getNameFont());
 
-	if(this->hasMessage){
+	if (this->hasMessage) {
 		g->drawText(400 - messageSize * 5, 15, serverMessage);
-		g->drawAnimation(Global::gameResources->getExclamationAnimation(), 400 - messageSize * 5 - 36, 14);
-		g->drawAnimation(Global::gameResources->getExclamationAnimation(), 400 + messageSize * 5, 14);
+		g->drawAnimation(Global::gameResources->getExclamationAnimation(),
+				400 - messageSize * 5 - 36, 14);
+		g->drawAnimation(Global::gameResources->getExclamationAnimation(),
+				400 + messageSize * 5, 14);
 
 	}
 
 	g->drawText(635, 15, "Puntaje: 0");
-	for(int i = 0; i < 5; i++){
-		g->drawAnimation(Global::gameResources->getHeartAnimation(), 10 + i* 32, 14);
+	for (int i = 0; i < 5; i++) {
+		g->drawAnimation(Global::gameResources->getHeartAnimation(),
+				10 + i * 32, 14);
 	}
 	levelStateMutex.unlock();
 }
@@ -240,30 +240,30 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 	levelStateMutex.lock();
 	if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
-			case SDLK_LEFT:
-				this->keyCodeData.push_back(MOVE_LEFT_DOWN);
-				break;
-			case SDLK_RIGHT:
-				this->keyCodeData.push_back(MOVE_RIGHT_DOWN);
-				break;
-			case SDLK_UP:
-				this->keyCodeData.push_back(JUMP);
-				break;
-			case SDLK_z:
-			case SDLK_KP_MINUS:
-				this->zoomScale += ZOOM_INCREMENT;
-				if(this->zoomScale > this->maxZoomScale){
-					this->zoomScale = this->maxZoomScale;
-				}
-				break;
-			case SDLK_x:
-			case SDLK_KP_PLUS:
-				this->zoomScale -= ZOOM_INCREMENT;
-				if(this->zoomScale < this->minZoomScale){
-					this->zoomScale = this->minZoomScale;
-				}
+		case SDLK_LEFT:
+			this->keyCodeData.push_back(MOVE_LEFT_DOWN);
+			break;
+		case SDLK_RIGHT:
+			this->keyCodeData.push_back(MOVE_RIGHT_DOWN);
+			break;
+		case SDLK_UP:
+			this->keyCodeData.push_back(JUMP);
+			break;
+		case SDLK_z:
+		case SDLK_KP_MINUS:
+			this->zoomScale += ZOOM_INCREMENT;
+			if (this->zoomScale > this->maxZoomScale) {
+				this->zoomScale = this->maxZoomScale;
+			}
+			break;
+		case SDLK_x:
+		case SDLK_KP_PLUS:
+			this->zoomScale -= ZOOM_INCREMENT;
+			if (this->zoomScale < this->minZoomScale) {
+				this->zoomScale = this->minZoomScale;
+			}
 
-				break;
+			break;
 		}
 		levelStateMutex.unlock();
 		return;
@@ -273,22 +273,22 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 		Message m;
 		m.addCommandCode(KEY_EVENT);
 		switch (e.key.keysym.sym) {
-			case SDLK_LEFT:
-				this->keyCodeData.push_back(MOVE_LEFT_UP);
-				break;
-			case SDLK_RIGHT:
-				this->keyCodeData.push_back(MOVE_RIGHT_UP);
-				break;
+		case SDLK_LEFT:
+			this->keyCodeData.push_back(MOVE_LEFT_UP);
+			break;
+		case SDLK_RIGHT:
+			this->keyCodeData.push_back(MOVE_RIGHT_UP);
+			break;
 		}
 	}
 	levelStateMutex.unlock();
 }
 
-void LevelState::sendKeyData(){
+void LevelState::sendKeyData() {
 	levelStateMutex.lock();
 	Message m;
 
-	if(keyCodeData.size() == 0){
+	if (keyCodeData.size() == 0) {
 		levelStateMutex.unlock();
 		return;
 	}
@@ -296,7 +296,7 @@ void LevelState::sendKeyData(){
 	m.addCommandCode(KEY_EVENT);
 	m.addChar(keyCodeData.size());
 
-	for(auto keyCode : keyCodeData){
+	for (auto keyCode : keyCodeData) {
 		m.addKeyEventCode(keyCode);
 	}
 
@@ -307,12 +307,11 @@ void LevelState::sendKeyData(){
 	levelStateMutex.unlock();
 }
 
-std::vector<KeyCode> LevelState::getKeyCodeData(){
+std::vector<KeyCode> LevelState::getKeyCodeData() {
 	return keyCodeData;
 }
 
-
-void LevelState::update(unsigned int delta){
+void LevelState::update(unsigned int delta) {
 	levelStateMutex.lock();
 	this->gameWorld->update(delta);
 
@@ -320,25 +319,24 @@ void LevelState::update(unsigned int delta){
 	this->frontParticleEmiter->update(delta);
 	//this->gameWorld->getMainCharacter()->update();
 
-	if(this->lightAnimation->isFinished()){
-		int rN = ((float) rand())/RAND_MAX * 5001;
-		if(rN >= 4995){
+	if (this->lightAnimation->isFinished()) {
+		int rN = ((float) rand()) / RAND_MAX * 5001;
+		if (rN >= 4995) {
 			this->lightAnimation->reset();
 			//this->lightAnimationX = ((float) rand())/RAND_MAX * this->getScreenWidth();
 		}
 	}
 
-
-	if(this->hasMessage){
+	if (this->hasMessage) {
 		this->messageTime += delta;
-		if(this->messageTime > 10000){
+		if (this->messageTime > 10000) {
 			this->hasMessage = false;
 		}
 	}
 
 	this->aliveTime += delta;
 
-	if(this->aliveTime > 500){
+	if (this->aliveTime > 500) {
 		Message m;
 		m.addCommandCode(IM_ALIVE);
 		m.addEndChar();
@@ -348,9 +346,9 @@ void LevelState::update(unsigned int delta){
 	levelStateMutex.unlock();
 }
 
-void LevelState::setMessage(char * message){
+void LevelState::setMessage(char * message) {
 	levelStateMutex.lock();
-	if(serverMessage != NULL){
+	if (serverMessage != NULL) {
 		delete serverMessage;
 		serverMessage = NULL;
 	}
@@ -361,19 +359,19 @@ void LevelState::setMessage(char * message){
 	levelStateMutex.unlock();
 }
 
-void LevelState::enter(){
+void LevelState::enter() {
 	VectorXY wSize = this->gameWorld->getBox2DWorldSize();
 	this->worldImage = new Image(wSize.x * 20, wSize.y * 20);
 	this->gameWorld->generateGraphics();
 
 	//Recalculamos con datos
 	//TODO: Cambiar! por el valor de la pantalla no harcodeado
-	float xMax = ((float)wSize.x * 20)/Global::game->getScreenWidth();
-	float yMax = ((float)wSize.y * 20)/Global::game->getScreenHeight();
+	float xMax = ((float) wSize.x * 20) / Global::game->getScreenWidth();
+	float yMax = ((float) wSize.y * 20) / Global::game->getScreenHeight();
 
 	//---------------------------------------------
 
-	if(xMax > yMax){
+	if (xMax > yMax) {
 		this->maxZoomScale = yMax;
 	} else {
 		this->maxZoomScale = xMax;
@@ -381,7 +379,7 @@ void LevelState::enter(){
 }
 
 LevelState::~LevelState() {
-	if(serverMessage != NULL){
+	if (serverMessage != NULL) {
 		delete serverMessage;
 	}
 }

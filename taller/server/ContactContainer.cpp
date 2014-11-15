@@ -7,7 +7,7 @@
 
 #include <ContactContainer.h>
 
-ContactContainer::ContactContainer(int typeOfThing, void *contained){
+ContactContainer::ContactContainer(int typeOfThing, void *contained) {
 	type = typeOfThing;
 	containedThing = contained;
 }

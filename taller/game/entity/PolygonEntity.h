@@ -24,7 +24,7 @@ public:
 	void addVertex(float x, float y);
 
 	void update(unsigned int delta);
-	void addUpdateRequest(UpdateRequest * u,  unsigned int elapsedTime);
+	void addUpdateRequest(UpdateRequest * u, unsigned int elapsedTime);
 	void setStatic(bool isStatic);
 
 	void buildRectangle(short int * vX, short int * vY);
@@ -40,8 +40,6 @@ private:
 	int lastUpdateTime;
 
 	int renderTimeCount;
-
-
 
 	VectorXY lastPosition;
 	VectorXY nextPosition;

@@ -19,7 +19,6 @@
 
 class Graphics;
 
-
 class Game {
 public:
 	Game(const char* title);

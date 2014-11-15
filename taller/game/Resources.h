@@ -38,7 +38,8 @@ public:
 	Animation * getTopJumpRight();
 	Animation * getTopJumpLeft();
 
-	Animation * getAnimationByAnimationCode(AnimationCode animationCode, bool offline = false);
+	Animation * getAnimationByAnimationCode(AnimationCode animationCode,
+			bool offline = false);
 
 	Animation * getSleepingEmoticon();
 	Animation * getExclamationAnimation();
@@ -93,7 +94,6 @@ private:
 	Animation * sleepingEmoticon;
 	Animation * heartAnimation;
 	Animation * exclamationAnimation;
-
 
 	TTF_Font * nameFonts;
 

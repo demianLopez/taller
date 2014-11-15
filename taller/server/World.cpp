@@ -26,16 +26,16 @@ b2World * World::getBox2DWorld() {
 	return this->box2DWorld;
 }
 
-string * World::getWorldName(){
+string * World::getWorldName() {
 	return this->mapName;
 }
 
-void World::setMapData(string * mapName, int maxPlayers){
+void World::setMapData(string * mapName, int maxPlayers) {
 	this->mapName = mapName;
 	this->maxPlayers = maxPlayers;
 }
 
-int World::getMaxPlayers(){
+int World::getMaxPlayers() {
 	return this->maxPlayers;
 }
 
@@ -43,7 +43,7 @@ b2Vec2 * World::getBox2DWorldSize() {
 	return this->Box2DWorldSize;
 }
 
-void World::initializePlayerBody(Jugador * player){
+void World::initializePlayerBody(Jugador * player) {
 
 	double longX = 1.2f;
 	double longY = 1.8f;
@@ -74,7 +74,6 @@ void World::initializePlayerBody(Jugador * player){
 
 	b2PolygonShape dynamicBox;
 
-
 	dynamicBox.SetAsBox(longX, longY);
 
 	b2FixtureDef fixtureDef;
@@ -83,14 +82,16 @@ void World::initializePlayerBody(Jugador * player){
 	fixtureDef.friction = 0;
 
 	b2Fixture *bodyFixture = body->CreateFixture(&fixtureDef);
-	bodyFixture->SetUserData(new ContactContainer(ContactContainer::SENSORDELPIE,player));
+	bodyFixture->SetUserData(
+			new ContactContainer(ContactContainer::SENSORDELPIE, player));
 
-	dynamicBox.SetAsBox( longX - 0.2 , 0.4, b2Vec2(0,-longY), 0);
+	dynamicBox.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, -longY), 0);
 	fixtureDef.density = 0;
 	bodyFixture->SetSensor(true);
 	fixtureDef.isSensor = true;
 	b2Fixture * footSensor = body->CreateFixture(&fixtureDef);
-	footSensor->SetUserData(new ContactContainer(ContactContainer::JUGADOR, player));
+	footSensor->SetUserData(
+			new ContactContainer(ContactContainer::JUGADOR, player));
 	ContactListener * footListener = new ContactListener();
 
 	player->setListenerTouchingGround(footListener);
@@ -98,9 +99,9 @@ void World::initializePlayerBody(Jugador * player){
 
 }
 
-Jugador * World::getPlayer(int userIndex){
-	for(auto * user : this->playerList){
-		if(user->getIndex() == userIndex){
+Jugador * World::getPlayer(int userIndex) {
+	for (auto * user : this->playerList) {
+		if (user->getIndex() == userIndex) {
 
 			return user;
 		}
@@ -108,20 +109,20 @@ Jugador * World::getPlayer(int userIndex){
 	return NULL;
 }
 
-void World::waitWorldThread(){
+void World::waitWorldThread() {
 	this->worldThread.join();
 }
 
-void World::requestKeyData(Jugador * j){
+void World::requestKeyData(Jugador * j) {
 	Message m;
 	m.addCommandCode(REQUEST_KEY_DATA);
 	m.addEndChar();
 	j->getClient()->send_message(&m);
 }
 
-void World::addPlayer(Jugador * jugador, bool reconecting){
+void World::addPlayer(Jugador * jugador, bool reconecting) {
 	worldMutex.lock();
-	if(!reconecting){
+	if (!reconecting) {
 		this->playerList.push_back(jugador);
 		int avavibleIndex = this->getAvavibleIndex();
 		jugador->setEntityIndex(avavibleIndex);
@@ -129,9 +130,9 @@ void World::addPlayer(Jugador * jugador, bool reconecting){
 		this->initializePlayerBody(jugador);
 	}
 
-	for(auto * p : playerList){
-		if(!reconecting){
-			if(p->getIndex() != jugador->getIndex()){
+	for (auto * p : playerList) {
+		if (!reconecting) {
+			if (p->getIndex() != jugador->getIndex()) {
 				//Le avisamos a los demas que alguien se conecto
 				this->instantiatePlayer(jugador, p->getClient());
 			}
@@ -144,11 +145,11 @@ void World::addPlayer(Jugador * jugador, bool reconecting){
 	worldMutex.unlock();
 }
 
-void World::releaseEntityIndex(int index){
+void World::releaseEntityIndex(int index) {
 
 }
 
-vector<Jugador *> World::getPlayerList(){
+vector<Jugador *> World::getPlayerList() {
 	return this->playerList;
 }
 
@@ -162,36 +163,36 @@ void World::addPolygon(Polygon * polygon) {
 }
 
 /*
-b2Vec2 World::box2DToSDL(b2Vec2 * box2DCoord) {
-	float sdlX = box2DCoord->x / Box2DWorldSize->x * SDLWindowSize->x;
-	float sdlY = SDLWindowSize->y
-			- box2DCoord->y / Box2DWorldSize->y * SDLWindowSize->y;
-	b2Vec2 sdlCoord(sdlX, sdlY);
-	return sdlCoord;
-}
+ b2Vec2 World::box2DToSDL(b2Vec2 * box2DCoord) {
+ float sdlX = box2DCoord->x / Box2DWorldSize->x * SDLWindowSize->x;
+ float sdlY = SDLWindowSize->y
+ - box2DCoord->y / Box2DWorldSize->y * SDLWindowSize->y;
+ b2Vec2 sdlCoord(sdlX, sdlY);
+ return sdlCoord;
+ }
 
-b2Vec2 World::box2DToSDLSize(b2Vec2 * box2DCoord) {
-	float sdlX = box2DCoord->x / Box2DWorldSize->x * SDLWindowSize->x;
-	float sdlY = box2DCoord->y / Box2DWorldSize->y * SDLWindowSize->y;
-	b2Vec2 sdlCoord(sdlX, sdlY);
-	return sdlCoord;
-}
+ b2Vec2 World::box2DToSDLSize(b2Vec2 * box2DCoord) {
+ float sdlX = box2DCoord->x / Box2DWorldSize->x * SDLWindowSize->x;
+ float sdlY = box2DCoord->y / Box2DWorldSize->y * SDLWindowSize->y;
+ b2Vec2 sdlCoord(sdlX, sdlY);
+ return sdlCoord;
+ }
 
-b2Vec2 World::SDLToBox2DSize(b2Vec2 * SDLCoord) {
-	float b2DX = SDLCoord->x / SDLWindowSize->x * Box2DWorldSize->x;
-	float b2DY = SDLCoord->y / SDLWindowSize->y * Box2DWorldSize->y;
-	b2Vec2 box2DCoord(b2DX, b2DY);
-	return box2DCoord;
-}
+ b2Vec2 World::SDLToBox2DSize(b2Vec2 * SDLCoord) {
+ float b2DX = SDLCoord->x / SDLWindowSize->x * Box2DWorldSize->x;
+ float b2DY = SDLCoord->y / SDLWindowSize->y * Box2DWorldSize->y;
+ b2Vec2 box2DCoord(b2DX, b2DY);
+ return box2DCoord;
+ }
 
-b2Vec2 World::SDLToBox2D(b2Vec2 * SDLCoord) {
-	float b2DX = SDLCoord->x / SDLWindowSize->x * Box2DWorldSize->x;
-	float b2DY = (SDLCoord->y - SDLWindowSize->y) / SDLWindowSize->y
-			* Box2DWorldSize->y;
-	b2Vec2 box2DCoord(b2DX, b2DY);
-	return box2DCoord;
-}
-*/
+ b2Vec2 World::SDLToBox2D(b2Vec2 * SDLCoord) {
+ float b2DX = SDLCoord->x / SDLWindowSize->x * Box2DWorldSize->x;
+ float b2DY = (SDLCoord->y - SDLWindowSize->y) / SDLWindowSize->y
+ * Box2DWorldSize->y;
+ b2Vec2 box2DCoord(b2DX, b2DY);
+ return box2DCoord;
+ }
+ */
 
 void World::worldStep(int delta) {
 	float32 timeStep = ((float) delta) / 1000;
@@ -201,7 +202,7 @@ void World::worldStep(int delta) {
 	this->box2DWorld->Step(timeStep, velocityIterations, positionIterations);
 }
 
-void World::instantiatePlayer(Jugador * p, Client_handler * client){
+void World::instantiatePlayer(Jugador * p, Client_handler * client) {
 	Message m;
 	m.addCommandCode(ADD_PLAYER_DATA);
 	m.addChar(p->getIndex());
@@ -214,9 +215,9 @@ void World::instantiatePlayer(Jugador * p, Client_handler * client){
 	client->send_message(&m);
 }
 
-int World::getAvavibleIndex(){
+int World::getAvavibleIndex() {
 	int p = lastEntityIndex;
-	lastEntityIndex ++;
+	lastEntityIndex++;
 	return p;
 }
 
@@ -235,31 +236,31 @@ vector<Polygon *> World::getPolygonList() {
 	return this->polygonList;
 }
 
-void World::start(){
+void World::start() {
 	this->wordLoop = true;
 	this->worldThread = thread(World::worldLoop, this);
 }
 
-void World::stop(){
+void World::stop() {
 	this->wordLoop = false;
 }
 
-bool World::isOnLoop(){
+bool World::isOnLoop() {
 	return this->wordLoop;
 }
 
-void World::worldLoop(World * word){
+void World::worldLoop(World * word) {
 	char eCode = 0;
-	try{
+	try {
 		int ups = 25;
-		int sleepTime = 1000/ups;
+		int sleepTime = 1000 / ups;
 
 		unsigned int updateCount = 0;
 
-		while(word->isOnLoop()){
+		while (word->isOnLoop()) {
 			eCode = 0;
 
-			for(auto * j : word->getPlayerList()){
+			for (auto * j : word->getPlayerList()) {
 				j->apllyCodes();
 				j->update();
 			}
@@ -269,8 +270,8 @@ void World::worldLoop(World * word){
 
 			//worldMutex.lock();
 			eCode = 4;
-			for(auto * j : word->getPlayerList()){
-				if(!j->isOffline()){
+			for (auto * j : word->getPlayerList()) {
+				if (!j->isOffline()) {
 					word->requestKeyData(j);
 				}
 			}
@@ -280,14 +281,14 @@ void World::worldLoop(World * word){
 			word->worldStep(sleepTime);
 			eCode = 6;
 
-			if((updateCount % 1) == 0){
+			if ((updateCount % 1) == 0) {
 				word->sendUpdates();
 			}
-			updateCount ++;
+			updateCount++;
 
-			for(auto * j : word->getPlayerList()){
-				if(!j->isOffline()){
-					if(j->keyRequestSend >= 60){
+			for (auto * j : word->getPlayerList()) {
+				if (!j->isOffline()) {
+					if (j->keyRequestSend >= 60) {
 						j->setOffline(true);
 						Message m;
 						m.addCommandCode(SHOW_MESSAGE);
@@ -303,39 +304,40 @@ void World::worldLoop(World * word){
 				}
 			}
 		}
-	} catch (const std::exception& e){
-		std::cout<<e.what()<<" - Producido en WorldLoop - tCode: "<<eCode<<std::endl;
+	} catch (const std::exception& e) {
+		std::cout << e.what() << " - Producido en WorldLoop - tCode: " << eCode
+				<< std::endl;
 		exit(-1);
 	}
 }
 
-void World::sendUpdates(){
-	for(auto * j : playerList){
+void World::sendUpdates() {
+	for (auto * j : playerList) {
 		//this->updateTiming(j);
 		this->updatePeople(j);
-		if(!j->isOffline()){
+		if (!j->isOffline()) {
 			j->keyRequestSend++;
 		}
 	}
 
-	for(auto * p : polygonList){
-		if(!p->isStatic()){
+	for (auto * p : polygonList) {
+		if (!p->isStatic()) {
 			this->updatePolygon(p);
 		}
 	}
 }
 
-void World::updateTiming(Jugador * j){
+void World::updateTiming(Jugador * j) {
 	Message m;
 	m.addCommandCode(UPDATE_TIMING);
-	char timing = 1000/(this->updatesPerSecond + 1);
+	char timing = 1000 / (this->updatesPerSecond + 1);
 	m.addChar(timing);
 	m.addEndChar();
 
 	j->getClient()->send_message(&m);
 }
 
-void World::updatePolygon(Polygon * p){
+void World::updatePolygon(Polygon * p) {
 	Message m;
 	m.addCommandCode(UPDATE_ENTITY);
 	m.addChar(p->getEntityIndex());
@@ -349,7 +351,7 @@ void World::updatePolygon(Polygon * p){
 	this->sendToWorldPlayers(&m);
 }
 
-void World::updatePeople(Jugador * p){
+void World::updatePeople(Jugador * p) {
 	Message m;
 	m.addCommandCode(UPDATE_PLAYER_ENTITY);
 	m.addChar(p->getIndex());
@@ -368,7 +370,6 @@ World::~World() {
 	delete this->gravity;
 	delete this->box2DWorld;
 
-
 	for (auto *polygon : polygonList) {
 		delete polygon;
 	}
@@ -376,9 +377,9 @@ World::~World() {
 	polygonList.clear();
 }
 
-void World::sendToWorldPlayers(Message * m){
-	for(auto * p: this->playerList){
-		if(!p->isOffline()){
+void World::sendToWorldPlayers(Message * m) {
+	for (auto * p : this->playerList) {
+		if (!p->isOffline()) {
 			p->getClient()->send_message(m);
 		}
 	}

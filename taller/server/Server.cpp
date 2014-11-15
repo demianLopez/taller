@@ -14,12 +14,12 @@ void Server::run_server(Server * server) {
 	}
 }
 
-void Server::waitServerThread(){
+void Server::waitServerThread() {
 	this->server_thread.join();
 }
 
-void Server::listen(){
-	if(queue.is_open()){
+void Server::listen() {
+	if (queue.is_open()) {
 
 		Socket * newConection = NULL;
 		newConection = queue.accept_client();
@@ -27,8 +27,8 @@ void Server::listen(){
 		if (newConection != NULL) {
 			this->userListMutex.lock();
 
-			for(auto * client : clients){
-				if(client->isEmpty()){
+			for (auto * client : clients) {
+				if (client->isEmpty()) {
 					client->setSocket(newConection);
 					client->startLoop();
 					client->userIndex = lastIndex;
@@ -47,10 +47,10 @@ Server::Server() {
 	this->maxConnections = 8;
 }
 
-Client_handler * Server::getUser(char userIndex){
+Client_handler * Server::getUser(char userIndex) {
 	this->userListMutex.lock();
-	for(auto * user : clients){
-		if(user->userIndex == userIndex){
+	for (auto * user : clients) {
+		if (user->userIndex == userIndex) {
 			return user;
 		}
 	}
@@ -59,13 +59,13 @@ Client_handler * Server::getUser(char userIndex){
 	return NULL;
 }
 
-void Server::stopQueue(){
+void Server::stopQueue() {
 	queue.close();
 }
 
-void Server::stopClients(){
-	for(auto * client : clients){
-		if(!client->isEmpty()){
+void Server::stopClients() {
+	for (auto * client : clients) {
+		if (!client->isEmpty()) {
 			client->stop();
 		}
 		client->waitThreadEnd();
@@ -73,35 +73,35 @@ void Server::stopClients(){
 	}
 }
 
-void Server::stopServer(){
+void Server::stopServer() {
 	this->serverLoop = false;
 	this->stopQueue();
 	server_thread.join();
 	this->stopClients();
 }
 
-void Server::sendToAll(Message * message){
-	for(auto * user : clients){
-		if(user->isConnected()){
+void Server::sendToAll(Message * message) {
+	for (auto * user : clients) {
+		if (user->isConnected()) {
 			user->send_message(message);
 		}
 	}
 }
 
-void Server::sendToOthers(Message * message, int userIndex){
-	for(auto * user : clients){
-		if(user->isConnected() && (user->userIndex != userIndex)){
+void Server::sendToOthers(Message * message, int userIndex) {
+	for (auto * user : clients) {
+		if (user->isConnected() && (user->userIndex != userIndex)) {
 			user->send_message(message);
 		}
 	}
 }
 
-bool Server::isOnLoop(){
+bool Server::isOnLoop() {
 	return this->serverLoop;
 }
 
-void Server::starServer(int port){
-	for(int i = 0; i < this->maxConnections; i++){
+void Server::starServer(int port) {
+	for (int i = 0; i < this->maxConnections; i++) {
 		Client_handler * client = new Client_handler();
 		clients.push_back(client);
 		client->setDataObserver(new ServerData(this));

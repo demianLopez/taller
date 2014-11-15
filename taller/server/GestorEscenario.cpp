@@ -19,12 +19,13 @@ GestorEscenario::~GestorEscenario() {
 	// TODO Auto-generated destructor stub
 }
 
-escenario* GestorEscenario::getEscenario(){
+escenario* GestorEscenario::getEscenario() {
 	return &elEscenario;
 }
 
 void GestorEscenario::configurarEscenerio(int altopx, int anchopx, int altoun,
-		int anchoun, string imagen_fondo, int personajeX, int personajeY, int cantidadJugadores, string nombreMapa) {
+		int anchoun, string imagen_fondo, int personajeX, int personajeY,
+		int cantidadJugadores, string nombreMapa) {
 	this->elEscenario.altopx = altopx;
 	this->elEscenario.anchopx = anchopx;
 	this->elEscenario.altoun = altoun;
@@ -108,7 +109,8 @@ World * GestorEscenario::obtenerMundo() {
 	world = new World(new b2Vec2(0, -20));
 	world->setUnits(elEscenario.anchoun, elEscenario.altoun);
 
-	world->setMapData(new string(elEscenario.nombreMapa), elEscenario.cantidadJugadores);
+	world->setMapData(new string(elEscenario.nombreMapa),
+			elEscenario.cantidadJugadores);
 	b2Vec2 SDLCharPos = b2Vec2(elEscenario.personajeX, elEscenario.personajeY);
 
 	for (auto objeto : objetos) {

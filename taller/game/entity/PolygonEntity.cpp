@@ -5,54 +5,53 @@
  *      Author: demian
  */
 
-
 #include "PolygonEntity.h"
 #include <Global.h>
 
-PolygonEntity::PolygonEntity(int index) : GameEntity(index) {
+PolygonEntity::PolygonEntity(int index) :
+		GameEntity(index) {
 	this->polygonImage = NULL;
 }
 
-void PolygonEntity::update(unsigned int delta){
-
+void PolygonEntity::update(unsigned int delta) {
 
 }
 
-void PolygonEntity::addUpdateRequest(UpdateRequest * u,  unsigned int elapsedTime){
+void PolygonEntity::addUpdateRequest(UpdateRequest * u,
+		unsigned int elapsedTime) {
 
 	this->lastPosition = nextPosition;
 	this->nextPosition = VectorXY(u->posX, u->posY);
 
-
 	this->lastRotation = this->rotation;
 	this->rotation = u->rotation;
-
 
 	this->elapsedTime = elapsedTime - this->lastUpdateTime;
 	this->lastUpdateTime = elapsedTime;
 	this->renderTimeCount = 0;
 }
 
-void PolygonEntity::setStatic(bool isStatic){
+void PolygonEntity::setStatic(bool isStatic) {
 	this->isStatic = isStatic;
 }
 
-void PolygonEntity::render(Graphics * g, unsigned int delta){
-
-
+void PolygonEntity::render(Graphics * g, unsigned int delta) {
 
 	renderTimeCount += delta;
 
 	VectorXY sdlPos;
 	float finalRotation;
 
+	if (!isStatic) {
 
-	if(!isStatic){
+		float d = (float) (renderTimeCount) / (float) (elapsedTime);
 
-		float d = (float)(renderTimeCount)/(float) (elapsedTime);
-
-		if(d > 1) { d = 1; }
-		if(d < 0) { d = 0; }
+		if (d > 1) {
+			d = 1;
+		}
+		if (d < 0) {
+			d = 0;
+		}
 		float iPosX = lastPosition.x + (nextPosition.x - lastPosition.x) * d;
 		float iPosY = lastPosition.y + (nextPosition.y - lastPosition.y) * d;
 		finalRotation = lastRotation + (rotation - lastRotation) * d;
@@ -71,10 +70,10 @@ void PolygonEntity::render(Graphics * g, unsigned int delta){
 	g->drawAtCenter(false);
 }
 
-void PolygonEntity::initialize(){
+void PolygonEntity::initialize() {
 	//Buscamos el ancho y largo maximo!!
 
-	if(this->vList.size() < 3){
+	if (this->vList.size() < 3) {
 		this->polygonImage = new Image("Resources/bola.png");
 		return;
 	}
@@ -144,7 +143,7 @@ void PolygonEntity::initialize(){
 
 	this->polygonImage = new Image(sdlSize.x, sdlSize.y);
 
-	if(this->type == P_RECTANGLE){
+	if (this->type == P_RECTANGLE) {
 		this->buildRectangle(vX, vY);
 	} else {
 		Graphics * g = GameElements::getGraphicsInstance();
@@ -159,7 +158,7 @@ void PolygonEntity::initialize(){
 	delete[] vY;
 }
 
-void PolygonEntity::buildRectangle(short int * vX,short int * vY){
+void PolygonEntity::buildRectangle(short int * vX, short int * vY) {
 	int tileX = 1;
 	int tileY = 0;
 	Image * borderImage = new Image("Resources/tile.png");
@@ -171,58 +170,54 @@ void PolygonEntity::buildRectangle(short int * vX,short int * vY){
 	short int supBorder = vX[1] - vX[0];
 	short int sidBorder = vY[2] - vY[1];
 
-	int iterationX = supBorder/16 + 1;
-	int iterationY = sidBorder/16 + 1;
+	int iterationX = supBorder / 16 + 1;
+	int iterationY = sidBorder / 16 + 1;
 
-	for(int x = 0; x < iterationX; x++){
-		for(int y = 0; y < iterationY; y++){
+	for (int x = 0; x < iterationX; x++) {
+		for (int y = 0; y < iterationY; y++) {
 			int tX = x * 16 + vX[0];
 			int tY = y * 16 + vY[0];
 			int iTx = 16;
 			int iTy = 16;
 
-			if(y == 0){
+			if (y == 0) {
 				iTy = 0;
-			} else if(y == (iterationY - 1)){
+			} else if (y == (iterationY - 1)) {
 				iTy = 48;
 			} else {
 				iTy = (y * 16) % 32 + 16;
 			}
 
-
-			if(x == 0){
+			if (x == 0) {
 				iTx = 0;
-			} else if(x == (iterationX - 1)){
+			} else if (x == (iterationX - 1)) {
 				iTx = 48;
 			} else {
 				iTx = (x * 16) % 32 + 16;
 			}
 
-			g->drawImage(borderImage, tX, tY, iTx + tileX * 64, iTy + tileY * 64, 16, 16, 16, 16);
+			g->drawImage(borderImage, tX, tY, iTx + tileX * 64,
+					iTy + tileY * 64, 16, 16, 16, 16);
 		}
 	}
-
 
 	delete g;
 	delete borderImage;
 
-
 }
 
-void PolygonEntity::addVertex(float x, float y){
+void PolygonEntity::addVertex(float x, float y) {
 	this->vList.push_back(new VectorXY(x, y));
 }
 
 PolygonEntity::~PolygonEntity() {
-	for(auto * v : vList){
+	for (auto * v : vList) {
 		delete v;
 	}
 
-	if(polygonImage != NULL){
+	if (polygonImage != NULL) {
 		delete this->polygonImage;
 	}
 
-
 }
-
 

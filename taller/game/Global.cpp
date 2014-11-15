@@ -7,10 +7,10 @@
 
 #include <Global.h>
 
-	Client_handler * Global::client;
-	LevelState * Global::levelState;
-	MainMenu * Global::mainMenu;
-	SnowBross * Global::game;
-	GameWorld * Global::gameWorld;
-	Resources * Global::gameResources;
-	int Global::serverUpdateTiming;
+Client_handler * Global::client;
+LevelState * Global::levelState;
+MainMenu * Global::mainMenu;
+SnowBross * Global::game;
+GameWorld * Global::gameWorld;
+Resources * Global::gameResources;
+int Global::serverUpdateTiming;

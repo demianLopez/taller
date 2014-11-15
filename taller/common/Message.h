@@ -50,7 +50,6 @@ public:
 	/* Agrega un caracter END_CHAR al final del mensaje. */
 	void addEndChar();
 
-
 	virtual ~Message();
 
 	CommandCode getFirstCommandCode();

@@ -12,8 +12,7 @@
 class Animation;
 class Resources;
 
-
-class Personaje : public CosaConMovimiento{
+class Personaje: public CosaConMovimiento {
 protected:
 	ContactListener *listenerTouchingGround;
 	AnimationCode currentAnimation;
@@ -37,11 +36,10 @@ public:
 	void setListenerTouchingGround(ContactListener *aListener);
 
 	void update();
-/*
-	Animation * getAnimation(Resources * resources);
-	*/
+	/*
+	 Animation * getAnimation(Resources * resources);
+	 */
 private:
-
 
 	virtual void evaluateAnimation();
 

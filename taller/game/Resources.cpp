@@ -52,46 +52,47 @@ Animation * Resources::getPlayerAnimationRight() {
 	return this->characterAnimationRight;
 }
 
-Animation * Resources::getAnimationByAnimationCode(AnimationCode animationCode, bool offline){
-	if(!offline){
-		switch(animationCode){
-			case A_STAND_RIGHT:
-				return this->characterStaticRight;
-			case A_STAND_LEFT:
-				return this->characterStaticLeft;
-			case A_WALK_RIGHT:
-				return this->characterWalkRight;
-				break;
-			case A_WALK_LEFT:
-				return this->characterWalkLeft;
-				break;
-			case A_JUMP_RIGHT:
-				return this->characterAirRight;
-			case A_JUMP_LEFT:
-				return this->characterAirLeft;
+Animation * Resources::getAnimationByAnimationCode(AnimationCode animationCode,
+		bool offline) {
+	if (!offline) {
+		switch (animationCode) {
+		case A_STAND_RIGHT:
+			return this->characterStaticRight;
+		case A_STAND_LEFT:
+			return this->characterStaticLeft;
+		case A_WALK_RIGHT:
+			return this->characterWalkRight;
+			break;
+		case A_WALK_LEFT:
+			return this->characterWalkLeft;
+			break;
+		case A_JUMP_RIGHT:
+			return this->characterAirRight;
+		case A_JUMP_LEFT:
+			return this->characterAirLeft;
 		}
-	}else{
-		switch(animationCode){
-			case A_STAND_RIGHT:
-				return this->characterStaticRightBW;
-			case A_STAND_LEFT:
-				return this->characterStaticLeftBW;
-			case A_WALK_RIGHT:
-				return this->characterStaticRightBW;
-				break;
-			case A_WALK_LEFT:
-				return this->characterStaticLeftBW;
-				break;
-			case A_JUMP_RIGHT:
-				return this->characterAirRightBW;
-			case A_JUMP_LEFT:
-				return this->characterAirLeftBW;
+	} else {
+		switch (animationCode) {
+		case A_STAND_RIGHT:
+			return this->characterStaticRightBW;
+		case A_STAND_LEFT:
+			return this->characterStaticLeftBW;
+		case A_WALK_RIGHT:
+			return this->characterStaticRightBW;
+			break;
+		case A_WALK_LEFT:
+			return this->characterStaticLeftBW;
+			break;
+		case A_JUMP_RIGHT:
+			return this->characterAirRightBW;
+		case A_JUMP_LEFT:
+			return this->characterAirLeftBW;
 		}
 	}
 	return NULL; //Si llego aca algo esta mal
 }
 
-void Resources::loadColoredAnimations(){
+void Resources::loadColoredAnimations() {
 	this->characterSpriteSheet = new SpriteSheet(PLAYER_ANIM_PATH, 70, 80);
 	this->characterAnimationLeft = new Animation();
 	this->characterAnimationRight = new Animation();
@@ -170,7 +171,7 @@ void Resources::loadColoredAnimations(){
 	this->topJumpRight->addFrame(this->characterJump->getSubImage(0, 1), 50);
 }
 
-void Resources::loadBWAnimations(){
+void Resources::loadBWAnimations() {
 	this->characterSpriteSheetBW = new SpriteSheet(PLAYER_ANIM_BW_PATH, 70, 80);
 	this->characterAnimationLeftBW = new Animation();
 	this->characterAnimationRightBW = new Animation();
@@ -197,23 +198,23 @@ void Resources::loadBWAnimations(){
 	this->characterWalkRightBW = new Animation();
 	this->characterWalkLeftBW = new Animation();
 
-	this->characterWalkRightBW->addFrame(this->characterWalkBW->getSubImage(0, 1),
-			75);
-	this->characterWalkRightBW->addFrame(this->characterWalkBW->getSubImage(1, 1),
-			75);
-	this->characterWalkRightBW->addFrame(this->characterWalkBW->getSubImage(2, 1),
-			75);
-	this->characterWalkRightBW->addFrame(this->characterWalkBW->getSubImage(3, 1),
-			75);
+	this->characterWalkRightBW->addFrame(
+			this->characterWalkBW->getSubImage(0, 1), 75);
+	this->characterWalkRightBW->addFrame(
+			this->characterWalkBW->getSubImage(1, 1), 75);
+	this->characterWalkRightBW->addFrame(
+			this->characterWalkBW->getSubImage(2, 1), 75);
+	this->characterWalkRightBW->addFrame(
+			this->characterWalkBW->getSubImage(3, 1), 75);
 
-	this->characterWalkLeftBW->addFrame(this->characterWalkBW->getSubImage(0, 0),
-			75);
-	this->characterWalkLeftBW->addFrame(this->characterWalkBW->getSubImage(1, 0),
-			75);
-	this->characterWalkLeftBW->addFrame(this->characterWalkBW->getSubImage(2, 0),
-			75);
-	this->characterWalkLeftBW->addFrame(this->characterWalkBW->getSubImage(3, 0),
-			75);
+	this->characterWalkLeftBW->addFrame(
+			this->characterWalkBW->getSubImage(0, 0), 75);
+	this->characterWalkLeftBW->addFrame(
+			this->characterWalkBW->getSubImage(1, 0), 75);
+	this->characterWalkLeftBW->addFrame(
+			this->characterWalkBW->getSubImage(2, 0), 75);
+	this->characterWalkLeftBW->addFrame(
+			this->characterWalkBW->getSubImage(3, 0), 75);
 
 	this->characterJumpBW = new SpriteSheet(PLAYER_JUMP_BW_PATH, 55, 83);
 
@@ -226,15 +227,15 @@ void Resources::loadBWAnimations(){
 	this->topJumpLeftBW = new Animation();
 	this->topJumpRightBW = new Animation();
 
-	this->characterStaticLeftBW->addFrame(this->characterJumpBW->getSubImage(1, 0),
-			1000);
-	this->characterStaticRightBW->addFrame(this->characterJumpBW->getSubImage(6, 1),
-			1000);
+	this->characterStaticLeftBW->addFrame(
+			this->characterJumpBW->getSubImage(1, 0), 1000);
+	this->characterStaticRightBW->addFrame(
+			this->characterJumpBW->getSubImage(6, 1), 1000);
 
 	this->characterAirLeftBW->addFrame(this->characterJumpBW->getSubImage(0, 0),
 			1000);
-	this->characterAirRightBW->addFrame(this->characterJumpBW->getSubImage(7, 1),
-			1000);
+	this->characterAirRightBW->addFrame(
+			this->characterJumpBW->getSubImage(7, 1), 1000);
 
 	this->topJumpLeftBW->addFrame(this->characterJumpBW->getSubImage(3, 0), 75);
 	this->topJumpLeftBW->addFrame(this->characterJumpBW->getSubImage(4, 0), 75);
@@ -242,11 +243,16 @@ void Resources::loadBWAnimations(){
 	this->topJumpLeftBW->addFrame(this->characterJumpBW->getSubImage(6, 0), 75);
 	this->topJumpLeftBW->addFrame(this->characterJumpBW->getSubImage(7, 0), 75);
 
-	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(4, 1), 50);
-	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(3, 1), 50);
-	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(2, 1), 50);
-	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(1, 1), 50);
-	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(0, 1), 50);
+	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(4, 1),
+			50);
+	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(3, 1),
+			50);
+	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(2, 1),
+			50);
+	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(1, 1),
+			50);
+	this->topJumpRightBW->addFrame(this->characterJumpBW->getSubImage(0, 1),
+			50);
 }
 
 void Resources::loadAnimations() {
@@ -260,15 +266,15 @@ void Resources::loadAnimations() {
 	this->heartAnimation = new Animation();
 	this->exclamationAnimation = new Animation();
 
-	for(int i = 0; i < 8; i++){
+	for (int i = 0; i < 8; i++) {
 		sleepingEmoticon->addFrame(emoticons->getSubImage(i, 9), 150);
-		if( i != 0){
+		if (i != 0) {
 			heartAnimation->addFrame(emoticons->getSubImage(i, 3), 150);
 			exclamationAnimation->addFrame(emoticons->getSubImage(i, 0), 150);
 		}
 	}
 
-	for(int i = 7; i > 0; i--) {
+	for (int i = 7; i > 0; i--) {
 		heartAnimation->addFrame(emoticons->getSubImage(i, 3), 150);
 		exclamationAnimation->addFrame(emoticons->getSubImage(i, 0), 150);
 	}
@@ -277,10 +283,9 @@ void Resources::loadAnimations() {
 
 }
 
-Animation * Resources::getExclamationAnimation(){
+Animation * Resources::getExclamationAnimation() {
 	return this->exclamationAnimation;
 }
-
 
 Image * Resources::getBackground() {
 	return this->backgroundImage;
@@ -318,15 +323,15 @@ Animation * Resources::getTopJumpRight() {
 	return this->topJumpRight;
 }
 
-Animation * Resources::getSleepingEmoticon(){
+Animation * Resources::getSleepingEmoticon() {
 	return this->sleepingEmoticon;
 }
 
-TTF_Font * Resources::getNameFont(){
+TTF_Font * Resources::getNameFont() {
 	return this->nameFonts;
 }
 
-Animation * Resources::getHeartAnimation(){
+Animation * Resources::getHeartAnimation() {
 	return this->heartAnimation;
 }
 

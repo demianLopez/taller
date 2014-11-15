@@ -11,27 +11,28 @@
 #include "Global.h"
 #include "Resources.h"
 
-SnowBross::SnowBross(const char *pTitle) : Game(pTitle) {
+SnowBross::SnowBross(const char *pTitle) :
+		Game(pTitle) {
 	this->closingGame = false;
 }
 
-void SnowBross::initializeGameStates(){
+void SnowBross::initializeGameStates() {
 	this->addState(new MainMenu());
 	this->addState(new LevelState());
 
 	this->enterState(0);
 }
 
-void SnowBross::initGame(){
+void SnowBross::initGame() {
 	Resources * resources = new Resources();
 	resources->loadAnimations();
 
 	Global::gameResources = resources;
 }
-bool SnowBross::isClosing(){
+bool SnowBross::isClosing() {
 	return this->closingGame;
 }
-void SnowBross::exitGame(){
+void SnowBross::exitGame() {
 	//Global::client->stop();
 	delete Global::gameResources;
 	closingGame = true;

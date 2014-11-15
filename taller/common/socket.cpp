@@ -76,7 +76,7 @@ Socket::Socket(int port, const string& host) {
 
 	if (res == -1) {
 		//Logger::customLog("socket.cpp", Logger::ERROR,
-			//	"No se pudo conectar el socket");
+		//	"No se pudo conectar el socket");
 		return;
 	}
 	this->_port = port;
@@ -92,7 +92,7 @@ int Socket::send_message(const char* message, size_t message_len) {
 
 	if (res == -1) {
 		//Logger::customLog("socket.cpp", Logger::ERROR,
-			//	"No se pudo enviar el mensaje por el socket");
+		//	"No se pudo enviar el mensaje por el socket");
 		return res;
 	}
 	return res;
@@ -109,7 +109,7 @@ SocketQueue::SocketQueue() {
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd == -1) {
 		//Logger::customLog("socket.cpp", Logger::ERROR,
-				//"Fallo la creacion de la cola de sockets");
+		//"Fallo la creacion de la cola de sockets");
 	}
 }
 
@@ -130,7 +130,7 @@ void SocketQueue::init(int port, in_addr_t address) {
 
 	if (res == -1) {
 		//Logger::customLog("socket.cpp", Logger::ERROR,
-			//	"No se pudo vincular la cola de sockets con la direccion/puerto solicitados");
+		//	"No se pudo vincular la cola de sockets con la direccion/puerto solicitados");
 		return;
 	}
 	this->_port = port;
@@ -142,14 +142,14 @@ void SocketQueue::init(int port, const char* address) {
 	this->init(port, addr);
 }
 
-Socket  * SocketQueue::accept_connection() {
+Socket * SocketQueue::accept_connection() {
 	sockaddr_in_s their_addr;
 	unsigned int sin_size = sizeof(struct sockaddr_in);
 	int client = accept(sockfd, (struct sockaddr *) &their_addr, &sin_size);
 
 	if (client == -1) {
 		//Logger::customLog("socket.cpp", Logger::WARNING,
-			//	"Fallo la recepcion de conexiones en la cola de sockets. Se genera un socket invalido.");
+		//	"Fallo la recepcion de conexiones en la cola de sockets. Se genera un socket invalido.");
 	}
 
 	return new Socket(client, their_addr);

@@ -8,7 +8,8 @@
 #include "PlayerEntity.h"
 #include <Global.h>
 
-PlayerEntity::PlayerEntity(int index) : GameEntity(index) {
+PlayerEntity::PlayerEntity(int index) :
+		GameEntity(index) {
 	// TODO Auto-generated constructor stub
 	this->renderTimeCount = 0;
 	this->lName = 0;
@@ -22,23 +23,23 @@ PlayerEntity::PlayerEntity(int index) : GameEntity(index) {
 	firstUpdate = false;
 }
 
-void PlayerEntity::setPlayerName(char * name){
+void PlayerEntity::setPlayerName(char * name) {
 	this->pName = name;
 	this->lName = strlen(name);
 }
 
-void PlayerEntity::update(unsigned int delta){
-	if(!this->firstUpdate){
+void PlayerEntity::update(unsigned int delta) {
+	if (!this->firstUpdate) {
 		return;
 	}
 
 	this->renderTimeCount += delta;
 
-	if(renderTimeCount > this->updateTimeArray[currentUpdate]){
+	if (renderTimeCount > this->updateTimeArray[currentUpdate]) {
 
-		int nextUpdate = (currentUpdate + 1)%10;
+		int nextUpdate = (currentUpdate + 1) % 10;
 
-		if(updateRequestArray[nextUpdate] == NULL){
+		if (updateRequestArray[nextUpdate] == NULL) {
 			this->renderTimeCount = this->updateTimeArray[currentUpdate];
 			return;
 		}
@@ -58,43 +59,45 @@ void PlayerEntity::update(unsigned int delta){
 		this->offline = u->offline;
 	}
 
+	float d = (float) (renderTimeCount)
+			/ (float) (updateTimeArray[currentUpdate]);
 
-	float d = (float)(renderTimeCount)/(float) (updateTimeArray[currentUpdate]);
-
-	if(d > 1) { d = 1; }
+	if (d > 1) {
+		d = 1;
+	}
 	float iPosX = lastPosition.x + (nextPosition.x - lastPosition.x) * d;
 	float iPosY = lastPosition.y + (nextPosition.y - lastPosition.y) * d;
 
 	position = VectorXY(iPosX, iPosY);
 }
 
-void PlayerEntity::addUpdateRequest(UpdateRequest * u,  unsigned int elapsedTime){
-
+void PlayerEntity::addUpdateRequest(UpdateRequest * u,
+		unsigned int elapsedTime) {
 
 	this->updateTimeArray[lastAddUpdate] = elapsedTime - this->lastUpdateTime;
 	this->lastUpdateTime = elapsedTime;
 	this->updateRequestArray[lastAddUpdate] = u;
 
-	lastAddUpdate = (lastAddUpdate + 1)%10;
+	lastAddUpdate = (lastAddUpdate + 1) % 10;
 
-	if(!firstUpdate && (lastAddUpdate > 1)){
+	if (!firstUpdate && (lastAddUpdate > 1)) {
 		this->currentUpdate = 1;
-		this->lastPosition = VectorXY(updateRequestArray[0]->posX, updateRequestArray[0]->posY);
+		this->lastPosition = VectorXY(updateRequestArray[0]->posX,
+				updateRequestArray[0]->posY);
 		this->nextPosition = VectorXY(u->posX, u->posY);
 		this->firstUpdate = true;
 	}
 }
 
-void PlayerEntity::setOffline(bool offline){
+void PlayerEntity::setOffline(bool offline) {
 	this->offline = offline;
 }
 
-void PlayerEntity::initialize(){
+void PlayerEntity::initialize() {
 
 }
 
-void PlayerEntity::render(Graphics * g, unsigned int delta){
-
+void PlayerEntity::render(Graphics * g, unsigned int delta) {
 
 	//int renderTime = Global::game->getElapsedTime() - this->lastUpdateTime;
 
@@ -102,19 +105,23 @@ void PlayerEntity::render(Graphics * g, unsigned int delta){
 
 	//VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 	g->drawAtCenter(true);
-	if(offline){
-		g->drawAnimation(Global::gameResources->getSleepingEmoticon(), sdlPos.x + 10, sdlPos.y - 50);
-		g->drawAnimation(Global::gameResources->getAnimationByAnimationCode(animation, true), sdlPos.x, sdlPos.y);
-	}else{
-		g->drawAnimation(Global::gameResources->getAnimationByAnimationCode(animation), sdlPos.x, sdlPos.y);
+	if (offline) {
+		g->drawAnimation(Global::gameResources->getSleepingEmoticon(),
+				sdlPos.x + 10, sdlPos.y - 50);
+		g->drawAnimation(
+				Global::gameResources->getAnimationByAnimationCode(animation,
+						true), sdlPos.x, sdlPos.y);
+	} else {
+		g->drawAnimation(
+				Global::gameResources->getAnimationByAnimationCode(animation),
+				sdlPos.x, sdlPos.y);
 	}
 	g->setFont(Global::gameResources->getNameFont());
 
-
-
-	if(!offline){
+	if (!offline) {
 		g->setColor(0, 0, 0, 150);
-		g->drawFillRect(sdlPos.x - this->lName * 5 - 7, sdlPos.y - 56, this->lName * 10 + 20, 20);
+		g->drawFillRect(sdlPos.x - this->lName * 5 - 7, sdlPos.y - 56,
+				this->lName * 10 + 20, 20);
 		g->setColor(255, 255, 255);
 		g->drawText(sdlPos.x - this->lName * 5, sdlPos.y - 60, this->pName);
 	}
@@ -122,7 +129,7 @@ void PlayerEntity::render(Graphics * g, unsigned int delta){
 	g->drawAtCenter(false);
 }
 
-void PlayerEntity::setAnimation(AnimationCode animation){
+void PlayerEntity::setAnimation(AnimationCode animation) {
 	this->animation = animation;
 }
 
