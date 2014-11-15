@@ -11,7 +11,6 @@
 #include <signal.h>
 #include "ClientData.h"
 #include <Global.h>
-
 #include <LectorJson.h>
 #include <GestorEscenario.h>
 #include <Data.h>

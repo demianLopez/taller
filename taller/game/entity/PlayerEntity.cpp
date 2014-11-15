@@ -14,12 +14,6 @@ PlayerEntity::PlayerEntity(int index) :
 	this->renderTimeCount = 0;
 	this->lName = 0;
 
-	currentUpdate = 0;
-	lastAddUpdate = 0;
-
-	this->updateTimeArray = new int[10];
-	this->updateRequestArray = new UpdateRequest*[10];
-
 	firstUpdate = false;
 }
 
@@ -34,23 +28,22 @@ void PlayerEntity::update(unsigned int delta) {
 	}
 
 	this->renderTimeCount += delta;
+	UpdateRequest * u = NULL;
 
-	if (renderTimeCount > this->updateTimeArray[currentUpdate]) {
-
-		int nextUpdate = (currentUpdate + 1) % 10;
-
-		if (updateRequestArray[nextUpdate] == NULL) {
-			this->renderTimeCount = this->updateTimeArray[currentUpdate];
+	if (renderTimeCount > this->updateTime.front()) {
+		if (updateRequest.size() <= 1) {
+			this->renderTimeCount = this->updateTime.front();
 			return;
 		}
 
-		renderTimeCount -= this->updateTimeArray[currentUpdate];
+		renderTimeCount -= this->updateTime.front();
 
-		delete this->updateRequestArray[currentUpdate];
-		this->updateRequestArray[currentUpdate] = NULL;
+		u = updateRequest.front();
+		updateRequest.pop();
+		updateTime.pop();
+		delete u;
 
-		currentUpdate = nextUpdate;
-		UpdateRequest * u = this->updateRequestArray[currentUpdate];
+		u = this->updateRequest.front();
 
 		this->lastPosition = this->nextPosition;
 		this->nextPosition = VectorXY(u->posX, u->posY);
@@ -60,7 +53,7 @@ void PlayerEntity::update(unsigned int delta) {
 	}
 
 	float d = (float) (renderTimeCount)
-			/ (float) (updateTimeArray[currentUpdate]);
+			/ (float) (updateTime.front());
 
 	if (d > 1) {
 		d = 1;
@@ -74,17 +67,18 @@ void PlayerEntity::update(unsigned int delta) {
 void PlayerEntity::addUpdateRequest(UpdateRequest * u,
 		unsigned int elapsedTime) {
 
-	this->updateTimeArray[lastAddUpdate] = elapsedTime - this->lastUpdateTime;
+	unsigned int difTime = elapsedTime - this->lastUpdateTime;
 	this->lastUpdateTime = elapsedTime;
-	this->updateRequestArray[lastAddUpdate] = u;
 
-	lastAddUpdate = (lastAddUpdate + 1) % 10;
+	this->updateTime.push(difTime);
+	this->updateRequest.push(u);
 
-	if (!firstUpdate && (lastAddUpdate > 1)) {
-		this->currentUpdate = 1;
-		this->lastPosition = VectorXY(updateRequestArray[0]->posX,
-				updateRequestArray[0]->posY);
+	if (!firstUpdate && (updateTime.size() > 1)) {
+		this->lastPosition = VectorXY(updateRequest.front()->posX,
+				updateRequest.front()->posY);
 		this->nextPosition = VectorXY(u->posX, u->posY);
+		updateRequest.pop();
+		updateTime.pop();
 		this->firstUpdate = true;
 	}
 }
@@ -136,7 +130,9 @@ void PlayerEntity::setAnimation(AnimationCode animation) {
 PlayerEntity::~PlayerEntity() {
 	delete this->pName;
 
-	delete[] this->updateTimeArray;
-	delete[] this->updateRequestArray;
+	while(updateRequest.size() > 0){
+		delete updateRequest.front();
+		updateRequest.pop();
+	}
 }
 
