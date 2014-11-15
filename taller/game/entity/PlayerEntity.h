@@ -9,6 +9,7 @@
 #define PLAYERENTITY_H_
 
 #include "GameEntity.h"
+#include <queue>
 
 class PlayerEntity: public GameEntity {
 public:
@@ -30,10 +31,8 @@ private:
 
 	int renderTimeCount;
 
-	int * updateTimeArray;
-	UpdateRequest ** updateRequestArray;
-	int currentUpdate;
-	int lastAddUpdate;
+	std::queue<int> updateTime;
+	std::queue<UpdateRequest *> updateRequest;
 
 	char * pName;
 	int lName;
