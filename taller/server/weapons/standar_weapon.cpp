@@ -1,5 +1,5 @@
 /**
- level_object.h
+ standar_weapon.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,17 +16,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef LEVEL_OBJECT_H_
-#define LEVEL_OBJECT_H_
+#include "standar_weapon.h"
 
-class Level_object {
-private:
-	bool _is_alive;
+Standar_weapon::Standar_weapon() {
+	// TODO Auto-generated constructor stub
 
-public:
-	Level_object();
+}
 
-	bool is_alive();
-};
+Standar_weapon::~Standar_weapon() {
+	// TODO Auto-generated destructor stub
+}
 
-#endif /* LEVEL_OBJECT_H_ */

@@ -1,5 +1,5 @@
 /**
- level_object.h
+ standar_weapon.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,17 +16,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef LEVEL_OBJECT_H_
-#define LEVEL_OBJECT_H_
+#ifndef STANDAR_WEAPON_H_
+#define STANDAR_WEAPON_H_
 
-class Level_object {
-private:
-	bool _is_alive;
+#include "weapon.h"
 
+class Standar_weapon: public Weapon {
 public:
-	Level_object();
-
-	bool is_alive();
+	Standar_weapon();
+	virtual ~Standar_weapon();
 };
 
-#endif /* LEVEL_OBJECT_H_ */
+#endif /* STANDAR_WEAPON_H_ */
