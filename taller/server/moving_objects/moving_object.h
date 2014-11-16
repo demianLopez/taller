@@ -19,6 +19,8 @@
 #ifndef MOVING_OBJECT_H_
 #define MOVING_OBJECT_H_
 
+#include "../level_objects/level_object.h"
+
 class Moving_object: public Level_object {
 public:
 	Moving_object();

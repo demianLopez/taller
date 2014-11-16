@@ -24,9 +24,6 @@ using std::stack;
 Enemy::Enemy() {
 }
 
-void Enemy::set_weapon(Weapon* weapon) {
-}
-
 Enemy::~Enemy() {
 
 }

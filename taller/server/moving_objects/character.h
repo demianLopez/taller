@@ -20,6 +20,7 @@
 #define CHARACTER_H_
 
 #include "moving_object.h"
+#include "../weapons/weapon.h"
 
 #include <stack>
 
