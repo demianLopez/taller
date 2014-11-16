@@ -1,5 +1,5 @@
 /**
- enemy_factory.cpp
+ player_character.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,18 +16,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+#ifndef PLAYER_CHARACTER_H_
+#define PLAYER_CHARACTER_H_
 
-#include "enemy_factory.h"
-#include "move_patterns/standar_movement_strategy.h"
-#include "../weapons/standar_weapon.h"
+#include "character.h"
 
-Enemy* Enemy_factory::get_enemy() {
-	return new Enemy();
-}
+class Player_character: public Character {
+public:
+	Player_character();
+	virtual ~Player_character();
+};
 
-Enemy* Enemy_factory::get_standar_enemy() {
-	Enemy* standar = get_enemy();
-	standar->set_weapon(new Standar_weapon());
-//	standar.set_movement(new Standar_movement_strategy());
-	return standar;
-}
+#endif /* PLAYER_CHARACTER_H_ */

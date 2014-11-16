@@ -1,5 +1,5 @@
 /**
- enemy.h
+ enemy.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -17,22 +17,16 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-#ifndef ENEMY_H_
-#define ENEMY_H_
+#include "enemy.h"
 
-#include <stack>
+using std::stack;
 
-#include "../level_objects/level_object.h"
-#include "../weapons/weapon.h"
+Enemy::Enemy() {
+}
 
-class Enemy: public Level_object {
+void Enemy::set_weapon(Weapon* weapon) {
+}
 
-std::stack <Weapon*> weapons;
+Enemy::~Enemy() {
 
-public:
-	Enemy();
-	void set_weapon(Weapon* weapon);
-	~Enemy();
-};
-
-#endif /* ENEMY_H_ */
+}

@@ -1,5 +1,5 @@
 /**
- enemy.cpp
+ moving_object.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,22 +16,12 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+#ifndef MOVING_OBJECT_H_
+#define MOVING_OBJECT_H_
 
-#include "enemy.h"
+class Moving_object: public Level_object {
+public:
+	Moving_object();
+};
 
-using std::stack;
-
-Enemy::Enemy(){
-}
-
-void Enemy::set_weapon(Weapon* weapon) {
-	weapons.push(weapon);
-}
-
-Enemy::~Enemy() {
-	while (!weapons.empty()){
-		Weapon* weapon = weapons.top();
-		weapons.pop();
-		delete weapon;
-	}
-}
+#endif /* MOVING_OBJECT_H_ */
