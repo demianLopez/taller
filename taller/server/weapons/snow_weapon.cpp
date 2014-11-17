@@ -1,5 +1,5 @@
 /**
- player_character.cpp
+ snow_weapon.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,15 +16,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#include "player_character.h"
-#include "../weapons/"
+#include "snow_weapon.h"
 
-Player_character::Player_character() :
-		Character() {
-	this->set_weapon(new Snow_weapon());
+Snow_weapon::Snow_weapon() {
+	// TODO Auto-generated constructor stub
+
 }
 
-Player_character::~Player_character() {
+Projectile* Snow_weapon::get_projectile() {
+	return NULL;
+}
+
+Snow_weapon::~Snow_weapon() {
 	// TODO Auto-generated destructor stub
 }
 

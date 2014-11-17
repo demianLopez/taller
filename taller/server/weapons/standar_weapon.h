@@ -22,8 +22,12 @@
 #include "weapon.h"
 
 class Standar_weapon: public Weapon {
+protected:
+	virtual Projectile* get_projectile();
+
 public:
 	Standar_weapon();
+	virtual void fire();
 	virtual ~Standar_weapon();
 };
 

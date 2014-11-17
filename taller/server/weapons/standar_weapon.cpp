@@ -19,11 +19,16 @@
 #include "standar_weapon.h"
 
 Standar_weapon::Standar_weapon() {
-	// TODO Auto-generated constructor stub
+	remaining_bullets = -1;
+}
 
+Projectile* Standar_weapon::get_projectile() {
+	return NULL; //FIXME
 }
 
 Standar_weapon::~Standar_weapon() {
-	// TODO Auto-generated destructor stub
+	Projectile* p = this->get_projectile(); //FIXME
 }
 
+void Standar_weapon::fire() {
+}

@@ -1,5 +1,5 @@
 /**
- player_character.cpp
+ projectile.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,15 +16,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#include "player_character.h"
-#include "../weapons/"
+#ifndef PROJECTILE_H_
+#define PROJECTILE_H_
 
-Player_character::Player_character() :
-		Character() {
-	this->set_weapon(new Snow_weapon());
-}
+#include "../../moving_objects/moving_object.h"
 
-Player_character::~Player_character() {
-	// TODO Auto-generated destructor stub
-}
+class Projectile: public Moving_object {
+public:
+	Projectile();
+	virtual ~Projectile();
+};
 
+#endif /* PROJECTILE_H_ */

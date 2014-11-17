@@ -20,9 +20,19 @@
 #ifndef WEAPON_H_
 #define WEAPON_H_
 
+#include <stddef.h>
+
 class Weapon {
+protected:
+	size_t remaining_bullets;
+
+protected:
+	virtual Projectile* get_projectile()=0;
+
 public:
 	Weapon();
+	virtual void fire()=0;
+	virtual ~Weapon();
 };
 
 #endif /* WEAPON_H_ */
