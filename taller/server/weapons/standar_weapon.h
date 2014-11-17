@@ -27,7 +27,7 @@ protected:
 
 public:
 	Standar_weapon();
-	virtual void fire();
+	virtual Projectile* fire();
 	virtual ~Standar_weapon();
 };
 

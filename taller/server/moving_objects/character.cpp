@@ -20,7 +20,6 @@
 
 Character::Character() {
 	// TODO Auto-generated constructor stub
-
 }
 
 void Character::set_weapon(Weapon* weapon) {
@@ -33,4 +32,13 @@ Character::~Character() {
 		weapons.pop();
 		delete weapon;
 	}
+}
+
+Projectile* Character::fire() {
+	Projectile* p = weapons.top()->fire();
+	if (weapons.top()->is_empty()){
+		delete weapons.top();
+		weapons.pop();
+	}
+	return p;
 }

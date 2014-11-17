@@ -33,6 +33,7 @@ public:
 	Character();
 
 	void set_weapon(Weapon* weapon);
+	Projectile* fire();
 
 	~Character();
 };

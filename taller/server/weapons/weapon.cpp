@@ -23,3 +23,9 @@ Weapon::Weapon() {
 
 }
 
+bool Weapon::is_empty() {
+	return remaining_bullets == 0;
+}
+
+Weapon::~Weapon() {
+}

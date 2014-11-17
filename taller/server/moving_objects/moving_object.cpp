@@ -26,3 +26,7 @@ Moving_object::Moving_object() {
 void Moving_object::set_movement(Move_pattern* pattern) {
 	move_pattern = pattern;
 }
+
+Moving_object::~Moving_object() {
+	delete move_pattern;
+}

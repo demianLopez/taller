@@ -24,9 +24,11 @@
 
 class Moving_object: public Level_object {
 	Move_pattern* move_pattern;
+
 public:
 	Moving_object();
 	void set_movement(Move_pattern* pattern);
+	virtual ~Moving_object();
 };
 
 #endif /* MOVING_OBJECT_H_ */

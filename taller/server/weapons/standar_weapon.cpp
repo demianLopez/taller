@@ -27,8 +27,9 @@ Projectile* Standar_weapon::get_projectile() {
 }
 
 Standar_weapon::~Standar_weapon() {
-	Projectile* p = this->get_projectile(); //FIXME
 }
 
-void Standar_weapon::fire() {
+Projectile* Standar_weapon::fire() {
+	Projectile* p = this->get_projectile(); //FIXME
+	return p;
 }

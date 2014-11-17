@@ -1,4 +1,4 @@
-CFLAGS=-Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage $(FLDR_ADD)
+CPPFLAGS=-Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage $(FLDR_ADD)
 EXEC=enemies_test
 CC= gcc -std=c++11 -g
 
@@ -22,10 +22,10 @@ endif
 all: clean $(EXEC)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CPPFLAGS) -c $<
 
 $(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) -o $(EXEC)
+	$(CC) $(CPPFLAGS) $(LDFLAGS) $(OBJS) -o $(EXEC)
 
 clean:
 	rm -f *.o

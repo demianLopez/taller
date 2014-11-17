@@ -21,6 +21,7 @@
 #define WEAPON_H_
 
 #include <stddef.h>
+#include "projectile/projectile.h"
 
 class Weapon {
 protected:
@@ -31,7 +32,8 @@ protected:
 
 public:
 	Weapon();
-	virtual void fire()=0;
+	virtual Projectile* fire()=0;
+	virtual bool is_empty();
 	virtual ~Weapon();
 };
 

@@ -17,7 +17,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 #include "player_character.h"
-#include "../weapons/"
+#include "../weapons/snow_weapon.h"
 
 Player_character::Player_character() :
 		Character() {
