@@ -19,11 +19,8 @@
 #include "player_character.h"
 
 Player_character::Player_character() {
-	// TODO Auto-generated constructor stub
-
 }
 
 Player_character::~Player_character() {
-	// TODO Auto-generated destructor stub
 }
 

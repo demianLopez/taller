@@ -19,6 +19,5 @@ void Label::render(Graphics * g) {
 }
 
 Label::~Label() {
-	// TODO Auto-generated destructor stub
 }
 

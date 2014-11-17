@@ -65,8 +65,6 @@ void World::initializePlayerBody(Jugador * player) {
 	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);
 
-	//TODO: MAX fijate que comente esto por las dudas, desp vemos
-
 	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 	body->SetFixedRotation(true);
 

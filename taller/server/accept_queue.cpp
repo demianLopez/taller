@@ -22,12 +22,9 @@
 #define QUEUE_SIZE 20
 
 Accept_queue::Accept_queue() {
-	// TODO Auto-generated constructor stub
-
 }
 
 Accept_queue::~Accept_queue() {
-	// TODO Auto-generated destructor stub
 }
 
 Socket * Accept_queue::accept_client() {

@@ -209,6 +209,5 @@ void ServerData::errorConnection(Client_handler * client, int error) {
 }
 
 ServerData::~ServerData() {
-	// TODO Auto-generated destructor stub
 }
 

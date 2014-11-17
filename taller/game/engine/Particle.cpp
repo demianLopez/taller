@@ -43,6 +43,5 @@ void Particle::render(Graphics *g) {
 }
 
 Particle::~Particle() {
-	// TODO Auto-generated destructor stub
 }
 

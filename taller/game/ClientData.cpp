@@ -13,7 +13,6 @@
 #include "../common/UpdateRequest.h"
 
 ClientData::ClientData() {
-	// TODO Auto-generated constructor stub
 }
 
 /* Cierra la conexion cuando se pierde la conexion con el server.
@@ -182,6 +181,5 @@ void ClientData::backMainMenu() {
 }
 
 ClientData::~ClientData() {
-	// TODO Auto-generated destructor stub
 }
 

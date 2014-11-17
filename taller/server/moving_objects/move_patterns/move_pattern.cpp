@@ -20,7 +20,5 @@
 #include "move_pattern.h"
 
 Move_pattern::Move_pattern() {
-	// TODO Auto-generated constructor stub
-
 }
 

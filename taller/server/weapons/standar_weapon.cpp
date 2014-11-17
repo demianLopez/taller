@@ -19,11 +19,8 @@
 #include "standar_weapon.h"
 
 Standar_weapon::Standar_weapon() {
-	// TODO Auto-generated constructor stub
-
 }
 
 Standar_weapon::~Standar_weapon() {
-	// TODO Auto-generated destructor stub
 }
 

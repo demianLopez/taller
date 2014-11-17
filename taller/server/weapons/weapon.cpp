@@ -19,7 +19,5 @@
 #include "weapon.h"
 
 Weapon::Weapon() {
-	// TODO Auto-generated constructor stub
-
 }
 

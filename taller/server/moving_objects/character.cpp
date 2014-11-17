@@ -19,8 +19,6 @@
 #include "character.h"
 
 Character::Character() {
-	// TODO Auto-generated constructor stub
-
 }
 
 void Character::set_weapon(Weapon* weapon) {
