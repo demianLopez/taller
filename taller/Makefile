@@ -1,4 +1,4 @@
-CFLAGS=-Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage
+CFLAGS=-Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage $(FLDR_ADD)
 EXEC=enemies_test
 CC= gcc -std=c++11 -g
 
