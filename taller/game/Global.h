@@ -8,13 +8,13 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
-#include <client_handler.h>
-#include <LevelState.h>
-#include <MainMenu.h>
-#include <Message.h>
-#include <CommandCode.h>
-#include <SnowBross.h>
-#include <Resources.h>
+#include "../common/client_handler.h"
+#include "LevelState.h"
+#include "MainMenu.h"
+#include "../common/Message.h"
+#include "../common/CommandCode.h"
+#include "SnowBross.h"
+#include "Resources.h"
 
 class Global {
 public:

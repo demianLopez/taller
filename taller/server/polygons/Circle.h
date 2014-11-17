@@ -21,7 +21,7 @@
 
 #include "Polygon.h"
 #include <Box2D/Box2D.h>
-#include "../game/engine/Image.h"
+#include "../../game/engine/Image.h"
 
 class Circle: public Polygon {
 public:

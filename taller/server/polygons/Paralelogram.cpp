@@ -11,7 +11,7 @@
  * Created on: 22/9/2014
  * Author: EscDemi
  */
-#include <polygons/Paralelogram.h>
+#include "Paralelogram.h"
 #include <math.h>
 void Paralelogram::define_vertex(double base, double height, double angle,
 		b2Vec2* vertex) {

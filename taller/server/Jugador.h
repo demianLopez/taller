@@ -2,10 +2,10 @@
 #define JUGADOR_H_
 
 #include "Personaje.h"
-#include "BolaDeNieve.h"
-#include <client_handler.h>
+#include "../game/BolaDeNieve.h"
+#include "../common/client_handler.h"
 #include <vector>
-#include <CommandCode.h>
+#include "../common/CommandCode.h"
 
 using std::vector;
 // Jugador principal

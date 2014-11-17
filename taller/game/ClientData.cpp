@@ -5,12 +5,12 @@
  *      Author: demian
  */
 
-#include <ClientData.h>
+#include "ClientData.h"
 #include <iostream>
 #include "Global.h"
 #include "entity/PolygonEntity.h"
 #include "entity/PlayerEntity.h"
-#include <UpdateRequest.h>
+#include "../common/UpdateRequest.h"
 
 ClientData::ClientData() {
 	// TODO Auto-generated constructor stub

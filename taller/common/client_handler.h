@@ -19,8 +19,8 @@
 #ifndef CLIENT_HANDLER_H_
 #define CLIENT_HANDLER_H_
 
-#include "../common/socket.h"
-#include "../common/message_command.h"
+#include "socket.h"
+#include "message_command.h"
 #include <string>
 #include <thread>
 #include <signal.h>

@@ -1,10 +1,10 @@
 #ifndef PERSONAJE_H_
 #define PERSONAJE_H_
 
-#include "VectorXY.h"
+#include "../game/VectorXY.h"
 #include "CosaConMovimiento.h"
 #include "ContactListener.h"
-#include <CommandCode.h>
+#include "../common/CommandCode.h"
 
 #include <Box2D/Box2D.h>
 

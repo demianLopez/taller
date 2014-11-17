@@ -1,10 +1,10 @@
 #ifndef COSACONMOVIMIENTO_H_
 #define COSACONMOVIMIENTO_H_
 
-#include "VectorXY.h"
+#include "../game/VectorXY.h"
 #include <Box2D/Box2D.h>
-#include "engine/Animation.h"
-#include "Resources.h"
+#include "../game/engine/Animation.h"
+#include "../game/Resources.h"
 
 class CosaConMovimiento {	// No puedo pensar un nombre mejor.
 private:

@@ -10,8 +10,8 @@
 
 #include "GameEntity.h"
 #include <vector>
-#include <VectorXY.h>
-#include <engine/Image.h>
+#include "../VectorXY.h"
+#include "../engine/Image.h"
 
 using std::vector;
 

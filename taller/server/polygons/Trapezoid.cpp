@@ -17,8 +17,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 #include "Trapezoid.h"
-#include "../game/engine/GameElements.h"
-#include "../game/engine/SdlGfx/SDL2_gfxPrimitives.h"
+#include "../../game/engine/GameElements.h"
+#include "../../game/engine/SdlGfx/SDL2_gfxPrimitives.h"
 
 b2Vec2 * Trapezoid::define_vertex(double angle, double height, double base,
 		double top) {

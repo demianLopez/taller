@@ -1,7 +1,7 @@
 #ifndef BOLADENIEVE_H_
 #define BOLADENIEVE_H_
 
-#include "CosaConMovimiento.h"
+#include "../server/CosaConMovimiento.h"
 
 class BolaDeNieve: public CosaConMovimiento {
 private:

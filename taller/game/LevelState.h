@@ -12,7 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
-#include <CommandCode.h>
+#include "../common/CommandCode.h"
 #include <mutex>
 
 #include "engine/Image.h"

@@ -6,7 +6,7 @@
  */
 
 #include "PolygonEntity.h"
-#include <Global.h>
+#include "../Global.h"
 
 PolygonEntity::PolygonEntity(int index) :
 		GameEntity(index) {

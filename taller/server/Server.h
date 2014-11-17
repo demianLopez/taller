@@ -9,13 +9,13 @@
 #define SERVER_H_
 
 #include "accept_queue.h"
-#include <client_handler.h>
+#include "../common/client_handler.h"
 #include <vector>
 #include <iostream>
 #include <thread>
 #include <chrono>
 #include <mutex>
-#include <Message.h>
+#include "../common/Message.h"
 
 using std::vector;
 using std::cout;

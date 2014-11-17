@@ -5,7 +5,7 @@
  *      Author: demian
  */
 
-#include <Global.h>
+#include "Global.h"
 
 Client_handler * Global::client;
 LevelState * Global::levelState;

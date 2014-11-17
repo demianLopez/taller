@@ -6,7 +6,7 @@
  */
 
 #include "PlayerEntity.h"
-#include <Global.h>
+#include "../Global.h"
 
 PlayerEntity::PlayerEntity(int index) :
 		GameEntity(index) {

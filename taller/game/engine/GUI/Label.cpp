@@ -5,7 +5,7 @@
  *      Author: demian
  */
 
-#include "engine/GUI/Label.h"
+#include "Label.h"
 
 Label::Label(const char * text) {
 	this->text = text;

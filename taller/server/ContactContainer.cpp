@@ -5,7 +5,7 @@
  *      Author: maxi
  */
 
-#include <ContactContainer.h>
+#include "ContactContainer.h"
 
 ContactContainer::ContactContainer(int typeOfThing, void *contained) {
 	type = typeOfThing;

@@ -8,7 +8,7 @@
 #ifndef SERVERDATA_H_
 #define SERVERDATA_H_
 
-#include <DataObserver.h>
+#include "../common/DataObserver.h"
 #include "Server.h"
 #include "Jugador.h"
 
