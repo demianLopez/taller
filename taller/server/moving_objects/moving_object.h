@@ -20,10 +20,13 @@
 #define MOVING_OBJECT_H_
 
 #include "../level_objects/level_object.h"
+#include "move_patterns/move_pattern.h"
 
 class Moving_object: public Level_object {
+	Move_pattern* move_pattern;
 public:
 	Moving_object();
+	void set_movement(Move_pattern* pattern);
 };
 
 #endif /* MOVING_OBJECT_H_ */

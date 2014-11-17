@@ -28,6 +28,6 @@ Enemy* Enemy_factory::get_enemy() {
 Enemy* Enemy_factory::get_standar_enemy() {
 	Enemy* standar = get_enemy();
 	standar->set_weapon(new Standar_weapon());
-//	standar->set_movement(new Standar_movement_strategy());
+	standar->set_movement(new Standar_movement_strategy());
 	return standar;
 }
