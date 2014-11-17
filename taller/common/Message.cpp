@@ -25,7 +25,7 @@ Message::Message(char *data, char size) {
 	this->message = new char[256];
 	memcpy(message, data, size);
 	this->pointer = size;
-	read = 0;//FIXME: Esta bien que aca este en cero pero en la anterior en 1?
+	read = 0; //FIXME: Esta bien que aca este en cero pero en la anterior en 1?
 }
 
 /* Agrega un caracter END_CHAR al final del mensaje. */

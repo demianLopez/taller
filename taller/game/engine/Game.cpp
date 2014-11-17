@@ -100,8 +100,7 @@ bool Game::instantiate() {
 		Logger::customLog("Game.cpp", Logger::INFO, "SDL Initialize: OK");
 
 		gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED,
-				SDL_WINDOWPOS_UNDEFINED, this->width, this->height,
-				SDL_WINDOW_SHOWN);
+		SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
 
 		if (gWindow == NULL) {
 			Logger::customLog("Game.cpp", Logger::ERROR,

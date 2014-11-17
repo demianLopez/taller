@@ -99,7 +99,6 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta) {
 	//TODO: Corregir!
 	//int screenW = this->getScreenWidth();
 	//int screenH = this->getScreenHeight();
-
 	int screenW = game->getScreenWidth();
 	int screenH = game->getScreenHeight();
 	/*

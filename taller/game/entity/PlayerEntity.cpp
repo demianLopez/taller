@@ -52,8 +52,7 @@ void PlayerEntity::update(unsigned int delta) {
 		this->offline = u->offline;
 	}
 
-	float d = (float) (renderTimeCount)
-			/ (float) (updateTime.front());
+	float d = (float) (renderTimeCount) / (float) (updateTime.front());
 
 	if (d > 1) {
 		d = 1;
@@ -130,7 +129,7 @@ void PlayerEntity::setAnimation(AnimationCode animation) {
 PlayerEntity::~PlayerEntity() {
 	delete this->pName;
 
-	while(updateRequest.size() > 0){
+	while (updateRequest.size() > 0) {
 		delete updateRequest.front();
 		updateRequest.pop();
 	}
