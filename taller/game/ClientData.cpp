@@ -97,7 +97,8 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		float pX = m->getFloat();
 		float pY = m->getFloat();
 		AnimationCode anim = m->getAnimationCode();
-		char * pName;
+
+		char * pName = new char[50]; //Lo Libera PlayerEntity
 		m->getCharArray(&pName);
 
 		PlayerEntity * pEntity = new PlayerEntity(index);

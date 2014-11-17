@@ -28,6 +28,7 @@ LevelState::LevelState() {
 	this->hasMessage = false;
 	this->messageTime = 0;
 	this->serverMessage = NULL;
+	this->aliveTime = 0;
 }
 
 void LevelState::init(Game * game) {

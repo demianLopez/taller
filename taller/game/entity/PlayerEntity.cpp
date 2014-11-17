@@ -17,6 +17,7 @@ PlayerEntity::PlayerEntity(int index) :
 	firstUpdate = false;
 }
 
+/* Recibe name con memoria ya alocada. Se encarga de liberarla. */
 void PlayerEntity::setPlayerName(char * name) {
 	this->pName = name;
 	this->lName = strlen(name);
@@ -127,7 +128,7 @@ void PlayerEntity::setAnimation(AnimationCode animation) {
 }
 
 PlayerEntity::~PlayerEntity() {
-	delete this->pName;
+	delete[] this->pName;
 
 	while (updateRequest.size() > 0) {
 		delete updateRequest.front();
