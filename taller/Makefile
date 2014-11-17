@@ -1,6 +1,8 @@
 CFLAGS=-Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage
 EXEC=enemies_test
 CC= gcc -std=c++11 -g
+
+SRC=$(wildcard *.cpp)
 SRC+= $(wildcard server/bonus_items/*.cpp)
 SRC+= $(wildcard server/level_objects/*.cpp)
 SRC+= $(wildcard server/level_objects/collision_strategies/*.cpp)
@@ -13,7 +15,7 @@ SRC+= $(wildcard server/weapons/projectile/*.cpp)
 OBJS=$(SRC:.cpp=.o)
 LDFLAGS=-lm -lstdc++ -lgcov -coverage -lpthread -pthread
 
-ifneq (,$(shell grep -lm 1 \'^\s*\#.*include.*\<math\.h\>\' *.h *.cpp ))
+ifneq (,$(shell grep -lm 1 \'^\s*\#.*include.*\<math\.h\>\' *.h *.c ))
 	LDFLAGS+=-lm
 endif
 
@@ -30,6 +32,5 @@ clean:
 	rm -f */*.o
 	rm -f */*/*.o	
 	rm -f */*/*/*.o
-	rm -f */*/*/*/*.o
-	
+	rm -f */*/*/*/*.o	
 	rm -f $(RM_FILES) $(EXEC) *.gcno *.gcda  *~
