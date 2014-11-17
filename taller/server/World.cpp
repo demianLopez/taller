@@ -249,55 +249,63 @@ bool World::isOnLoop() {
 
 void World::worldLoop(World * world) {
 	char eCode = 0;
+	try {
+		int ups = 30;
+		int sleepTime = 1000 / ups;
 
-	int ups = 25;
-	int sleepTime = 1000 / ups;
+		unsigned int updateCount = 0;
 
-	unsigned int updateCount = 0;
+		while (world->isOnLoop()) {
+			eCode = 0;
 
-	while (world->isOnLoop()) {
-
-		for (auto * j : world->getPlayerList()) {
-			j->apllyCodes();
-			j->update();
-		}
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-
-		//worldMutex.lock();
-
-		for (auto * j : world->getPlayerList()) {
-			if (!j->isOffline()) {
-				world->requestKeyData(j);
+			for (auto * j : world->getPlayerList()) {
+				j->apllyCodes();
+				j->update();
 			}
-		}
-		//worldMutex.unlock();
 
+			eCode = 3;
+			std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
 
-		world->worldStep(sleepTime);
+			//worldMutex.lock();
+			eCode = 4;
+			for (auto * j : world->getPlayerList()) {
+				if (!j->isOffline()) {
+					world->requestKeyData(j);
+				}
+			}
+			//worldMutex.unlock();
 
+			eCode = 5;
+			world->worldStep(sleepTime);
+			eCode = 6;
 
-		world->sendUpdates();
+			if ((updateCount % 2) == 0) {
+				world->sendUpdates();
+			}
+			updateCount++;
 
-		updateCount++;
+			for (auto * j : world->getPlayerList()) {
+				if (!j->isOffline()) {
+					if (j->keyRequestSend >= 60) {
+						j->setOffline(true);
+						Message m;
+						m.addCommandCode(SHOW_MESSAGE);
+						string pM("");
+						pM.append(j->getName());
+						pM.append(" se ha desconectado");
+						m.addCharArray(pM.c_str(), pM.size());
+						m.addEndChar();
 
-		for (auto * j : world->getPlayerList()) {
-			if (!j->isOffline()) {
-				if (j->keyRequestSend >= 60) {
-					j->setOffline(true);
-					Message m;
-					m.addCommandCode(SHOW_MESSAGE);
-					string pM("");
-					pM.append(j->getName());
-					pM.append(" se ha desconectado");
-					m.addCharArray(pM.c_str(), pM.size());
-					m.addEndChar();
+						Data::world->sendToWorldPlayers(&m);
 
-					Data::world->sendToWorldPlayers(&m);
-
+					}
 				}
 			}
 		}
+	} catch (const std::exception& e) {
+		std::cout << e.what() << " - Producido en WorldLoop - tCode: " << eCode
+				<< std::endl;
+		exit(-1);
 	}
 }
 
