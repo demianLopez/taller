@@ -27,10 +27,7 @@ all: clean $(EXEC)
 $(EXEC): $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) *.o -o $(EXEC)
 
-clean:
-	rm -f *.o
-	
-real_clean:	
+clean:	
 	rm -f *.o
 	rm -f */*.o
 	rm -f */*/*.o
@@ -38,4 +35,4 @@ real_clean:
 	rm -f */*/*/*/*.o
 	rm -f */*/*/*/*/*.o
 	rm -f */*/*/*/*/*/*.o
-	rm -f $(RM_FILES) $(EXEC) *.gcno *.gcda  *~
+	rm -f $(RM_FILES) $(EXEC) *.gcno *.gcda  *~ *.log
