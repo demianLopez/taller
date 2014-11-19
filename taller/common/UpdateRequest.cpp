@@ -8,11 +8,8 @@
 #include "UpdateRequest.h"
 
 UpdateRequest::UpdateRequest() {
-	// TODO Auto-generated constructor stub
-
 }
 
 UpdateRequest::~UpdateRequest() {
-	// TODO Auto-generated destructor stub
 }
 

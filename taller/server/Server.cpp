@@ -113,6 +113,5 @@ void Server::starServer(int port) {
 }
 
 Server::~Server() {
-	// TODO Auto-generated destructor stub
 }
 

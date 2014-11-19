@@ -19,8 +19,6 @@
 #include "moving_object.h"
 
 Moving_object::Moving_object() {
-	// TODO Auto-generated constructor stub
-
 }
 
 void Moving_object::set_movement(Move_pattern* pattern) {

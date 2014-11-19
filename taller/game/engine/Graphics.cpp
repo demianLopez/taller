@@ -165,6 +165,5 @@ void Graphics::drawFillPolygon(short int* vx, short int* vy, int n, int r,
 }
 
 Graphics::~Graphics() {
-	// TODO Auto-generated destructor stub
 }
 

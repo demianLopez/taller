@@ -143,6 +143,14 @@ void MainMenu::keyEvent(SDL_Event e, Game * game) {
 }
 
 MainMenu::~MainMenu() {
-	// TODO Auto-generated destructor stub
+	/*
+	 * TODO: Se hacen todos estos new. No hay que liberarlos?
+	 * 		 No es muy importante igual.. No afecta al juego.
+	 * this->buttonConnect = new Button("Conectar");
+	 * this->backgroundImage = new Image("Resources/menuFont.jpeg");
+	 * this->particleEmiter = new ParticleEmiter(new Image("Resources/p.png"), 10);
+	 * this->titleLabel = new Label("Servidor");
+	 * this->userName = new TextBox("Username");
+	 */
 }
 

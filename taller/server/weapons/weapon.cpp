@@ -19,8 +19,6 @@
 #include "weapon.h"
 
 Weapon::Weapon() {
-	// TODO Auto-generated constructor stub
-
 }
 
 bool Weapon::is_empty() {

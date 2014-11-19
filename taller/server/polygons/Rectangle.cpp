@@ -55,6 +55,5 @@ Rectangle::Rectangle(double width, double height, double density, double posX,
 }
 
 Rectangle::~Rectangle() {
-	// TODO Auto-generated destructor stub
 }
 

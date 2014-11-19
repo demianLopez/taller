@@ -28,6 +28,7 @@ LevelState::LevelState() {
 	this->hasMessage = false;
 	this->messageTime = 0;
 	this->serverMessage = NULL;
+	this->aliveTime = 0;
 }
 
 void LevelState::init(Game * game) {
@@ -88,7 +89,7 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta) {
 
 	//b2Vec2 playerPos = this->gameWorld->getMainCharacter()->getBody()->GetPosition();
 
-	//TODO SCROLLING MAL ARMADO CORREGIR!
+	//TODO: SCROLLING MAL ARMADO CORREGIR!
 	/*
 	 b2Vec2 fontPlayerPos(playerPos.x/box2dWorld->x * backImage->getWidth(),
 	 backImage->getHeight() - playerPos.y/box2dWorld->y * backImage->getHeight());

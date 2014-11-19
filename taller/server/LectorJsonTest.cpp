@@ -12,12 +12,9 @@
 const char* ESCENARIO_DEFECTO = "Resources/p1.json";
 
 LectorJsonTest::LectorJsonTest() {
-	// TODO Auto-generated constructor stub
-
 }
 
 LectorJsonTest::~LectorJsonTest() {
-	// TODO Auto-generated destructor stub
 }
 
 void LectorJsonTest::imprimirXConsola() {

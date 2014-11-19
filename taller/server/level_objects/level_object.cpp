@@ -19,7 +19,6 @@
 #include "level_object.h"
 
 Level_object::Level_object() {
-	// TODO Auto-generated constructor stub
 	_is_alive = true;
 }
 

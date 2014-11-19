@@ -42,6 +42,5 @@ void GameEntity::setWorld(GameWorld * gameWorld) {
 }
 
 GameEntity::~GameEntity() {
-	// TODO Auto-generated destructor stub
 }
 

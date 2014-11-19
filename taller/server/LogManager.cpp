@@ -15,12 +15,9 @@ const int WARNING = 2;
 const int FATAL_ERROR = 3;
 
 LogManager::LogManager() {
-	// TODO Auto-generated constructor stub
-
 }
 
 LogManager::~LogManager() {
-	// TODO Auto-generated destructor stub
 }
 
 void LogManager::reportarProblema(string descripcionError, int nivel) {
