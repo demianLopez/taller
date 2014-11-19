@@ -36,7 +36,7 @@ Character::~Character() {
 
 Projectile* Character::fire() {
 	Projectile* p = weapons.top()->fire();
-	if (weapons.top()->is_empty()){
+	if (weapons.top()->is_empty()) {
 		delete weapons.top();
 		weapons.pop();
 	}

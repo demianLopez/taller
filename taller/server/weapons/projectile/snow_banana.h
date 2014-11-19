@@ -21,7 +21,7 @@
 
 #include "projectile.h"
 
-class Snow_banana : public Projectile {
+class Snow_banana: public Projectile {
 public:
 	Snow_banana();
 	virtual ~Snow_banana();

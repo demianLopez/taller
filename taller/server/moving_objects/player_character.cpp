@@ -19,7 +19,6 @@
 #include "player_character.h"
 #include "../weapons/snow_weapon.h"
 
-
 Player_character::Player_character() :
 		Character() {
 	this->set_weapon(new Snow_weapon());
