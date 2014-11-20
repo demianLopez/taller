@@ -26,7 +26,10 @@ private:
 public:
 	Level_object();
 
+	virtual void collide(Level_object* object) = 0;
 	bool is_alive();
+
+	virtual ~Level_object();
 };
 
 #endif /* LEVEL_OBJECT_H_ */

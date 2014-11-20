@@ -20,12 +20,16 @@
 #define DMG_PROJECTILE_H_
 
 #include "projectile.h"
+#include "../../moving_objects/character.h"
 
 class Dmg_projectile: public Projectile {
-private:
-	size_t get_dmg() = 0;
+protected:
+	virtual size_t get_dmg() = 0;
 public:
 	Dmg_projectile();
+
+	virtual void collide(Character* character);
+
 	virtual ~Dmg_projectile();
 };
 
