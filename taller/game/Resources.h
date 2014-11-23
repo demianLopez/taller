@@ -12,7 +12,7 @@ class Image;
 class SpriteSheet;
 class Animation;
 
-#include "CommandCode.h"
+#include "../common/CommandCode.h"
 #include "engine/LibIncludes.h"
 
 class Resources {

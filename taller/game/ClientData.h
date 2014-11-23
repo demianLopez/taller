@@ -8,7 +8,7 @@
 #ifndef CLIENTDATA_H_
 #define CLIENTDATA_H_
 
-#include <DataObserver.h>
+#include "../common/DataObserver.h"
 
 class ClientData: public DataObserver {
 public:

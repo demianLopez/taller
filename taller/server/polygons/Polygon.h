@@ -20,9 +20,9 @@
 #define MODEL_POLYGON_H_
 
 #include <Box2D/Box2D.h>
-#include <World.h>
+#include "../World.h"
 #include <vector>
-#include <CommandCode.h>
+#include "../../common/CommandCode.h"
 
 class World;
 

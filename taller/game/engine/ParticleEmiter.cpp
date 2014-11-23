@@ -5,7 +5,7 @@
  *      Author: EscDemi
  */
 
-#include <engine/ParticleEmiter.h>
+#include "ParticleEmiter.h"
 #include <cstdlib>
 #include "Image.h"
 #include "Particle.h"

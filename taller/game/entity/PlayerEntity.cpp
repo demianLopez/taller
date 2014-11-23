@@ -6,22 +6,24 @@
  */
 
 #include "PlayerEntity.h"
-#include <Global.h>
+#include "../Global.h"
 
 PlayerEntity::PlayerEntity(int index) :
+
 		MovementEntity(index) {
 	// TODO Auto-generated constructor stub
+
 
 	this->lName = 0;
 
 
 }
 
+/* Recibe name con memoria ya alocada. Se encarga de liberarla. */
 void PlayerEntity::setPlayerName(char * name) {
 	this->pName = name;
 	this->lName = strlen(name);
 }
-
 
 void PlayerEntity::setOffline(bool offline) {
 	this->offline = offline;

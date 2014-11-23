@@ -1,6 +1,6 @@
 #include "Personaje.h"
-#include "Resources.h"
-#include "engine/Animation.h"
+#include "../game/Resources.h"
+#include "../game/engine/Animation.h"
 #include "CosaConMovimiento.h"
 #include <iostream>
 

@@ -65,8 +65,6 @@ void World::initializePlayerBody(Jugador * player) {
 	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);
 
-	//TODO: MAX fijate que comente esto por las dudas, desp vemos
-
 	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 	body->SetFixedRotation(true);
 
@@ -249,7 +247,7 @@ bool World::isOnLoop() {
 	return this->wordLoop;
 }
 
-void World::worldLoop(World * word) {
+void World::worldLoop(World * world) {
 	char eCode = 0;
 	try {
 		int ups = 30;
@@ -257,10 +255,10 @@ void World::worldLoop(World * word) {
 
 		unsigned int updateCount = 0;
 
-		while (word->isOnLoop()) {
+		while (world->isOnLoop()) {
 			eCode = 0;
 
-			for (auto * j : word->getPlayerList()) {
+			for (auto * j : world->getPlayerList()) {
 				j->apllyCodes();
 				j->update();
 			}
@@ -270,23 +268,23 @@ void World::worldLoop(World * word) {
 
 			//worldMutex.lock();
 			eCode = 4;
-			for (auto * j : word->getPlayerList()) {
+			for (auto * j : world->getPlayerList()) {
 				if (!j->isOffline()) {
-					word->requestKeyData(j);
+					world->requestKeyData(j);
 				}
 			}
 			//worldMutex.unlock();
 
 			eCode = 5;
-			word->worldStep(sleepTime);
+			world->worldStep(sleepTime);
 			eCode = 6;
 
 			if ((updateCount % 2) == 0) {
-				word->sendUpdates();
+				world->sendUpdates();
 			}
 			updateCount++;
 
-			for (auto * j : word->getPlayerList()) {
+			for (auto * j : world->getPlayerList()) {
 				if (!j->isOffline()) {
 					if (j->keyRequestSend >= 60) {
 						j->setOffline(true);

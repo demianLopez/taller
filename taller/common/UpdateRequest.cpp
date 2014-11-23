@@ -5,14 +5,11 @@
  *      Author: demian
  */
 
-#include <UpdateRequest.h>
+#include "UpdateRequest.h"
 
 UpdateRequest::UpdateRequest() {
-	// TODO Auto-generated constructor stub
-
 }
 
 UpdateRequest::~UpdateRequest() {
-	// TODO Auto-generated destructor stub
 }
 

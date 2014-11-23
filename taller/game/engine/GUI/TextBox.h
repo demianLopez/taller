@@ -9,7 +9,7 @@
 #define TEXTBOX_H_
 
 #include "Component.h"
-#include <engine/Graphics.h>
+#include "../Graphics.h"
 #include <string.h>
 
 class TextBox: public Component {

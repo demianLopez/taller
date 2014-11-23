@@ -33,6 +33,5 @@ void Component::setPosition(int x, int y) {
 }
 
 Component::~Component() {
-	// TODO Auto-generated destructor stub
 }
 

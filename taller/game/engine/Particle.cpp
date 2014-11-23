@@ -5,7 +5,7 @@
  *      Author: EscDemi
  */
 
-#include <engine/Particle.h>
+#include "Particle.h"
 #include "ParticleEmiter.h"
 #include "Graphics.h"
 #include <math.h>
@@ -43,6 +43,5 @@ void Particle::render(Graphics *g) {
 }
 
 Particle::~Particle() {
-	// TODO Auto-generated destructor stub
 }
 

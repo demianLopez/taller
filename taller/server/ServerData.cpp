@@ -5,7 +5,7 @@
  *      Author: demian
  */
 
-#include <ServerData.h>
+#include "ServerData.h"
 #include "Jugador.h"
 #include "Data.h"
 #include <string>
@@ -209,6 +209,5 @@ void ServerData::errorConnection(Client_handler * client, int error) {
 }
 
 ServerData::~ServerData() {
-	// TODO Auto-generated destructor stub
 }
 

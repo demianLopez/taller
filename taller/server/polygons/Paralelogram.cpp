@@ -11,8 +11,9 @@
  * Created on: 22/9/2014
  * Author: EscDemi
  */
-#include <polygons/Paralelogram.h>
+#include "Paralelogram.h"
 #include <math.h>
+
 void Paralelogram::define_vertex(double base, double height, double angle,
 		b2Vec2* vertex) {
 	double y_height;
@@ -32,6 +33,7 @@ void Paralelogram::define_vertex(double base, double height, double angle,
 	vertex[2] = b2Vec2(x_base, y_height);
 	vertex[3] = b2Vec2(x_base - base, y_height);
 }
+
 Paralelogram::Paralelogram(double base, double height, double angle,
 		double posX, double posY, double density, double rotation,
 		int body_type, World * world) :
@@ -56,11 +58,12 @@ Paralelogram::Paralelogram(double base, double height, double angle,
 	this->setVertex(vertex);
 	delete[] vertex;
 }
+
 void Paralelogram::setVertex(b2Vec2 * vertex) {
 	for (size_t i = 0; i < 4; i++) {
 		this->addB2DPoint(vertex[i].x, vertex[i].y);
 	}
 }
+
 Paralelogram::~Paralelogram() {
-	// TODO Auto-generated destructor stub
 }

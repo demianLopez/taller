@@ -2,18 +2,18 @@
 #include <stdio.h>
 #include <string>
 #include "SnowBross.h"
-#include "Jugador.h"
+#include "../server/Jugador.h"
 #include "engine/Game.h"
 #include "../common/Logger.h"
 #include "../server/Server.h"
-#include <socket.h>
-#include <client_handler.h>
+#include "../common/socket.h"
+#include "../common/client_handler.h"
 #include <signal.h>
 #include "ClientData.h"
-#include <Global.h>
-#include <LectorJson.h>
-#include <GestorEscenario.h>
-#include <Data.h>
+#include "Global.h"
+#include "../server/LectorJson.h"
+#include "../server/GestorEscenario.h"
+#include "../server/Data.h"
 using namespace std;
 
 int const SCREEN_WIDTH = 800;

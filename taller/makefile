@@ -1,30 +1,38 @@
-#Project Builder
-#General
-CC = gcc -std=c++11 -g
-CPPFLAGS = -Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage
-CPPLDFLAGS = -lm -lstdc++ -lgcov -coverage -lpthread -pthread
+FLDR_ADD=#-Iserver/json
 
-#ALL
-COMMON_O = socket.o
-SERVER_O = $(COMMON_O) accept_queue.o client_handler.o
-CLIENT_O = $(COMMON_O)
+CFLAGS=-Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage $(FLDR_ADD)
+EXEC=TheGame
+CC= gcc -std=c++11 -g
 
-all: server client
+SRC=$(wildcard *.cpp)
+SRC+= $(wildcard */*.cpp)
+SRC+= $(wildcard */*/*.cpp)
+SRC+= $(wildcard */*/*/*.cpp)
+SRC+= $(wildcard */*/*/*/*.cpp)
+SRC+= $(wildcard */*/*/*/*/*.cpp)
+SRC+= $(wildcard */*/*/*/*/*/*.cpp)
 
-server: $(SERVER_O) example_server.cpp
-	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(SERVER_O) example_server.cpp -o Server
-	
-client: $(CLIENT_O)
-	$(CC) $(CPPFLAGS) $(CPPLDFLAGS) $(CLIENT_O) example_client.cpp -o Client
-	
-socket.o: common/socket.h common/socket.cpp
-	$(CC) $(CPPLDFLAGS) -c common/socket.cpp
+OBJS=$(SRC:.cpp=.o)
+LDFLAGS=-lm -lstdc++ -lgcov -coverage -lpthread -pthread  -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image
 
-accept_queue.o: server/accept_queue.h server/accept_queue.cpp
-	$(CC) $(CPPLDFLAGS) -c server/accept_queue.cpp
-	
-client_handler.o: server/client_handler.h server/client_handler.cpp
-	$(CC) $(CPPLDFLAGS) -c server/client_handler.cpp
-	
-clean:
-	rm -f *.o *.gcno *.gcda  *~ Client Server
+ifneq (,$(shell grep -lm 1 \'^\s*\#.*include.*\<math\.h\>\' *.h *.c ))
+	LDFLAGS+=-lm
+endif
+
+all: clean $(EXEC)
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $<
+
+$(EXEC): $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) *.o -o $(EXEC)
+
+clean:	
+	rm -f *.o
+	rm -f */*.o
+	rm -f */*/*.o
+	rm -f */*/*/*.o
+	rm -f */*/*/*/*.o
+	rm -f */*/*/*/*/*.o
+	rm -f */*/*/*/*/*/*.o
+	rm -f $(RM_FILES) $(EXEC) *.gcno *.gcda  *~ *.log

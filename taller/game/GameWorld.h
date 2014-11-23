@@ -12,7 +12,7 @@
 #include <vector>
 #include <map>
 class GameEntity;
-#include <UpdateRequest.h>
+#include "../common/UpdateRequest.h"
 #include <mutex>
 
 class GameWorld {

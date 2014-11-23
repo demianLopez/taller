@@ -8,11 +8,11 @@
 #ifndef GAMEENTITY_H_
 #define GAMEENTITY_H_
 
-#include <engine/Graphics.h>
-#include <VectorXY.h>
-#include <GameWorld.h>
-#include <UpdateRequest.h>
-#include <CommandCode.h>
+#include "../engine/Graphics.h"
+#include "../VectorXY.h"
+#include "../GameWorld.h"
+#include "../../common/UpdateRequest.h"
+#include "../../common/CommandCode.h"
 
 class GameEntity {
 public:

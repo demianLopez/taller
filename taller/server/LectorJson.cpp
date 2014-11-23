@@ -50,14 +50,11 @@ const int OK = 0;
 LectorJson::LectorJson() {
 	logger = new LogManager();
 	elEscenario = new GestorEscenario();
-	// TODO Auto-generated constructor stub
-
 }
 
 LectorJson::~LectorJson() {
 	delete logger;
 	delete elEscenario;
-	// TODO Auto-generated destructor stub
 }
 
 int LectorJson::validarInt(string miembro, Value raiz, int valorDefecto,

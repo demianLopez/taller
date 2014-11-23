@@ -5,7 +5,7 @@
  *      Author: demian
  */
 
-#include <Server.h>
+#include "Server.h"
 #include "ServerData.h"
 
 void Server::run_server(Server * server) {
@@ -113,6 +113,5 @@ void Server::starServer(int port) {
 }
 
 Server::~Server() {
-	// TODO Auto-generated destructor stub
 }
 

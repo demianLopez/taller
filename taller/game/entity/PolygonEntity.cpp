@@ -6,11 +6,17 @@
  */
 
 #include "PolygonEntity.h"
-#include <Global.h>
+#include "../Global.h"
 
 PolygonEntity::PolygonEntity(int index) :
 		MovementEntity(index) {
 	this->polygonImage = NULL;
+
+	// Inicializo esto porque sino dentro de render
+	// en d uno de los dos empieza sin estar inicializado.
+	// FIXME: no se si eso esta bien.. Esto es un parche.
+	this->renderTimeCount = 0;
+	this->elapsedTime = 1;
 }
 
 void PolygonEntity::setStatic(bool isStatic) {

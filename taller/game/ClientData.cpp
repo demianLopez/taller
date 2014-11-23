@@ -5,15 +5,14 @@
  *      Author: demian
  */
 
-#include <ClientData.h>
+#include "ClientData.h"
 #include <iostream>
 #include "Global.h"
 #include "entity/PolygonEntity.h"
 #include "entity/PlayerEntity.h"
-#include <UpdateRequest.h>
+#include "../common/UpdateRequest.h"
 
 ClientData::ClientData() {
-	// TODO Auto-generated constructor stub
 }
 
 /* Cierra la conexion cuando se pierde la conexion con el server.
@@ -97,7 +96,8 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		float pX = m->getFloat();
 		float pY = m->getFloat();
 		AnimationCode anim = m->getAnimationCode();
-		char * pName;
+
+		char * pName = new char[50]; //Lo Libera PlayerEntity
 		m->getCharArray(&pName);
 
 		PlayerEntity * pEntity = new PlayerEntity(index);
@@ -181,6 +181,5 @@ void ClientData::backMainMenu() {
 }
 
 ClientData::~ClientData() {
-	// TODO Auto-generated destructor stub
 }
 

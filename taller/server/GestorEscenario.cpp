@@ -11,12 +11,10 @@
 #include "../common/Logger.h"
 
 GestorEscenario::GestorEscenario() {
-	// TODO Auto-generated constructor stub
 
 }
 
 GestorEscenario::~GestorEscenario() {
-	// TODO Auto-generated destructor stub
 }
 
 escenario* GestorEscenario::getEscenario() {

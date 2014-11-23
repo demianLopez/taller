@@ -12,8 +12,6 @@ SDL_Renderer * GameElements::gRenderer = NULL;
 TTF_Font * GameElements::gFont = NULL;
 
 GameElements::GameElements() {
-	// TODO Auto-generated constructor stub
-
 }
 
 Graphics * GameElements::getGraphicsInstance() {
@@ -21,6 +19,5 @@ Graphics * GameElements::getGraphicsInstance() {
 }
 
 GameElements::~GameElements() {
-	// TODO Auto-generated destructor stub
 }
 
