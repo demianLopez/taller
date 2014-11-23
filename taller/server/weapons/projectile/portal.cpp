@@ -19,11 +19,13 @@
 #include "portal.h"
 
 Portal::Portal() {
-	// TODO Auto-generated constructor stub
-
+	this->linked_portal = nullptr;
 }
 
 Portal::~Portal() {
 	// TODO Auto-generated destructor stub
 }
 
+void Portal::link(Portal* portal) {
+	linked_portal = portal;
+}

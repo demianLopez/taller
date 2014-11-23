@@ -22,8 +22,11 @@
 #include "projectile.h"
 
 class Portal: public Projectile {
+private:
+	Portal* linked_portal;
 public:
 	Portal();
+	void link(Portal* portal);
 	virtual ~Portal();
 };
 

@@ -32,6 +32,7 @@ private:
 
 private:
 	Fire(char spawn_direction);
+	void spread();
 
 public:
 	Fire();

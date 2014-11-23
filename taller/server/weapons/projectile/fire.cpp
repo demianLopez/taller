@@ -23,7 +23,18 @@ Fire::Fire() {
 
 }
 
+Fire::Fire(char spawn_direction):Fire() {
+	this->spawn_direction = spawn_direction;
+}
+
 Fire::~Fire() {
 	// TODO Auto-generated destructor stub
 }
 
+void Fire::spread() {
+	if (this->spawn_direction == SPAWN_BOTH){
+		new Fire(SPAWN_LEFT);
+		new Fire(SPAWN_RIGHT);
+	}
+	new Fire(this->spawn_direction);
+}
