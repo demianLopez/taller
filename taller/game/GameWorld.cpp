@@ -36,7 +36,9 @@ void GameWorld::setMainEntity(int index) {
 }
 
 GameEntity * GameWorld::searchEntity(int index) {
+	//this->updateMutex.lock();
 	return this->entityMap[index];
+	//this->updateMutex.unlock();
 }
 
 /* Agrega un GameEntity. */
@@ -86,6 +88,14 @@ void GameWorld::addUpdateRequest(UpdateRequest * update) {
 /* Devuelve entityList.*/
 std::map<int, GameEntity *> GameWorld::getEntityMap() {
 	return this->entityMap;
+}
+
+void GameWorld::mutexLock(){
+	this->updateMutex.lock();
+}
+
+void GameWorld::mutexUnlock(){
+	this->updateMutex.unlock();
 }
 
 /* Inicializa los componentes graficos. */

@@ -1,0 +1,38 @@
+/*
+ * MovementEntity.h
+ *
+ *  Created on: 23/11/2014
+ *      Author: demian
+ */
+
+#ifndef MOVEMENTENTITY_H_
+#define MOVEMENTENTITY_H_
+
+#include "GameEntity.h"
+#include <queue>
+
+class MovementEntity: public GameEntity {
+public:
+	MovementEntity(int index);
+	void update(unsigned int delta);
+	void addUpdateRequest(UpdateRequest * u, unsigned int currentTime);
+
+	virtual void applyUpdate(UpdateRequest * u) = 0;
+
+	virtual ~MovementEntity();
+private:
+	std::queue<int> updateTime;
+	std::queue<UpdateRequest *> updateRequest;
+
+	VectorXY lastPosition;
+	VectorXY nextPosition;
+
+	float lastRotation;
+	float nextRotation;
+
+	unsigned int lastUpdateTime;
+	bool firstUpdate;
+	int renderTimeCount;
+};
+
+#endif /* MOVEMENTENTITY_H_ */
