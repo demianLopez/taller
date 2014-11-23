@@ -18,7 +18,6 @@
  */
 #include "standar_weapon.h"
 
-
 Standar_weapon::Standar_weapon() {
 	remaining_bullets = -1;
 }

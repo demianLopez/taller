@@ -24,13 +24,10 @@
 
 class Dmg_projectile: public Projectile {
 
-private:
-	virtual void _collide(Character& character);
-
 public:
 	Dmg_projectile();
 
-	virtual void collide(Level_object* object);
+	virtual void _collide(Character& character);
 
 	virtual ~Dmg_projectile();
 };

@@ -19,11 +19,12 @@
 #ifndef PROJECTILE_H_
 #define PROJECTILE_H_
 
-#include "../../moving_objects/moving_object.h"
+#include "../../moving_objects/character.h"
 
 class Projectile: public Moving_object {
 public:
 	Projectile();
+	virtual void collide(Character& character)=0;
 	virtual ~Projectile();
 };
 

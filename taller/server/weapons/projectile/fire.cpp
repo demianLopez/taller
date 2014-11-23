@@ -23,7 +23,8 @@ Fire::Fire() {
 
 }
 
-Fire::Fire(char spawn_direction):Fire() {
+Fire::Fire(char spawn_direction) :
+		Fire() {
 	this->spawn_direction = spawn_direction;
 }
 
@@ -32,7 +33,7 @@ Fire::~Fire() {
 }
 
 void Fire::spread() {
-	if (this->spawn_direction == SPAWN_BOTH){
+	if (this->spawn_direction == SPAWN_BOTH) {
 		new Fire(SPAWN_LEFT);
 		new Fire(SPAWN_RIGHT);
 	}

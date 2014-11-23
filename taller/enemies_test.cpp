@@ -6,7 +6,7 @@ int main() {
 	Enemy* shiningPhoenixEnforcer = Enemy_factory::get_standar_enemy();
 
 	Projectile* p = shiningFlareWingman->fire();
-	p->collide(shiningPhoenixEnforcer);
+	p->collide(*shiningPhoenixEnforcer);
 
 
 	delete shiningPhoenixEnforcer;
