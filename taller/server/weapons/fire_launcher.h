@@ -1,5 +1,5 @@
 /**
- level_object.cpp
+ fire_launcher.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,15 +16,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#include "level_object.h"
+#ifndef FIRE_LAUNCHER_H_
+#define FIRE_LAUNCHER_H_
 
-Level_object::Level_object() {
-	_is_alive = true;
-}
+#include "standar_weapon.h"
 
-bool Level_object::is_alive() {
-	return _is_alive;
-}
+class Fire_launcher: public Standar_weapon {
+protected:
+	virtual Projectile* get_projectile();
 
-Level_object::~Level_object() {
-}
+public:
+	Fire_launcher();
+	virtual ~Fire_launcher();
+};
+
+#endif /* FIRE_LAUNCHER_H_ */

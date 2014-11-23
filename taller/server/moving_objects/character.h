@@ -34,6 +34,9 @@ public:
 
 	void set_weapon(Weapon* weapon);
 	Projectile* fire();
+	void reduce_life();
+
+	virtual void collide(Level_object* object);
 
 	~Character();
 };

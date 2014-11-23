@@ -23,12 +23,14 @@
 #include "../../moving_objects/character.h"
 
 class Dmg_projectile: public Projectile {
-protected:
-	virtual size_t get_dmg() = 0;
+
+private:
+	virtual void _collide(Character& character);
+
 public:
 	Dmg_projectile();
 
-	virtual void collide(Character* character);
+	virtual void collide(Level_object* object);
 
 	virtual ~Dmg_projectile();
 };

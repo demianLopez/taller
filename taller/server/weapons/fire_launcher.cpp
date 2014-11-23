@@ -1,5 +1,5 @@
 /**
- level_object.cpp
+ fire_launcher.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,15 +16,19 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#include "level_object.h"
+#include "fire_launcher.h"
+#include "projectile/fire.h"
 
-Level_object::Level_object() {
-	_is_alive = true;
+Fire_launcher::Fire_launcher() {
+	// TODO Auto-generated constructor stub
+
 }
 
-bool Level_object::is_alive() {
-	return _is_alive;
+Projectile* Fire_launcher::get_projectile() {
+	return new Fire();
 }
 
-Level_object::~Level_object() {
+Fire_launcher::~Fire_launcher() {
+	// TODO Auto-generated destructor stub
 }
+

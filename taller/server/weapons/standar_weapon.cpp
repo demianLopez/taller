@@ -18,6 +18,7 @@
  */
 #include "standar_weapon.h"
 
+
 Standar_weapon::Standar_weapon() {
 	remaining_bullets = -1;
 }
@@ -30,6 +31,6 @@ Standar_weapon::~Standar_weapon() {
 }
 
 Projectile* Standar_weapon::fire() {
-	Projectile* p = this->get_projectile(); //FIXME
+	Projectile* p = (*this).get_projectile(); //FIXME
 	return p;
 }

@@ -18,13 +18,15 @@
  */
 #include "snow_weapon.h"
 
+#include "projectile/fire.h"
+
 Snow_weapon::Snow_weapon() {
 	// TODO Auto-generated constructor stub
 
 }
 
 Projectile* Snow_weapon::get_projectile() {
-	return NULL;
+	return new Fire(); //FIXME
 }
 
 Snow_weapon::~Snow_weapon() {

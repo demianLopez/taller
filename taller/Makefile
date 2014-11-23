@@ -1,6 +1,6 @@
-CPPFLAGS=-Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage $(FLDR_ADD)
+CPPFLAGS= -std=c++11 -g -Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage $(FLDR_ADD)
 EXEC=enemies_test
-CC= gcc -std=c++11 -g
+CC= gcc
 
 SRC=$(wildcard *.cpp)
 SRC+= $(wildcard server/bonus_items/*.cpp)

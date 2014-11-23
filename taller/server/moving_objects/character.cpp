@@ -26,6 +26,9 @@ void Character::set_weapon(Weapon* weapon) {
 	weapons.push(weapon);
 }
 
+void Character::reduce_life() {
+}
+
 Character::~Character() {
 	while (!weapons.empty()) {
 		Weapon* weapon = weapons.top();
@@ -41,4 +44,7 @@ Projectile* Character::fire() {
 		weapons.pop();
 	}
 	return p;
+}
+
+void Character::collide(Level_object* object) {
 }

@@ -23,7 +23,14 @@ Dmg_projectile::Dmg_projectile() {
 
 }
 
+void Dmg_projectile::collide(Level_object* object) {
+	this->_collide(*object);
+}
+
 Dmg_projectile::~Dmg_projectile() {
 	// TODO Auto-generated destructor stub
 }
 
+void Dmg_projectile::_collide(Character& character) {
+	character.reduce_life();
+}
