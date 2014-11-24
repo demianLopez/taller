@@ -1,5 +1,5 @@
 /**
- character.h
+ bonus.cpp
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,36 +16,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef CHARACTER_H_
-#define CHARACTER_H_
+#include "bonus.h"
 
-class Weapon;
-class Projectile;
-#include "moving_object.h"
-#include "../weapons/weapon.h"
+Bonus::Bonus() {
+	// TODO Auto-generated constructor stub
 
-#include <stack>
+}
 
-class Character: public Moving_object {
-protected:
+Bonus::~Bonus() {
+	// TODO Auto-generated destructor stub
+}
 
-	std::stack<Weapon*> weapons;
-	int energy;
-
-
-public:
-	Character();
-
-	void set_weapon(Weapon* weapon);
-	Projectile* fire();
-	void reduce_life();
-
-	void add_bous(Bonus* bonus);
-
-
-	int get_energy();
-
-	~Character();
-};
-
-#endif /* CHARACTER_H_ */

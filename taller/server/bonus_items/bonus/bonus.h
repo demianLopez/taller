@@ -1,5 +1,5 @@
 /**
- character.h
+ bonus.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,36 +16,13 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef CHARACTER_H_
-#define CHARACTER_H_
+#ifndef BONUS_H_
+#define BONUS_H_
 
-class Weapon;
-class Projectile;
-#include "moving_object.h"
-#include "../weapons/weapon.h"
-
-#include <stack>
-
-class Character: public Moving_object {
-protected:
-
-	std::stack<Weapon*> weapons;
-	int energy;
-
-
+class Bonus {
 public:
-	Character();
-
-	void set_weapon(Weapon* weapon);
-	Projectile* fire();
-	void reduce_life();
-
-	void add_bous(Bonus* bonus);
-
-
-	int get_energy();
-
-	~Character();
+	Bonus();
+	virtual ~Bonus();
 };
 
-#endif /* CHARACTER_H_ */
+#endif /* BONUS_H_ */

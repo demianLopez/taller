@@ -16,7 +16,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "snow_banana.h"
+
+using std::list;
 
 Snow_banana::Snow_banana() {
 	// TODO Auto-generated constructor stub
@@ -27,3 +30,22 @@ Snow_banana::~Snow_banana() {
 	// TODO Auto-generated destructor stub
 }
 
+void Snow_banana::collide(Character& character) {
+	character.add_bonus(new Snow_counter());
+
+	list<Bonus*> bonus = character.get_asigned_bonus();
+
+	int i = 0;
+	int total_counters = 0;
+
+	while (i < bonus.size()) {
+		if (bonus[i]->type == SNOW_COUNTER) {
+			total_counters++;
+		}
+	}
+
+	if (total_counters > 4) {
+		character.turn_into_snowball();
+	}
+
+}

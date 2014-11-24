@@ -24,6 +24,7 @@
 class Snow_banana: public Projectile {
 public:
 	Snow_banana();
+	virtual void collide(Character& character);
 	virtual ~Snow_banana();
 };
 
