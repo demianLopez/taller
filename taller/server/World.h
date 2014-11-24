@@ -70,6 +70,7 @@ public:
 	void instantiatePlayer(Jugador * j, Client_handler * client);
 
 	void requestKeyData(Jugador * j);
+	void setMinPlayers(int minPlayers);
 
 private:
 	void updateTiming(Jugador * j);
@@ -99,6 +100,7 @@ private:
 
 	string * mapName;
 	int maxPlayers;
+	int minPlayers;
 
 	int lastEntityIndex;
 

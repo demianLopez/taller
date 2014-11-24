@@ -126,6 +126,11 @@ void World::addPlayer(Jugador * jugador, bool reconecting) {
 		jugador->setEntityIndex(avavibleIndex);
 		jugador->getClient()->userIndex = avavibleIndex;
 		this->initializePlayerBody(jugador);
+
+		//Si se cumple cantidad minima de jugadores arrancamos!
+		if(this->playerList.size() >= this->minPlayers){
+			this->start();
+		}
 	}
 
 	for (auto * p : playerList) {
@@ -159,38 +164,6 @@ void World::addPolygon(Polygon * polygon) {
 	polygon->setEntityIndex(this->getAvavibleIndex());
 	this->polygonList.push_back(polygon);
 }
-
-/*
- b2Vec2 World::box2DToSDL(b2Vec2 * box2DCoord) {
- float sdlX = box2DCoord->x / Box2DWorldSize->x * SDLWindowSize->x;
- float sdlY = SDLWindowSize->y
- - box2DCoord->y / Box2DWorldSize->y * SDLWindowSize->y;
- b2Vec2 sdlCoord(sdlX, sdlY);
- return sdlCoord;
- }
-
- b2Vec2 World::box2DToSDLSize(b2Vec2 * box2DCoord) {
- float sdlX = box2DCoord->x / Box2DWorldSize->x * SDLWindowSize->x;
- float sdlY = box2DCoord->y / Box2DWorldSize->y * SDLWindowSize->y;
- b2Vec2 sdlCoord(sdlX, sdlY);
- return sdlCoord;
- }
-
- b2Vec2 World::SDLToBox2DSize(b2Vec2 * SDLCoord) {
- float b2DX = SDLCoord->x / SDLWindowSize->x * Box2DWorldSize->x;
- float b2DY = SDLCoord->y / SDLWindowSize->y * Box2DWorldSize->y;
- b2Vec2 box2DCoord(b2DX, b2DY);
- return box2DCoord;
- }
-
- b2Vec2 World::SDLToBox2D(b2Vec2 * SDLCoord) {
- float b2DX = SDLCoord->x / SDLWindowSize->x * Box2DWorldSize->x;
- float b2DY = (SDLCoord->y - SDLWindowSize->y) / SDLWindowSize->y
- * Box2DWorldSize->y;
- b2Vec2 box2DCoord(b2DX, b2DY);
- return box2DCoord;
- }
- */
 
 void World::worldStep(int delta) {
 	float32 timeStep = ((float) delta) / 1000;
@@ -245,6 +218,10 @@ void World::stop() {
 
 bool World::isOnLoop() {
 	return this->wordLoop;
+}
+
+void World::setMinPlayers(int minPlayers){
+	this->minPlayers = minPlayers;
 }
 
 void World::worldLoop(World * world) {

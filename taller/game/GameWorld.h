@@ -52,6 +52,9 @@ public:
 
 	GameEntity * getMainEntity();
 
+	void mutexLock();
+	void mutexUnlock();
+
 	virtual ~GameWorld();
 private:
 	VectorXY box2DSize;

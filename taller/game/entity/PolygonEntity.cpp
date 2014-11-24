@@ -9,32 +9,8 @@
 #include "../Global.h"
 
 PolygonEntity::PolygonEntity(int index) :
-		GameEntity(index) {
+		MovementEntity(index) {
 	this->polygonImage = NULL;
-
-	// Inicializo esto porque sino dentro de render
-	// en d uno de los dos empieza sin estar inicializado.
-	// FIXME: no se si eso esta bien.. Esto es un parche.
-	this->renderTimeCount = 0;
-	this->elapsedTime = 1;
-}
-
-void PolygonEntity::update(unsigned int delta) {
-
-}
-
-void PolygonEntity::addUpdateRequest(UpdateRequest * u,
-		unsigned int elapsedTime) {
-
-	this->lastPosition = nextPosition;
-	this->nextPosition = VectorXY(u->posX, u->posY);
-
-	this->lastRotation = this->rotation;
-	this->rotation = u->rotation;
-
-	this->elapsedTime = elapsedTime - this->lastUpdateTime;
-	this->lastUpdateTime = elapsedTime;
-	this->renderTimeCount = 0;
 }
 
 void PolygonEntity::setStatic(bool isStatic) {
@@ -42,37 +18,10 @@ void PolygonEntity::setStatic(bool isStatic) {
 }
 
 void PolygonEntity::render(Graphics * g, unsigned int delta) {
-
-	renderTimeCount += delta;
-
-	VectorXY sdlPos;
-	float finalRotation;
-
-	if (!isStatic) {
-
-		float d = (float) (renderTimeCount) / (float) (elapsedTime);
-
-		if (d > 1) {
-			d = 1;
-		}
-		if (d < 0) {
-			d = 0;
-		}
-		float iPosX = lastPosition.x + (nextPosition.x - lastPosition.x) * d;
-		float iPosY = lastPosition.y + (nextPosition.y - lastPosition.y) * d;
-		finalRotation = lastRotation + (rotation - lastRotation) * d;
-
-		position = VectorXY(iPosX, iPosY);
-		sdlPos = this->gameWorld->box2DToSDL(&position);
-	} else {
-		lastPosition = position;
-		nextPosition = position;
-		sdlPos = this->gameWorld->box2DToSDL(&position);
-		finalRotation = rotation;
-	}
+	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 
 	g->drawAtCenter(true);
-	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y, -finalRotation * 57);
+	g->drawImage(this->polygonImage, sdlPos.x, sdlPos.y, -rotation * 57);
 	g->drawAtCenter(false);
 }
 
@@ -214,6 +163,10 @@ void PolygonEntity::buildRectangle(short int * vX, short int * vY) {
 
 void PolygonEntity::addVertex(float x, float y) {
 	this->vList.push_back(new VectorXY(x, y));
+}
+
+void PolygonEntity::applyUpdate(UpdateRequest * u){
+
 }
 
 PolygonEntity::~PolygonEntity() {

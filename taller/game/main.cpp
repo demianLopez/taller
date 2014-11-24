@@ -27,9 +27,9 @@ int mainServer() {
 	GestorEscenario * ge = lj->obtenerGestorEscenario();
 	World * w = ge->obtenerMundo();
 
+	w->setMinPlayers(2);
 	delete lj;
 
-	w->start();
 	cout << "Mapa iniciado - Esperando jugadores" << endl;
 
 	Server * sv = new Server();

@@ -8,23 +8,24 @@
 #ifndef POLYGONENTITY_H_
 #define POLYGONENTITY_H_
 
-#include "GameEntity.h"
+#include "MovementEntity.h"
 #include <vector>
 #include "../VectorXY.h"
 #include "../engine/Image.h"
 
 using std::vector;
 
-class PolygonEntity: public GameEntity {
+class PolygonEntity: public MovementEntity {
 public:
 	PolygonEntity(int index);
 
 	void render(Graphics * g, unsigned int delta);
 	void initialize();
+	void applyUpdate(UpdateRequest * u);
+
 	void addVertex(float x, float y);
 
-	void update(unsigned int delta);
-	void addUpdateRequest(UpdateRequest * u, unsigned int elapsedTime);
+
 	void setStatic(bool isStatic);
 
 	void buildRectangle(short int * vX, short int * vY);
@@ -35,15 +36,6 @@ private:
 	Image * polygonImage;
 
 	bool isStatic;
-
-	int elapsedTime;
-	int lastUpdateTime;
-
-	int renderTimeCount;
-
-	VectorXY lastPosition;
-	VectorXY nextPosition;
-	float lastRotation;
 };
 
 #endif /* POLYGONENTITY_H_ */
