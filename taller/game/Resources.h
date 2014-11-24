@@ -47,6 +47,7 @@ public:
 	Image * getBackground();
 
 	TTF_Font * getNameFont();
+	TTF_Font * getGuiFont();
 
 	Animation * getHeartAnimation();
 
@@ -96,6 +97,7 @@ private:
 	Animation * exclamationAnimation;
 
 	TTF_Font * nameFonts;
+	TTF_Font * GUI_Font;
 
 	void loadColoredAnimations();
 	void loadBWAnimations();

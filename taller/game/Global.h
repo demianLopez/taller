@@ -27,6 +27,8 @@ public:
 	static GameWorld * gameWorld;
 	static Resources * gameResources;
 
+	static int playerLife;
+
 };
 
 #endif /* GLOBAL_H_ */

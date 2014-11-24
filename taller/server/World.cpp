@@ -128,7 +128,7 @@ void World::addPlayer(Jugador * jugador, bool reconecting) {
 		this->initializePlayerBody(jugador);
 
 		//Si se cumple cantidad minima de jugadores arrancamos!
-		if(this->playerList.size() >= this->minPlayers){
+		if(this->playerList.size() >= this->minPlayers && !this->wordLoop){
 			this->start();
 		}
 	}

@@ -50,6 +50,10 @@ private:
 
 	Image * worldImage;
 	Image * backgroundImage;
+	Image * topGuiImage;
+	SpriteSheet * lives;
+	Image * liveE;
+	Image * liveD;
 
 	GameWorld * gameWorld;
 

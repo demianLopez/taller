@@ -280,6 +280,7 @@ void Resources::loadAnimations() {
 	}
 
 	this->nameFonts = TTF_OpenFont("Resources/font.ttf", 18);
+	this->GUI_Font = TTF_OpenFont("Resources/CHLORINP.TTF", 22);
 
 }
 
@@ -329,6 +330,10 @@ Animation * Resources::getSleepingEmoticon() {
 
 TTF_Font * Resources::getNameFont() {
 	return this->nameFonts;
+}
+
+TTF_Font * Resources::getGuiFont() {
+	return this->GUI_Font;
 }
 
 Animation * Resources::getHeartAnimation() {
@@ -386,6 +391,6 @@ Resources::~Resources() {
 	delete this->heartAnimation;
 	delete this->emoticons;
 	TTF_CloseFont (nameFonts);
-
+	TTF_CloseFont (GUI_Font);
 }
 

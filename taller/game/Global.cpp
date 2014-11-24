@@ -14,3 +14,5 @@ SnowBross * Global::game;
 GameWorld * Global::gameWorld;
 Resources * Global::gameResources;
 int Global::serverUpdateTiming;
+
+int Global::playerLife = 4;

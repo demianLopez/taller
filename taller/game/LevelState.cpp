@@ -56,6 +56,13 @@ void LevelState::init(Game * game) {
 				this->spriteLightAnimation->getSubImage(i, 0), 25);
 	}
 
+	this->topGuiImage = new Image("Resources/topMain.png");
+	this->lives = new SpriteSheet("Resources/lifes.png", 23, 26);
+
+	this->liveE = lives->getSubImage(0,0);
+	this->liveD = lives->getSubImage(1, 0);
+
+
 }
 
 void LevelState::setWorld(GameWorld * world) {
@@ -71,6 +78,10 @@ void LevelState::exit(Game * game) {
 	delete this->frontParticleEmiter;
 	delete this->worldImage;
 	delete this->backgroundImage;
+	delete this->topGuiImage;
+	delete this->liveD;
+	delete this->liveE;
+	delete this->lives;
 }
 
 void LevelState::restartCameraPosition() {
@@ -207,31 +218,29 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta) {
 	//POST RENDERING!!!
 	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
-	g->setColor(0, 255, 0);
-	g->drawFillRect(10, 10, 160, 40);
-	g->drawFillRect(190, 10, 420, 40);
-	g->drawFillRect(630, 10, 160, 40);
-	g->setColor(0, 0, 0);
-	g->drawRect(11, 11, 158, 38);
-	g->drawRect(191, 11, 418, 38);
-	g->drawRect(631, 11, 158, 38);
 
-	g->setColor(255, 0, 0);
-	g->setFont(Global::gameResources->getNameFont());
+	g->drawImage(this->topGuiImage, 0, -15);
 
+	g->setColor(255, 255, 255);
+	g->setFont(Global::gameResources->getGuiFont());
+
+	float lM = 6.5;
 	if (this->hasMessage) {
-		g->drawText(400 - messageSize * 5, 15, serverMessage);
+		g->drawText(400 - messageSize * lM, 20, serverMessage);
 		g->drawAnimation(Global::gameResources->getExclamationAnimation(),
-				400 - messageSize * 5 - 36, 14);
+				400 - messageSize * lM - 30, 16);
 		g->drawAnimation(Global::gameResources->getExclamationAnimation(),
-				400 + messageSize * 5, 14);
+				394 + messageSize * lM, 16);
 
 	}
 
-	g->drawText(635, 15, "Puntaje: 0");
+	g->drawText(625, 20, "Puntaje 0");
 	for (int i = 0; i < 5; i++) {
-		g->drawAnimation(Global::gameResources->getHeartAnimation(),
-				10 + i * 32, 14);
+		if(i < Global::playerLife){
+			g->drawImage(liveE, 25 + i * 30, 20);
+		} else {
+			g->drawImage(liveD, 25 + i * 30, 20);
+		}
 	}
 	levelStateMutex.unlock();
 }
