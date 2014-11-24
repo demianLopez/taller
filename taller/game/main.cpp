@@ -74,7 +74,7 @@ int mainServer() {
 	w->waitWorldThread();
 
 	delete sv;
-	delete w;
+	delete Data::world;
 	return 0;
 }
 

@@ -12,6 +12,8 @@
 #include "Data.h"
 #include "ContactContainer.h"
 #include "ServerData.h"
+#include "LectorJson.h"
+#include "GestorEscenario.h"
 
 World::World(b2Vec2 * gravity) {
 	this->gravity = gravity;
@@ -257,6 +259,151 @@ void World::nextLevel(World* currentLevel) {
 	currentLevel->stop();
 	currentLevel->waitWorldThread();
 	delete currentLevel;
+
+	LectorJson * lj = new LectorJson();
+	lj->cargarEscenario("Maps/tp0.json");
+	GestorEscenario * ge = lj->obtenerGestorEscenario();
+	World * w = ge->obtenerMundo();
+
+	Data::world = w;
+
+	for(auto * player : pList){
+		//w->logginUser(player->getName(), player->getClient());
+		delete player;
+	}
+
+	pList.clear();
+
+	delete lj;
+}
+
+void World::logginUser(string userName, Client_handler* client) {
+
+		Message envio;
+	// Comparacion para ver si ya existe el nombre en uso.
+		bool reconecting = false;
+		Jugador * reconectedPlayer = NULL;
+
+		for (auto * p : this->playerList) {
+			string oPlayer(p->getName());
+
+			if (oPlayer.compare(userName) == 0) {
+
+				if (p->isOffline()) {
+					reconecting = true;
+					reconectedPlayer = p;
+					break;
+				} else {
+					envio.addCommandCode(ERROR_MESSAGE);
+					envio.addCharArray("Jugador Online\0", 15);
+					envio.addCharArray(
+							"El nombre que intenta utilizar se encuentra en uso\0",
+							51);
+					envio.addEndChar();
+					client->send_message(&envio);
+					return;
+				}
+			}
+		}
+
+		// Ver si ya esta lleno.
+		if (!reconecting) {
+			if (this->getPlayerList().size()
+					>= this->getMaxPlayers()) {
+				envio.addCommandCode(ERROR_MESSAGE);
+				envio.addCharArray("Lugares\0", 8);
+				envio.addCharArray("No hay mas lugar\0", 17);
+				envio.addEndChar();
+				client->send_message(&envio);
+				return;
+			}
+		}
+
+		//Mandamos un mensaje por poligono!
+		envio.addCommandCode(INITIALIZE_MAP);
+		envio.addFloat(&this->getBox2DWorldSize()->x);
+		envio.addFloat(&this->getBox2DWorldSize()->y);
+		envio.addChar(this->isWaitingForPlayers());
+		envio.addEndChar();
+		client->send_message(&envio);
+
+		vector<Polygon*> polList = this->getPolygonList();
+
+		for (auto * p : polList) {
+			Message * mapData = new Message();
+			mapData->addCommandCode(ADD_MAP_DATA);
+
+			char vNum = p->getPointList().size();
+			mapData->addChar(p->getEntityIndex());
+			mapData->addChar(p->isStatic());
+			mapData->addChar(p->getType());
+			mapData->addChar(vNum);
+			mapData->addFloat(&p->getPosition()->x);
+			mapData->addFloat(&p->getPosition()->y);
+			float rotation = p->getRotation();
+			mapData->addFloat(&rotation);
+
+			for (auto * ver : p->getPointList()) {
+				mapData->addFloat(&ver->x);
+				mapData->addFloat(&ver->y);
+			}
+
+			mapData->addEndChar();
+			client->send_message(mapData);
+
+			delete mapData;
+		}
+
+		Jugador * j;
+
+		if (!reconecting) {
+			Message m;
+			m.addCommandCode(SHOW_MESSAGE);
+			string pM("");
+			pM.append(userName);
+			pM.append(" se ha conectado");
+			m.addCharArray(pM.c_str(), pM.size());
+			m.addEndChar();
+			this->sendToWorldPlayers(&m);
+
+			j = new Jugador(client, (char *)userName.c_str());
+			j->setOffline(false); //FIXME: agregue esto porque sino queda sin inicializar. No se si va en false..
+
+		} else {
+			Message m;
+			m.addCommandCode(SHOW_MESSAGE);
+			string pM("");
+			pM.append(reconectedPlayer->getName());
+			pM.append(" se ha reconectado");
+			m.addCharArray(pM.c_str(), pM.size());
+			m.addEndChar();
+
+			this->sendToWorldPlayers(&m);
+			client->userIndex = reconectedPlayer->getIndex();
+			reconectedPlayer->setClient(client);
+			j = reconectedPlayer;
+			j->setOffline(false);
+		}
+
+		this->addPlayer(j, reconecting);
+
+		Message * mainEntity = new Message();
+		mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
+		char mEntity = j->getIndex();
+		mainEntity->addChar(mEntity);
+		mainEntity->addEndChar();
+		client->send_message(mainEntity);
+		delete mainEntity;
+
+		Message * finalData = new Message();
+		finalData->addCommandCode(INITIALIZE_GRAPHICS);
+		finalData->addChar(j->getPlayerLives());
+		finalData->addChar(j->getPlayerScore());
+		finalData->addEndChar();
+		client->send_message(finalData);
+		delete finalData;
+
+		return;
 }
 
 void World::worldLoop(World * world) {

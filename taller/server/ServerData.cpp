@@ -74,18 +74,14 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 		vector<Jugador *> lPlayer = Data::world->getPlayerList();
 		char * playerName;
 		m->getCharArray(&playerName);
-
 		string nm(playerName);
 
 		// Comparacion para ver si ya existe el nombre en uso.
 		bool reconecting = false;
 		Jugador * reconectedPlayer = NULL;
-
 		for (auto * p : lPlayer) {
 			string oPlayer(p->getName());
-
 			if (oPlayer.compare(nm) == 0) {
-
 				if (p->isOffline()) {
 					reconecting = true;
 					reconectedPlayer = p;
@@ -102,7 +98,6 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 				}
 			}
 		}
-
 		// Ver si ya esta lleno.
 		if (!reconecting) {
 			if (Data::world->getPlayerList().size()
@@ -115,7 +110,6 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 				return cCode;
 			}
 		}
-
 		//Mandamos un mensaje por poligono!
 		envio.addCommandCode(INITIALIZE_MAP);
 		envio.addFloat(&Data::world->getBox2DWorldSize()->x);
@@ -123,13 +117,10 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 		envio.addChar(Data::world->isWaitingForPlayers());
 		envio.addEndChar();
 		client->send_message(&envio);
-
 		vector<Polygon*> polList = Data::world->getPolygonList();
-
 		for (auto * p : polList) {
 			Message * mapData = new Message();
 			mapData->addCommandCode(ADD_MAP_DATA);
-
 			char vNum = p->getPointList().size();
 			mapData->addChar(p->getEntityIndex());
 			mapData->addChar(p->isStatic());
@@ -139,20 +130,15 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 			mapData->addFloat(&p->getPosition()->y);
 			float rotation = p->getRotation();
 			mapData->addFloat(&rotation);
-
 			for (auto * ver : p->getPointList()) {
 				mapData->addFloat(&ver->x);
 				mapData->addFloat(&ver->y);
 			}
-
 			mapData->addEndChar();
 			client->send_message(mapData);
-
 			delete mapData;
 		}
-
 		Jugador * j;
-
 		if (!reconecting) {
 			Message m;
 			m.addCommandCode(SHOW_MESSAGE);
@@ -162,10 +148,8 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 			m.addCharArray(pM.c_str(), pM.size());
 			m.addEndChar();
 			Data::world->sendToWorldPlayers(&m);
-
 			j = new Jugador(client, playerName);
 			j->setOffline(false); //FIXME: agregue esto porque sino queda sin inicializar. No se si va en false..
-
 		} else {
 			Message m;
 			m.addCommandCode(SHOW_MESSAGE);
@@ -174,16 +158,13 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 			pM.append(" se ha reconectado");
 			m.addCharArray(pM.c_str(), pM.size());
 			m.addEndChar();
-
 			Data::world->sendToWorldPlayers(&m);
 			client->userIndex = reconectedPlayer->getIndex();
 			reconectedPlayer->setClient(client);
 			j = reconectedPlayer;
 			j->setOffline(false);
 		}
-
 		Data::world->addPlayer(j, reconecting);
-
 		Message * mainEntity = new Message();
 		mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
 		char mEntity = j->getIndex();
@@ -191,7 +172,6 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 		mainEntity->addEndChar();
 		client->send_message(mainEntity);
 		delete mainEntity;
-
 		Message * finalData = new Message();
 		finalData->addCommandCode(INITIALIZE_GRAPHICS);
 		finalData->addChar(j->getPlayerLives());
@@ -199,7 +179,6 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 		finalData->addEndChar();
 		client->send_message(finalData);
 		delete finalData;
-
 		return cCode;
 	}
 

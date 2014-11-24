@@ -6,6 +6,7 @@
  */
 
 #include <ChangeState.h>
+#include "Global.h"
 
 ChangeState::ChangeState() {
 	// TODO Auto-generated constructor stub
@@ -44,4 +45,6 @@ void ChangeState::exit(Game* game) {
 }
 
 void ChangeState::enter() {
+	delete Global::gameWorld;
+	Global::gameWorld = NULL;
 }

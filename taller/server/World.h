@@ -76,6 +76,8 @@ public:
 
 	static void nextLevel(World * currentLevel);
 
+	void logginUser(string userName, Client_handler * client);
+
 private:
 	void updateTiming(Jugador * j);
 	void updatePolygon(Polygon * p);
