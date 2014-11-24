@@ -22,6 +22,9 @@
 class Bonus {
 public:
 	Bonus();
+
+	virtual std::string get_type()=0;
+
 	virtual ~Bonus();
 };
 

@@ -19,10 +19,14 @@
 #ifndef MODEL_POLYGON_H_
 #define MODEL_POLYGON_H_
 
-#include <Box2D/Box2D.h>
-#include "../World.h"
+#include <Box2D/Common/b2Math.h>
 #include <vector>
+
 #include "../../common/CommandCode.h"
+
+class b2Body;
+struct b2BodyDef;
+struct b2FixtureDef;
 
 class World;
 

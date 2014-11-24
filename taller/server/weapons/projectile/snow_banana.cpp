@@ -19,6 +19,11 @@
 
 #include "snow_banana.h"
 
+#include <list>
+
+#include "../../bonus_items/bonus/snow_counter.h"
+#include "../../moving_objects/character.h"
+
 using std::list;
 
 Snow_banana::Snow_banana() {
@@ -39,13 +44,14 @@ void Snow_banana::collide(Character& character) {
 	int total_counters = 0;
 
 	while (i < bonus.size()) {
-		if (bonus[i]->type == SNOW_COUNTER) {
+		if (bonus[i]->get_type() == SNOW_COUNTER) {
 			total_counters++;
 		}
 	}
 
 	if (total_counters > 4) {
-		character.turn_into_snowball();
+		character.die();
+		//TODO: Spawn snowball
 	}
 
 }

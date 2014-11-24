@@ -1,5 +1,5 @@
 /**
- character.h
+ snow_counter.h
 
  Copyright 2014 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,36 +16,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef CHARACTER_H_
-#define CHARACTER_H_
+#ifndef SNOW_COUNTER_H_
+#define SNOW_COUNTER_H_
 
-class Weapon;
-class Projectile;
-#include "moving_object.h"
-#include "../weapons/weapon.h"
-#include "../bonus_items/bonus/bonus.h"
+#include <string>
 
-#include <stack>
+#include "bonus.h"
 
-class Character: public Moving_object {
-protected:
-
-	std::stack<Weapon*> weapons;
-	int energy;
-
+class Snow_counter: public Bonus {
 public:
-	Character();
-
-	void set_weapon(Weapon* weapon);
-	Projectile* fire();
-	void reduce_life();
-
-	void add_bous(Bonus* bonus);
-	void die();
-
-	int get_energy();
-
-	~Character();
+	Snow_counter();
+	virtual std::string get_type();
+	virtual ~Snow_counter();
 };
 
-#endif /* CHARACTER_H_ */
+#endif /* SNOW_COUNTER_H_ */
