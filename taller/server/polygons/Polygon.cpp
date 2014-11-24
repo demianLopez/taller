@@ -16,10 +16,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "Polygon.h"
 
-#include <Box2D/Box2D.h>
-#include <math.h>
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2Fixture.h>
+#include <Box2D/Dynamics/b2World.h>
+#include <stddef.h>
+
+#include "../../server/World.h"
 #include "../ContactContainer.h"
 
 Polygon::Polygon(int body_def) {

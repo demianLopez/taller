@@ -5,7 +5,10 @@
  *      Author: demian
  */
 
-#include <entity/MovementEntity.h>
+#include "MovementEntity.h"
+
+#include <stddef.h>
+
 
 MovementEntity::MovementEntity(int index) : GameEntity(index) {
 	this->renderTimeCount = 0;

@@ -16,7 +16,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "Rectangle.h"
+
+#include <Box2D/Collision/Shapes/b2PolygonShape.h>
+#include <Box2D/Common/b2Math.h>
+
+#include "../../common/CommandCode.h"
+#include "../Box2D/Dynamics/b2Body.h"
+#include "../Box2D/Dynamics/b2Fixture.h"
 
 Rectangle::Rectangle(double width, double height, double density, double posX,
 		double posY, double angle, int body_type, World * world) :

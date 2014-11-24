@@ -8,6 +8,7 @@
 #ifndef PLAYERENTITY_H_
 #define PLAYERENTITY_H_
 
+#include "../../common/CommandCode.h"
 #include "MovementEntity.h"
 
 

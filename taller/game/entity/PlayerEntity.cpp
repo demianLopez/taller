@@ -6,7 +6,15 @@
  */
 
 #include "PlayerEntity.h"
+
+#include <cstring>
+
+#include "../../common/UpdateRequest.h"
+#include "../engine/Graphics.h"
+#include "../GameWorld.h"
 #include "../Global.h"
+#include "../Resources.h"
+#include "../VectorXY.h"
 
 PlayerEntity::PlayerEntity(int index) :
 

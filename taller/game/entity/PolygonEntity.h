@@ -8,10 +8,12 @@
 #ifndef POLYGONENTITY_H_
 #define POLYGONENTITY_H_
 
-#include "MovementEntity.h"
 #include <vector>
+
 #include "../VectorXY.h"
-#include "../engine/Image.h"
+#include "MovementEntity.h"
+
+class Image;
 
 using std::vector;
 
