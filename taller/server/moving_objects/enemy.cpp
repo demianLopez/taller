@@ -22,6 +22,7 @@
 using std::stack;
 
 Enemy::Enemy() {
+	energy = 5;
 }
 
 Enemy::~Enemy() {

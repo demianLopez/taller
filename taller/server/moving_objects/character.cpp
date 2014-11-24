@@ -27,6 +27,7 @@ void Character::set_weapon(Weapon* weapon) {
 }
 
 void Character::reduce_life() {
+	energy--;
 }
 
 Character::~Character() {
@@ -46,5 +47,6 @@ Projectile* Character::fire() {
 	return p;
 }
 
-void Character::collide(Level_object* object) {
+int Character::get_energy() {
+	return energy;
 }

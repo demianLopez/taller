@@ -27,9 +27,11 @@ class Projectile;
 #include <stack>
 
 class Character: public Moving_object {
-private:
+protected:
 
 	std::stack<Weapon*> weapons;
+	int energy;
+
 
 public:
 	Character();
@@ -38,7 +40,7 @@ public:
 	Projectile* fire();
 	void reduce_life();
 
-	virtual void collide(Level_object* object);
+	int get_energy();
 
 	~Character();
 };
