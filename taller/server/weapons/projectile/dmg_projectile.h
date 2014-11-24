@@ -27,7 +27,7 @@ class Dmg_projectile: public Projectile {
 public:
 	Dmg_projectile();
 
-	virtual void _collide(Character& character);
+	virtual void collide(Character& character);
 
 	virtual ~Dmg_projectile();
 };

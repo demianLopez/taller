@@ -19,6 +19,8 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
 
+class Weapon;
+class Projectile;
 #include "moving_object.h"
 #include "../weapons/weapon.h"
 

@@ -19,6 +19,9 @@
 #ifndef PROJECTILE_H_
 #define PROJECTILE_H_
 
+class Character;
+
+#include "../../moving_objects/moving_object.h"
 #include "../../moving_objects/character.h"
 
 class Projectile: public Moving_object {

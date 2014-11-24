@@ -27,6 +27,6 @@ Dmg_projectile::~Dmg_projectile() {
 	// TODO Auto-generated destructor stub
 }
 
-void Dmg_projectile::_collide(Character& character) {
+void Dmg_projectile::collide(Character& character) {
 	character.reduce_life();
 }
