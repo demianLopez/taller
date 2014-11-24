@@ -17,6 +17,14 @@ GameWorld::GameWorld(float tX, float tY) {
 	this->mainEntity = NULL;
 }
 
+void GameWorld::setWaitingForPlayers(bool waitingForPlayers){
+	this->waitingForPlayers = waitingForPlayers;
+}
+
+bool GameWorld::isWaitingForPlayers(){
+	return this->waitingForPlayers;
+}
+
 GameEntity * GameWorld::getMainEntity() {
 	return this->mainEntity;
 }

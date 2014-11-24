@@ -58,6 +58,7 @@ void LevelState::init(Game * game) {
 
 	this->topGuiImage = new Image("Resources/topMain.png");
 	this->lives = new SpriteSheet("Resources/lifes.png", 23, 26);
+	this->waitingPlayer = new Image("Resources/WaitingPlayers.png");
 
 	this->liveE = lives->getSubImage(0,0);
 	this->liveD = lives->getSubImage(1, 0);
@@ -82,6 +83,7 @@ void LevelState::exit(Game * game) {
 	delete this->liveD;
 	delete this->liveE;
 	delete this->lives;
+	delete this->waitingPlayer;
 }
 
 void LevelState::restartCameraPosition() {
@@ -219,6 +221,21 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta) {
 	//-----------------------------------------------------------------------------
 	this->frontParticleEmiter->render(g);
 
+	if(Global::gameWorld->isWaitingForPlayers()){
+		this->drawWaitingPlayersGUI(g);
+	} else {
+		this->drawMainGUI(g);
+	}
+
+
+	levelStateMutex.unlock();
+}
+
+void LevelState::drawWaitingPlayersGUI(Graphics * g){
+	g->drawImage(this->waitingPlayer);
+}
+
+void LevelState::drawMainGUI(Graphics * g){
 	g->drawImage(this->topGuiImage, 0, -15);
 
 	g->setColor(255, 255, 255);
@@ -242,11 +259,15 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta) {
 			g->drawImage(liveD, 25 + i * 30, 20);
 		}
 	}
-	levelStateMutex.unlock();
 }
 
 void LevelState::keyEvent(SDL_Event e, Game * game) {
 	levelStateMutex.lock();
+	if(Global::gameWorld->isWaitingForPlayers()){
+		levelStateMutex.unlock();
+		return;
+	}
+
 	if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
 		case SDLK_LEFT:

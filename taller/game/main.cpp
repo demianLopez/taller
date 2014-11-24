@@ -61,6 +61,10 @@ int mainServer() {
 			std::cout << "Updates por segundo " << w->updatesPerSecond
 					<< std::endl;
 		}
+
+		if (command.compare("forceLevel") == 0) {
+			w->nextLevel(w);
+		}
 	}
 
 	std::cout << "Cerrando Server" << endl;

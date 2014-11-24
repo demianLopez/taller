@@ -120,6 +120,7 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 		envio.addCommandCode(INITIALIZE_MAP);
 		envio.addFloat(&Data::world->getBox2DWorldSize()->x);
 		envio.addFloat(&Data::world->getBox2DWorldSize()->y);
+		envio.addChar(Data::world->isWaitingForPlayers());
 		envio.addEndChar();
 		client->send_message(&envio);
 
@@ -193,6 +194,8 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 
 		Message * finalData = new Message();
 		finalData->addCommandCode(INITIALIZE_GRAPHICS);
+		finalData->addChar(j->getPlayerLives());
+		finalData->addChar(j->getPlayerScore());
 		finalData->addEndChar();
 		client->send_message(finalData);
 		delete finalData;

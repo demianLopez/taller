@@ -20,6 +20,11 @@ World::World(b2Vec2 * gravity) {
 	this->box2DWorld = new b2World(*gravity);
 	this->Box2DWorldSize = NULL;
 	this->lastEntityIndex = 0;
+	this->waitingPlayers = true;
+}
+
+bool World::isWaitingForPlayers(){
+	return this->waitingPlayers;
 }
 
 b2World * World::getBox2DWorld() {
@@ -120,6 +125,8 @@ void World::requestKeyData(Jugador * j) {
 
 void World::addPlayer(Jugador * jugador, bool reconecting) {
 	worldMutex.lock();
+	bool start = false;
+
 	if (!reconecting) {
 		this->playerList.push_back(jugador);
 		int avavibleIndex = this->getAvavibleIndex();
@@ -128,10 +135,16 @@ void World::addPlayer(Jugador * jugador, bool reconecting) {
 		this->initializePlayerBody(jugador);
 
 		//Si se cumple cantidad minima de jugadores arrancamos!
-		if(this->playerList.size() >= this->minPlayers && !this->wordLoop){
+		if(this->playerList.size() >= this->minPlayers && waitingPlayers){
+			waitingPlayers = false;
+			start = true;
 			this->start();
 		}
 	}
+
+	Message m;
+	m.addCommandCode(START_GAME);
+	m.addEndChar();
 
 	for (auto * p : playerList) {
 		if (!reconecting) {
@@ -144,7 +157,15 @@ void World::addPlayer(Jugador * jugador, bool reconecting) {
 		//Te mandamos la informacion de los demas player conectados
 		//incluyendote
 		this->instantiatePlayer(p, jugador->getClient());
+
+		if(start){
+			if(!p->isOffline()){
+				p->getClient()->send_message(&m);
+			}
+		}
 	}
+
+
 	worldMutex.unlock();
 }
 
@@ -222,6 +243,20 @@ bool World::isOnLoop() {
 
 void World::setMinPlayers(int minPlayers){
 	this->minPlayers = minPlayers;
+}
+
+void World::nextLevel(World* currentLevel) {
+	Message m;
+	m.addCommandCode(END_LEVEL);
+	m.addEndChar();
+	currentLevel->sendToWorldPlayers(&m);
+
+	//Lo unico que se transfiere de nivel a nivel es la lista de jugadores!
+	vector<Jugador *> pList = currentLevel->getPlayerList();
+
+	currentLevel->stop();
+	currentLevel->waitWorldThread();
+	delete currentLevel;
 }
 
 void World::worldLoop(World * world) {

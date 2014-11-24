@@ -88,6 +88,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		float tX = m->getFloat();
 		float tY = m->getFloat();
 		Global::gameWorld = new GameWorld(tX, tY);
+		Global::gameWorld->setWaitingForPlayers(m->getChar());
 		return cCode;
 	}
 
@@ -140,7 +141,22 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 
 	if (cCode == INITIALIZE_GRAPHICS) {
 		Global::levelState->setWorld(Global::gameWorld);
+		Global::playerLife = m->getChar();
+		Global::playerScore = m->getChar();
 		Global::game->enterState(1);
+		return cCode;
+	}
+
+	if (cCode == UPDATE_PLAYER_STAT) {
+		Global::levelState->setWorld(Global::gameWorld);
+		Global::playerLife = m->getChar();
+		Global::playerScore = m->getChar();
+		Global::game->enterState(1);
+		return cCode;
+	}
+
+	if(cCode == START_GAME){
+		Global::gameWorld->setWaitingForPlayers(false);
 		return cCode;
 	}
 
@@ -148,6 +164,11 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		char entityIndex = m->getChar();
 		Global::gameWorld->setMainEntity(entityIndex);
 		Global::levelState->restartCameraPosition();
+		return cCode;
+	}
+
+	if(cCode == END_LEVEL){
+		Global::game->enterState(2);
 		return cCode;
 	}
 

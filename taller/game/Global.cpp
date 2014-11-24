@@ -15,4 +15,5 @@ GameWorld * Global::gameWorld;
 Resources * Global::gameResources;
 int Global::serverUpdateTiming;
 
-int Global::playerLife = 4;
+int Global::playerLife;
+int Global::playerScore;

@@ -20,13 +20,22 @@ private:
 
 	void evaluateAnimation();
 
+
+
 	/*
 	 const float VELOCIDAD_MAXIMA_BUFF_X = VELOCIDAD_MAXIMA_DEFAULT_X * 1.5;
 	 */
 
 public:
+	void updateOnClientUserStats();
+
+	int lives;
+	int score;
 
 	int keyRequestSend;
+
+	int getPlayerLives();
+	int getPlayerScore();
 
 	void setOffline(bool isOffline);
 	bool isOffline();

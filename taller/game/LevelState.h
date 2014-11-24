@@ -48,12 +48,16 @@ private:
 	virtual void exit(Game * game);
 	void enter();
 
+	void drawMainGUI(Graphics * g);
+	void drawWaitingPlayersGUI(Graphics * g);
+
 	Image * worldImage;
 	Image * backgroundImage;
 	Image * topGuiImage;
 	SpriteSheet * lives;
 	Image * liveE;
 	Image * liveD;
+	Image * waitingPlayer;
 
 	GameWorld * gameWorld;
 

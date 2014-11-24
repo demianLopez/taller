@@ -28,6 +28,7 @@ public:
 	static Resources * gameResources;
 
 	static int playerLife;
+	static int playerScore;
 
 };
 
