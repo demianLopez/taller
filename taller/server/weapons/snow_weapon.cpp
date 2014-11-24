@@ -16,9 +16,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "snow_weapon.h"
 
-#include "projectile/fire.h"
+#include "projectile/snow_banana.h"
 
 Snow_weapon::Snow_weapon() {
 	// TODO Auto-generated constructor stub
@@ -26,7 +27,7 @@ Snow_weapon::Snow_weapon() {
 }
 
 Projectile* Snow_weapon::get_projectile() {
-	return new Fire(); //FIXME
+	return new Snow_banana();
 }
 
 Snow_weapon::~Snow_weapon() {

@@ -19,6 +19,8 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
 
+#include <list>
+
 class Weapon;
 class Projectile;
 #include "moving_object.h"
@@ -31,6 +33,7 @@ class Character: public Moving_object {
 protected:
 
 	std::stack<Weapon*> weapons;
+	std::list<Bonus*> bonus;
 	int energy;
 
 public:
@@ -40,7 +43,9 @@ public:
 	Projectile* fire();
 	void reduce_life();
 
-	void add_bous(Bonus* bonus);
+	void add_bonus(Bonus* bonus);
+	std::list<Bonus*> get_asigned_bonus();
+
 	void die();
 
 	int get_energy();

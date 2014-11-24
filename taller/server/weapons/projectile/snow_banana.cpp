@@ -19,7 +19,9 @@
 
 #include "snow_banana.h"
 
+#include <iterator>
 #include <list>
+#include <string>
 
 #include "../../bonus_items/bonus/snow_counter.h"
 #include "../../moving_objects/character.h"
@@ -43,10 +45,14 @@ void Snow_banana::collide(Character& character) {
 	int i = 0;
 	int total_counters = 0;
 
+	std::list<Bonus*>::iterator it = bonus.begin();
+
 	while (i < bonus.size()) {
-		if (bonus[i]->get_type() == SNOW_COUNTER) {
+	    if ((*it)->get_type() == "SNOW_COUNTER") {
 			total_counters++;
 		}
+	    std::advance(it,1);
+	    i++;
 	}
 
 	if (total_counters > 4) {

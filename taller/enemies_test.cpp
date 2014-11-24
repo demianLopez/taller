@@ -16,7 +16,25 @@ int main() {
 
 	Projectile* p = shiningFlareWingman->fire();
 	p->collide(*shiningPhoenixEnforcer);
+	cout << "Shining Phoenix Enforcer tiene ahora: "
+			<< shiningPhoenixEnforcer->get_energy() << " de " << energy << endl;
 
+	p->collide(*shiningPhoenixEnforcer);
+	cout << "Shining Phoenix Enforcer tiene ahora: "
+			<< shiningPhoenixEnforcer->get_energy() << " de " << energy << endl;
+
+
+	p->collide(*shiningPhoenixEnforcer);
+	cout << "Shining Phoenix Enforcer tiene ahora: "
+			<< shiningPhoenixEnforcer->get_energy() << " de " << energy << endl;
+
+
+	p->collide(*shiningPhoenixEnforcer);
+	cout << "Shining Phoenix Enforcer tiene ahora: "
+			<< shiningPhoenixEnforcer->get_energy() << " de " << energy << endl;
+
+
+	p->collide(*shiningPhoenixEnforcer);
 	cout << "Shining Phoenix Enforcer tiene ahora: "
 			<< shiningPhoenixEnforcer->get_energy() << " de " << energy << endl;
 

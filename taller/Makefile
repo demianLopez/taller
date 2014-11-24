@@ -4,12 +4,15 @@ CC= gcc
 
 SRC=$(wildcard *.cpp)
 SRC+= $(wildcard server/bonus_items/*.cpp)
+SRC+= $(wildcard server/bonus_items/bonus/*.cpp)
 SRC+= $(wildcard server/level_objects/*.cpp)
 SRC+= $(wildcard server/level_objects/collision_strategies/*.cpp)
 SRC+= $(wildcard server/moving_objects/*.cpp)
 SRC+= $(wildcard server/moving_objects/move_patterns/*.cpp)
 SRC+= $(wildcard server/weapons/*.cpp)
 SRC+= $(wildcard server/weapons/projectile/*.cpp)
+SRC+= $(wildcard server/bonus_items/*.cpp)
+
 
 
 OBJS=$(SRC:.cpp=.o)

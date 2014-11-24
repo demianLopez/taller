@@ -19,6 +19,8 @@
 #ifndef BONUS_H_
 #define BONUS_H_
 
+#include <string>
+
 class Bonus {
 public:
 	Bonus();

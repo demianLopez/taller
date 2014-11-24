@@ -31,6 +31,18 @@ void Character::reduce_life() {
 	energy--;
 }
 
+void Character::add_bonus(Bonus* bonus) {
+	this->bonus.push_back(bonus);
+}
+
+std::list<Bonus*> Character::get_asigned_bonus() {
+	return bonus;
+}
+
+void Character::die() {
+	energy = 0;
+}
+
 Character::~Character() {
 	while (!weapons.empty()) {
 		Weapon* weapon = weapons.top();
