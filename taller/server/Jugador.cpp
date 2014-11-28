@@ -83,6 +83,12 @@ void Jugador::apllyCodes() {
 	keyCode.clear();
 }
 
+Jugador *  Jugador::clonePlayer() {
+	Jugador * newPlayer = new Jugador(this->client, this->name);
+	newPlayer->setOffline(this->isOffline());
+	return newPlayer;
+}
+
 Client_handler * Jugador::getClient() {
 	return this->client;
 }

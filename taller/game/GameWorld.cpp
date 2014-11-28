@@ -85,12 +85,12 @@ void GameWorld::update(unsigned int delta) {
 
 /* Agrega pedido de request. */
 void GameWorld::addUpdateRequest(UpdateRequest * update) {
-	//this->updateMutex.lock();
+	this->updateMutex.lock();
 
 	entityMap[update->index]->addUpdateRequest(update,
 			Global::game->getElapsedTime());
 
-	//this->updateMutex.unlock();
+	this->updateMutex.unlock();
 }
 
 /* Devuelve entityList.*/

@@ -76,7 +76,8 @@ public:
 
 	static void nextLevel(World * currentLevel);
 
-	void logginUser(string userName, Client_handler * client);
+	void sendWorldInfo(Client_handler * client);
+	void checkPlayerCount();
 
 private:
 	void updateTiming(Jugador * j);

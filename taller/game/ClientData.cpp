@@ -32,24 +32,31 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 	}
 
 	if (cCode == UPDATE_ENTITY) {
+
 		UpdateRequest * uR = new UpdateRequest();
 		uR->index = m->getChar();
 		uR->posX = m->getFloat();
 		uR->posY = m->getFloat();
 		uR->rotation = m->getFloat();
-		Global::gameWorld->addUpdateRequest(uR);
+		if(Global::game->isOnState(1)){
+			Global::gameWorld->addUpdateRequest(uR);
+		}
 		return cCode;
 	}
 
 	if (cCode == UPDATE_PLAYER_ENTITY) {
+
 		UpdateRequest * uR = new UpdateRequest();
 		uR->index = m->getChar();
 		uR->posX = m->getFloat();
 		uR->posY = m->getFloat();
 		uR->animation = m->getAnimationCode();
 		uR->offline = m->getChar();
-		Global::gameWorld->addUpdateRequest(uR);
+		if(Global::game->isOnState(1)){
+			Global::gameWorld->addUpdateRequest(uR);
+		}
 		return cCode;
+
 	}
 
 	if (cCode == REQUEST_KEY_DATA) {
@@ -135,6 +142,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 			pEnt->addVertex(tX, tY);
 		}
 
+		pEnt->setWorld(Global::gameWorld);
 		Global::gameWorld->addEntity(pEnt);
 		return cCode;
 	}

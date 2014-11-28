@@ -66,6 +66,7 @@ void LevelState::init(Game * game) {
 
 }
 
+
 void LevelState::setWorld(GameWorld * world) {
 	this->gameWorld = world;
 }

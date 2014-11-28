@@ -63,7 +63,7 @@ int mainServer() {
 		}
 
 		if (command.compare("forceLevel") == 0) {
-			w->nextLevel(w);
+			w->nextLevel(Data::world);
 		}
 	}
 

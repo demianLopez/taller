@@ -50,6 +50,40 @@ b2Vec2 * World::getBox2DWorldSize() {
 	return this->Box2DWorldSize;
 }
 
+void World::sendWorldInfo(Client_handler * client){
+	//Mandamos un mensaje por poligono!
+	Message envio = Message();
+
+	envio.addCommandCode(INITIALIZE_MAP);
+	envio.addFloat(&Data::world->getBox2DWorldSize()->x);
+	envio.addFloat(&Data::world->getBox2DWorldSize()->y);
+	envio.addChar(Data::world->isWaitingForPlayers());
+	envio.addEndChar();
+	client->send_message(&envio);
+
+	vector<Polygon*> polList = Data::world->getPolygonList();
+	for (auto * p : polList) {
+		Message * mapData = new Message();
+		mapData->addCommandCode(ADD_MAP_DATA);
+		char vNum = p->getPointList().size();
+		mapData->addChar(p->getEntityIndex());
+		mapData->addChar(p->isStatic());
+		mapData->addChar(p->getType());
+		mapData->addChar(vNum);
+		mapData->addFloat(&p->getPosition()->x);
+		mapData->addFloat(&p->getPosition()->y);
+		float rotation = p->getRotation();
+		mapData->addFloat(&rotation);
+		for (auto * ver : p->getPointList()) {
+			mapData->addFloat(&ver->x);
+			mapData->addFloat(&ver->y);
+		}
+		mapData->addEndChar();
+		client->send_message(mapData);
+		delete mapData;
+	}
+}
+
 void World::initializePlayerBody(Jugador * player) {
 
 	double longX = 1.2f;
@@ -115,7 +149,9 @@ Jugador * World::getPlayer(int userIndex) {
 }
 
 void World::waitWorldThread() {
-	this->worldThread.join();
+	if(this->worldThread.joinable()){
+		this->worldThread.join();
+	}
 }
 
 void World::requestKeyData(Jugador * j) {
@@ -125,9 +161,26 @@ void World::requestKeyData(Jugador * j) {
 	j->getClient()->send_message(&m);
 }
 
+void World::checkPlayerCount(){
+	if(this->playerList.size() >= this->minPlayers && this->waitingPlayers){
+		waitingPlayers = false;
+
+		Message m;
+		m.addCommandCode(START_GAME);
+		m.addEndChar();
+
+		for(auto * p: playerList){
+			if(!p->isOffline()){
+				p->getClient()->send_message(&m);
+			}
+		}
+
+		this->start();
+	}
+}
+
 void World::addPlayer(Jugador * jugador, bool reconecting) {
 	worldMutex.lock();
-	bool start = false;
 
 	if (!reconecting) {
 		this->playerList.push_back(jugador);
@@ -135,18 +188,7 @@ void World::addPlayer(Jugador * jugador, bool reconecting) {
 		jugador->setEntityIndex(avavibleIndex);
 		jugador->getClient()->userIndex = avavibleIndex;
 		this->initializePlayerBody(jugador);
-
-		//Si se cumple cantidad minima de jugadores arrancamos!
-		if(this->playerList.size() >= this->minPlayers && waitingPlayers){
-			waitingPlayers = false;
-			start = true;
-			this->start();
-		}
 	}
-
-	Message m;
-	m.addCommandCode(START_GAME);
-	m.addEndChar();
 
 	for (auto * p : playerList) {
 		if (!reconecting) {
@@ -159,12 +201,6 @@ void World::addPlayer(Jugador * jugador, bool reconecting) {
 		//Te mandamos la informacion de los demas player conectados
 		//incluyendote
 		this->instantiatePlayer(p, jugador->getClient());
-
-		if(start){
-			if(!p->isOffline()){
-				p->getClient()->send_message(&m);
-			}
-		}
 	}
 
 
@@ -265,206 +301,97 @@ void World::nextLevel(World* currentLevel) {
 	GestorEscenario * ge = lj->obtenerGestorEscenario();
 	World * w = ge->obtenerMundo();
 
+	w->setMinPlayers(1);
+
 	Data::world = w;
 
 	for(auto * player : pList){
-		//w->logginUser(player->getName(), player->getClient());
+		w->sendWorldInfo(player->getClient());
+
+		w->addPlayer(player->clonePlayer(), false);
+
+		Message * mainEntity = new Message();
+		mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
+		char mEntity = player->getIndex();
+		mainEntity->addChar(mEntity);
+		mainEntity->addEndChar();
+		player->getClient()->send_message(mainEntity);
+		delete mainEntity;
+
+		Message * finalData = new Message();
+		finalData->addCommandCode(INITIALIZE_GRAPHICS);
+		finalData->addChar(player->getPlayerLives());
+		finalData->addChar(player->getPlayerScore());
+		finalData->addEndChar();
+		player->getClient()->send_message(finalData);
+
+
+		delete finalData;
+
+
 		delete player;
 	}
 
 	pList.clear();
 
+	w->checkPlayerCount();
 	delete lj;
-}
-
-void World::logginUser(string userName, Client_handler* client) {
-
-		Message envio;
-	// Comparacion para ver si ya existe el nombre en uso.
-		bool reconecting = false;
-		Jugador * reconectedPlayer = NULL;
-
-		for (auto * p : this->playerList) {
-			string oPlayer(p->getName());
-
-			if (oPlayer.compare(userName) == 0) {
-
-				if (p->isOffline()) {
-					reconecting = true;
-					reconectedPlayer = p;
-					break;
-				} else {
-					envio.addCommandCode(ERROR_MESSAGE);
-					envio.addCharArray("Jugador Online\0", 15);
-					envio.addCharArray(
-							"El nombre que intenta utilizar se encuentra en uso\0",
-							51);
-					envio.addEndChar();
-					client->send_message(&envio);
-					return;
-				}
-			}
-		}
-
-		// Ver si ya esta lleno.
-		if (!reconecting) {
-			if (this->getPlayerList().size()
-					>= this->getMaxPlayers()) {
-				envio.addCommandCode(ERROR_MESSAGE);
-				envio.addCharArray("Lugares\0", 8);
-				envio.addCharArray("No hay mas lugar\0", 17);
-				envio.addEndChar();
-				client->send_message(&envio);
-				return;
-			}
-		}
-
-		//Mandamos un mensaje por poligono!
-		envio.addCommandCode(INITIALIZE_MAP);
-		envio.addFloat(&this->getBox2DWorldSize()->x);
-		envio.addFloat(&this->getBox2DWorldSize()->y);
-		envio.addChar(this->isWaitingForPlayers());
-		envio.addEndChar();
-		client->send_message(&envio);
-
-		vector<Polygon*> polList = this->getPolygonList();
-
-		for (auto * p : polList) {
-			Message * mapData = new Message();
-			mapData->addCommandCode(ADD_MAP_DATA);
-
-			char vNum = p->getPointList().size();
-			mapData->addChar(p->getEntityIndex());
-			mapData->addChar(p->isStatic());
-			mapData->addChar(p->getType());
-			mapData->addChar(vNum);
-			mapData->addFloat(&p->getPosition()->x);
-			mapData->addFloat(&p->getPosition()->y);
-			float rotation = p->getRotation();
-			mapData->addFloat(&rotation);
-
-			for (auto * ver : p->getPointList()) {
-				mapData->addFloat(&ver->x);
-				mapData->addFloat(&ver->y);
-			}
-
-			mapData->addEndChar();
-			client->send_message(mapData);
-
-			delete mapData;
-		}
-
-		Jugador * j;
-
-		if (!reconecting) {
-			Message m;
-			m.addCommandCode(SHOW_MESSAGE);
-			string pM("");
-			pM.append(userName);
-			pM.append(" se ha conectado");
-			m.addCharArray(pM.c_str(), pM.size());
-			m.addEndChar();
-			this->sendToWorldPlayers(&m);
-
-			j = new Jugador(client, (char *)userName.c_str());
-			j->setOffline(false); //FIXME: agregue esto porque sino queda sin inicializar. No se si va en false..
-
-		} else {
-			Message m;
-			m.addCommandCode(SHOW_MESSAGE);
-			string pM("");
-			pM.append(reconectedPlayer->getName());
-			pM.append(" se ha reconectado");
-			m.addCharArray(pM.c_str(), pM.size());
-			m.addEndChar();
-
-			this->sendToWorldPlayers(&m);
-			client->userIndex = reconectedPlayer->getIndex();
-			reconectedPlayer->setClient(client);
-			j = reconectedPlayer;
-			j->setOffline(false);
-		}
-
-		this->addPlayer(j, reconecting);
-
-		Message * mainEntity = new Message();
-		mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
-		char mEntity = j->getIndex();
-		mainEntity->addChar(mEntity);
-		mainEntity->addEndChar();
-		client->send_message(mainEntity);
-		delete mainEntity;
-
-		Message * finalData = new Message();
-		finalData->addCommandCode(INITIALIZE_GRAPHICS);
-		finalData->addChar(j->getPlayerLives());
-		finalData->addChar(j->getPlayerScore());
-		finalData->addEndChar();
-		client->send_message(finalData);
-		delete finalData;
-
-		return;
 }
 
 void World::worldLoop(World * world) {
 	char eCode = 0;
-	try {
-		int ups = 30;
-		int sleepTime = 1000 / ups;
 
-		unsigned int updateCount = 0;
+	int ups = 30;
+	int sleepTime = 1000 / ups;
 
-		while (world->isOnLoop()) {
-			eCode = 0;
+	unsigned int updateCount = 0;
 
-			for (auto * j : world->getPlayerList()) {
-				j->apllyCodes();
-				j->update();
+	while (world->isOnLoop()) {
+		eCode = 0;
+
+		for (auto * j : world->getPlayerList()) {
+			j->apllyCodes();
+			j->update();
+		}
+
+		eCode = 3;
+		std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+
+		//worldMutex.lock();
+		eCode = 4;
+		for (auto * j : world->getPlayerList()) {
+			if (!j->isOffline()) {
+				world->requestKeyData(j);
 			}
+		}
+		//worldMutex.unlock();
 
-			eCode = 3;
-			std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+		eCode = 5;
+		world->worldStep(sleepTime);
+		eCode = 6;
 
-			//worldMutex.lock();
-			eCode = 4;
-			for (auto * j : world->getPlayerList()) {
-				if (!j->isOffline()) {
-					world->requestKeyData(j);
-				}
-			}
-			//worldMutex.unlock();
+		if ((updateCount % 2) == 0) {
+			world->sendUpdates();
+		}
+		updateCount++;
 
-			eCode = 5;
-			world->worldStep(sleepTime);
-			eCode = 6;
+		for (auto * j : world->getPlayerList()) {
+			if (!j->isOffline()) {
+				if (j->keyRequestSend >= 60) {
+					j->setOffline(true);
+					Message m;
+					m.addCommandCode(SHOW_MESSAGE);
+					string pM("");
+					pM.append(j->getName());
+					pM.append(" se ha desconectado");
+					m.addCharArray(pM.c_str(), pM.size());
+					m.addEndChar();
 
-			if ((updateCount % 2) == 0) {
-				world->sendUpdates();
-			}
-			updateCount++;
+					Data::world->sendToWorldPlayers(&m);
 
-			for (auto * j : world->getPlayerList()) {
-				if (!j->isOffline()) {
-					if (j->keyRequestSend >= 60) {
-						j->setOffline(true);
-						Message m;
-						m.addCommandCode(SHOW_MESSAGE);
-						string pM("");
-						pM.append(j->getName());
-						pM.append(" se ha desconectado");
-						m.addCharArray(pM.c_str(), pM.size());
-						m.addEndChar();
-
-						Data::world->sendToWorldPlayers(&m);
-
-					}
 				}
 			}
 		}
-	} catch (const std::exception& e) {
-		std::cout << e.what() << " - Producido en WorldLoop - tCode: " << eCode
-				<< std::endl;
-		exit(-1);
 	}
 }
 

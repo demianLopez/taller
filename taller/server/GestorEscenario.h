@@ -28,7 +28,7 @@ struct escenario {
 	string nombreMapa;
 	string sigNivel;
 	int minJug;
-	double pos[];
+	double * pos;
 };
 
 struct rgb {

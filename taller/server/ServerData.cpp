@@ -110,35 +110,11 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 				return cCode;
 			}
 		}
-		//Mandamos un mensaje por poligono!
-		envio.addCommandCode(INITIALIZE_MAP);
-		envio.addFloat(&Data::world->getBox2DWorldSize()->x);
-		envio.addFloat(&Data::world->getBox2DWorldSize()->y);
-		envio.addChar(Data::world->isWaitingForPlayers());
-		envio.addEndChar();
-		client->send_message(&envio);
-		vector<Polygon*> polList = Data::world->getPolygonList();
-		for (auto * p : polList) {
-			Message * mapData = new Message();
-			mapData->addCommandCode(ADD_MAP_DATA);
-			char vNum = p->getPointList().size();
-			mapData->addChar(p->getEntityIndex());
-			mapData->addChar(p->isStatic());
-			mapData->addChar(p->getType());
-			mapData->addChar(vNum);
-			mapData->addFloat(&p->getPosition()->x);
-			mapData->addFloat(&p->getPosition()->y);
-			float rotation = p->getRotation();
-			mapData->addFloat(&rotation);
-			for (auto * ver : p->getPointList()) {
-				mapData->addFloat(&ver->x);
-				mapData->addFloat(&ver->y);
-			}
-			mapData->addEndChar();
-			client->send_message(mapData);
-			delete mapData;
-		}
+
+		Data::world->sendWorldInfo(client);
+
 		Jugador * j;
+
 		if (!reconecting) {
 			Message m;
 			m.addCommandCode(SHOW_MESSAGE);
@@ -164,7 +140,9 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 			j = reconectedPlayer;
 			j->setOffline(false);
 		}
+
 		Data::world->addPlayer(j, reconecting);
+
 		Message * mainEntity = new Message();
 		mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
 		char mEntity = j->getIndex();
@@ -172,6 +150,7 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 		mainEntity->addEndChar();
 		client->send_message(mainEntity);
 		delete mainEntity;
+
 		Message * finalData = new Message();
 		finalData->addCommandCode(INITIALIZE_GRAPHICS);
 		finalData->addChar(j->getPlayerLives());
@@ -179,6 +158,9 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 		finalData->addEndChar();
 		client->send_message(finalData);
 		delete finalData;
+
+		Data::world->checkPlayerCount();
+
 		return cCode;
 	}
 
