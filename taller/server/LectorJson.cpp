@@ -301,23 +301,29 @@ int LectorJson::validarComunes(Value objeto, double *posx, double *posy,
 		string codigoObjeto) {
 	double x = this->validarDouble("x", objeto, POS_OBJ_INV, codigoObjeto);
 	double y = this->validarDouble("y", objeto, POS_OBJ_INV, codigoObjeto);
+	/*
 	if (x == POS_OBJ_INV || y == POS_OBJ_INV) {
 		return INVALIDO;
 	}
+	*/
 	double rotacion = this->validarDouble("rot", objeto, ROT_OBJ_D,
 			codigoObjeto);
+	/*
 	if (rotacion < 0 || rotacion > 360) {
 		logger->reportarProblema(
 				"La rotacion requerida no se permite. Se establece rotacion por defecto.",
 				WARNING);
 		rotacion = ROT_OBJ_D;
 	}
+	*/
 	double mass = this->validarDouble("masa", objeto, MASA_OBJ_D, codigoObjeto);
+	/*
 	if (mass < 0) {
 		logger->reportarProblema(
 				"La masa es negativa. Se establece masa por defecto.", WARNING);
 		mass = MASA_OBJ_D;
 	}
+	*/
 	string col = this->validarColor("color", objeto, COLOR_OBJ_D, codigoObjeto);
 
 	bool state = this->validarBool("estatico", objeto, EST_OBJ_D, codigoObjeto);
@@ -485,12 +491,14 @@ void LectorJson::armarTrapecio(Value objeto) {
 	}
 	double angulo = this->validarDouble("angulo", objeto, ANGULO_OBJ_D,
 			"trapecio");
+	/*
 	if (angulo < 0 || angulo > 180) {
 		logger->reportarProblema(
 				"El angulo para le trapecio es invalido. Se carga defecto",
 				WARNING);
 		angulo = ANGULO_OBJ_D;
 	}
+	*/
 	double alto = this->validarDouble("alto", objeto, ALTO_OBJ_D, "trapecio");
 	if (alto <= 0) {
 		logger->reportarProblema(
