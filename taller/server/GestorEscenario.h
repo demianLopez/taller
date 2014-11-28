@@ -26,6 +26,9 @@ struct escenario {
 	int personajeY;
 	int cantidadJugadores;
 	string nombreMapa;
+	string sigNivel;
+	int minJug;
+	double pos[];
 };
 
 struct rgb {
@@ -63,7 +66,7 @@ public:
 	escenario datos();
 	void configurarEscenerio(int altopx, int anchopx, int altoun, int anchoun,
 			string imagen_fondo, int personajeX, int personajeY,
-			int cantidadJugadores, string nombreMapa);
+			int cantidadJugadores, string nombreMapa, string sigNivel, int minJug,double pos[]);
 	void agregarObjeto(string tipo, double posX, double posY, string color,
 			double rot, double masa, double escala, bool estado, double alto,
 			double ancho, int lados, double radio, double baseParal,
