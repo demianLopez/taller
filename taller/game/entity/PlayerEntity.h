@@ -28,6 +28,10 @@ private:
 	AnimationCode animation;
 	bool offline;
 
+	bool invulnerable;
+
+	unsigned int blinkingTime;
+
 	char * pName;
 	int lName;
 };

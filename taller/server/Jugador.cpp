@@ -90,8 +90,35 @@ Jugador *  Jugador::clonePlayer() {
 	return newPlayer;
 }
 
+bool Jugador::isInvulnerable(){
+	return this->invulnerable;
+}
+
+void Jugador::checkStatus() {
+	if(invulnerable){
+		//b2Vec2 pos(10, 10);
+		//this->body->SetTransform(pos, 0);
+		this->secondsInvulLeft--;
+		if(secondsInvulLeft <= 0){
+			this->invulnerable = false;
+		}
+	}
+}
+
 Client_handler * Jugador::getClient() {
 	return this->client;
+}
+
+void Jugador::hit(){
+	if(invulnerable || offline){
+		return;
+	}
+
+	this->invulnerable = true;
+	this->secondsInvulLeft = 3;
+
+	this->lives--;
+	this->updateOnClientUserStats();
 }
 
 void Jugador::evaluateAnimation() {

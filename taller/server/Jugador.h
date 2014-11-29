@@ -23,7 +23,8 @@ private:
 
 	void evaluateAnimation();
 
-
+	bool invulnerable;
+	char secondsInvulLeft;
 
 
 	/*
@@ -33,6 +34,9 @@ private:
 public:
 	void updateOnClientUserStats();
 	Jugador * clonePlayer();
+
+	bool isInvulnerable();
+
 
 	int lives;
 	int score;
@@ -47,6 +51,10 @@ public:
 
 	void setOffline(bool isOffline);
 	bool isOffline();
+
+	void hit();
+	void checkStatus();
+
 
 	Jugador(Client_handler * client, char * name);
 

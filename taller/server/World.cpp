@@ -283,6 +283,12 @@ void World::setMinPlayers(int minPlayers){
 	this->minPlayers = minPlayers;
 }
 
+void World::nextSecond() {
+	for(auto * p : this->playerList){
+		p->checkStatus();
+	}
+}
+
 void World::nextLevel(World* currentLevel) {
 	currentLevel->stop();
 	currentLevel->waitWorldThread();
@@ -368,42 +374,47 @@ void World::switchLevel(){
 }
 
 void World::worldLoop(World * world) {
-	char eCode = 0;
 
 	int ups = 30;
 	int sleepTime = 1000 / ups;
 
 	unsigned int updateCount = 0;
 
+	unsigned int elapsedTime = 0;
+
 	while (world->isOnLoop()) {
-		eCode = 0;
 
 		for (auto * j : world->getPlayerList()) {
 			j->apllyCodes();
 			j->update();
 		}
 
-		eCode = 3;
 		std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+		elapsedTime += sleepTime;
 
-		//worldMutex.lock();
-		eCode = 4;
+		if(elapsedTime >= 1000){
+			world->nextSecond();
+			elapsedTime -= 1000;
+		}
+
+
 		for (auto * j : world->getPlayerList()) {
 			if (!j->isOffline()) {
 				world->requestKeyData(j);
 			}
 		}
-		//worldMutex.unlock();
 
-		eCode = 5;
 		world->worldStep(sleepTime);
-		eCode = 6;
+
 
 		if ((updateCount % 2) == 0) {
 			world->sendUpdates();
 		}
 		updateCount++;
 
+		/*
+		TODO: Esto era para verificar que nadie se desconecte con calbe, pero produce un pequeño delay
+		//si en esta entrega no evaluan eso, lo dejamos asi!
 		for (auto * j : world->getPlayerList()) {
 			if (!j->isOffline()) {
 				if (j->keyRequestSend >= 60) {
@@ -421,6 +432,7 @@ void World::worldLoop(World * world) {
 				}
 			}
 		}
+		*/
 	}
 }
 
@@ -428,9 +440,9 @@ void World::sendUpdates() {
 	for (auto * j : playerList) {
 		//this->updateTiming(j);
 		this->updatePeople(j);
-		if (!j->isOffline()) {
+		/*if (!j->isOffline()) {
 			j->keyRequestSend++;
-		}
+		}*/
 	}
 
 	for (auto * p : polygonList) {
@@ -472,6 +484,7 @@ void World::updatePeople(Jugador * p) {
 	m.addFloat(&p->getPosition()->y);
 	m.addAnimationCode(p->getCurrentAnimation());
 	m.addChar(p->isOffline());
+	m.addChar(p->isInvulnerable());
 	m.addEndChar();
 
 	this->sendToWorldPlayers(&m);

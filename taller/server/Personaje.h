@@ -26,6 +26,8 @@ public:
 	void moveRight(bool isButtonDown);
 	void jump();
 
+	virtual void hit() = 0;
+
 	AnimationCode getCurrentAnimation();
 
 	b2Vec2 * getPosition();

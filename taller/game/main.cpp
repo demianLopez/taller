@@ -65,6 +65,8 @@ int mainServer() {
 		if (command.compare("forceLevel") == 0) {
 			Data::world->switchLevel();
 		}
+
+		Data::world->getPlayerList()[0]->hit();
 	}
 
 	std::cout << "Cerrando Server" << endl;

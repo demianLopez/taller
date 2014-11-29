@@ -78,8 +78,9 @@ public:
 
 	void sendWorldInfo(Client_handler * client);
 	void checkPlayerCount();
-
 	void switchLevel();
+
+	void nextSecond();
 private:
 	void updateTiming(Jugador * j);
 	void updatePolygon(Polygon * p);

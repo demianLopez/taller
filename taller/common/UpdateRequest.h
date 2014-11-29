@@ -17,6 +17,7 @@ public:
 	float rotation;
 	AnimationCode animation;
 	bool offline;
+	bool invulnerable;
 	UpdateRequest();
 	virtual ~UpdateRequest();
 };

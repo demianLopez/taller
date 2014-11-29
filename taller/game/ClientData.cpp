@@ -52,6 +52,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		uR->posY = m->getFloat();
 		uR->animation = m->getAnimationCode();
 		uR->offline = m->getChar();
+		uR->invulnerable = m->getChar();
 		if(Global::game->isOnState(1)){
 			Global::gameWorld->addUpdateRequest(uR);
 		}

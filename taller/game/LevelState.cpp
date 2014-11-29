@@ -249,10 +249,14 @@ void LevelState::drawMainGUI(Graphics * g){
 				400 - messageSize * lM - 30, 16);
 		g->drawAnimation(Global::gameResources->getExclamationAnimation(),
 				394 + messageSize * lM, 16);
-
 	}
 
-	g->drawText(625, 20, "Puntaje 0");
+	std::stringstream score;
+	score.clear();
+	score.str("");
+	score << "Puntaje "<<Global::playerScore;
+
+	g->drawText(625, 20, score.str().c_str());
 	for (int i = 0; i < 5; i++) {
 		if(i < Global::playerLife){
 			g->drawImage(liveE, 25 + i * 30, 20);

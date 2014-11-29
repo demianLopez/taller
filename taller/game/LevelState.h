@@ -76,7 +76,9 @@ private:
 	int globalY;
 
 	std::vector<KeyCode> keyCodeData;
+
 	mutex levelStateMutex;
+	//mutex updateMutex;
 
 	char * serverMessage;
 	int messageTime;

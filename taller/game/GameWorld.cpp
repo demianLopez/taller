@@ -108,10 +108,12 @@ void GameWorld::mutexUnlock(){
 
 /* Inicializa los componentes graficos. */
 void GameWorld::generateGraphics() {
+	this->updateMutex.lock();
 	for (auto entity : this->entityMap) {
 		entity.second->setWorld(this);
 		entity.second->initialize();
 	}
+	this->updateMutex.unlock();
 }
 
 VectorXY GameWorld::box2DToSDLSize(VectorXY * box2DCoord) {

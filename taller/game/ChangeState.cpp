@@ -39,11 +39,16 @@ void ChangeState::render(Graphics* g, Game* game, unsigned int delta) {
 	g->setColor(255, 255, 255);
 
 	for(int i = 0; i < playerCount; i++){
+
+		std::stringstream score;
+		score.clear();
+		score.str("");
+		score << scores[i];
+
 		int hy = 250 + i * 30;
 		g->drawText(150, hy, players[i].c_str());
-		string score("");
 
-		g->drawText(380, hy, "120");
+		g->drawText(380, hy, score.str().c_str());
 		bool online = playerConected[i];
 
 		if(online){
