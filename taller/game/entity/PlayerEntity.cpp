@@ -6,7 +6,15 @@
  */
 
 #include "PlayerEntity.h"
+
+#include <cstring>
+
+#include "../../common/UpdateRequest.h"
+#include "../engine/Graphics.h"
+#include "../GameWorld.h"
 #include "../Global.h"
+#include "../Resources.h"
+#include "../VectorXY.h"
 
 PlayerEntity::PlayerEntity(int index) :
 
@@ -36,11 +44,15 @@ void PlayerEntity::initialize() {
 void PlayerEntity::applyUpdate(UpdateRequest * u){
 	this->animation = u->animation;
 	this->offline = u->offline;
+	this->invulnerable = u->invulnerable;
 }
 
 void PlayerEntity::render(Graphics * g, unsigned int delta) {
 
 	//int renderTime = Global::game->getElapsedTime() - this->lastUpdateTime;
+
+	this->blinkingTime += delta;
+	this->blinkingTime = blinkingTime % 500;
 
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 
@@ -53,9 +65,11 @@ void PlayerEntity::render(Graphics * g, unsigned int delta) {
 				Global::gameResources->getAnimationByAnimationCode(animation,
 						true), sdlPos.x, sdlPos.y);
 	} else {
-		g->drawAnimation(
+		if(!(invulnerable && blinkingTime > 250)){
+			g->drawAnimation(
 				Global::gameResources->getAnimationByAnimationCode(animation),
 				sdlPos.x, sdlPos.y);
+		}
 	}
 	g->setFont(Global::gameResources->getNameFont());
 

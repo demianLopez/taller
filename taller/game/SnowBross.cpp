@@ -8,6 +8,7 @@
 #include "SnowBross.h"
 #include "MainMenu.h"
 #include "LevelState.h"
+#include "ChangeState.h"
 #include "Global.h"
 #include "Resources.h"
 
@@ -19,6 +20,7 @@ SnowBross::SnowBross(const char *pTitle) :
 void SnowBross::initializeGameStates() {
 	this->addState(new MainMenu());
 	this->addState(new LevelState());
+	this->addState(new ChangeState());
 
 	this->enterState(0);
 }

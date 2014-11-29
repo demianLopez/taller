@@ -72,6 +72,15 @@ public:
 	void requestKeyData(Jugador * j);
 	void setMinPlayers(int minPlayers);
 
+	bool isWaitingForPlayers();
+
+
+
+	void sendWorldInfo(Client_handler * client);
+	void checkPlayerCount();
+	void switchLevel();
+
+	void nextSecond();
 private:
 	void updateTiming(Jugador * j);
 	void updatePolygon(Polygon * p);
@@ -83,12 +92,15 @@ private:
 
 	bool wordLoop;
 	static void worldLoop(World * world);
+	static void nextLevel(World * currentLevel);
 
 	vector<Jugador*> playerList;
 
 	ContactListener *contactListener;
 
 	thread worldThread;
+
+	bool waitingPlayers;
 
 	vector<Polygon*> polygonList;
 

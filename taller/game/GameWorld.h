@@ -52,6 +52,9 @@ public:
 
 	GameEntity * getMainEntity();
 
+	void setWaitingForPlayers(bool waitingForPlayers);
+	bool isWaitingForPlayers();
+
 	void mutexLock();
 	void mutexUnlock();
 
@@ -66,6 +69,8 @@ private:
 	std::mutex updateMutex;
 
 	GameEntity * mainEntity;
+
+	bool waitingForPlayers;
 
 	int afkTime;
 };

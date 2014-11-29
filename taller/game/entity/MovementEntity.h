@@ -8,8 +8,11 @@
 #ifndef MOVEMENTENTITY_H_
 #define MOVEMENTENTITY_H_
 
-#include "GameEntity.h"
 #include <queue>
+
+#include "../../common/UpdateRequest.h"
+#include "../VectorXY.h"
+#include "GameEntity.h"
 
 class MovementEntity: public GameEntity {
 public:

@@ -6,7 +6,14 @@
  */
 
 #include "PolygonEntity.h"
-#include "../Global.h"
+
+#include <stddef.h>
+
+#include "../../common/CommandCode.h"
+#include "../engine/GameElements.h"
+#include "../engine/Graphics.h"
+#include "../engine/Image.h"
+#include "../GameWorld.h"
 
 PolygonEntity::PolygonEntity(int index) :
 		MovementEntity(index) {

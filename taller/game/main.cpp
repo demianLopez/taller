@@ -27,7 +27,7 @@ int mainServer() {
 	GestorEscenario * ge = lj->obtenerGestorEscenario();
 	World * w = ge->obtenerMundo();
 
-	w->setMinPlayers(2);
+	w->setMinPlayers(1);
 	delete lj;
 
 	cout << "Mapa iniciado - Esperando jugadores" << endl;
@@ -61,6 +61,12 @@ int mainServer() {
 			std::cout << "Updates por segundo " << w->updatesPerSecond
 					<< std::endl;
 		}
+
+		if (command.compare("forceLevel") == 0) {
+			Data::world->switchLevel();
+		}
+
+		Data::world->getPlayerList()[0]->hit();
 	}
 
 	std::cout << "Cerrando Server" << endl;
@@ -70,7 +76,7 @@ int mainServer() {
 	w->waitWorldThread();
 
 	delete sv;
-	delete w;
+	delete Data::world;
 	return 0;
 }
 

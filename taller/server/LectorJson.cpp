@@ -19,6 +19,7 @@ const int ALTOUN_D = 100;
 const int ANCHOUN_D = 50;
 const string IMAGEN_FONDO_D = "Resources/font1.png";
 const int CANTIDADJUGADORES_D = 4;
+const int MIN_JUG = 1;
 
 //Valores por defecto personaje
 const int POSX_D = 100;
@@ -39,6 +40,7 @@ const double ANGULO_OBJ_D = 45.0;
 const double BASE_SUPERIOR_OBJ_D = 4.0;
 const double BASE_INFERIOR_OBJ_D = 2.0;
 const bool EST_OBJ_D = true;
+
 
 //Tipo de problemas
 const int ERROR = 1;
@@ -165,15 +167,12 @@ string LectorJson::validarNombreMapa(string miembro, Value raiz,
 		string valorDefecto, string codigoObjeto) {
 	Value texto = raiz[miembro];
 	if (texto.isNull()) {
-
-		cout << "asdasdasdas123123123123123 " << endl;
 		logger->reportarProblema(
 				"No existe el miembro '" + miembro + "' en objeto: "
 						+ codigoObjeto + ". Cargo texto por defecto.", WARNING);
 		return valorDefecto;
 	}
 	if (!texto.isString()) {
-		cout << "asdasdasdas " << endl;
 		logger->reportarProblema(
 				"Formato de texto invalido. Carga texto por defecto", WARNING);
 		return valorDefecto;
@@ -223,26 +222,33 @@ void LectorJson::obtenerEscenario(Value raiz) {
 		return;
 	} else {
 		int altopx = validarInt("altopx", escenario, ALTOPX_D, "escenario");
+		/*
 		if (altopx < ALTOPX_MIN_D) {
 			logger->reportarProblema(
 					"No se permite altura de ventana menor a 50. Se carga tamano por defecto.",
 					WARNING);
 			altopx = ALTOPX_MIN_D;
 		}
+		*/
 		int anchopx = validarInt("anchopx", escenario, ALTOPX_D, "escenario");
+		/*
 		if (anchopx < ANCHOPX_MIN_D) {
 			logger->reportarProblema(
 					"No se permite ancho de ventana menor a 50. Se carga tamano por defecto.",
 					WARNING);
 			altopx = ANCHOPX_MIN_D;
 		}
+		*/
 		int altoun = validarInt("altoun", escenario, ALTOPX_D, "escenario");
 		int anchoun = validarInt("anchoun", escenario, ALTOPX_D, "escenario");
 		string imagen = validarImagen("imagen_fondo", escenario, IMAGEN_FONDO_D,
 				"escenario");
 		Value personaje = escenario["personaje"];
+
 		int x;
+
 		int y;
+
 		if (personaje.isNull()) {
 			logger->reportarProblema(
 					"No se encontro clave 'personaje'. Carga personaje por defecto.",
@@ -250,9 +256,20 @@ void LectorJson::obtenerEscenario(Value raiz) {
 			x = POSX_D;
 			y = POSY_D;
 		} else {
-			x = validarInt("x", personaje, POSX_D, "personaje");
-			y = validarInt("y", personaje, POSY_D, "personaje");
+			x = validarDouble("x", personaje, POSX_D, "personaje");
+			y = validarDouble("y", personaje, POSY_D, "personaje");
 		}
+		//obtengo las posiciones de los jugadores
+		double	x_1 = validarDouble("x1", personaje, POSX_D, "personaje");
+		double	y_1 = validarDouble("y1", personaje, POSY_D, "personaje");
+		double	x_2 = validarDouble("x2", personaje, POSX_D, "personaje");
+		double	y_2 = validarDouble("y2", personaje, POSY_D, "personaje");
+		double	x_3 = validarDouble("x3", personaje, POSX_D, "personaje");
+		double	y_3 = validarDouble("y3", personaje, POSY_D, "personaje");
+		double	x_4 = validarDouble("x4", personaje, POSX_D, "personaje");
+		double	y_4 = validarDouble("y4", personaje, POSY_D, "personaje");
+		//}
+		double posiciones[] = {x_1,y_1,x_2,y_2,x_3,y_3,x_4,y_4};
 		int cantidadJugadores = validarInt("cantidadJugadores", escenario,
 				CANTIDADJUGADORES_D, "escenario");
 		if (cantidadJugadores <= 0)
@@ -261,8 +278,12 @@ void LectorJson::obtenerEscenario(Value raiz) {
 		string nombreMapa = validarNombreMapa("nombreMapa", escenario,
 				string("Un mapa"), "escenario");
 
+		string siguienteNivel = validarNombreMapa("siguienteNivel",escenario,ESCENARIO_X_DEFECTO,"escenario");
+
+		int minJugadores = validarInt("minJugadores",escenario,MIN_JUG,"escenario");
+
 		this->elEscenario->configurarEscenerio(altopx, anchopx, altoun, anchoun,
-				imagen, x, y, cantidadJugadores, nombreMapa);
+				imagen, x, y, cantidadJugadores, nombreMapa,siguienteNivel,minJugadores,posiciones);
 		this->obtenerObjetos(escenario);
 	}
 
@@ -280,23 +301,29 @@ int LectorJson::validarComunes(Value objeto, double *posx, double *posy,
 		string codigoObjeto) {
 	double x = this->validarDouble("x", objeto, POS_OBJ_INV, codigoObjeto);
 	double y = this->validarDouble("y", objeto, POS_OBJ_INV, codigoObjeto);
+	/*
 	if (x == POS_OBJ_INV || y == POS_OBJ_INV) {
 		return INVALIDO;
 	}
+	*/
 	double rotacion = this->validarDouble("rot", objeto, ROT_OBJ_D,
 			codigoObjeto);
+	/*
 	if (rotacion < 0 || rotacion > 360) {
 		logger->reportarProblema(
 				"La rotacion requerida no se permite. Se establece rotacion por defecto.",
 				WARNING);
 		rotacion = ROT_OBJ_D;
 	}
+	*/
 	double mass = this->validarDouble("masa", objeto, MASA_OBJ_D, codigoObjeto);
+	/*
 	if (mass < 0) {
 		logger->reportarProblema(
 				"La masa es negativa. Se establece masa por defecto.", WARNING);
 		mass = MASA_OBJ_D;
 	}
+	*/
 	string col = this->validarColor("color", objeto, COLOR_OBJ_D, codigoObjeto);
 
 	bool state = this->validarBool("estatico", objeto, EST_OBJ_D, codigoObjeto);
@@ -464,12 +491,14 @@ void LectorJson::armarTrapecio(Value objeto) {
 	}
 	double angulo = this->validarDouble("angulo", objeto, ANGULO_OBJ_D,
 			"trapecio");
+	/*
 	if (angulo < 0 || angulo > 180) {
 		logger->reportarProblema(
 				"El angulo para le trapecio es invalido. Se carga defecto",
 				WARNING);
 		angulo = ANGULO_OBJ_D;
 	}
+	*/
 	double alto = this->validarDouble("alto", objeto, ALTO_OBJ_D, "trapecio");
 	if (alto <= 0) {
 		logger->reportarProblema(

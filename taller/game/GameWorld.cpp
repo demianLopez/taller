@@ -17,6 +17,14 @@ GameWorld::GameWorld(float tX, float tY) {
 	this->mainEntity = NULL;
 }
 
+void GameWorld::setWaitingForPlayers(bool waitingForPlayers){
+	this->waitingForPlayers = waitingForPlayers;
+}
+
+bool GameWorld::isWaitingForPlayers(){
+	return this->waitingForPlayers;
+}
+
 GameEntity * GameWorld::getMainEntity() {
 	return this->mainEntity;
 }
@@ -77,12 +85,12 @@ void GameWorld::update(unsigned int delta) {
 
 /* Agrega pedido de request. */
 void GameWorld::addUpdateRequest(UpdateRequest * update) {
-	//this->updateMutex.lock();
+	this->updateMutex.lock();
 
 	entityMap[update->index]->addUpdateRequest(update,
 			Global::game->getElapsedTime());
 
-	//this->updateMutex.unlock();
+	this->updateMutex.unlock();
 }
 
 /* Devuelve entityList.*/
@@ -100,10 +108,12 @@ void GameWorld::mutexUnlock(){
 
 /* Inicializa los componentes graficos. */
 void GameWorld::generateGraphics() {
+	this->updateMutex.lock();
 	for (auto entity : this->entityMap) {
 		entity.second->setWorld(this);
 		entity.second->initialize();
 	}
+	this->updateMutex.unlock();
 }
 
 VectorXY GameWorld::box2DToSDLSize(VectorXY * box2DCoord) {

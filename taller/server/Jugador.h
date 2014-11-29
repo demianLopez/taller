@@ -6,8 +6,11 @@
 #include "../common/client_handler.h"
 #include <vector>
 #include "../common/CommandCode.h"
+#include <mutex>
 
 using std::vector;
+using std::mutex;
+
 // Jugador principal
 class Jugador: public Personaje {
 private:
@@ -20,16 +23,38 @@ private:
 
 	void evaluateAnimation();
 
+	bool invulnerable;
+	char secondsInvulLeft;
+
+
 	/*
 	 const float VELOCIDAD_MAXIMA_BUFF_X = VELOCIDAD_MAXIMA_DEFAULT_X * 1.5;
 	 */
 
 public:
+	void updateOnClientUserStats();
+	Jugador * clonePlayer();
+
+	bool isInvulnerable();
+
+
+	int lives;
+	int score;
+
+	mutex playerBusy;
 
 	int keyRequestSend;
+	bool isReady;
+
+	int getPlayerLives();
+	int getPlayerScore();
 
 	void setOffline(bool isOffline);
 	bool isOffline();
+
+	void hit();
+	void checkStatus();
+
 
 	Jugador(Client_handler * client, char * name);
 

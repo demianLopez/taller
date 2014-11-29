@@ -48,8 +48,16 @@ private:
 	virtual void exit(Game * game);
 	void enter();
 
+	void drawMainGUI(Graphics * g);
+	void drawWaitingPlayersGUI(Graphics * g);
+
 	Image * worldImage;
 	Image * backgroundImage;
+	Image * topGuiImage;
+	SpriteSheet * lives;
+	Image * liveE;
+	Image * liveD;
+	Image * waitingPlayer;
 
 	GameWorld * gameWorld;
 
@@ -68,7 +76,9 @@ private:
 	int globalY;
 
 	std::vector<KeyCode> keyCodeData;
+
 	mutex levelStateMutex;
+	//mutex updateMutex;
 
 	char * serverMessage;
 	int messageTime;

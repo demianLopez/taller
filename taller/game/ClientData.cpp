@@ -32,24 +32,32 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 	}
 
 	if (cCode == UPDATE_ENTITY) {
+
 		UpdateRequest * uR = new UpdateRequest();
 		uR->index = m->getChar();
 		uR->posX = m->getFloat();
 		uR->posY = m->getFloat();
 		uR->rotation = m->getFloat();
-		Global::gameWorld->addUpdateRequest(uR);
+		if(Global::game->isOnState(1)){
+			Global::gameWorld->addUpdateRequest(uR);
+		}
 		return cCode;
 	}
 
 	if (cCode == UPDATE_PLAYER_ENTITY) {
+
 		UpdateRequest * uR = new UpdateRequest();
 		uR->index = m->getChar();
 		uR->posX = m->getFloat();
 		uR->posY = m->getFloat();
 		uR->animation = m->getAnimationCode();
 		uR->offline = m->getChar();
-		Global::gameWorld->addUpdateRequest(uR);
+		uR->invulnerable = m->getChar();
+		if(Global::game->isOnState(1)){
+			Global::gameWorld->addUpdateRequest(uR);
+		}
 		return cCode;
+
 	}
 
 	if (cCode == REQUEST_KEY_DATA) {
@@ -88,6 +96,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		float tX = m->getFloat();
 		float tY = m->getFloat();
 		Global::gameWorld = new GameWorld(tX, tY);
+		Global::gameWorld->setWaitingForPlayers(m->getChar());
 		return cCode;
 	}
 
@@ -134,13 +143,29 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 			pEnt->addVertex(tX, tY);
 		}
 
+		pEnt->setWorld(Global::gameWorld);
 		Global::gameWorld->addEntity(pEnt);
 		return cCode;
 	}
 
 	if (cCode == INITIALIZE_GRAPHICS) {
 		Global::levelState->setWorld(Global::gameWorld);
+		Global::playerLife = m->getChar();
+		Global::playerScore = m->getChar();
 		Global::game->enterState(1);
+		return cCode;
+	}
+
+	if (cCode == UPDATE_PLAYER_STAT) {
+		Global::levelState->setWorld(Global::gameWorld);
+		Global::playerLife = m->getChar();
+		Global::playerScore = m->getChar();
+		Global::game->enterState(1);
+		return cCode;
+	}
+
+	if(cCode == START_GAME){
+		Global::gameWorld->setWaitingForPlayers(false);
 		return cCode;
 	}
 
@@ -148,6 +173,28 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		char entityIndex = m->getChar();
 		Global::gameWorld->setMainEntity(entityIndex);
 		Global::levelState->restartCameraPosition();
+		return cCode;
+	}
+
+	if(cCode == END_LEVEL){
+		char playerCount = m->getChar();
+
+		string * playerNames = new string[playerCount];
+		int * playerScores = new int[playerCount];
+		bool * playerConected = new bool[playerCount];
+
+		for(int i = 0; i < playerCount; i++){
+			char * name;
+			m->getCharArray(&name);
+			playerNames[i] = string(name);
+			playerScores[i] = m->getChar();
+			playerConected[i] = m->getChar();
+			delete[] name;
+		}
+
+		bool winGame  = m->getChar();
+		Global::changeState->setLevelData(playerNames, playerScores, winGame, playerCount, playerConected);
+		Global::game->enterState(2);
 		return cCode;
 	}
 

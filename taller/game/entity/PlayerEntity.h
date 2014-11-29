@@ -8,6 +8,7 @@
 #ifndef PLAYERENTITY_H_
 #define PLAYERENTITY_H_
 
+#include "../../common/CommandCode.h"
 #include "MovementEntity.h"
 
 
@@ -26,6 +27,10 @@ public:
 private:
 	AnimationCode animation;
 	bool offline;
+
+	bool invulnerable;
+
+	unsigned int blinkingTime;
 
 	char * pName;
 	int lName;

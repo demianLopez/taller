@@ -1,6 +1,8 @@
 #include "Jugador.h"
 #include <math.h>
 #include <iostream>
+#include "../common/Message.h"
+#include "../common/CommandCode.h"
 
 // Inicializa Jugador.
 Jugador::Jugador(Client_handler * client, char * name) {
@@ -9,6 +11,27 @@ Jugador::Jugador(Client_handler * client, char * name) {
 	this->body = NULL;
 	this->tipoDeObjeto = 2; // Para los contactos. Los jugadores tienen valor
 	this->keyRequestSend = 0;
+	this->lives = 5;
+	this->score = 0;
+	this->isReady = false;
+}
+
+void Jugador::updateOnClientUserStats(){
+	Message m;
+	m.addCommandCode(UPDATE_PLAYER_STAT);
+	m.addChar(this->lives);
+	m.addChar(this->score);
+	m.addEndChar();
+
+	this->client->send_message(&m);
+}
+
+int Jugador::getPlayerLives(){
+	return this->lives;
+}
+
+int Jugador::getPlayerScore(){
+	return this->score;
 }
 
 char * Jugador::getName() {
@@ -61,8 +84,41 @@ void Jugador::apllyCodes() {
 	keyCode.clear();
 }
 
+Jugador *  Jugador::clonePlayer() {
+	Jugador * newPlayer = new Jugador(this->client, this->name);
+	newPlayer->setOffline(this->isOffline());
+	return newPlayer;
+}
+
+bool Jugador::isInvulnerable(){
+	return this->invulnerable;
+}
+
+void Jugador::checkStatus() {
+	if(invulnerable){
+		//b2Vec2 pos(10, 10);
+		//this->body->SetTransform(pos, 0);
+		this->secondsInvulLeft--;
+		if(secondsInvulLeft <= 0){
+			this->invulnerable = false;
+		}
+	}
+}
+
 Client_handler * Jugador::getClient() {
 	return this->client;
+}
+
+void Jugador::hit(){
+	if(invulnerable || offline){
+		return;
+	}
+
+	this->invulnerable = true;
+	this->secondsInvulLeft = 3;
+
+	this->lives--;
+	this->updateOnClientUserStats();
 }
 
 void Jugador::evaluateAnimation() {

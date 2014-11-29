@@ -45,7 +45,6 @@ private:
 	void renderGUI(Graphics * g, Game * game);
 
 	Image * backgroundImage;
-
 	ParticleEmiter * particleEmiter;
 
 	//GUI

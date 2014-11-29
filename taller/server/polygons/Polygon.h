@@ -30,6 +30,8 @@ struct b2FixtureDef;
 
 class World;
 
+using std::vector;
+
 class Polygon {
 
 public:

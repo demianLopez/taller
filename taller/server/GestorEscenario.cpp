@@ -23,7 +23,8 @@ escenario* GestorEscenario::getEscenario() {
 
 void GestorEscenario::configurarEscenerio(int altopx, int anchopx, int altoun,
 		int anchoun, string imagen_fondo, int personajeX, int personajeY,
-		int cantidadJugadores, string nombreMapa) {
+		int cantidadJugadores, string nombreMapa, string sigNivel, int minJug
+		, double * posiciones) {
 	this->elEscenario.altopx = altopx;
 	this->elEscenario.anchopx = anchopx;
 	this->elEscenario.altoun = altoun;
@@ -33,6 +34,9 @@ void GestorEscenario::configurarEscenerio(int altopx, int anchopx, int altoun,
 	this->elEscenario.personajeY = personajeY;
 	this->elEscenario.cantidadJugadores = cantidadJugadores;
 	this->elEscenario.nombreMapa = nombreMapa;
+	this->elEscenario.sigNivel = sigNivel;
+	this->elEscenario.minJug = minJug;
+	this->elEscenario.pos = posiciones;
 }
 
 escenario GestorEscenario::datos() {
