@@ -74,11 +74,12 @@ public:
 
 	bool isWaitingForPlayers();
 
-	static void nextLevel(World * currentLevel);
+
 
 	void sendWorldInfo(Client_handler * client);
 	void checkPlayerCount();
 
+	void switchLevel();
 private:
 	void updateTiming(Jugador * j);
 	void updatePolygon(Polygon * p);
@@ -90,6 +91,7 @@ private:
 
 	bool wordLoop;
 	static void worldLoop(World * world);
+	static void nextLevel(World * currentLevel);
 
 	vector<Jugador*> playerList;
 

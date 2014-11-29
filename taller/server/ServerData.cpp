@@ -164,6 +164,14 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 		return cCode;
 	}
 
+	if (cCode == PLAYER_READY) {
+		Jugador * p = Data::world->getPlayer(client->userIndex);
+		p->playerBusy.lock();
+		p->isReady = true;
+		p->playerBusy.unlock();
+		return cCode;
+	}
+
 	std::cout << "WARNING: LOOSING cCode: " << (int) cCode << endl;
 	return cCode;
 }

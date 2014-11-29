@@ -13,6 +13,7 @@ MainMenu * Global::mainMenu;
 SnowBross * Global::game;
 GameWorld * Global::gameWorld;
 Resources * Global::gameResources;
+ChangeState* Global::changeState;
 int Global::serverUpdateTiming;
 
 int Global::playerLife;

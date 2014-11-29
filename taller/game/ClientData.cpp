@@ -176,6 +176,23 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 	}
 
 	if(cCode == END_LEVEL){
+		char playerCount = m->getChar();
+
+		string * playerNames = new string[playerCount];
+		int * playerScores = new int[playerCount];
+		bool * playerConected = new bool[playerCount];
+
+		for(int i = 0; i < playerCount; i++){
+			char * name;
+			m->getCharArray(&name);
+			playerNames[i] = string(name);
+			playerScores[i] = m->getChar();
+			playerConected[i] = m->getChar();
+			delete[] name;
+		}
+
+		bool winGame  = m->getChar();
+		Global::changeState->setLevelData(playerNames, playerScores, winGame, playerCount, playerConected);
 		Global::game->enterState(2);
 		return cCode;
 	}

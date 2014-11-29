@@ -13,6 +13,7 @@ Jugador::Jugador(Client_handler * client, char * name) {
 	this->keyRequestSend = 0;
 	this->lives = 5;
 	this->score = 0;
+	this->isReady = false;
 }
 
 void Jugador::updateOnClientUserStats(){

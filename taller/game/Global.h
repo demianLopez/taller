@@ -15,6 +15,7 @@
 #include "../common/CommandCode.h"
 #include "SnowBross.h"
 #include "Resources.h"
+#include "ChangeState.h"
 
 class Global {
 public:
@@ -23,6 +24,7 @@ public:
 	static Client_handler * client;
 	static LevelState * levelState;
 	static MainMenu * mainMenu;
+	static ChangeState * changeState;
 	static SnowBross * game;
 	static GameWorld * gameWorld;
 	static Resources * gameResources;

@@ -35,6 +35,7 @@ const CommandCode IM_ALIVE = 18;
 const CommandCode UPDATE_PLAYER_STAT = 19;
 const CommandCode START_GAME = 20;
 const CommandCode END_LEVEL = 21;
+const CommandCode PLAYER_READY = 22;
 
 const KeyCode MOVE_LEFT_DOWN = 0;
 const KeyCode MOVE_RIGHT_DOWN = 1;

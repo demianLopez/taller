@@ -6,8 +6,11 @@
 #include "../common/client_handler.h"
 #include <vector>
 #include "../common/CommandCode.h"
+#include <mutex>
 
 using std::vector;
+using std::mutex;
+
 // Jugador principal
 class Jugador: public Personaje {
 private:
@@ -34,7 +37,10 @@ public:
 	int lives;
 	int score;
 
+	mutex playerBusy;
+
 	int keyRequestSend;
+	bool isReady;
 
 	int getPlayerLives();
 	int getPlayerScore();
