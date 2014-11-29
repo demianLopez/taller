@@ -28,5 +28,6 @@ Dmg_projectile::~Dmg_projectile() {
 }
 
 void Dmg_projectile::collide(Character& character) {
+	Projectile::collide(character);
 	character.reduce_life();
 }

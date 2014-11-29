@@ -23,6 +23,10 @@ Projectile::Projectile() {
 
 }
 
+void Projectile::collide(Character& character) {
+	this->_is_alive = false;
+}
+
 Projectile::~Projectile() {
 	// TODO Auto-generated destructor stub
 }

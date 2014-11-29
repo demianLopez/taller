@@ -20,7 +20,7 @@
 #define LEVEL_OBJECT_H_
 
 class Level_object {
-private:
+protected:
 	bool _is_alive;
 
 public:

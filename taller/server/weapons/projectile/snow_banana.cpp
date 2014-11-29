@@ -38,6 +38,11 @@ Snow_banana::~Snow_banana() {
 }
 
 void Snow_banana::collide(Character& character) {
+	if (!this->_is_alive)
+		return;
+
+	Projectile::collide(character);
+
 	character.add_bonus(new Snow_counter());
 
 	list<Bonus*> bonus = character.get_asigned_bonus();
@@ -48,11 +53,11 @@ void Snow_banana::collide(Character& character) {
 	std::list<Bonus*>::iterator it = bonus.begin();
 
 	while (i < bonus.size()) {
-	    if ((*it)->get_type() == "SNOW_COUNTER") {
+		if ((*it)->get_type() == "SNOW_COUNTER") {
 			total_counters++;
 		}
-	    std::advance(it,1);
-	    i++;
+		std::advance(it, 1);
+		i++;
 	}
 
 	if (total_counters > 4) {

@@ -27,7 +27,7 @@ class Character;
 class Projectile: public Moving_object {
 public:
 	Projectile();
-	virtual void collide(Character& character)=0;
+	virtual void collide(Character& character);
 	virtual ~Projectile();
 };
 
