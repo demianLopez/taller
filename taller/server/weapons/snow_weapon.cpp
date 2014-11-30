@@ -21,16 +21,13 @@
 
 #include "projectile/snow_banana.h"
 
-Snow_weapon::Snow_weapon() {
-	// TODO Auto-generated constructor stub
-
-}
-
 Projectile* Snow_weapon::get_projectile() {
 	return new Snow_banana();
 }
 
-Snow_weapon::~Snow_weapon() {
-	// TODO Auto-generated destructor stub
+Snow_weapon::Snow_weapon(World* world) :
+		Standar_weapon(world) {
 }
 
+Snow_weapon::~Snow_weapon() {
+}

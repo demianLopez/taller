@@ -22,16 +22,18 @@
 
 #include <stddef.h>
 #include "projectile/projectile.h"
+#include "../World.h"
 
 class Weapon {
 protected:
 	size_t remaining_bullets;
+	World* world;
 
 protected:
 	virtual Projectile* get_projectile()=0;
 
 public:
-	Weapon();
+	Weapon(World* world);
 	virtual Projectile* fire()=0;
 	virtual bool is_empty();
 	virtual ~Weapon();

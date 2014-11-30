@@ -26,7 +26,7 @@ protected:
 	virtual Projectile* get_projectile();
 
 public:
-	Fire_launcher();
+	Fire_launcher(World* world);
 	virtual ~Fire_launcher();
 };
 

@@ -15,7 +15,7 @@
 #include "LectorJson.h"
 #include "GestorEscenario.h"
 
-World::World(b2Vec2 * gravity) {
+World::World(b2Vec2* gravity) {
 	this->gravity = gravity;
 	this->contactListener = new ContactListener();
 	this->Box2DWorldSize = new b2Vec2(0, 0);

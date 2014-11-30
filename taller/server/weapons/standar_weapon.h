@@ -26,7 +26,7 @@ protected:
 	virtual Projectile* get_projectile();
 
 public:
-	Standar_weapon();
+	Standar_weapon(World* world);
 	virtual Projectile* fire();
 	virtual ~Standar_weapon();
 };

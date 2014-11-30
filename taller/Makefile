@@ -1,22 +1,19 @@
-CPPFLAGS= -std=c++11 -g -Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage $(FLDR_ADD)
-EXEC=enemies_test
-CC= gcc
+FLDR_ADD=#-Iserver/json
+
+CFLAGS=-Wall -Wextra -g -pedantic -fprofile-arcs -ftest-coverage $(FLDR_ADD)
+EXEC=TheGame
+CC= gcc -std=c++11 -g
 
 SRC=$(wildcard *.cpp)
-SRC+= $(wildcard server/bonus_items/*.cpp)
-SRC+= $(wildcard server/bonus_items/bonus/*.cpp)
-SRC+= $(wildcard server/level_objects/*.cpp)
-SRC+= $(wildcard server/level_objects/collision_strategies/*.cpp)
-SRC+= $(wildcard server/moving_objects/*.cpp)
-SRC+= $(wildcard server/moving_objects/move_patterns/*.cpp)
-SRC+= $(wildcard server/weapons/*.cpp)
-SRC+= $(wildcard server/weapons/projectile/*.cpp)
-SRC+= $(wildcard server/bonus_items/*.cpp)
-
-
+SRC+= $(wildcard */*.cpp)
+SRC+= $(wildcard */*/*.cpp)
+SRC+= $(wildcard */*/*/*.cpp)
+SRC+= $(wildcard */*/*/*/*.cpp)
+SRC+= $(wildcard */*/*/*/*/*.cpp)
+SRC+= $(wildcard */*/*/*/*/*/*.cpp)
 
 OBJS=$(SRC:.cpp=.o)
-LDFLAGS=-lm -lstdc++ -lgcov -coverage -lpthread -pthread
+LDFLAGS=-lm -lstdc++ -lgcov -coverage -lpthread -pthread  -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image
 
 ifneq (,$(shell grep -lm 1 \'^\s*\#.*include.*\<math\.h\>\' *.h *.c ))
 	LDFLAGS+=-lm
@@ -24,16 +21,18 @@ endif
 
 all: clean $(EXEC)
 
-%.o: %.c
-	$(CC) $(CPPFLAGS) -c $<
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $<
 
 $(EXEC): $(OBJS)
-	$(CC) $(CPPFLAGS) $(LDFLAGS) $(OBJS) -o $(EXEC)
+	$(CC) $(CFLAGS) $(LDFLAGS) *.o -o $(EXEC)
 
-clean:
+clean:	
 	rm -f *.o
 	rm -f */*.o
-	rm -f */*/*.o	
+	rm -f */*/*.o
 	rm -f */*/*/*.o
-	rm -f */*/*/*/*.o	
-	rm -f $(RM_FILES) $(EXEC) *.gcno *.gcda  *~
+	rm -f */*/*/*/*.o
+	rm -f */*/*/*/*/*.o
+	rm -f */*/*/*/*/*/*.o
+	rm -f $(RM_FILES) $(EXEC) *.gcno *.gcda  *~ *.log

@@ -26,7 +26,7 @@ protected:
 	virtual Projectile* get_projectile();
 
 public:
-	Snow_weapon();
+	Snow_weapon(World* world);
 	virtual ~Snow_weapon();
 };
 

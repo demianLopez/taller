@@ -5,9 +5,24 @@
  *      Author: demian
  */
 
-#include <ChangeState.h>
-#include "Global.h"
+#include "ChangeState.h"
 
+#include <SDL2/SDL_events.h>
+#include <sstream>
+
+#include "../common/client_handler.h"
+#include "../common/CommandCode.h"
+#include "../common/Message.h"
+#include "engine/Game.h"
+#include "engine/Graphics.h"
+#include "engine/GUI/Button.h"
+#include "engine/Image.h"
+#include "engine/ParticleEmiter.h"
+#include "GameWorld.h"
+#include "Global.h"
+#include "Resources.h"
+
+using std::string;
 
 ChangeState::ChangeState() {
 	// TODO Auto-generated constructor stub

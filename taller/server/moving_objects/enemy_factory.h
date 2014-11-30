@@ -24,9 +24,9 @@
 
 class Enemy_factory {
 private:
-	static Enemy* get_enemy();
+	static Enemy* get_enemy(World* world);
 public:
-	static Enemy* get_standar_enemy();
+	static Enemy* get_standar_enemy(World* world);
 };
 
 #endif /* ENEMY_FACTORY_H_ */
