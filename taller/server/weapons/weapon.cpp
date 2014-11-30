@@ -28,3 +28,10 @@ Weapon::~Weapon() {
 Weapon::Weapon(World* world) {
 	this->world = world;
 }
+
+Projectile* Weapon::fire() {
+	Projectile* p = (*this).get_projectile(); //FIXME
+	(*this).launch(p);
+	world->add_projectile(p);
+	return p;
+}

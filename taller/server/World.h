@@ -8,14 +8,12 @@
 #ifndef WORLD_H_
 #define WORLD_H_
 
-#include <Box2D/Box2D.h>
-#include "Jugador.h"
 #include <vector>
+
+#include "Jugador.h"
 #include "polygons/Polygon.h"
-#include "ContactListener.h"
-#include <thread>
-#include <string.h>
-#include <mutex>
+
+class Projectile;
 
 using std::string;
 using std::thread;
@@ -58,6 +56,8 @@ public:
 	void addPlayer(Jugador* jugador, bool reconecting);
 	vector<Jugador*> getPlayerList();
 	Jugador* getPlayer(int userIndex);
+
+	void add_projectile(Projectile* p);
 
 	void releaseEntityIndex(int index);
 

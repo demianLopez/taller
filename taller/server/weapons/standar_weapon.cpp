@@ -30,7 +30,6 @@ Projectile* Standar_weapon::get_projectile() {
 Standar_weapon::~Standar_weapon() {
 }
 
-Projectile* Standar_weapon::fire() {
-	Projectile* p = (*this).get_projectile(); //FIXME
-	return p;
+void Standar_weapon::launch(Projectile* p) {
+	p->apply_force(10,(this->direction == LEFT) ? -10:10);
 }

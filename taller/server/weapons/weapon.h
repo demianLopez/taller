@@ -20,6 +20,9 @@
 #ifndef WEAPON_H_
 #define WEAPON_H_
 
+#define LEFT 'l'
+#define RIGHT 'r'
+
 #include <stddef.h>
 #include "projectile/projectile.h"
 #include "../World.h"
@@ -29,12 +32,16 @@ protected:
 	size_t remaining_bullets;
 	World* world;
 
+	char direction = LEFT;
+
+
 protected:
 	virtual Projectile* get_projectile()=0;
+	virtual void launch(Projectile* p)=0;
 
 public:
 	Weapon(World* world);
-	virtual Projectile* fire()=0;
+	virtual Projectile* fire();
 	virtual bool is_empty();
 	virtual ~Weapon();
 };

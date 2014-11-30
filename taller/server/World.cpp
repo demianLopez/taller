@@ -6,14 +6,24 @@
  */
 
 #include "World.h"
-#include "Personaje.h"
-#include "polygons/PolygonFactory.h"
-#include "polygons/Polygon.h"
-#include "Data.h"
+
+#include <Box2D/Collision/Shapes/b2PolygonShape.h>
+#include <Box2D/Common/b2Math.h>
+#include <Box2D/Common/b2Settings.h>
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2Fixture.h>
+#include <Box2D/Dynamics/b2World.h>
+#include <cstring>
+#include <string>
+
+#include "../common/client_handler.h"
+#include "../common/CommandCode.h"
+#include "../common/Message.h"
 #include "ContactContainer.h"
-#include "ServerData.h"
-#include "LectorJson.h"
+#include "ContactListener.h"
+#include "Data.h"
 #include "GestorEscenario.h"
+#include "LectorJson.h"
 
 World::World(b2Vec2* gravity) {
 	this->gravity = gravity;
@@ -511,3 +521,5 @@ void World::sendToWorldPlayers(Message * m) {
 	}
 }
 
+void World::add_projectile(Projectile* p) {
+}

@@ -25,6 +25,9 @@ void Moving_object::set_movement(Move_pattern* pattern) {
 	move_pattern = pattern;
 }
 
+void Moving_object::apply_force(int vertical, int horizontal) {
+}
+
 Moving_object::~Moving_object() {
 	delete move_pattern;
 }
