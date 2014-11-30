@@ -31,16 +31,30 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	 if(second->type == ContactContainer::SENSORDELPIE) cout << "Second es sensor" << endl;
 	 cout << "--" << endl;
 	 */
-	if (first->type == ContactContainer::JUGADOR
+	if (first->type == ContactContainer::SENSORDELPIE
 			&& second->type == ContactContainer::POLYGON) {
 		aPlayer = (Jugador*) first->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts++;
 		return;
 	}
 	if (first->type == ContactContainer::POLYGON
-			&& second->type == ContactContainer::JUGADOR) {
+			&& second->type == ContactContainer::SENSORDELPIE) {
 		aPlayer = (Jugador*) second->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts++;
+		return;
+	}
+
+	if (first->type == ContactContainer::ENEMY
+			&& second->type == ContactContainer::JUGADOR) {
+		aPlayer = (Jugador*) second->containedThing;
+		aPlayer->hit();
+		return;
+	}
+	if (first->type == ContactContainer::JUGADOR
+			&& second->type == ContactContainer::ENEMY) {
+		aPlayer = (Jugador*) first->containedThing;
+		aPlayer->hit();
+		return;
 	}
 
 }
@@ -55,14 +69,14 @@ void ContactListener::EndContact(b2Contact* contact) {
 		return;
 
 	Jugador *aPlayer;
-	if (first->type == ContactContainer::JUGADOR
+	if (first->type == ContactContainer::SENSORDELPIE
 			&& second->type == ContactContainer::POLYGON) {
 		aPlayer = (Jugador*) first->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts--;
 		return;
 	}
 	if (first->type == ContactContainer::POLYGON
-			&& second->type == ContactContainer::JUGADOR) {
+			&& second->type == ContactContainer::SENSORDELPIE) {
 		aPlayer = (Jugador*) second->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts--;
 	}

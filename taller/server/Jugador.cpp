@@ -92,7 +92,7 @@ Jugador *  Jugador::clonePlayer() {
 }
 
 void Jugador::deadEvent(){
-	this->body->SetActive(false);
+	//this->body->SetActive(false); FIXME: rompe las cosas
 
 	Message m;
 	m.addCommandCode(SHOW_MESSAGE);

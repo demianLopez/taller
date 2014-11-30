@@ -138,7 +138,7 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	b2Fixture *bodyFixture = body->CreateFixture(&fixtureDef);
 
 	bodyFixture->SetUserData(
-			new ContactContainer(ContactContainer::SENSORDELPIE, enemy));
+			new ContactContainer(ContactContainer::ENEMY, enemy));
 
 	dynamicBox.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, -longY), 0);
 	fixtureDef.density = 0;
@@ -146,7 +146,7 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	fixtureDef.isSensor = true;
 	b2Fixture * footSensor = body->CreateFixture(&fixtureDef);
 	footSensor->SetUserData(
-			new ContactContainer(ContactContainer::JUGADOR, enemy));
+			new ContactContainer(ContactContainer::ENEMY, enemy));
 	ContactListener * footListener = new ContactListener();
 
 	enemy->setListenerTouchingGround(footListener);
@@ -191,7 +191,7 @@ void World::initializePlayerBody(Jugador * player) {
 
 	b2Fixture *bodyFixture = body->CreateFixture(&fixtureDef);
 	bodyFixture->SetUserData(
-			new ContactContainer(ContactContainer::SENSORDELPIE, player));
+			new ContactContainer(ContactContainer::JUGADOR, player));
 
 	dynamicBox.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, -longY), 0);
 	fixtureDef.density = 0;
@@ -199,7 +199,7 @@ void World::initializePlayerBody(Jugador * player) {
 	fixtureDef.isSensor = true;
 	b2Fixture * footSensor = body->CreateFixture(&fixtureDef);
 	footSensor->SetUserData(
-			new ContactContainer(ContactContainer::JUGADOR, player));
+			new ContactContainer(ContactContainer::SENSORDELPIE, player));
 	ContactListener * footListener = new ContactListener();
 
 	player->setListenerTouchingGround(footListener);
