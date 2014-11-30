@@ -464,19 +464,19 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 }
 
 void World::nextLevel(){
-	new thread(World::changeLevel, this, this->nextLevelName, true);
+	new thread(World::changeLevel, this, (char *)this->nextLevelName.c_str(), true);
 }
 
 void World::restartLevel(){
-	new thread(World::changeLevel, this, this->currentLevelName, false);
+	new thread(World::changeLevel, this, (char *)this->currentLevelName.c_str(), false);
 }
 
 void World::setCurrentLevelName(char* currentLevelName) {
-	this->currentLevelName = currentLevelName;
+	this->currentLevelName = string(currentLevelName);
 }
 
 void World::setNextLevelName(char* nextLevelName) {
-	this->nextLevelName = nextLevelName;
+	this->nextLevelName = string(nextLevelName);
 }
 
 void World::worldLoop(World * world) {
@@ -656,11 +656,11 @@ void World::verifyLevelEndConditions(){
 		someoneEnemyAlive = someoneEnemyAlive || !e->isDead();
 	}
 
-	if(!someoneEnemyAlive){
+	/*if(!someoneEnemyAlive){
 		this->isRestarting = true;
 		this->nextLevel();
 		return;
-	}
+	}*/
 
 
 	bool someoneAlive = false;

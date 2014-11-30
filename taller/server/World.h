@@ -134,8 +134,8 @@ private:
 
 	mutex worldMutex;
 
-	char * currentLevelName;
-	char * nextLevelName;
+	string currentLevelName;
+	string nextLevelName;
 };
 
 #endif /* WORLD_H_ */

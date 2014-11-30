@@ -124,6 +124,8 @@ World * GestorEscenario::obtenerMundo() {
 			elEscenario.cantidadJugadores);
 	b2Vec2 SDLCharPos = b2Vec2(elEscenario.personajeX, elEscenario.personajeY);
 
+	world->setNextLevelName((char *)elEscenario.sigNivel.c_str());
+
 	for (auto objeto : objetos) {
 
 		string tipo = objeto.tipo;
