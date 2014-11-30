@@ -105,7 +105,7 @@ private:
 	void initializeEnemyBody(Enemigo * enemy);
 
 	bool wordLoop;
-
+	bool isRestarting;
 	static void worldLoop(World * world);
 	static void changeLevel(World * currentLevel, char * nextLevel, bool wonLevel);
 

@@ -33,6 +33,7 @@ World::World(b2Vec2* gravity) {
 	this->Box2DWorldSize = NULL;
 	this->lastEntityIndex = 0;
 	this->waitingPlayers = true;
+	this->isRestarting = false;
 }
 
 bool World::isWaitingForPlayers(){
@@ -392,11 +393,9 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 	currentLevel->waitWorldThread();
 	//Lo unico que se transfiere de nivel a nivel es la lista de jugadores!
 	vector<Jugador *> pList = currentLevel->getPlayerList();
-
 	Message m;
 	m.addCommandCode(END_LEVEL);
 	m.addChar(pList.size());
-
 	for(auto * p : pList){
 		string n(p->getName());
 		m.addCharArray(n.c_str(), n.size());
@@ -409,7 +408,6 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 	currentLevel->sendToWorldPlayers(&m);
 
 	//Esperamos que todos se pongan en READY!
-
 	bool notReady = true;
 
 	while(notReady){
@@ -422,14 +420,12 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 
 		notReady = !someoneNotReady;
 	}
-
 	delete currentLevel;
 
 	LectorJson * lj = new LectorJson();
 	lj->cargarEscenario(nextLevel);
 	GestorEscenario * ge = lj->obtenerGestorEscenario();
 	World * w = ge->obtenerMundo();
-
 	w->setMinPlayers(1);
 
 	Data::world = w;
@@ -461,7 +457,6 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 
 		delete player;
 	}
-
 	pList.clear();
 
 	w->checkPlayerCount();
@@ -653,11 +648,16 @@ void World::add_projectile(Projectile* p) {
 void World::verifyLevelEndConditions(){
 
 	bool someoneEnemyAlive = false;
+	if (this->isRestarting){
+		return;
+	}
+
 	for(auto * e : this->enemyList){
 		someoneEnemyAlive = someoneEnemyAlive || !e->isDead();
 	}
 
 	if(!someoneEnemyAlive){
+		this->isRestarting = true;
 		this->nextLevel();
 		return;
 	}
@@ -671,6 +671,7 @@ void World::verifyLevelEndConditions(){
 	}
 
 	if(!someoneAlive && someoneConnected){
+		this->isRestarting = true;
 		this->restartLevel();
 	}
 }
