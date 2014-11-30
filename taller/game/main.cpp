@@ -117,7 +117,7 @@ int mainCliente(const char * ip) {
 	return 0;
 }
 
-int madin(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
 	if (argc > 1) {
 		return mainCliente(argv[1]);
 	}
