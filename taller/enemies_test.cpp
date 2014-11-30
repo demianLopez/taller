@@ -81,6 +81,7 @@ void test_b() {
 	delete shiningFlareWingman;
 }
 
+/**/
 int main() {
 	test_a();
 	test_b();
