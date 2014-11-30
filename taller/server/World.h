@@ -16,6 +16,7 @@
 #include <thread>
 #include <string.h>
 #include <mutex>
+#include "Enemigo.h"
 
 using std::string;
 using std::thread;
@@ -56,7 +57,11 @@ public:
 	void waitWorldThread();
 
 	void addPlayer(Jugador * jugador, bool reconecting);
+	void addEnemy(Enemigo * enemy);
+
 	vector<Jugador*> getPlayerList();
+	vector<Enemigo*> getEnemyList();
+
 	Jugador * getPlayer(int userIndex);
 
 	void releaseEntityIndex(int index);
@@ -68,6 +73,7 @@ public:
 	void sendToWorldPlayers(Message * m);
 
 	void instantiatePlayer(Jugador * j, Client_handler * client);
+	void instantiateEnemy(Enemigo * enemy, Client_handler * client);
 
 	void requestKeyData(Jugador * j);
 	void setMinPlayers(int minPlayers);
@@ -85,16 +91,20 @@ private:
 	void updateTiming(Jugador * j);
 	void updatePolygon(Polygon * p);
 	void updatePeople(Jugador * p);
+	void updateEnemy(Enemigo * e);
 
 	void sendUpdates();
 
 	void initializePlayerBody(Jugador * player);
+
+	void initializeEnemyBody(Enemigo * enemy);
 
 	bool wordLoop;
 	static void worldLoop(World * world);
 	static void nextLevel(World * currentLevel);
 
 	vector<Jugador*> playerList;
+	vector<Enemigo*> enemyList;
 
 	ContactListener *contactListener;
 

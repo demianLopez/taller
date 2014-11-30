@@ -36,6 +36,8 @@ const CommandCode UPDATE_PLAYER_STAT = 19;
 const CommandCode START_GAME = 20;
 const CommandCode END_LEVEL = 21;
 const CommandCode PLAYER_READY = 22;
+const CommandCode ADD_ENEMY_DATA = 23;
+const CommandCode UPDATE_ENEMY_ENTITY = 24;
 
 const KeyCode MOVE_LEFT_DOWN = 0;
 const KeyCode MOVE_RIGHT_DOWN = 1;

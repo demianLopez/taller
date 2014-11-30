@@ -14,6 +14,10 @@
 #include "../server/LectorJson.h"
 #include "../server/GestorEscenario.h"
 #include "../server/Data.h"
+
+#include "Enemigo.h"
+#include "moving_objects/move_patterns/standar_movement_strategy.h"
+
 using namespace std;
 
 int const SCREEN_WIDTH = 800;
@@ -43,6 +47,8 @@ int mainServer() {
 	Data::server = sv;
 	Data::world = w;
 
+	w->addEnemy(new Enemigo(new Standar_movement_strategy()));
+
 	while (commandLoop) {
 		cin >> command;
 
@@ -65,8 +71,6 @@ int mainServer() {
 		if (command.compare("forceLevel") == 0) {
 			Data::world->switchLevel();
 		}
-
-		Data::world->getPlayerList()[0]->hit();
 	}
 
 	std::cout << "Cerrando Server" << endl;

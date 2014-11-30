@@ -20,6 +20,8 @@ public:
 	void update(unsigned int delta);
 	void addUpdateRequest(UpdateRequest * u, unsigned int currentTime);
 
+	void setAnimation(AnimationCode animation);
+
 	virtual void applyUpdate(UpdateRequest * u) = 0;
 
 	virtual ~MovementEntity();
@@ -36,6 +38,8 @@ private:
 	unsigned int lastUpdateTime;
 	bool firstUpdate;
 	int renderTimeCount;
+protected:
+	AnimationCode animation;
 };
 
 #endif /* MOVEMENTENTITY_H_ */
