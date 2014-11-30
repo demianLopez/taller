@@ -530,6 +530,8 @@ void World::worldLoop(World * world) {
 		}
 		updateCount++;
 
+		world->verifyLevelEndConditions();
+
 		/*
 		TODO: Esto era para verificar que nadie se desconecte con calbe, pero produce un pequeño delay
 		//si en esta entrega no evaluan eso, lo dejamos asi!
@@ -647,3 +649,29 @@ void World::sendToWorldPlayers(Message * m) {
 
 void World::add_projectile(Projectile* p) {
 }
+
+void World::verifyLevelEndConditions(){
+
+	bool someoneEnemyAlive = false;
+	for(auto * e : this->enemyList){
+		someoneEnemyAlive = someoneEnemyAlive || !e->isDead();
+	}
+
+	if(!someoneEnemyAlive){
+		this->nextLevel();
+		return;
+	}
+
+
+	bool someoneAlive = false;
+	bool someoneConnected = false;
+	for(auto * p : this->playerList){
+		someoneAlive = someoneAlive || (!p->isDead() && !p->isOffline());
+		someoneConnected = someoneConnected || !p->isOffline();
+	}
+
+	if(!someoneAlive && someoneConnected){
+		this->restartLevel();
+	}
+}
+

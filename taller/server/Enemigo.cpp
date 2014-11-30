@@ -17,6 +17,10 @@ Enemigo::Enemigo(Move_pattern * movePattern) {
 	this->movePattern = movePattern;
 }
 
+bool Enemigo::isDead(){
+	return this->dead;
+}
+
 void Enemigo::hit() {
 }
 

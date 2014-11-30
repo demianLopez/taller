@@ -91,6 +91,7 @@ public:
 
 	void setCurrentLevelName(char* currentLevelName);
 	void setNextLevelName(char* nextLevelName);
+	void verifyLevelEndConditions();
 private:
 	void updateTiming(Jugador* j);
 	void updatePolygon(Polygon* p);

@@ -18,9 +18,13 @@ public:
 	void hit();
 	void evaluateMovement(Jugador * nearPlayer);
 	void evaluateAnimation();
+	bool isDead();
+
 	virtual ~Enemigo();
 private:
 	Move_pattern * movePattern;
+
+	bool dead;
 };
 
 #endif /* ENEMIGO_H_ */
