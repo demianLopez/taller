@@ -68,6 +68,14 @@ void GestorEscenario::agregarObjeto(string tipo, double posX, double posY,
 	this->objetos.push_back(nuevoObjeto);
 }
 
+void GestorEscenario::setActual(const char* actual){
+	this->escenarioActual = (char*)actual;
+}
+
+char * GestorEscenario::getActual(){
+	return escenarioActual	;
+}
+
 void GestorEscenario::agregarEnemigo(string tipo,double posx,double posy){
 	enemy nuevoEnemigo;
 	nuevoEnemigo.tipo = tipo;
