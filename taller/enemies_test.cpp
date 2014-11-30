@@ -81,7 +81,7 @@ void test_b() {
 	delete shiningFlareWingman;
 }
 
-int main() {
+int maifn() {
 	test_a();
 	test_b();
 	return 0;

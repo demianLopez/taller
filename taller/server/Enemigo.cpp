@@ -5,7 +5,13 @@
  *      Author: demian
  */
 
-#include <Enemigo.h>
+#include "Enemigo.h"
+
+#include <Box2D/Common/b2Math.h>
+#include <Box2D/Dynamics/b2Body.h>
+
+#include "../common/CommandCode.h"
+#include "ContactListener.h"
 
 Enemigo::Enemigo(Move_pattern * movePattern) {
 	this->movePattern = movePattern;
