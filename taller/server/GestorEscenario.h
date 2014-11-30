@@ -57,6 +57,12 @@ struct objeto {
 	bool estatico = true;
 };
 
+struct enemy {
+	string tipo;
+	double posx;
+	double posy;
+};
+
 class GestorEscenario {
 public:
 	GestorEscenario();
@@ -79,10 +85,11 @@ public:
 	Polygon * colocarTrap(objeto figura);
 	rgb obtenerRGB(string color);
 	int calcularColor(char col1, char col2);
-
+	void agregarEnemigo(string tipo,double posx,double posy);
 	World * obtenerMundo();
 private:
 	escenario elEscenario;
+	vector<enemy> enemigos;
 	vector<objeto> objetos;
 	World * world;
 

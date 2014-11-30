@@ -25,8 +25,8 @@ int const SCREEN_HEIGHT = 600;
 int mainServer() {
 
 	LectorJson * lj = new LectorJson();
-	cout << "Cargando mapa tp0" << endl;
-	lj->cargarEscenario("Maps/tp0.json");
+	cout << "Cargando mapa nivel0" << endl;
+	lj->cargarEscenario("Maps/nivel0.json");
 	GestorEscenario * ge = lj->obtenerGestorEscenario();
 	World * w = ge->obtenerMundo();
 

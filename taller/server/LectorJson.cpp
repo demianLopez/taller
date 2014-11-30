@@ -285,6 +285,7 @@ void LectorJson::obtenerEscenario(Value raiz) {
 		this->elEscenario->configurarEscenerio(altopx, anchopx, altoun, anchoun,
 				imagen, x, y, cantidadJugadores, nombreMapa,siguienteNivel,minJugadores,posiciones);
 		this->obtenerObjetos(escenario);
+		this->obtenerEnemigos(escenario);
 	}
 
 }
@@ -547,6 +548,24 @@ void LectorJson::crearObjeto(Value objeto) {
 							+ "' no esta definido, no se puede crear.",
 					WARNING);
 	}
+}
+
+void LectorJson::obtenerEnemigos(Value raiz){
+	Value enemigos = raiz["enemigos"];
+	if (enemigos.isNull()) {
+		logger->reportarProblema("El Escenario no contiene enemigos.", WARNING);
+		return;
+	}
+	for (unsigned int i = 0; i < enemigos.size(); i++) {
+		this->crearEnemigo(enemigos[i]);
+	}
+}
+
+void LectorJson::crearEnemigo(Value enemigo){
+	string tipo = enemigo["tipo"];
+	double posx = validarDouble("posx",enemigo,POSX_D,"Enemigo");
+	double posy = validarDouble("posy",enemigo,POSY_D,"Enemigo");
+	elEscenario->agregarEnemigo(tipo,posx,posy);
 }
 
 void LectorJson::cargarEscenario(const char* rutaArchivo) {

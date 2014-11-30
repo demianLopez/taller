@@ -68,6 +68,15 @@ void GestorEscenario::agregarObjeto(string tipo, double posX, double posY,
 	this->objetos.push_back(nuevoObjeto);
 }
 
+void GestorEscenario::agregarEnemigo(string tipo,double posx,double posy){
+	enemy nuevoEnemigo;
+	nuevoEnemigo.tipo = tipo;
+	nuevoEnemigo.posx = posx;
+	nuevoEnemigo.posy = posy;
+	this-> enemigos.push_back(nuevoEnemigo);
+}
+
+
 void GestorEscenario::imprimirXConsola() {
 	cout << "Descripcion escenario:" << endl;
 	cout << "altopx = " << elEscenario.altopx << endl;

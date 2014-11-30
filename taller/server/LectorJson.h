@@ -44,6 +44,8 @@ private:
 	void armarCirculo(Value objeto);
 	void armarParalelogramo(Value objeto);
 	void armarTrapecio(Value objeto);
+	void obtenerEnemigos(Value raiz);
+	void crearEnemigo(Value enemigo);
 
 	LogManager* logger;
 	GestorEscenario * elEscenario;
