@@ -18,6 +18,10 @@ MovementEntity::MovementEntity(int index) : GameEntity(index) {
 	firstUpdate = false;
 }
 
+void MovementEntity::setAnimation(AnimationCode animation) {
+	this->animation = animation;
+}
+
 void MovementEntity::update(unsigned int delta) {
 	if (!this->firstUpdate) {
 		return;
