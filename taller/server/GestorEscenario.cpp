@@ -133,6 +133,10 @@ World * GestorEscenario::obtenerMundo() {
 	b2Vec2 SDLCharPos = b2Vec2(elEscenario.personajeX, elEscenario.personajeY);
 
 	world->setNextLevelName((char *)elEscenario.sigNivel.c_str());
+	world->setCurrentLevelName(escenarioActual);
+	world->setMinPlayers(elEscenario.minJug);
+
+
 
 	for (auto objeto : objetos) {
 

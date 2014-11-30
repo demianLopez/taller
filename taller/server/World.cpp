@@ -420,13 +420,13 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 
 		notReady = !someoneNotReady;
 	}
-	delete currentLevel;
 
 	LectorJson * lj = new LectorJson();
 	lj->cargarEscenario(nextLevel);
 	GestorEscenario * ge = lj->obtenerGestorEscenario();
 	World * w = ge->obtenerMundo();
-	w->setMinPlayers(1);
+
+	delete currentLevel;
 
 	Data::world = w;
 
