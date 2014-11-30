@@ -84,10 +84,6 @@ void PlayerEntity::render(Graphics * g, unsigned int delta) {
 	g->drawAtCenter(false);
 }
 
-void PlayerEntity::setAnimation(AnimationCode animation) {
-	this->animation = animation;
-}
-
 PlayerEntity::~PlayerEntity() {
 	delete this->pName;
 }

@@ -73,25 +73,83 @@ void World::sendWorldInfo(Client_handler * client){
 
 	vector<Polygon*> polList = Data::world->getPolygonList();
 	for (auto * p : polList) {
-		Message * mapData = new Message();
-		mapData->addCommandCode(ADD_MAP_DATA);
+		Message mapData;
+		mapData.addCommandCode(ADD_MAP_DATA);
 		char vNum = p->getPointList().size();
-		mapData->addChar(p->getEntityIndex());
-		mapData->addChar(p->isStatic());
-		mapData->addChar(p->getType());
-		mapData->addChar(vNum);
-		mapData->addFloat(&p->getPosition()->x);
-		mapData->addFloat(&p->getPosition()->y);
+		mapData.addChar(p->getEntityIndex());
+		mapData.addChar(p->isStatic());
+		mapData.addChar(p->getType());
+		mapData.addChar(vNum);
+		mapData.addFloat(&p->getPosition()->x);
+		mapData.addFloat(&p->getPosition()->y);
 		float rotation = p->getRotation();
-		mapData->addFloat(&rotation);
+		mapData.addFloat(&rotation);
 		for (auto * ver : p->getPointList()) {
-			mapData->addFloat(&ver->x);
-			mapData->addFloat(&ver->y);
+			mapData.addFloat(&ver->x);
+			mapData.addFloat(&ver->y);
 		}
-		mapData->addEndChar();
-		client->send_message(mapData);
-		delete mapData;
+		mapData.addEndChar();
+		client->send_message(&mapData);
 	}
+
+	for(auto * e : enemyList){
+		this->instantiateEnemy(e, client);
+	}
+}
+
+
+
+void World::initializeEnemyBody(Enemigo * enemy){
+	double longX = 1.2f;
+	double longY = 1.8f;
+
+	b2PolygonShape box_shape;
+	box_shape.SetAsBox(longX, longY); //seteo los vertices del poligono
+
+	b2FixtureDef body_fixture;
+	body_fixture.shape = &box_shape;
+	body_fixture.density = 1;
+	body_fixture.friction = 0.05;
+	body_fixture.filter.categoryBits = 0x0002; // Categoria para evitar que 2 jugadores colisionen.
+	body_fixture.filter.groupIndex = -2;
+
+	b2BodyDef body_definition;
+	body_definition.type = b2_dynamicBody;
+	body_definition.position.Set(20, 5);
+
+	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
+	b2Fixture *fixture = body->CreateFixture(&body_fixture);
+
+	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
+	body->SetFixedRotation(true);
+
+	enemy->setBox2DDefinitions(body, fixture);
+
+	b2PolygonShape dynamicBox;
+
+	dynamicBox.SetAsBox(longX, longY);
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1;
+	fixtureDef.friction = 0;
+
+	b2Fixture *bodyFixture = body->CreateFixture(&fixtureDef);
+
+	bodyFixture->SetUserData(
+			new ContactContainer(ContactContainer::SENSORDELPIE, enemy));
+
+	dynamicBox.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, -longY), 0);
+	fixtureDef.density = 0;
+	bodyFixture->SetSensor(true);
+	fixtureDef.isSensor = true;
+	b2Fixture * footSensor = body->CreateFixture(&fixtureDef);
+	footSensor->SetUserData(
+			new ContactContainer(ContactContainer::JUGADOR, enemy));
+	ContactListener * footListener = new ContactListener();
+
+	enemy->setListenerTouchingGround(footListener);
+	box2DWorld->SetContactListener(new ContactListener());
 }
 
 void World::initializePlayerBody(Jugador * player) {
@@ -189,6 +247,20 @@ void World::checkPlayerCount(){
 	}
 }
 
+void World::addEnemy(Enemigo * enemy){
+
+	this->enemyList.push_back(enemy);
+	int avavibleIndex = this->getAvavibleIndex();
+	enemy->setEntityIndex(avavibleIndex);
+	this->initializeEnemyBody(enemy);
+
+	for (auto * p : playerList) {
+		if(!p->isOffline()){
+			this->instantiateEnemy(enemy, p->getClient());
+		}
+	}
+}
+
 void World::addPlayer(Jugador * jugador, bool reconecting) {
 	worldMutex.lock();
 
@@ -240,6 +312,18 @@ void World::worldStep(int delta) {
 	int32 positionIterations = 2;
 
 	this->box2DWorld->Step(timeStep, velocityIterations, positionIterations);
+}
+
+void World::instantiateEnemy(Enemigo * e, Client_handler * client){
+	Message m;
+	m.addCommandCode(ADD_ENEMY_DATA);
+	m.addChar(e->getIndex());
+	m.addFloat(&e->getPosition()->x);
+	m.addFloat(&e->getPosition()->y);
+	m.addAnimationCode(e->getCurrentAnimation());
+	m.addEndChar();
+
+	client->send_message(&m);
 }
 
 void World::instantiatePlayer(Jugador * p, Client_handler * client) {
@@ -299,6 +383,10 @@ void World::nextSecond() {
 	}
 }
 
+vector<Enemigo*> World::getEnemyList() {
+	return this->enemyList;
+}
+
 void World::nextLevel(World* currentLevel) {
 	currentLevel->stop();
 	currentLevel->waitWorldThread();
@@ -349,14 +437,15 @@ void World::nextLevel(World* currentLevel) {
 	for(auto * player : pList){
 		w->sendWorldInfo(player->getClient());
 
-		w->addPlayer(player->clonePlayer(), false);
+		Jugador * nJugador = player->clonePlayer();
+		w->addPlayer(nJugador, false);
 
 		Message * mainEntity = new Message();
 		mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
-		char mEntity = player->getIndex();
+		char mEntity = nJugador->getIndex();
 		mainEntity->addChar(mEntity);
 		mainEntity->addEndChar();
-		player->getClient()->send_message(mainEntity);
+		nJugador->getClient()->send_message(mainEntity);
 		delete mainEntity;
 
 		Message * finalData = new Message();
@@ -364,7 +453,7 @@ void World::nextLevel(World* currentLevel) {
 		finalData->addChar(player->getPlayerLives());
 		finalData->addChar(player->getPlayerScore());
 		finalData->addEndChar();
-		player->getClient()->send_message(finalData);
+		nJugador->getClient()->send_message(finalData);
 
 
 		delete finalData;
@@ -397,6 +486,13 @@ void World::worldLoop(World * world) {
 		for (auto * j : world->getPlayerList()) {
 			j->apllyCodes();
 			j->update();
+		}
+
+		if(world->getPlayerList().size() > 0){
+			for(auto * e : world->getEnemyList()){
+				e->evaluateMovement(world->getPlayerList()[0]);
+				e->update();
+			}
 		}
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
@@ -460,6 +556,10 @@ void World::sendUpdates() {
 			this->updatePolygon(p);
 		}
 	}
+
+	for(auto * e : enemyList){
+		this->updateEnemy(e);
+	}
 }
 
 void World::updateTiming(Jugador * j) {
@@ -495,6 +595,18 @@ void World::updatePeople(Jugador * p) {
 	m.addAnimationCode(p->getCurrentAnimation());
 	m.addChar(p->isOffline());
 	m.addChar(p->isInvulnerable());
+	m.addEndChar();
+
+	this->sendToWorldPlayers(&m);
+}
+
+void World::updateEnemy(Enemigo * e){
+	Message m;
+	m.addCommandCode(UPDATE_ENEMY_ENTITY);
+	m.addChar(e->getIndex());
+	m.addFloat(&e->getPosition()->x);
+	m.addFloat(&e->getPosition()->y);
+	m.addAnimationCode(e->getCurrentAnimation());
 	m.addEndChar();
 
 	this->sendToWorldPlayers(&m);

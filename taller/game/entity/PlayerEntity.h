@@ -20,12 +20,12 @@ public:
 	void initialize();
 	void applyUpdate(UpdateRequest * u);
 
-	void setAnimation(AnimationCode animation);
+
 	void setOffline(bool offline);
 
 	void setPlayerName(char * name);
 private:
-	AnimationCode animation;
+
 	bool offline;
 
 	bool invulnerable;

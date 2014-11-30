@@ -10,6 +10,7 @@
 #include "Global.h"
 #include "entity/PolygonEntity.h"
 #include "entity/PlayerEntity.h"
+#include "entity/EnemyEntity.h"
 #include "../common/UpdateRequest.h"
 
 ClientData::ClientData() {
@@ -58,6 +59,18 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		}
 		return cCode;
 
+	}
+
+	if (cCode == UPDATE_ENEMY_ENTITY) {
+		UpdateRequest * uR = new UpdateRequest();
+		uR->index = m->getChar();
+		uR->posX = m->getFloat();
+		uR->posY = m->getFloat();
+		uR->animation = m->getAnimationCode();
+		if(Global::game->isOnState(1)){
+			Global::gameWorld->addUpdateRequest(uR);
+		}
+		return cCode;
 	}
 
 	if (cCode == REQUEST_KEY_DATA) {
@@ -117,6 +130,20 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		pEntity->setWorld(Global::gameWorld);
 		Global::gameWorld->addEntity(pEntity);
 
+		return cCode;
+	}
+
+	if(cCode == ADD_ENEMY_DATA){
+		char index = m->getChar();
+		float pX = m->getFloat();
+		float pY = m->getFloat();
+		AnimationCode anim = m->getAnimationCode();
+
+		EnemyEntity * enemyEntity = new EnemyEntity(index);
+		enemyEntity->setPosition(pX, pY);
+		enemyEntity->setAnimation(anim);
+
+		Global::gameWorld->addEntity(enemyEntity);
 		return cCode;
 	}
 
