@@ -28,6 +28,7 @@ class Moving_object: public Level_object {
 public:
 	Moving_object();
 	void set_movement(Move_pattern* pattern);
+	void apply_force(int vertical,int horizontal);
 	virtual ~Moving_object();
 };
 

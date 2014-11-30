@@ -8,16 +8,19 @@
 #ifndef CHANGESTATE_H_
 #define CHANGESTATE_H_
 
+#include <string>
+
 #include "engine/GameState.h"
-#include "engine/ParticleEmiter.h"
-#include "engine/Image.h"
-#include "engine/GUI/Button.h"
+
+class Button;
+class ParticleEmiter;
 
 class ChangeState: public GameState {
 public:
 	ChangeState();
 	virtual ~ChangeState();
-	void setLevelData(string * players, int * scores, bool winLevel, int playerCount, bool * playerConected);
+	void setLevelData(std::string * players, int * scores, bool winLevel,
+			int playerCount, bool * playerConected);
 private:
 	void update(unsigned int delta);
 	void render(Graphics *g, Game * game, unsigned int delta);
@@ -37,9 +40,9 @@ private:
 
 	bool imReady;
 
-	bool * playerConected;
-	string * players;
-	int * scores;
+	bool* playerConected;
+	std::string* players;
+	int* scores;
 	bool winLevel;
 	int playerCount;
 

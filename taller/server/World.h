@@ -8,15 +8,13 @@
 #ifndef WORLD_H_
 #define WORLD_H_
 
-#include <Box2D/Box2D.h>
-#include "Jugador.h"
 #include <vector>
-#include "polygons/Polygon.h"
-#include "ContactListener.h"
-#include <thread>
-#include <string.h>
-#include <mutex>
+
 #include "Enemigo.h"
+#include "Jugador.h"
+#include "polygons/Polygon.h"
+
+class Projectile;
 
 using std::string;
 using std::thread;
@@ -26,24 +24,24 @@ class Polygon;
 
 class World {
 public:
-	World(b2Vec2 * gravity);
+	World(b2Vec2* gravity);
 
 	int updatesPerSecond;
 
-	string * getWorldName();
+	string* getWorldName();
 	int getMaxPlayers();
 
-	void setMapData(string * mapName, int maxPlayers);
+	void setMapData(string* mapName, int maxPlayers);
 
 	void setUnits(int wU, int hU);
-	b2Vec2 * getBox2DWorldSize();
+	b2Vec2* getBox2DWorldSize();
 
 	void worldStep(int delta);
 
-	void addPolygon(Polygon * polygon);
+	void addPolygon(Polygon* polygon);
 
-	b2World * getBox2DWorld();
-	vector<Polygon *> getPolygonList();
+	b2World* getBox2DWorld();
+	vector<Polygon*> getPolygonList();
 
 	bool isOutOfWorld(b2Vec2 position);
 
@@ -56,13 +54,14 @@ public:
 
 	void waitWorldThread();
 
-	void addPlayer(Jugador * jugador, bool reconecting);
+	void addPlayer(Jugador* jugador, bool reconecting);
 	void addEnemy(Enemigo * enemy);
 
 	vector<Jugador*> getPlayerList();
-	vector<Enemigo*> getEnemyList();
+	Jugador* getPlayer(int userIndex);
 
-	Jugador * getPlayer(int userIndex);
+	void add_projectile(Projectile* p);
+	vector<Enemigo*> getEnemyList();
 
 	void releaseEntityIndex(int index);
 
@@ -70,19 +69,19 @@ public:
 
 	virtual ~World();
 
-	void sendToWorldPlayers(Message * m);
+	void sendToWorldPlayers(Message* m);
 
-	void instantiatePlayer(Jugador * j, Client_handler * client);
+	void instantiatePlayer(Jugador* j, Client_handler* client);
 	void instantiateEnemy(Enemigo * enemy, Client_handler * client);
 
-	void requestKeyData(Jugador * j);
+	void requestKeyData(Jugador* j);
 	void setMinPlayers(int minPlayers);
 
 	bool isWaitingForPlayers();
 
 
 
-	void sendWorldInfo(Client_handler * client);
+	void sendWorldInfo(Client_handler* client);
 	void checkPlayerCount();
 
 	void nextLevel();
@@ -93,25 +92,26 @@ public:
 	void setCurrentLevelName(char* currentLevelName);
 	void setNextLevelName(char* nextLevelName);
 private:
-	void updateTiming(Jugador * j);
-	void updatePolygon(Polygon * p);
-	void updatePeople(Jugador * p);
-	void updateEnemy(Enemigo * e);
+	void updateTiming(Jugador* j);
+	void updatePolygon(Polygon* p);
+	void updatePeople(Jugador* p);
+	void updateEnemy(Enemigo* e);
 
 	void sendUpdates();
 
-	void initializePlayerBody(Jugador * player);
+	void initializePlayerBody(Jugador* player);
 
 	void initializeEnemyBody(Enemigo * enemy);
 
 	bool wordLoop;
+
 	static void worldLoop(World * world);
 	static void changeLevel(World * currentLevel, char * nextLevel, bool wonLevel);
 
 	vector<Jugador*> playerList;
 	vector<Enemigo*> enemyList;
 
-	ContactListener *contactListener;
+	ContactListener* contactListener;
 
 	thread worldThread;
 
@@ -120,12 +120,12 @@ private:
 	vector<Polygon*> polygonList;
 
 	//BOX 2D
-	b2World * box2DWorld;
-	b2Vec2 * gravity;
+	b2World* box2DWorld;
+	b2Vec2* gravity;
 
-	b2Vec2 * Box2DWorldSize;
+	b2Vec2* Box2DWorldSize;
 
-	string * mapName;
+	string* mapName;
 	int maxPlayers;
 	int minPlayers;
 

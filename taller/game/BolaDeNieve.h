@@ -2,6 +2,7 @@
 #define BOLADENIEVE_H_
 
 #include "../server/CosaConMovimiento.h"
+#include "VectorXY.h"
 
 class BolaDeNieve: public CosaConMovimiento {
 private:

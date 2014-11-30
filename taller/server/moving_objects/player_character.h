@@ -23,7 +23,7 @@
 
 class Player_character: public Character {
 public:
-	Player_character();
+	Player_character(World* world);
 	virtual ~Player_character();
 };
 

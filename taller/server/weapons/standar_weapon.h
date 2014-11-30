@@ -24,10 +24,11 @@
 class Standar_weapon: public Weapon {
 protected:
 	virtual Projectile* get_projectile();
+	virtual void launch(Projectile* p);
+
 
 public:
-	Standar_weapon();
-	virtual Projectile* fire();
+	Standar_weapon(World* world);
 	virtual ~Standar_weapon();
 };
 

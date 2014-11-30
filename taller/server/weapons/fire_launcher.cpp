@@ -19,13 +19,12 @@
 #include "fire_launcher.h"
 #include "projectile/fire.h"
 
-Fire_launcher::Fire_launcher() {
-	// TODO Auto-generated constructor stub
-
-}
-
 Projectile* Fire_launcher::get_projectile() {
 	return new Fire();
+}
+
+Fire_launcher::Fire_launcher(World* world) :
+		Standar_weapon(world) {
 }
 
 Fire_launcher::~Fire_launcher() {

@@ -19,9 +19,9 @@
 #include "player_character.h"
 #include "../weapons/snow_weapon.h"
 
-Player_character::Player_character() :
+Player_character::Player_character(World* world) :
 		Character() {
-	this->set_weapon(new Snow_weapon());
+	this->set_weapon(new Snow_weapon(world));
 }
 
 Player_character::~Player_character() {

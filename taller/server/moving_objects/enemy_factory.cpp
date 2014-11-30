@@ -21,13 +21,13 @@
 #include "move_patterns/standar_movement_strategy.h"
 #include "../weapons/fire_launcher.h"
 
-Enemy* Enemy_factory::get_enemy() {
+Enemy* Enemy_factory::get_enemy(World* world) {
 	return new Enemy();
 }
 
-Enemy* Enemy_factory::get_standar_enemy() {
-	Enemy* standar = get_enemy();
-	standar->set_weapon(new Fire_launcher());
+Enemy* Enemy_factory::get_standar_enemy(World* world) {
+	Enemy* standar = get_enemy(world);
+	standar->set_weapon(new Fire_launcher(world));
 	standar->set_movement(new Standar_movement_strategy());
 	return standar;
 }

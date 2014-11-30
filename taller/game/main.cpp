@@ -1,22 +1,21 @@
-#include <iostream>
-#include <stdio.h>
-#include <string>
-#include "SnowBross.h"
-#include "../server/Jugador.h"
-#include "engine/Game.h"
-#include "../common/Logger.h"
-#include "../server/Server.h"
-#include "../common/socket.h"
-#include "../common/client_handler.h"
 #include <signal.h>
+#include <iostream>
+#include <string>
+
+#include "../common/client_handler.h"
+#include "../common/Logger.h"
+#include "../common/socket.h"
+#include "../server/Data.h"
+#include "../server/Enemigo.h"
+#include "../server/GestorEscenario.h"
+#include "../server/Jugador.h"
+#include "../server/LectorJson.h"
+#include "../server/moving_objects/move_patterns/standar_movement_strategy.h"
+#include "../server/Server.h"
+#include "../server/World.h"
 #include "ClientData.h"
 #include "Global.h"
-#include "../server/LectorJson.h"
-#include "../server/GestorEscenario.h"
-#include "../server/Data.h"
-
-#include "Enemigo.h"
-#include "moving_objects/move_patterns/standar_movement_strategy.h"
+#include "SnowBross.h"
 
 using namespace std;
 
