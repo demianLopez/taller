@@ -562,7 +562,7 @@ void LectorJson::obtenerEnemigos(Value raiz){
 }
 
 void LectorJson::crearEnemigo(Value enemigo){
-	string tipo = enemigo["tipo"];
+	string tipo = validarNombreMapa("tipo",enemigo,"malo","Enemigo");
 	double posx = validarDouble("posx",enemigo,POSX_D,"Enemigo");
 	double posy = validarDouble("posy",enemigo,POSY_D,"Enemigo");
 	elEscenario->agregarEnemigo(tipo,posx,posy);
