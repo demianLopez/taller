@@ -86,8 +86,12 @@ public:
 	rgb obtenerRGB(string color);
 	int calcularColor(char col1, char col2);
 	void agregarEnemigo(string tipo,double posx,double posy);
+	void setActual(const char* actual);
+	char* getActual();
+
 	World * obtenerMundo();
 private:
+	char* escenarioActual;
 	escenario elEscenario;
 	vector<enemy> enemigos;
 	vector<objeto> objetos;
