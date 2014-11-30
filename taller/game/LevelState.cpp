@@ -268,7 +268,7 @@ void LevelState::drawMainGUI(Graphics * g){
 
 void LevelState::keyEvent(SDL_Event e, Game * game) {
 	levelStateMutex.lock();
-	if(Global::gameWorld->isWaitingForPlayers()){
+	if(Global::gameWorld->isWaitingForPlayers() || Global::isPlayerDead()){
 		levelStateMutex.unlock();
 		return;
 	}

@@ -18,3 +18,7 @@ int Global::serverUpdateTiming;
 
 int Global::playerLife;
 int Global::playerScore;
+
+bool Global::isPlayerDead(){
+	return (Global::playerLife == 0);
+}

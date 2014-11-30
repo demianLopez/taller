@@ -377,7 +377,7 @@ vector<Enemigo*> World::getEnemyList() {
 	return this->enemyList;
 }
 
-void World::nextLevel(World* currentLevel) {
+void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 	currentLevel->stop();
 	currentLevel->waitWorldThread();
 	//Lo unico que se transfiere de nivel a nivel es la lista de jugadores!
@@ -394,7 +394,7 @@ void World::nextLevel(World* currentLevel) {
 		m.addChar(!p->isOffline());
 	}
 
-	m.addChar(0);
+	m.addChar(wonLevel);
 	m.addEndChar();
 	currentLevel->sendToWorldPlayers(&m);
 
@@ -416,7 +416,7 @@ void World::nextLevel(World* currentLevel) {
 	delete currentLevel;
 
 	LectorJson * lj = new LectorJson();
-	lj->cargarEscenario("Maps/tp0.json");
+	lj->cargarEscenario(nextLevel);
 	GestorEscenario * ge = lj->obtenerGestorEscenario();
 	World * w = ge->obtenerMundo();
 
@@ -458,8 +458,20 @@ void World::nextLevel(World* currentLevel) {
 	delete lj;
 }
 
-void World::switchLevel(){
-	new thread(World::nextLevel, this);
+void World::nextLevel(){
+	new thread(World::changeLevel, this, this->nextLevelName, true);
+}
+
+void World::restartLevel(){
+	new thread(World::changeLevel, this, this->currentLevelName, false);
+}
+
+void World::setCurrentLevelName(char* currentLevelName) {
+	this->currentLevelName = currentLevelName;
+}
+
+void World::setNextLevelName(char* nextLevelName) {
+	this->nextLevelName = nextLevelName;
 }
 
 void World::worldLoop(World * world) {

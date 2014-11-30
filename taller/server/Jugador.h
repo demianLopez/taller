@@ -22,6 +22,7 @@ private:
 	bool offline;
 
 	void evaluateAnimation();
+	void deadEvent();
 
 	bool invulnerable;
 	char secondsInvulLeft;
@@ -36,6 +37,7 @@ public:
 	Jugador * clonePlayer();
 
 	bool isInvulnerable();
+	bool isDead();
 
 
 	int lives;

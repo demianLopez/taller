@@ -68,8 +68,16 @@ int mainServer() {
 					<< std::endl;
 		}
 
-		if (command.compare("forceLevel") == 0) {
-			Data::world->switchLevel();
+		if (command.compare("nextlevel") == 0) {
+			Data::world->nextLevel();
+		}
+
+		if (command.compare("restartlevel") == 0) {
+			Data::world->restartLevel();
+		}
+
+		if (command.compare("hit") == 0) {
+			Data::world->getPlayerList()[0]->hit();
 		}
 	}
 

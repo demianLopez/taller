@@ -23,6 +23,7 @@ public:
 	void setAnimation(AnimationCode animation);
 
 	virtual void applyUpdate(UpdateRequest * u) = 0;
+	void setUpdateable(bool updateable);
 
 	virtual ~MovementEntity();
 private:
@@ -38,6 +39,9 @@ private:
 	unsigned int lastUpdateTime;
 	bool firstUpdate;
 	int renderTimeCount;
+
+	int difTime;
+	bool updateable;
 protected:
 	AnimationCode animation;
 };

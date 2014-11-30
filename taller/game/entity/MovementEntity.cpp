@@ -22,6 +22,51 @@ void MovementEntity::setAnimation(AnimationCode animation) {
 	this->animation = animation;
 }
 
+void MovementEntity::setUpdateable(bool updateable)
+{
+	this->updateable = updateable;
+}
+//INTERPOLACION -> MOVIMIENTO SIN FLUIDES PERO SIN DELAY
+
+void MovementEntity::update(unsigned int delta){
+
+	if(!updateable){
+		return;
+	}
+
+
+	this->renderTimeCount += delta;
+
+	float d = (float) (renderTimeCount) / (float) (difTime);
+
+	float iPosX = lastPosition.x + (nextPosition.x - lastPosition.x) * d;
+	float iPosY = lastPosition.y + (nextPosition.y - lastPosition.y) * d;
+
+	this->rotation = lastRotation + (nextRotation - lastRotation) * d;
+
+	position = VectorXY(iPosX, iPosY);
+
+}
+
+void MovementEntity::addUpdateRequest(UpdateRequest * u, unsigned int currentTime){
+	this->position = this->nextPosition;
+	this->lastPosition = this->nextPosition;
+	this->nextPosition = VectorXY(u->posX, u->posY);
+
+	this->rotation = this->nextRotation;
+	this->lastRotation = this->nextRotation;
+	this->nextRotation = u->rotation;
+
+	this->difTime = currentTime - this->lastUpdateTime;
+	this->lastUpdateTime = currentTime;
+	this->renderTimeCount = 0;
+
+	this->applyUpdate(u);
+}
+
+
+//INTERPOLACION -> MOVIMIENTO FLUIDO PERO CON DELAY
+/*
 void MovementEntity::update(unsigned int delta) {
 	if (!this->firstUpdate) {
 		return;
@@ -68,6 +113,7 @@ void MovementEntity::update(unsigned int delta) {
 	position = VectorXY(iPosX, iPosY);
 }
 
+
 void MovementEntity::addUpdateRequest(UpdateRequest * u,
 		unsigned int elapsedTime) {
 
@@ -86,6 +132,8 @@ void MovementEntity::addUpdateRequest(UpdateRequest * u,
 		this->firstUpdate = true;
 	}
 }
+
+*/
 
 MovementEntity::~MovementEntity() {
 	while(updateRequest.size() > 0){

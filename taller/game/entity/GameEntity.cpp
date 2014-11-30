@@ -29,7 +29,6 @@ void GameEntity::setType(EntityType type) {
 
 void GameEntity::setPosition(float x, float y) {
 	this->position = VectorXY(x, y);
-
 }
 
 void GameEntity::setRotation(float rotation) {

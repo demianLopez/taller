@@ -28,7 +28,7 @@ public:
 	void addVertex(float x, float y);
 
 
-	void setStatic(bool isStatic);
+
 
 	void buildRectangle(short int * vX, short int * vY);
 
@@ -37,7 +37,6 @@ private:
 	vector<VectorXY *> vList;
 	Image * polygonImage;
 
-	bool isStatic;
 };
 
 #endif /* POLYGONENTITY_H_ */

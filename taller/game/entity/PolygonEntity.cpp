@@ -20,10 +20,6 @@ PolygonEntity::PolygonEntity(int index) :
 	this->polygonImage = NULL;
 }
 
-void PolygonEntity::setStatic(bool isStatic) {
-	this->isStatic = isStatic;
-}
-
 void PolygonEntity::render(Graphics * g, unsigned int delta) {
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 

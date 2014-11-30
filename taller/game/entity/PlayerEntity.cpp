@@ -23,6 +23,7 @@ PlayerEntity::PlayerEntity(int index) :
 
 
 	this->lName = 0;
+	this->invulnerable = false;
 
 
 }

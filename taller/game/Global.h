@@ -32,6 +32,8 @@ public:
 	static int playerLife;
 	static int playerScore;
 
+	static bool isPlayerDead();
+
 };
 
 #endif /* GLOBAL_H_ */

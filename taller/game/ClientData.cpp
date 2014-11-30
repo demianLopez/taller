@@ -158,7 +158,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		float rotation = m->getFloat();
 
 		PolygonEntity * pEnt = new PolygonEntity(index);
-		pEnt->setStatic(isStatic);
+		pEnt->setUpdateable(!isStatic);
 		pEnt->setPosition(pX, pY);
 		pEnt->setRotation(rotation);
 		pEnt->setType(type);

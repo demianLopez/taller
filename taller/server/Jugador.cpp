@@ -3,7 +3,7 @@
 #include <iostream>
 #include "../common/Message.h"
 #include "../common/CommandCode.h"
-
+#include "Data.h"
 // Inicializa Jugador.
 Jugador::Jugador(Client_handler * client, char * name) {
 	this->client = client;
@@ -14,6 +14,7 @@ Jugador::Jugador(Client_handler * client, char * name) {
 	this->lives = 5;
 	this->score = 0;
 	this->isReady = false;
+	this->invulnerable = false;
 }
 
 void Jugador::updateOnClientUserStats(){
@@ -90,8 +91,26 @@ Jugador *  Jugador::clonePlayer() {
 	return newPlayer;
 }
 
+void Jugador::deadEvent(){
+	this->body->SetActive(false);
+
+	Message m;
+	m.addCommandCode(SHOW_MESSAGE);
+	string pM("");
+	pM.append(this->getName());
+	pM.append(" ha muerto");
+	m.addCharArray(pM.c_str(), pM.size());
+	m.addEndChar();
+
+	Data::world->sendToWorldPlayers(&m);
+}
+
 bool Jugador::isInvulnerable(){
 	return this->invulnerable;
+}
+
+bool Jugador::isDead(){
+	return (this->lives == 0);
 }
 
 void Jugador::checkStatus() {
@@ -119,6 +138,10 @@ void Jugador::hit(){
 
 	this->lives--;
 	this->updateOnClientUserStats();
+
+	if(this->isDead()){
+		this->deadEvent();
+	}
 }
 
 void Jugador::evaluateAnimation() {

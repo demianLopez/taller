@@ -84,9 +84,14 @@ public:
 
 	void sendWorldInfo(Client_handler * client);
 	void checkPlayerCount();
-	void switchLevel();
+
+	void nextLevel();
+	void restartLevel();
 
 	void nextSecond();
+
+	void setCurrentLevelName(char* currentLevelName);
+	void setNextLevelName(char* nextLevelName);
 private:
 	void updateTiming(Jugador * j);
 	void updatePolygon(Polygon * p);
@@ -101,7 +106,7 @@ private:
 
 	bool wordLoop;
 	static void worldLoop(World * world);
-	static void nextLevel(World * currentLevel);
+	static void changeLevel(World * currentLevel, char * nextLevel, bool wonLevel);
 
 	vector<Jugador*> playerList;
 	vector<Enemigo*> enemyList;
@@ -127,6 +132,9 @@ private:
 	int lastEntityIndex;
 
 	mutex worldMutex;
+
+	char * currentLevelName;
+	char * nextLevelName;
 };
 
 #endif /* WORLD_H_ */
