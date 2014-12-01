@@ -22,7 +22,7 @@ void EnemyEntity::render(Graphics* g, unsigned int delta) {
 	g->drawAtCenter(true);
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 	g->drawAnimation(
-		Global::gameResources->getBossAnimationLeft(),
+		Global::gameResources->getAnimationByAnimationCode(animation),
 		sdlPos.x, sdlPos.y);
 	g->drawAtCenter(false);
 }
