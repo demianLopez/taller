@@ -493,7 +493,8 @@ void World::worldLoop(World * world) {
 
 		if(world->getPlayerList().size() > 0){
 			for(auto * e : world->getEnemyList()){
-				e->evaluateMovement(world->getPlayerList()[0]);
+				//e->evaluateMovement(world->getPlayerList()[0]);
+				e->movimientoLoco();
 				e->update();
 			}
 		}
