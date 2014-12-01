@@ -20,19 +20,19 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	if (first == NULL || second == NULL)
 		return;
 
-	Jugador *aPlayer;
+	Personaje *aPlayer;
 	Polygon *aPolygon;
 
 	// Para ver si puede saltar
 	if (first->type == ContactContainer::SENSORDELPIE
 			&& second->type == ContactContainer::POLYGON) {
-		aPlayer = (Jugador*) first->containedThing;
+		aPlayer = (Personaje*) first->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts++;
 		return;
 	}
 	if (first->type == ContactContainer::POLYGON
 			&& second->type == ContactContainer::SENSORDELPIE) {
-		aPlayer = (Jugador*) second->containedThing;
+		aPlayer = (Personaje*) second->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts++;
 		return;
 	}
@@ -42,12 +42,16 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			&& second->type == ContactContainer::JUGADOR) {
 		aPlayer = (Jugador*) second->containedThing;
 		aPlayer->hit();
+		Personaje *enemigo = (Personaje*) first->containedThing;
+		enemigo->jump();
 		return;
 	}
 	if (first->type == ContactContainer::JUGADOR
 			&& second->type == ContactContainer::ENEMY) {
 		aPlayer = (Jugador*) first->containedThing;
 		aPlayer->hit();
+		Personaje *enemigo = (Personaje*) second->containedThing;
+		enemigo->jump();
 		return;
 	}
 

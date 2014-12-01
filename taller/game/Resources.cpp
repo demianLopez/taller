@@ -408,8 +408,8 @@ Resources::~Resources() {
 	delete this->heartAnimation;
 	delete this->emoticons;
 
-	delete this->bossAnimationLeft;
-	delete this->enemigo;
+	//delete this->bossAnimationLeft;
+	//delete this->enemigo;
 	TTF_CloseFont (nameFonts);
 	TTF_CloseFont (GUI_Font);
 }
