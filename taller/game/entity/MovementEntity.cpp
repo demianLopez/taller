@@ -39,7 +39,10 @@ void MovementEntity::update(unsigned int delta){
 
 	this->renderTimeCount += delta;
 
-	float d = (float) (renderTimeCount) / (float) (difTime);
+	float d = (float) (renderTimeCount) / (float) (difTime + 1);
+
+	if(d > 1) { d = 1;}
+	if(d < 0) { d = 0;}
 
 	float iPosX = lastPosition.x + (nextPosition.x - lastPosition.x) * d;
 	float iPosY = lastPosition.y + (nextPosition.y - lastPosition.y) * d;
@@ -64,6 +67,7 @@ void MovementEntity::addUpdateRequest(UpdateRequest * u, unsigned int currentTim
 	this->renderTimeCount = 0;
 
 	this->applyUpdate(u);
+	delete u;
 }
 
 

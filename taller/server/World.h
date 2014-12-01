@@ -14,6 +14,7 @@
 #include "Jugador.h"
 #include "polygons/Polygon.h"
 #include "Disparo.h"
+#include "B2DAfterChange.h"
 
 class Projectile;
 
@@ -80,7 +81,7 @@ public:
 
 	bool isWaitingForPlayers();
 
-
+	void playerShooting(Jugador * j);
 
 	void sendWorldInfo(Client_handler* client);
 	void checkPlayerCount();
@@ -96,17 +97,21 @@ public:
 
 	void addPlayerPos(float x, float y);
 
+	void addAfterChange(B2DAfterChange * ac);
+	void realizeAfterChange();
+
 private:
 	void updateTiming(Jugador* j);
 	void updatePolygon(Polygon* p);
+	void updateProjectile(Disparo * p);
 	void updatePeople(Jugador* p);
 	void updateEnemy(Enemigo* e);
 
 	void sendUpdates();
 
 	void initializePlayerBody(Jugador* player);
-
 	void initializeEnemyBody(Enemigo * enemy);
+	void initializeProjectile(Disparo * projectile);
 
 	bool wordLoop;
 	bool isRestarting;
@@ -126,6 +131,7 @@ private:
 	bool waitingPlayers;
 
 	vector<Polygon*> polygonList;
+	vector<B2DAfterChange*> afterChangeList;
 
 	//BOX 2D
 	b2World* box2DWorld;

@@ -7,12 +7,13 @@
 #include <vector>
 #include "../common/CommandCode.h"
 #include <mutex>
+#include "B2DAfterChange.h"
 
 using std::vector;
 using std::mutex;
 
 // Jugador principal
-class Jugador: public Personaje {
+class Jugador: public Personaje, public B2DAfterChange {
 private:
 
 	char * name;
@@ -23,6 +24,8 @@ private:
 
 	void evaluateAnimation();
 	void deadEvent();
+
+
 
 	bool invulnerable;
 	char secondsInvulLeft;
@@ -40,9 +43,13 @@ public:
 	bool isInvulnerable();
 	bool isDead();
 
+	void change();
+	void decreaseShoot();
 
 	int lives;
 	int score;
+
+	int shootRealized;
 
 	mutex playerBusy;
 

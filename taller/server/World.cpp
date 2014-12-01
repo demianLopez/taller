@@ -36,9 +36,12 @@ World::World(b2Vec2* gravity) {
 	this->isRestarting = false;
 
 	for(int i = 0; i < 40; i++){
-		this->projectileList.push_back(new Disparo(this->getAvavibleIndex()));
+		Disparo * p = new Disparo(this->getAvavibleIndex());
+		this->projectileList.push_back(p);
+		this->initializeProjectile(p);
 	}
 }
+
 
 bool World::isWaitingForPlayers(){
 	return this->waitingPlayers;
@@ -162,6 +165,33 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	enemy->setHeadListener(headListener);
 
 	box2DWorld->SetContactListener(new ContactListener());
+}
+
+void World::initializeProjectile(Disparo * projectile){
+	b2CircleShape circle_shape;
+
+	float32 radius = 0.15;
+	circle_shape.m_radius = radius;
+
+	b2FixtureDef body_fixture;
+	body_fixture.shape = &circle_shape;
+	body_fixture.density = 1;
+	body_fixture.friction = 0.5;
+
+	b2BodyDef body_definition;
+	body_definition.type = b2_dynamicBody;
+
+	body_definition.position.Set(0, 0); //seteo posicion base
+
+	b2Body * body = this->box2DWorld->CreateBody(&body_definition);
+	b2Fixture *fixture = body->CreateFixture(&body_fixture);
+
+	//fixture->SetUserData(new ContactContainer(ContactContainer::POLYGON, this)); // Para detectar colisiones.
+
+	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
+
+	projectile->setBox2DDefinitions(body, fixture);
+	body->SetActive(false);
 }
 
 void World::initializePlayerBody(Jugador * player) {
@@ -410,6 +440,48 @@ void World::addPlayerPos(float x, float y){
 	this->playerPos.push_back(new b2Vec2(x, y));
 }
 
+void World::playerShooting(Jugador* j) {
+
+	Disparo * pLibre = NULL;
+
+	for(auto * p : projectileList){
+		if(!p->isOnUse()){
+			pLibre = p;
+			break;
+		}
+	}
+
+	if(pLibre == NULL){
+		return;
+	}
+
+	float pX = j->getPosition()->x;
+	float pY = j->getPosition()->y;
+
+	pLibre->shoot(pX, pY, j);
+
+	Message m;
+	m.addCommandCode(SHOOT_PROJECTILE);
+	m.addChar(pLibre->getIndex());
+	m.addFloat(&pX);
+	m.addFloat(&pY);
+	m.addEndChar();
+
+	this->sendToWorldPlayers(&m);
+}
+
+void World::addAfterChange(B2DAfterChange* ac) {
+	this->afterChangeList.push_back(ac);
+}
+
+void World::realizeAfterChange() {
+	for(auto * ac: afterChangeList){
+		ac->change();
+	}
+
+	afterChangeList.clear();
+}
+
 void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 	currentLevel->stop();
 	currentLevel->waitWorldThread();
@@ -541,9 +613,10 @@ void World::worldLoop(World * world) {
 		}
 
 		world->worldStep(sleepTime);
+		world->realizeAfterChange();
 
 
-		if ((updateCount % 2) == 0) {
+		if ((updateCount % 1) == 0) {
 			world->sendUpdates();
 		}
 		updateCount++;
@@ -592,6 +665,12 @@ void World::sendUpdates() {
 	for(auto * e : enemyList){
 		this->updateEnemy(e);
 	}
+
+	for(auto * p : projectileList){
+		if(p->isOnUse()){
+			this->updateProjectile(p);
+		}
+	}
 }
 
 void World::updateTiming(Jugador * j) {
@@ -602,6 +681,20 @@ void World::updateTiming(Jugador * j) {
 	m.addEndChar();
 
 	j->getClient()->send_message(&m);
+}
+
+void World::updateProjectile(Disparo * p){
+	Message m;
+	m.addCommandCode(UPDATE_ENTITY);
+	m.addChar(p->getIndex());
+	m.addFloat(&p->getPosition()->x);
+	m.addFloat(&p->getPosition()->y);
+	float rotation = p->getRotation();
+	m.addFloat(&rotation);
+
+	m.addEndChar();
+
+	this->sendToWorldPlayers(&m);
 }
 
 void World::updatePolygon(Polygon * p) {

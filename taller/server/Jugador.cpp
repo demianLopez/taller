@@ -15,6 +15,7 @@ Jugador::Jugador(Client_handler * client, char * name) {
 	this->score = 0;
 	this->isReady = false;
 	this->invulnerable = false;
+	shootRealized = 0;
 }
 
 void Jugador::updateOnClientUserStats(){
@@ -62,16 +63,10 @@ bool Jugador::isOffline() {
 }
 
 void Jugador::shoot(){
-	Message m;
-	m.addCommandCode(SHOOT_PROJECTILE);
-	m.addChar(0);
-	float pX = this->body->GetPosition().x;
-	float pY = this->body->GetPosition().y;
-	m.addFloat(&pX);
-	m.addFloat(&pY);
-	m.addEndChar();
-
-	Data::world->sendToWorldPlayers(&m);
+	if(this->shootRealized < 10){
+		this->shootRealized++;
+		Data::world->playerShooting(this);
+	}
 }
 
 void Jugador::apllyCodes() {
@@ -107,8 +102,12 @@ Jugador *  Jugador::clonePlayer() {
 	return newPlayer;
 }
 
+void Jugador::decreaseShoot(){
+	this->shootRealized --;
+}
+
 void Jugador::deadEvent(){
-	//this->body->SetActive(false); FIXME: rompe las cosas
+	this->body->SetActive(false);
 
 	Message m;
 	m.addCommandCode(SHOW_MESSAGE);
@@ -156,8 +155,12 @@ void Jugador::hit(){
 	this->updateOnClientUserStats();
 
 	if(this->isDead()){
-		this->deadEvent();
+		Data::world->addAfterChange(this);
 	}
+}
+
+void Jugador::change(){
+	this->deadEvent();
 }
 
 void Jugador::evaluateAnimation() {

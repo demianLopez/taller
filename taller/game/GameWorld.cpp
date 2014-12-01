@@ -70,11 +70,18 @@ void GameWorld::update(unsigned int delta) {
 	 return;
 	 }
 	 */
+	for(auto * u : updateList){
+		entityMap[u->index]->addUpdateRequest(u, currentTime);
+	}
+
+	updateList.clear();
 
 	this->afkTime = 0;
 	for (auto entity : this->entityMap) {
 		entity.second->update(delta);
 	}
+
+
 	this->updateMutex.unlock();
 }
 
@@ -82,9 +89,9 @@ void GameWorld::update(unsigned int delta) {
 void GameWorld::addUpdateRequest(UpdateRequest * update) {
 	this->updateMutex.lock();
 
-	entityMap[update->index]->addUpdateRequest(update,
-			Global::game->getElapsedTime());
-
+	//entityMap[update->index]->addUpdateRequest(update, );
+	updateList.push_back(update);
+	//;
 	this->updateMutex.unlock();
 }
 
