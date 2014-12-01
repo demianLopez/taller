@@ -6,6 +6,7 @@
  */
 
 #include <Disparo.h>
+#include "Data.h"
 
 Disparo::Disparo(int index) {
 	onUse = false;
@@ -32,6 +33,25 @@ Disparo::~Disparo() {
 void Disparo::setBox2DDefinitions(b2Body* body, b2Fixture* fixture) {
 	this->body = body;
 	this->fixture = fixture;
+}
+
+void Disparo::destroy(){
+	Data::world->addAfterChange(this);
+}
+
+void Disparo::change(){
+	this->body->SetActive(false);
+	this->shootedBy->decreaseShoot();
+	this->shootedBy = NULL;
+	this->setOnUse(false);
+
+	Message m;
+	m.addCommandCode(ACTIVE_ENTITY);
+	m.addChar(this->index);
+	m.addChar(false);
+	m.addEndChar();
+
+	Data::world->sendToWorldPlayers(&m);
 }
 
 void Disparo::shoot(float pX, float pY, Jugador * shootedBy) {

@@ -441,7 +441,19 @@ void World::playerShooting(Jugador* j) {
 	m.addFloat(&pY);
 	m.addEndChar();
 
-	Data::world->sendToWorldPlayers(&m);
+	this->sendToWorldPlayers(&m);
+}
+
+void World::addAfterChange(B2DAfterChange* ac) {
+	this->afterChangeList.push_back(ac);
+}
+
+void World::realizeAfterChange() {
+	for(auto * ac: afterChangeList){
+		ac->change();
+	}
+
+	afterChangeList.clear();
 }
 
 void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
@@ -575,6 +587,7 @@ void World::worldLoop(World * world) {
 		}
 
 		world->worldStep(sleepTime);
+		world->realizeAfterChange();
 
 
 		if ((updateCount % 1) == 0) {

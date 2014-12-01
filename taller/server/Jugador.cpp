@@ -102,8 +102,12 @@ Jugador *  Jugador::clonePlayer() {
 	return newPlayer;
 }
 
+void Jugador::decreaseShoot(){
+	this->shootRealized --;
+}
+
 void Jugador::deadEvent(){
-	//this->body->SetActive(false); FIXME: rompe las cosas
+	this->body->SetActive(false);
 
 	Message m;
 	m.addCommandCode(SHOW_MESSAGE);
@@ -151,8 +155,12 @@ void Jugador::hit(){
 	this->updateOnClientUserStats();
 
 	if(this->isDead()){
-		this->deadEvent();
+		Data::world->addAfterChange(this);
 	}
+}
+
+void Jugador::change(){
+	this->deadEvent();
 }
 
 void Jugador::evaluateAnimation() {

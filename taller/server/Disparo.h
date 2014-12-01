@@ -10,14 +10,18 @@
 
 #include <Box2D/Box2D.h>
 #include "Jugador.h"
+#include "B2DAfterChange.h"
 
-class Disparo {
+class Disparo : public B2DAfterChange{
 public:
 	Disparo(int index);
 	virtual ~Disparo();
 
 	int getIndex();
 	bool isOnUse();
+	void destroy();
+
+	void change();
 
 	void setBox2DDefinitions(b2Body * body, b2Fixture * fixture);
 
