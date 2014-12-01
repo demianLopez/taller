@@ -584,6 +584,7 @@ void LectorJson::cargarEscenario(const char* rutaArchivo) {
 			return;
 		}
 	} else {
+		this->elEscenario->setActual(rutaArchivo);
 		if (archivoJson.get() != '{') {
 			logger->reportarProblema(
 					"El escenario que se quiere cargar esta corrupto en: Line 1, Column 1. Carga Escenario por defecto.",

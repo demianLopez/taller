@@ -68,6 +68,14 @@ void GestorEscenario::agregarObjeto(string tipo, double posX, double posY,
 	this->objetos.push_back(nuevoObjeto);
 }
 
+void GestorEscenario::setActual(const char* actual){
+	this->escenarioActual = (char*)actual;
+}
+
+char * GestorEscenario::getActual(){
+	return escenarioActual	;
+}
+
 void GestorEscenario::agregarEnemigo(string tipo,double posx,double posy){
 	enemy nuevoEnemigo;
 	nuevoEnemigo.tipo = tipo;
@@ -123,6 +131,12 @@ World * GestorEscenario::obtenerMundo() {
 	world->setMapData(new string(elEscenario.nombreMapa),
 			elEscenario.cantidadJugadores);
 	b2Vec2 SDLCharPos = b2Vec2(elEscenario.personajeX, elEscenario.personajeY);
+
+	world->setNextLevelName((char *)elEscenario.sigNivel.c_str());
+	world->setCurrentLevelName(escenarioActual);
+	world->setMinPlayers(elEscenario.minJug);
+
+
 
 	for (auto objeto : objetos) {
 
