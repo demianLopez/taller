@@ -98,8 +98,6 @@ void World::sendWorldInfo(Client_handler * client){
 	}
 }
 
-
-
 void World::initializeEnemyBody(Enemigo * enemy){
 	double longX = 1.2f;
 	double longY = 1.8f;
@@ -170,7 +168,9 @@ void World::initializePlayerBody(Jugador * player) {
 
 	b2BodyDef body_definition;
 	body_definition.type = b2_dynamicBody;
-	body_definition.position.Set(20, 20);
+
+	int indx = player->getIndex() % 4;
+	body_definition.position.Set(this->playerPos[indx]->x, this->playerPos[indx]->y);
 
 	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);

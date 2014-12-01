@@ -269,7 +269,17 @@ void LectorJson::obtenerEscenario(Value raiz) {
 		double	x_4 = validarDouble("x4", personaje, POSX_D, "personaje");
 		double	y_4 = validarDouble("y4", personaje, POSY_D, "personaje");
 		//}
-		double posiciones[] = {x_1,y_1,x_2,y_2,x_3,y_3,x_4,y_4};
+
+		double * posiciones = new double[8];
+		posiciones[0] = x_1;
+		posiciones[1] = y_1;
+		posiciones[2] = x_2;
+		posiciones[3] = y_3;
+		posiciones[4] = x_3;
+		posiciones[5] = y_3;
+		posiciones[6] = x_4;
+		posiciones[7] = y_4;
+
 		int cantidadJugadores = validarInt("cantidadJugadores", escenario,
 				CANTIDADJUGADORES_D, "escenario");
 		if (cantidadJugadores <= 0)

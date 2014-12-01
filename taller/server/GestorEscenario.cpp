@@ -141,6 +141,8 @@ World * GestorEscenario::obtenerMundo() {
 	world->addPlayerPos(elEscenario.pos[4], elEscenario.pos[5]);
 	world->addPlayerPos(elEscenario.pos[6], elEscenario.pos[7]);
 
+	delete[] elEscenario.pos;
+
 	for(auto enemigo : enemigos){
 
 	}
