@@ -58,7 +58,7 @@ struct objeto {
 };
 
 struct enemy {
-	string tipo;
+	int tipo;
 	double posx;
 	double posy;
 };
@@ -85,7 +85,7 @@ public:
 	Polygon * colocarTrap(objeto figura);
 	rgb obtenerRGB(string color);
 	int calcularColor(char col1, char col2);
-	void agregarEnemigo(string tipo,double posx,double posy);
+	void agregarEnemigo(int tipo,double posx,double posy);
 	void setActual(const char* actual);
 	char* getActual();
 

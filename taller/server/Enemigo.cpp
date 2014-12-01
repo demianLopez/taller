@@ -78,3 +78,9 @@ void Enemigo::evaluateMovement(Jugador* nearPlayer) {
 		this->setMovingRight(false);
 	}
 }
+
+void Enemigo::colocar(int type, double posx, double posy) {
+	this->type = type;
+	this->posx = posx;
+	this->posy = posy;
+}

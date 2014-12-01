@@ -114,7 +114,7 @@ void World::initializeEnemyBody(Enemigo * enemy){
 
 	b2BodyDef body_definition;
 	body_definition.type = b2_dynamicBody;
-	body_definition.position.Set(20, 5);
+	body_definition.position.Set(enemy->getx(),enemy->gety());
 
 	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);

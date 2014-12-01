@@ -19,11 +19,17 @@ public:
 	void evaluateMovement(Jugador * nearPlayer);
 	void evaluateAnimation();
 	bool isDead();
+	int getType(){ return type;};
+	double getx(){ return posx; };
+	double gety(){ return posy; };
+	void colocar(int type,double posx, double posy);
 
 	virtual ~Enemigo();
 private:
 	Move_pattern * movePattern;
-
+	int type;
+	double posx;
+	double posy;
 	bool dead;
 };
 

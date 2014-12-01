@@ -76,7 +76,7 @@ char * GestorEscenario::getActual(){
 	return escenarioActual	;
 }
 
-void GestorEscenario::agregarEnemigo(string tipo,double posx,double posy){
+void GestorEscenario::agregarEnemigo(int tipo,double posx,double posy){
 	enemy nuevoEnemigo;
 	nuevoEnemigo.tipo = tipo;
 	nuevoEnemigo.posx = posx;
@@ -144,7 +144,10 @@ World * GestorEscenario::obtenerMundo() {
 	delete[] elEscenario.pos;
 
 	for(auto enemigo : enemigos){
+		Enemigo * enemy = new Enemigo(NULL);
+		enemy->colocar(enemigo.tipo,enemigo.posx,enemigo.posy);
 
+		world->addEnemy(enemy);
 	}
 
 	for (auto objeto : objetos) {

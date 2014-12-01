@@ -45,8 +45,6 @@ int mainServer() {
 	Data::server = sv;
 	Data::world = w;
 
-	w->addEnemy(new Enemigo(new Standar_movement_strategy()));
-
 	while (commandLoop) {
 		cin >> command;
 
