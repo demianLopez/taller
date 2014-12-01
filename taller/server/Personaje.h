@@ -38,6 +38,7 @@ public:
 	void setListenerTouchingGround(ContactListener *aListener);
 
 	void update();
+	bool atravesandoRampa;
 	/*
 	 Animation * getAnimation(Resources * resources);
 	 */

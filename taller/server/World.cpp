@@ -174,6 +174,8 @@ void World::initializePlayerBody(Jugador * player) {
 
 	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);
+	fixture->SetUserData(
+			new ContactContainer(ContactContainer::JUGADOR, player));
 
 	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 	body->SetFixedRotation(true);
@@ -182,22 +184,12 @@ void World::initializePlayerBody(Jugador * player) {
 
 	b2PolygonShape dynamicBox;
 
-	dynamicBox.SetAsBox(longX, longY);
-
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1;
-	fixtureDef.friction = 0;
-
-	b2Fixture *bodyFixture = body->CreateFixture(&fixtureDef);
-	bodyFixture->SetUserData(
-			new ContactContainer(ContactContainer::JUGADOR, player));
-
 	dynamicBox.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, -longY), 0);
-	fixtureDef.density = 0;
-	bodyFixture->SetSensor(true);
-	fixtureDef.isSensor = true;
-	b2Fixture * footSensor = body->CreateFixture(&fixtureDef);
+	body_fixture.shape = &dynamicBox;
+	body_fixture.density = 0;
+
+	body_fixture.isSensor = true;
+	b2Fixture * footSensor = body->CreateFixture(&body_fixture);
 	footSensor->SetUserData(
 			new ContactContainer(ContactContainer::SENSORDELPIE, player));
 	ContactListener * footListener = new ContactListener();

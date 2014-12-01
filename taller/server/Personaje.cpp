@@ -7,6 +7,7 @@
 Personaje::Personaje() {
 	listenerTouchingGround = NULL;
 	this->currentAnimation = A_STAND_LEFT;
+	this->atravesandoRampa = false;
 }
 
 int Personaje::getIndex() {
@@ -41,7 +42,7 @@ void Personaje::evaluateAnimation() {
 }
 
 void Personaje::jump() {
-	if (listenerTouchingGround->getNumberOfContacts() == 0)
+	if (listenerTouchingGround->getNumberOfContacts() == 0 || this->atravesandoRampa)
 		return; //Esto medio que esta repetido, ya se checkea en SnowBross.
 	b2Vec2 currentVel = this->body->GetLinearVelocity();
 	this->body->SetLinearVelocity(b2Vec2(currentVel.x, movementSpeedY));
