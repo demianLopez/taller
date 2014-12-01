@@ -132,7 +132,7 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	body_fixture.isSensor = true;
 	b2Fixture * footSensor = body->CreateFixture(&body_fixture);
 	footSensor->SetUserData(
-			new ContactContainer(ContactContainer::ENEMY, enemy));
+			new ContactContainer(ContactContainer::SENSORDELPIE, enemy));
 	ContactListener * footListener = new ContactListener();
 
 	enemy->setListenerTouchingGround(footListener);

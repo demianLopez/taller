@@ -93,16 +93,17 @@ void ContactListener::EndContact(b2Contact* contact) {
 	if (first == NULL || second == NULL)
 		return;
 
-	Jugador *aPlayer;
+	Personaje *aPlayer;
+
 	if (first->type == ContactContainer::SENSORDELPIE
 			&& second->type == ContactContainer::POLYGON) {
-		aPlayer = (Jugador*) first->containedThing;
+		aPlayer = (Personaje*) first->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts--;
 		return;
 	}
 	if (first->type == ContactContainer::POLYGON
 			&& second->type == ContactContainer::SENSORDELPIE) {
-		aPlayer = (Jugador*) second->containedThing;
+		aPlayer = (Personaje*) second->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts--;
 		return;
 	}
@@ -110,14 +111,14 @@ void ContactListener::EndContact(b2Contact* contact) {
 	// Atravezar rampas desde abajo
 	if (first->type == ContactContainer::JUGADOR
 			&& second->type == ContactContainer::POLYGON) {
-		aPlayer = (Jugador*) first->containedThing;
+		aPlayer = (Personaje*) first->containedThing;
 		aPlayer->atravesandoRampa = false;
 
 		return;
 	}
 	if (first->type == ContactContainer::POLYGON
 			&& second->type == ContactContainer::JUGADOR) {
-		aPlayer = (Jugador*) second->containedThing;
+		aPlayer = (Personaje*) second->containedThing;
 		aPlayer->atravesandoRampa = false;
 		return;
 	}
