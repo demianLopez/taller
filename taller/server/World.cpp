@@ -110,7 +110,7 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	body_fixture.density = 1;
 	body_fixture.friction = 0.05;
 	body_fixture.filter.categoryBits = 0x0002; // Categoria para evitar que 2 jugadores colisionen.
-	body_fixture.filter.groupIndex = -2;
+	body_fixture.filter.groupIndex = 2;
 
 	b2BodyDef body_definition;
 	body_definition.type = b2_dynamicBody;
@@ -119,30 +119,18 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);
 
+	fixture->SetUserData(
+				new ContactContainer(ContactContainer::ENEMY, enemy));
 	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 	body->SetFixedRotation(true);
 
 	enemy->setBox2DDefinitions(body, fixture);
 
-	b2PolygonShape dynamicBox;
+	box_shape.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, -longY), 0);
+	body_fixture.density = 0;
 
-	dynamicBox.SetAsBox(longX, longY);
-
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1;
-	fixtureDef.friction = 0;
-
-	b2Fixture *bodyFixture = body->CreateFixture(&fixtureDef);
-
-	bodyFixture->SetUserData(
-			new ContactContainer(ContactContainer::ENEMY, enemy));
-
-	dynamicBox.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, -longY), 0);
-	fixtureDef.density = 0;
-	bodyFixture->SetSensor(true);
-	fixtureDef.isSensor = true;
-	b2Fixture * footSensor = body->CreateFixture(&fixtureDef);
+	body_fixture.isSensor = true;
+	b2Fixture * footSensor = body->CreateFixture(&body_fixture);
 	footSensor->SetUserData(
 			new ContactContainer(ContactContainer::ENEMY, enemy));
 	ContactListener * footListener = new ContactListener();
