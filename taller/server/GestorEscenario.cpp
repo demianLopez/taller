@@ -136,7 +136,14 @@ World * GestorEscenario::obtenerMundo() {
 	world->setCurrentLevelName(escenarioActual);
 	world->setMinPlayers(elEscenario.minJug);
 
+	world->addPlayerPos(elEscenario.pos[0], elEscenario.pos[1]);
+	world->addPlayerPos(elEscenario.pos[2], elEscenario.pos[3]);
+	world->addPlayerPos(elEscenario.pos[4], elEscenario.pos[5]);
+	world->addPlayerPos(elEscenario.pos[6], elEscenario.pos[7]);
 
+	for(auto enemigo : enemigos){
+
+	}
 
 	for (auto objeto : objetos) {
 

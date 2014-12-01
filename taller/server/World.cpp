@@ -388,6 +388,10 @@ vector<Enemigo*> World::getEnemyList() {
 	return this->enemyList;
 }
 
+void World::addPlayerPos(float x, float y){
+	this->playerPos.push_back(new b2Vec2(x, y));
+}
+
 void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 	currentLevel->stop();
 	currentLevel->waitWorldThread();

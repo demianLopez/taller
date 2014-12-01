@@ -92,6 +92,9 @@ public:
 	void setCurrentLevelName(char* currentLevelName);
 	void setNextLevelName(char* nextLevelName);
 	void verifyLevelEndConditions();
+
+	void addPlayerPos(float x, float y);
+
 private:
 	void updateTiming(Jugador* j);
 	void updatePolygon(Polygon* p);
@@ -111,6 +114,9 @@ private:
 
 	vector<Jugador*> playerList;
 	vector<Enemigo*> enemyList;
+
+	vector<b2Vec2*> playerPos;
+
 
 	ContactListener* contactListener;
 
