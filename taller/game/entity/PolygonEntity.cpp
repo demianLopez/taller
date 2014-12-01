@@ -117,7 +117,7 @@ void PolygonEntity::initialize() {
 }
 
 void PolygonEntity::buildRectangle(short int * vX, short int * vY) {
-	int tileX = 1;
+	int tileX = 0;
 	int tileY = 0;
 	Image * borderImage = new Image("Resources/tile.png");
 	Graphics * g = GameElements::getGraphicsInstance();
