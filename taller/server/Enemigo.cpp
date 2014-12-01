@@ -12,6 +12,8 @@
 
 #include "../common/CommandCode.h"
 #include "ContactListener.h"
+#include <stdlib.h>
+#include <iostream>
 
 Enemigo::Enemigo(Move_pattern * movePattern) {
 	this->movePattern = movePattern;
@@ -76,6 +78,34 @@ void Enemigo::evaluateMovement(Jugador* nearPlayer) {
 	} else {
 		this->setMovingLeft(false);
 		this->setMovingRight(false);
+	}
+}
+
+void Enemigo::movimientoLoco(){
+	srand (time(NULL));
+	int valor = rand() % 4 ;
+	this->jump();
+	std::cout << this->listenerTouchingGround->getNumberOfContacts() << endl;
+	switch (valor){
+		case 0:
+			this->setMovingRight(false);
+			this->setMovingLeft(true);
+			this->jump();
+			break;
+		case 1:
+			this->setMovingRight(true);
+			this->setMovingLeft(false);
+			this->jump();
+			break;
+		case 2:
+			this->setMovingRight(false);
+			this->setMovingLeft(false);
+			this->jump();
+			break;
+		case 3:
+			this->jump();
+			break;
+
 	}
 }
 
