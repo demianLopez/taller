@@ -442,8 +442,8 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 
 		Message * finalData = new Message();
 		finalData->addCommandCode(INITIALIZE_GRAPHICS);
-		finalData->addChar(player->getPlayerLives());
-		finalData->addChar(player->getPlayerScore());
+		finalData->addChar(nJugador->getPlayerLives());
+		finalData->addChar(nJugador->getPlayerScore());
 		finalData->addEndChar();
 		nJugador->getClient()->send_message(finalData);
 
