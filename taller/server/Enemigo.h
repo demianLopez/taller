@@ -23,6 +23,7 @@ public:
 	double getx(){ return posx; };
 	double gety(){ return posy; };
 	void colocar(int type,double posx, double posy);
+	void movimientoLoco();
 
 	virtual ~Enemigo();
 private:
