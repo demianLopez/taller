@@ -40,21 +40,22 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	// Contacto enemigo/jugador
 	if (first->type == ContactContainer::ENEMY
 			&& second->type == ContactContainer::JUGADOR) {
-		aPlayer = (Jugador*) second->containedThing;
+		aPlayer = (Personaje*) second->containedThing;
 		aPlayer->hit();
 		return;
 	}
 	if (first->type == ContactContainer::JUGADOR
 			&& second->type == ContactContainer::ENEMY) {
-		aPlayer = (Jugador*) first->containedThing;
+		aPlayer = (Personaje*) first->containedThing;
 		aPlayer->hit();
 		return;
 	}
 
 	// Atravezar rampas desde abajo
-	if (first->type == ContactContainer::JUGADOR
+	if ( (first->type == ContactContainer::JUGADOR
+			|| first->type == ContactContainer::ENEMY)
 			&& second->type == ContactContainer::POLYGON) {
-		aPlayer = (Jugador*) first->containedThing;
+		aPlayer = (Personaje*) first->containedThing;
 		aPolygon = (Polygon*) second->containedThing;
 		b2Vec2 velocity = aPlayer->getBody()->GetLinearVelocity();
 		if (velocity.y > 0){
@@ -65,8 +66,9 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		return;
 	}
 	if (first->type == ContactContainer::POLYGON
-			&& second->type == ContactContainer::JUGADOR) {
-		aPlayer = (Jugador*) second->containedThing;
+			&& (second->type == ContactContainer::JUGADOR
+				|| second->type == ContactContainer::ENEMY)) {
+		aPlayer = (Personaje*) second->containedThing;
 		aPolygon = (Polygon*) first->containedThing;
 		b2Vec2 velocity = aPlayer->getBody()->GetLinearVelocity();
 		if(velocity.y > 0){
@@ -105,7 +107,8 @@ void ContactListener::EndContact(b2Contact* contact) {
 	}
 
 	// Atravezar rampas desde abajo
-	if (first->type == ContactContainer::JUGADOR
+	if ( (first->type == ContactContainer::JUGADOR
+			|| first->type == ContactContainer::ENEMY)
 			&& second->type == ContactContainer::POLYGON) {
 		aPlayer = (Personaje*) first->containedThing;
 		aPlayer->atravesandoRampa = false;
@@ -113,7 +116,8 @@ void ContactListener::EndContact(b2Contact* contact) {
 		return;
 	}
 	if (first->type == ContactContainer::POLYGON
-			&& second->type == ContactContainer::JUGADOR) {
+			&& (second->type == ContactContainer::JUGADOR
+				|| second->type == ContactContainer::ENEMY)) {
 		aPlayer = (Personaje*) second->containedThing;
 		aPlayer->atravesandoRampa = false;
 		return;
