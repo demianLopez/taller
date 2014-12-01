@@ -42,16 +42,12 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			&& second->type == ContactContainer::JUGADOR) {
 		aPlayer = (Jugador*) second->containedThing;
 		aPlayer->hit();
-		Personaje *enemigo = (Personaje*) first->containedThing;
-		enemigo->jump();
 		return;
 	}
 	if (first->type == ContactContainer::JUGADOR
 			&& second->type == ContactContainer::ENEMY) {
 		aPlayer = (Jugador*) first->containedThing;
 		aPlayer->hit();
-		Personaje *enemigo = (Personaje*) second->containedThing;
-		enemigo->jump();
 		return;
 	}
 
