@@ -27,6 +27,7 @@ public:
 
 	virtual ~Enemigo();
 private:
+	int patron;
 	Move_pattern * movePattern;
 	int type;
 	double posx;
