@@ -17,6 +17,8 @@ static const char * PLAYER_ANIM_BW_PATH = "Resources/mainCharBW.png";
 static const char * PLAYER_WALK_BW_PATH = "Resources/mainCharWalkBW.png";
 static const char * PLAYER_JUMP_BW_PATH = "Resources/mainCharJumpBW.png";
 static const char * EMOTICONS_PATH = "Resources/balloon-emoticons-go.png";
+static const char * BOSS_ANIM_PATH = "Resources/bos_20.png";
+
 
 Resources::Resources() {
 	this->backgroundImage = NULL;
@@ -169,6 +171,21 @@ void Resources::loadColoredAnimations() {
 	this->topJumpRight->addFrame(this->characterJump->getSubImage(2, 1), 50);
 	this->topJumpRight->addFrame(this->characterJump->getSubImage(1, 1), 50);
 	this->topJumpRight->addFrame(this->characterJump->getSubImage(0, 1), 50);
+
+
+	//enemmigos
+
+	enemigo = new SpriteSheet(BOSS_ANIM_PATH,341,250);
+	this->bossAnimationLeft = new Animation();
+	this->bossAnimationRight = new Animation();
+
+	for (int y = 0 ; y < 4 ; y ++){
+		for (int x = 0 ; x < 3 ; x++){
+			this->bossAnimationLeft->addFrame(
+				this->enemigo->getSubImage(x, y), 900);
+		}
+	}
+
 }
 
 void Resources::loadBWAnimations() {
@@ -390,6 +407,9 @@ Resources::~Resources() {
 	delete this->exclamationAnimation;
 	delete this->heartAnimation;
 	delete this->emoticons;
+
+	delete this->bossAnimationLeft;
+	delete this->enemigo;
 	TTF_CloseFont (nameFonts);
 	TTF_CloseFont (GUI_Font);
 }

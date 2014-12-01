@@ -52,6 +52,11 @@ public:
 	Animation * getHeartAnimation();
 
 	virtual ~Resources();
+
+	Animation* getBossAnimationLeft() const {
+		return bossAnimationLeft;
+	}
+
 private:
 	Image * backgroundImage;
 	/***** Animacion personaje *****/
@@ -95,6 +100,10 @@ private:
 	Animation * sleepingEmoticon;
 	Animation * heartAnimation;
 	Animation * exclamationAnimation;
+
+	SpriteSheet * enemigo;
+	Animation * bossAnimationRight;
+	Animation * bossAnimationLeft;
 
 	TTF_Font * nameFonts;
 	TTF_Font * GUI_Font;
