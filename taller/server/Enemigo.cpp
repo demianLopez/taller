@@ -72,20 +72,21 @@ void Enemigo::evaluateMovement(Jugador* nearPlayer) {
 	if((eX - pX) > 1){
 		this->setMovingRight(false);
 		this->setMovingLeft(true);
+		this->jump();
 	} else if((eX - pX) < -1){
 		this->setMovingLeft(false);
 		this->setMovingRight(true);
+		this->jump();
 	} else {
 		this->setMovingLeft(false);
 		this->setMovingRight(false);
+		this->jump();
 	}
 }
 
 void Enemigo::movimientoLoco(){
 	srand (time(NULL));
-	int valor = rand() % 4 ;
-	this->jump();
-	std::cout << this->listenerTouchingGround->getNumberOfContacts() << endl;
+	int valor = rand() % 8 ;
 	switch (valor){
 		case 0:
 			this->setMovingRight(false);
@@ -103,7 +104,24 @@ void Enemigo::movimientoLoco(){
 			this->jump();
 			break;
 		case 3:
-			this->jump();
+			this->setMovingRight(true);
+			this->setMovingLeft(false);
+			break;
+		case 4:
+			this->setMovingRight(false);
+			this->setMovingLeft(true);
+			break;
+		case 5:
+			this->setMovingRight(true);
+			this->setMovingLeft(false);
+			break;
+		case 6:
+			this->setMovingRight(false);
+			this->setMovingLeft(false);
+			break;
+		case 7:
+			this->setMovingRight(false);
+			this->setMovingLeft(true);
 			break;
 
 	}
