@@ -18,6 +18,7 @@ GameEntity::GameEntity(int index) {
 
 void GameEntity::setActive(bool active){
 	this->active = active;
+	this->setedActive(active);
 }
 
 bool GameEntity::isActive(){

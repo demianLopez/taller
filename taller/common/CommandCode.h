@@ -56,6 +56,10 @@ const AnimationCode A_WALK_RIGHT = 2;
 const AnimationCode A_WALK_LEFT = 3;
 const AnimationCode A_JUMP_RIGHT = 4;
 const AnimationCode A_JUMP_LEFT = 5;
+const AnimationCode SNOW_LEVEL_1 = 6;
+const AnimationCode SNOW_LEVEL_2 = 7;
+const AnimationCode SNOW_LEVEL_3 = 8;
+const AnimationCode SNOW_LEVEL_4 = 9;
 
 const EntityType P_SOLID = 0;
 const EntityType P_RECTANGLE = 1;

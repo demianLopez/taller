@@ -103,7 +103,7 @@ Jugador *  Jugador::clonePlayer() {
 }
 
 void Jugador::decreaseShoot(){
-	this->shootRealized --;
+    	this->shootRealized --;
 }
 
 void Jugador::deadEvent(){

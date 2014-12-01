@@ -40,6 +40,8 @@ World::World(b2Vec2* gravity) {
 		this->projectileList.push_back(p);
 		this->initializeProjectile(p);
 	}
+
+	box2DWorld->SetContactListener(new ContactListener());
 }
 
 
@@ -163,8 +165,6 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	ContactListener * headListener = new ContactListener();
 
 	enemy->setHeadListener(headListener);
-
-	box2DWorld->SetContactListener(new ContactListener());
 }
 
 void World::initializeProjectile(Disparo * projectile){
@@ -186,7 +186,7 @@ void World::initializeProjectile(Disparo * projectile){
 	b2Body * body = this->box2DWorld->CreateBody(&body_definition);
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);
 
-	//fixture->SetUserData(new ContactContainer(ContactContainer::POLYGON, this)); // Para detectar colisiones.
+	fixture->SetUserData(new ContactContainer(ContactContainer::DISPARO_JUGADOR, projectile)); // Para detectar colisiones.
 
 	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 
@@ -250,9 +250,6 @@ void World::initializePlayerBody(Jugador * player) {
 	ContactListener * headListener = new ContactListener();
 
 	player->setHeadListener(headListener);
-
-	box2DWorld->SetContactListener(new ContactListener());
-
 }
 
 Jugador * World::getPlayer(int userIndex) {
@@ -429,6 +426,10 @@ void World::setMinPlayers(int minPlayers){
 void World::nextSecond() {
 	for(auto * p : this->playerList){
 		p->checkStatus();
+	}
+
+	for(auto * e : this->enemyList){
+		e->checkStatus();
 	}
 }
 

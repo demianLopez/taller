@@ -40,6 +40,8 @@ void Disparo::destroy(){
 }
 
 void Disparo::change(){
+
+	if(!this->onUse) { return; }
 	this->body->SetActive(false);
 	this->shootedBy->decreaseShoot();
 	this->shootedBy = NULL;
@@ -52,6 +54,7 @@ void Disparo::change(){
 	m.addEndChar();
 
 	Data::world->sendToWorldPlayers(&m);
+
 }
 
 void Disparo::shoot(float pX, float pY, Jugador * shootedBy) {

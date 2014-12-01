@@ -1,6 +1,8 @@
 #include "ContactListener.h"
 #include "ContactContainer.h"
 #include "Jugador.h"
+#include "Disparo.h"
+#include "Enemigo.h"
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -44,13 +46,17 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	if (first->type == ContactContainer::ENEMY
 			&& second->type == ContactContainer::JUGADOR) {
 		aPlayer = (Personaje*) second->containedThing;
-		aPlayer->hit();
+		if(!((Enemigo *) first->containedThing)->isInmovil()){
+			aPlayer->hit();
+		}
 		return;
 	}
 	if (first->type == ContactContainer::JUGADOR
 			&& second->type == ContactContainer::ENEMY) {
 		aPlayer = (Personaje*) first->containedThing;
-		aPlayer->hit();
+		if(!((Enemigo *) second->containedThing)->isInmovil()){
+			aPlayer->hit();
+		}
 		return;
 	}
 
@@ -91,6 +97,31 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		if (canGoThrough(aPlayer, aPolygon)){
 			contact->SetEnabled(false);
 			aPlayer->atravesandoRampa = true;
+		}
+
+		return;
+	}
+	if(first->type == ContactContainer::DISPARO_JUGADOR || second->type == ContactContainer::DISPARO_JUGADOR){
+		Disparo * disparo;
+		int tipoImpactado;
+		void * objetivo;
+
+		if(first->type == ContactContainer::DISPARO_JUGADOR) {
+			disparo = (Disparo *) first->containedThing;
+			tipoImpactado = second->type;
+			objetivo = second->containedThing;
+		} else {
+			disparo = (Disparo *) second->containedThing;
+			tipoImpactado = first->type;
+			objetivo = first->containedThing;
+		}
+
+		disparo->destroy();
+
+		if(tipoImpactado == ContactContainer::ENEMY){
+			Enemigo * e;
+			e = (Enemigo *) objetivo;
+			e->hit();
 		}
 
 		return;

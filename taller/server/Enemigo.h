@@ -24,6 +24,8 @@ public:
 	double gety(){ return posy; };
 	void colocar(int type,double posx, double posy);
 	void movimientoLoco();
+	void checkStatus();
+	bool isInmovil();
 
 	virtual ~Enemigo();
 private:
@@ -33,6 +35,10 @@ private:
 	double posx;
 	double posy;
 	bool dead;
+
+	bool inmovil;
+	int timeInmovil;
+	int nivelNieve;
 };
 
 #endif /* ENEMIGO_H_ */

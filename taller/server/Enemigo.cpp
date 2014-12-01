@@ -24,8 +24,36 @@ Enemigo::Enemigo(Move_pattern * movePattern) {
 bool Enemigo::isDead(){
 	return this->dead;
 }
+//esto se llama cada 1 segundo!
+void Enemigo::checkStatus(){
+	if(this->inmovil){
+		this->timeInmovil --;
+
+		if(this->timeInmovil == 0){
+			this->nivelNieve = 0;
+			this->inmovil = false;
+		}
+	}
+}
 
 void Enemigo::hit() {
+	this->timeInmovil = 5;
+	this->nivelNieve ++;
+	if(!inmovil){
+		inmovil = true;
+
+
+		if(nivelNieve > 4){
+			nivelNieve = 4;
+		}
+
+		this->setMovingLeft(false);
+		this->setMovingRight(false);
+	}
+}
+
+bool Enemigo::isInmovil(){
+	return this->inmovil;
 }
 
 void Enemigo::evaluateAnimation() {
@@ -67,6 +95,10 @@ Enemigo::~Enemigo() {
 }
 
 void Enemigo::evaluateMovement(Jugador* nearPlayer) {
+	if(inmovil) {
+		return;
+	}
+
 	float eX = this->body->GetPosition().x;
 	float pX = nearPlayer->getPosition()->x;
 
@@ -86,6 +118,9 @@ void Enemigo::evaluateMovement(Jugador* nearPlayer) {
 }
 
 void Enemigo::movimientoLoco(){
+	if(inmovil) {
+		return;
+	}
 	srand (time(NULL));
 	int valor = rand() % 8 ;
 	//if (valor == this->patron){

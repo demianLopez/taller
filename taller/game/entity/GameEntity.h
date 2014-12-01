@@ -39,6 +39,7 @@ public:
 	void setActive(bool active);
 private:
 	int entityIndex;
+	virtual void setedActive(bool active) { };
 
 protected:
 	VectorXY position;

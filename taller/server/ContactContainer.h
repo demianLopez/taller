@@ -15,6 +15,7 @@ public:
 	static const int SENSORDELPIE = 3;
 	static const int ENEMY = 4;
 	static const int SENSORDELACABEZA = 5;
+	static const int DISPARO_JUGADOR = 6;
 
 	int type;
 	void *containedThing;

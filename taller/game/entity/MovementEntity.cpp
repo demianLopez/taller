@@ -18,7 +18,10 @@ MovementEntity::MovementEntity(int index) : GameEntity(index) {
 	firstUpdate = false;
 }
 
-
+void MovementEntity::setedActive(bool active){
+	this->lastPosition = position;
+	this->nextPosition = position;
+}
 
 void MovementEntity::setAnimation(AnimationCode animation) {
 	this->animation = animation;

@@ -27,6 +27,8 @@ public:
 
 	virtual ~MovementEntity();
 private:
+	void setedActive(bool active);
+
 	std::queue<int> updateTime;
 	std::queue<UpdateRequest *> updateRequest;
 
