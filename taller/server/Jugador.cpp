@@ -62,16 +62,7 @@ bool Jugador::isOffline() {
 }
 
 void Jugador::shoot(){
-	Message m;
-	m.addCommandCode(SHOOT_PROJECTILE);
-	m.addChar(0);
-	float pX = this->body->GetPosition().x;
-	float pY = this->body->GetPosition().y;
-	m.addFloat(&pX);
-	m.addFloat(&pY);
-	m.addEndChar();
-
-	Data::world->sendToWorldPlayers(&m);
+	Data::world->playerShooting(this);
 }
 
 void Jugador::apllyCodes() {

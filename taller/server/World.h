@@ -80,7 +80,7 @@ public:
 
 	bool isWaitingForPlayers();
 
-
+	void playerShooting(Jugador * j);
 
 	void sendWorldInfo(Client_handler* client);
 	void checkPlayerCount();
@@ -99,14 +99,15 @@ public:
 private:
 	void updateTiming(Jugador* j);
 	void updatePolygon(Polygon* p);
+	void updateProjectile(Disparo * p);
 	void updatePeople(Jugador* p);
 	void updateEnemy(Enemigo* e);
 
 	void sendUpdates();
 
 	void initializePlayerBody(Jugador* player);
-
 	void initializeEnemyBody(Enemigo * enemy);
+	void initializeProjectile(Disparo * projectile);
 
 	bool wordLoop;
 	bool isRestarting;
