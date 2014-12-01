@@ -18,6 +18,7 @@
 Enemigo::Enemigo(Move_pattern * movePattern) {
 	this->movePattern = movePattern;
 	this->dead = false;
+	this->patron = 0;
 }
 
 bool Enemigo::isDead(){
@@ -87,6 +88,9 @@ void Enemigo::evaluateMovement(Jugador* nearPlayer) {
 void Enemigo::movimientoLoco(){
 	srand (time(NULL));
 	int valor = rand() % 8 ;
+	//if (valor == this->patron){
+		//valor++;
+	//}
 	switch (valor){
 		case 0:
 			this->setMovingRight(false);
@@ -123,8 +127,12 @@ void Enemigo::movimientoLoco(){
 			this->setMovingRight(false);
 			this->setMovingLeft(true);
 			break;
-
+		default:
+			this->setMovingRight(true);
+			this->setMovingLeft(false);
+			break;
 	}
+	this->patron = valor;
 }
 
 void Enemigo::colocar(int type, double posx, double posy) {
