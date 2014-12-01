@@ -432,7 +432,7 @@ void World::playerShooting(Jugador* j) {
 	float pX = j->getPosition()->x;
 	float pY = j->getPosition()->y;
 
-	pLibre->shoot(pX, pY, j->estaMirandoParaLaDerecha());
+	pLibre->shoot(pX, pY, j);
 
 	Message m;
 	m.addCommandCode(SHOOT_PROJECTILE);
@@ -577,7 +577,7 @@ void World::worldLoop(World * world) {
 		world->worldStep(sleepTime);
 
 
-		if ((updateCount % 2) == 0) {
+		if ((updateCount % 1) == 0) {
 			world->sendUpdates();
 		}
 		updateCount++;

@@ -15,6 +15,7 @@ Jugador::Jugador(Client_handler * client, char * name) {
 	this->score = 0;
 	this->isReady = false;
 	this->invulnerable = false;
+	shootRealized = 0;
 }
 
 void Jugador::updateOnClientUserStats(){
@@ -62,7 +63,10 @@ bool Jugador::isOffline() {
 }
 
 void Jugador::shoot(){
-	Data::world->playerShooting(this);
+	if(this->shootRealized < 10){
+		this->shootRealized++;
+		Data::world->playerShooting(this);
+	}
 }
 
 void Jugador::apllyCodes() {

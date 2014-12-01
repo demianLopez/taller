@@ -72,8 +72,9 @@ private:
 	GameEntity * mainEntity;
 
 	bool waitingForPlayers;
-
 	int afkTime;
+
+	std::vector<UpdateRequest *> updateList;
 };
 
 #endif /* GAMEWORLD_H_ */

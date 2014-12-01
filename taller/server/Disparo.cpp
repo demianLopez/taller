@@ -34,15 +34,18 @@ void Disparo::setBox2DDefinitions(b2Body* body, b2Fixture* fixture) {
 	this->fixture = fixture;
 }
 
-void Disparo::shoot(float pX, float pY, bool right) {
+void Disparo::shoot(float pX, float pY, Jugador * shootedBy) {
 	this->body->SetTransform(b2Vec2(pX, pY), 0);
 	this->body->SetActive(true);
 
-	if(right){
+	this->shootedBy = shootedBy;
+
+	if(shootedBy->estaMirandoParaLaDerecha()){
 		body->ApplyLinearImpulse(b2Vec2(10, 0), body->GetWorldCenter(), true);
 	} else {
 		body->ApplyLinearImpulse(b2Vec2(-10, 0), body->GetWorldCenter(), true);
 	}
+
 	this->setOnUse(true);
 }
 

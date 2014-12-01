@@ -9,6 +9,7 @@
 #define DISPARO_H_
 
 #include <Box2D/Box2D.h>
+#include "Jugador.h"
 
 class Disparo {
 public:
@@ -23,7 +24,7 @@ public:
 	b2Vec2 * getPosition();
 	float getRotation();
 
-	void shoot(float pX, float pY, bool right);
+	void shoot(float pX, float pY, Jugador * shootedBy);
 
 	void setOnUse(bool onUse);
 private:
@@ -32,6 +33,8 @@ private:
 
 	b2Body * body;
 	b2Fixture * fixture;
+
+	Jugador * shootedBy;
 };
 
 #endif /* DISPARO_H_ */

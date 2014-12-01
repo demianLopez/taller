@@ -44,6 +44,8 @@ public:
 	int lives;
 	int score;
 
+	int shootRealized;
+
 	mutex playerBusy;
 
 	int keyRequestSend;
