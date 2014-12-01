@@ -165,9 +165,9 @@ void Jugador::change(){
 
 void Jugador::evaluateAnimation() {
 	if (this->mirandoParaLaDerecha) {
-		if (this->isOnAir()
-				&& this->getListenerTouchingGround()->getNumberOfContacts()
-						== 0) {
+		if (this->isOnAir() &&
+		((this->getListenerTouchingGround()->getNumberOfContacts() == 0) ||
+		  this->atravesandoRampa) ) {
 			currentAnimation = A_JUMP_RIGHT;
 			return;
 		}
@@ -181,8 +181,9 @@ void Jugador::evaluateAnimation() {
 		return;
 	}
 
-	if (this->isOnAir()
-			&& this->getListenerTouchingGround()->getNumberOfContacts() == 0) {
+	if (this->isOnAir() &&
+	((this->getListenerTouchingGround()->getNumberOfContacts() == 0) ||
+	  this->atravesandoRampa) ) {
 		currentAnimation = A_JUMP_LEFT;
 		return;
 	}
