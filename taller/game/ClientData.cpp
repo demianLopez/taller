@@ -11,6 +11,7 @@
 #include "entity/PolygonEntity.h"
 #include "entity/PlayerEntity.h"
 #include "entity/EnemyEntity.h"
+#include "entity/ProjectileEntity.h"
 #include "../common/UpdateRequest.h"
 
 ClientData::ClientData() {
@@ -78,6 +79,13 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		return cCode;
 	}
 
+	if(cCode == ACTIVE_ENTITY){
+		int entityNumber = m->getChar();
+		bool active = m->getChar();
+		Global::gameWorld->searchEntity(entityNumber)->setActive(active);
+		return cCode;
+	}
+
 	if (cCode == UPDATE_TIMING) {
 		char timing = m->getChar();
 		Global::serverUpdateTiming = timing;
@@ -88,6 +96,18 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		char * serverName;
 		char l = m->getCharArray(&serverName);
 		Global::mainMenu->setServerInfo(serverName, m->getChar(), m->getChar());
+		return cCode;
+	}
+
+	if(cCode == SHOOT_PROJECTILE){
+		int indx = m->getChar();
+		float posX = m->getFloat();
+		float posY = m->getFloat();
+
+		GameEntity * gE = Global::gameWorld->searchEntity(indx);
+		gE->setPosition(posX, posY);
+		gE->setActive(true);
+
 		return cCode;
 	}
 
@@ -172,6 +192,18 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 
 		pEnt->setWorld(Global::gameWorld);
 		Global::gameWorld->addEntity(pEnt);
+		return cCode;
+	}
+
+	if(cCode == INSTANTIATE_PROJECTILES){
+		int nMin = m->getChar();
+		int nMax = m->getChar();
+
+		for(int i = nMin; i <= nMax; i++){
+			ProjectileEntity * p = new ProjectileEntity(i);
+			p->setActive(false);
+			Global::gameWorld->addEntity(p);
+		}
 		return cCode;
 	}
 

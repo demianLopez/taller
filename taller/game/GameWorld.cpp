@@ -44,16 +44,12 @@ void GameWorld::setMainEntity(int index) {
 }
 
 GameEntity * GameWorld::searchEntity(int index) {
-	//this->updateMutex.lock();
 	return this->entityMap[index];
-	//this->updateMutex.unlock();
 }
 
 /* Agrega un GameEntity. */
 void GameWorld::addEntity(GameEntity * entity) {
-	this->updateMutex.lock();
 	this->entityMap[entity->getIndex()] = entity;
-	this->updateMutex.unlock();
 }
 
 /* Realiza los updates. */
@@ -79,7 +75,6 @@ void GameWorld::update(unsigned int delta) {
 	for (auto entity : this->entityMap) {
 		entity.second->update(delta);
 	}
-
 	this->updateMutex.unlock();
 }
 

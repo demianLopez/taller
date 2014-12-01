@@ -156,7 +156,9 @@ void LevelState::render(Graphics *g, Game * game, unsigned int delta) {
 
 	map<int, GameEntity *> entityMap = this->gameWorld->getEntityMap();
 	for (auto e : entityMap) {
-		e.second->render(g, delta);
+		if(e.second->isActive()){
+			e.second->render(g, delta);
+		}
 	}
 
 	g->drawAtCenter(true);
@@ -283,6 +285,9 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 			break;
 		case SDLK_UP:
 			this->keyCodeData.push_back(JUMP);
+			break;
+		case SDLK_SPACE:
+			this->keyCodeData.push_back(SPACE);
 			break;
 		case SDLK_z:
 		case SDLK_KP_MINUS:

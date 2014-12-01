@@ -13,6 +13,7 @@
 #include "Enemigo.h"
 #include "Jugador.h"
 #include "polygons/Polygon.h"
+#include "Disparo.h"
 
 class Projectile;
 
@@ -116,7 +117,7 @@ private:
 	vector<Enemigo*> enemyList;
 
 	vector<b2Vec2*> playerPos;
-
+	vector<Disparo*> projectileList;
 
 	ContactListener* contactListener;
 

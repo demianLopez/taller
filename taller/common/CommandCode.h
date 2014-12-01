@@ -38,6 +38,9 @@ const CommandCode END_LEVEL = 21;
 const CommandCode PLAYER_READY = 22;
 const CommandCode ADD_ENEMY_DATA = 23;
 const CommandCode UPDATE_ENEMY_ENTITY = 24;
+const CommandCode ACTIVE_ENTITY = 25;
+const CommandCode INSTANTIATE_PROJECTILES = 26;
+const CommandCode SHOOT_PROJECTILE = 27;
 
 const KeyCode MOVE_LEFT_DOWN = 0;
 const KeyCode MOVE_RIGHT_DOWN = 1;
@@ -45,6 +48,7 @@ const KeyCode JUMP = 2;
 const KeyCode NOTHING = 3;
 const KeyCode MOVE_LEFT_UP = 4;
 const KeyCode MOVE_RIGHT_UP = 5;
+const KeyCode SPACE = 6;
 
 const AnimationCode A_STAND_RIGHT = 0;
 const AnimationCode A_STAND_LEFT = 1;

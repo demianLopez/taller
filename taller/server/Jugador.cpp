@@ -61,6 +61,19 @@ bool Jugador::isOffline() {
 	return offline;
 }
 
+void Jugador::shoot(){
+	Message m;
+	m.addCommandCode(SHOOT_PROJECTILE);
+	m.addChar(0);
+	float pX = this->body->GetPosition().x;
+	float pY = this->body->GetPosition().y;
+	m.addFloat(&pX);
+	m.addFloat(&pY);
+	m.addEndChar();
+
+	Data::world->sendToWorldPlayers(&m);
+}
+
 void Jugador::apllyCodes() {
 	for (auto code : keyCode) {
 		switch (code) {
@@ -78,6 +91,9 @@ void Jugador::apllyCodes() {
 			break;
 		case JUMP:
 			this->jump();
+			break;
+		case SPACE:
+			this->shoot();
 			break;
 		}
 	}

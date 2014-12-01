@@ -34,6 +34,10 @@ World::World(b2Vec2* gravity) {
 	this->lastEntityIndex = 0;
 	this->waitingPlayers = true;
 	this->isRestarting = false;
+
+	for(int i = 0; i < 40; i++){
+		this->projectileList.push_back(new Disparo(this->getAvavibleIndex()));
+	}
 }
 
 bool World::isWaitingForPlayers(){
@@ -96,6 +100,14 @@ void World::sendWorldInfo(Client_handler * client){
 	for(auto * e : enemyList){
 		this->instantiateEnemy(e, client);
 	}
+
+	Message p;
+	p.addCommandCode(INSTANTIATE_PROJECTILES);
+	p.addChar(projectileList[0]->getIndex());
+	p.addChar(projectileList[projectileList.size() - 1]->getIndex());
+	p.addEndChar();
+
+	client->send_message(&p);
 }
 
 void World::initializeEnemyBody(Enemigo * enemy){
@@ -627,6 +639,11 @@ World::~World() {
 		delete polygon;
 	}
 
+	for(auto * d : projectileList){
+		delete d;
+	}
+
+	projectileList.clear();
 	polygonList.clear();
 }
 

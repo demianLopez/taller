@@ -13,6 +13,15 @@ GameEntity::GameEntity(int index) {
 	this->position = VectorXY(0, 0);
 	this->gameWorld = nullptr;
 	this->type = 0;
+	this->active = true;
+}
+
+void GameEntity::setActive(bool active){
+	this->active = active;
+}
+
+bool GameEntity::isActive(){
+	return this->active;
 }
 
 VectorXY GameEntity::getPosition() {

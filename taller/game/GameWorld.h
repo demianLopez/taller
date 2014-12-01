@@ -67,6 +67,7 @@ private:
 	std::map<int, GameEntity *> entityMap;
 
 	std::mutex updateMutex;
+	std::mutex entityMutex;
 
 	GameEntity * mainEntity;
 

@@ -24,6 +24,8 @@ public:
 	virtual void addUpdateRequest(UpdateRequest * u,
 			unsigned int currentTime) = 0;
 
+	bool isActive();
+
 	void setRotation(float rotation);
 
 	void setWorld(GameWorld * gameWorld);
@@ -34,6 +36,7 @@ public:
 	void setType(EntityType type);
 
 	int getIndex();
+	void setActive(bool active);
 private:
 	int entityIndex;
 
@@ -43,6 +46,8 @@ protected:
 	float rotation;
 
 	EntityType type;
+
+	bool active;
 
 };
 

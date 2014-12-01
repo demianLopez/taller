@@ -18,6 +18,8 @@ MovementEntity::MovementEntity(int index) : GameEntity(index) {
 	firstUpdate = false;
 }
 
+
+
 void MovementEntity::setAnimation(AnimationCode animation) {
 	this->animation = animation;
 }
