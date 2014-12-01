@@ -1,7 +1,6 @@
 #include "ContactListener.h"
 #include "ContactContainer.h"
 #include "Jugador.h"
-#include "polygons/Polygon.h"
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -9,6 +8,10 @@ using std::endl;
 
 ContactListener::ContactListener() {
 	numberOfContacts = 0;
+}
+
+bool canGoThrough(Personaje* aPlayer, Polygon* aPolygon){
+	return aPlayer->getHeadListener()->isHeadTouching(aPolygon);
 }
 
 void ContactListener::BeginContact(b2Contact* contact) {
@@ -52,13 +55,27 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	}
 
 	// Atravezar rampas desde abajo
+	if (first->type == ContactContainer::SENSORDELACABEZA
+			&& second->type == ContactContainer::POLYGON) {
+		aPlayer = (Personaje*) first->containedThing;
+		aPolygon = (Polygon*) second->containedThing;
+		aPlayer->getHeadListener()->addHeadContact(aPolygon);
+		return;
+	}
+	if (first->type == ContactContainer::POLYGON
+				&& second->type == ContactContainer::SENSORDELACABEZA) {
+			aPlayer = (Personaje*) second->containedThing;
+			aPolygon = (Polygon*) first->containedThing;
+			aPlayer->getHeadListener()->addHeadContact(aPolygon);
+			return;
+	}
 	if ( (first->type == ContactContainer::JUGADOR
 			|| first->type == ContactContainer::ENEMY)
 			&& second->type == ContactContainer::POLYGON) {
 		aPlayer = (Personaje*) first->containedThing;
 		aPolygon = (Polygon*) second->containedThing;
-		b2Vec2 velocity = aPlayer->getBody()->GetLinearVelocity();
-		if (velocity.y > 0){
+
+		if (canGoThrough(aPlayer, aPolygon)){
 			contact->SetEnabled(false);
 			aPlayer->atravesandoRampa = true;
 		}
@@ -70,8 +87,8 @@ void ContactListener::BeginContact(b2Contact* contact) {
 				|| second->type == ContactContainer::ENEMY)) {
 		aPlayer = (Personaje*) second->containedThing;
 		aPolygon = (Polygon*) first->containedThing;
-		b2Vec2 velocity = aPlayer->getBody()->GetLinearVelocity();
-		if(velocity.y > 0){
+
+		if (canGoThrough(aPlayer, aPolygon)){
 			contact->SetEnabled(false);
 			aPlayer->atravesandoRampa = true;
 		}
@@ -92,6 +109,7 @@ void ContactListener::EndContact(b2Contact* contact) {
 		return;
 
 	Personaje *aPlayer;
+	Polygon *aPolygon;
 
 	if (first->type == ContactContainer::SENSORDELPIE
 			&& second->type == ContactContainer::POLYGON) {
@@ -107,6 +125,20 @@ void ContactListener::EndContact(b2Contact* contact) {
 	}
 
 	// Atravezar rampas desde abajo
+	if (first->type == ContactContainer::SENSORDELACABEZA
+			&& second->type == ContactContainer::POLYGON) {
+		aPlayer = (Personaje*) first->containedThing;
+		aPolygon = (Polygon*) second->containedThing;
+		aPlayer->getHeadListener()->removeHeadContact(aPolygon);
+		return;
+	}
+	if (first->type == ContactContainer::POLYGON
+				&& second->type == ContactContainer::SENSORDELACABEZA) {
+			aPlayer = (Personaje*) second->containedThing;
+			aPolygon = (Polygon*) first->containedThing;
+			aPlayer->getHeadListener()->removeHeadContact(aPolygon);
+			return;
+	}
 	if ( (first->type == ContactContainer::JUGADOR
 			|| first->type == ContactContainer::ENEMY)
 			&& second->type == ContactContainer::POLYGON) {
@@ -128,3 +160,16 @@ void ContactListener::EndContact(b2Contact* contact) {
 int ContactListener::getNumberOfContacts() {
 	return numberOfContacts;
 }
+
+void ContactListener::addHeadContact(Polygon* aPolygon){
+	polygonsInContact[aPolygon] = true;
+}
+
+bool ContactListener::isHeadTouching(Polygon* aPolygon){
+	return !(polygonsInContact.find(aPolygon) == polygonsInContact.end());
+}
+
+void ContactListener::removeHeadContact(Polygon* aPolygon){
+	polygonsInContact.erase(aPolygon);
+}
+

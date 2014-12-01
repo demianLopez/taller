@@ -15,6 +15,7 @@ class Resources;
 class Personaje: public CosaConMovimiento {
 protected:
 	ContactListener *listenerTouchingGround;
+	ContactListener *headListener;
 	AnimationCode currentAnimation;
 public:
 	Personaje();
@@ -36,6 +37,9 @@ public:
 
 	ContactListener* getListenerTouchingGround();
 	void setListenerTouchingGround(ContactListener *aListener);
+
+	ContactListener* getHeadListener();
+	void setHeadListener(ContactListener *aListener);
 
 	void update();
 	bool atravesandoRampa;

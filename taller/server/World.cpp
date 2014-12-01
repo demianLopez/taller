@@ -148,6 +148,19 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	ContactListener * footListener = new ContactListener();
 
 	enemy->setListenerTouchingGround(footListener);
+
+	box_shape.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, longY), 0);
+	body_fixture.shape = &box_shape;
+	body_fixture.density = 0;
+
+	body_fixture.isSensor = true;
+	b2Fixture * headSensor = body->CreateFixture(&body_fixture);
+	headSensor->SetUserData(
+			new ContactContainer(ContactContainer::SENSORDELACABEZA, enemy));
+	ContactListener * headListener = new ContactListener();
+
+	enemy->setHeadListener(headListener);
+
 	box2DWorld->SetContactListener(new ContactListener());
 }
 
@@ -195,6 +208,19 @@ void World::initializePlayerBody(Jugador * player) {
 	ContactListener * footListener = new ContactListener();
 
 	player->setListenerTouchingGround(footListener);
+
+	dynamicBox.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, longY), 0);
+	body_fixture.shape = &dynamicBox;
+	body_fixture.density = 0;
+
+	body_fixture.isSensor = true;
+	b2Fixture * headSensor = body->CreateFixture(&body_fixture);
+	headSensor->SetUserData(
+			new ContactContainer(ContactContainer::SENSORDELACABEZA, player));
+	ContactListener * headListener = new ContactListener();
+
+	player->setHeadListener(headListener);
+
 	box2DWorld->SetContactListener(new ContactListener());
 
 }

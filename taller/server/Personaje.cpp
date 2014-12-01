@@ -37,6 +37,14 @@ void Personaje::setListenerTouchingGround(ContactListener *aListener) {
 	listenerTouchingGround = aListener;
 }
 
+ContactListener* Personaje::getHeadListener(){
+	return headListener;
+}
+
+void Personaje::setHeadListener(ContactListener *aListener){
+	headListener = aListener;
+}
+
 void Personaje::evaluateAnimation() {
 // redefinir en cada personaje
 }
