@@ -26,7 +26,10 @@ public:
 	void movimientoLoco();
 	void checkStatus();
 	bool isInmovil();
+	bool kicked();
+	void tryKick();
 
+	float getRotation();
 	virtual ~Enemigo();
 private:
 	int patron;
@@ -39,6 +42,8 @@ private:
 	bool inmovil;
 	int timeInmovil;
 	int nivelNieve;
+
+	bool pateado;
 };
 
 #endif /* ENEMIGO_H_ */

@@ -4,6 +4,7 @@
 #include "../common/Message.h"
 #include "../common/CommandCode.h"
 #include "Data.h"
+#include "Enemigo.h"
 // Inicializa Jugador.
 Jugador::Jugador(Client_handler * client, char * name) {
 	this->client = client;
@@ -16,6 +17,7 @@ Jugador::Jugador(Client_handler * client, char * name) {
 	this->isReady = false;
 	this->invulnerable = false;
 	shootRealized = 0;
+	this->enemy = NULL;
 }
 
 void Jugador::updateOnClientUserStats(){
@@ -26,6 +28,10 @@ void Jugador::updateOnClientUserStats(){
 	m.addEndChar();
 
 	this->client->send_message(&m);
+}
+
+void Jugador::touchingEnemy(Enemigo * enemy){
+	this->enemy = enemy;
 }
 
 int Jugador::getPlayerLives(){
@@ -63,6 +69,9 @@ bool Jugador::isOffline() {
 }
 
 void Jugador::shoot(){
+	if(this->enemy != NULL){
+		enemy->tryKick();
+	}
 	if(this->shootRealized < 10){
 		this->shootRealized++;
 		Data::world->playerShooting(this);

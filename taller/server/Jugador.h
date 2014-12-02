@@ -9,6 +9,8 @@
 #include <mutex>
 #include "B2DAfterChange.h"
 
+class Enemigo;
+
 using std::vector;
 using std::mutex;
 
@@ -32,11 +34,14 @@ private:
 
 	void shoot();
 
+	Enemigo * enemy;
+
 	/*
 	 const float VELOCIDAD_MAXIMA_BUFF_X = VELOCIDAD_MAXIMA_DEFAULT_X * 1.5;
 	 */
 
 public:
+	void touchingEnemy(Enemigo * enemigo);
 	void updateOnClientUserStats();
 	Jugador * clonePlayer();
 

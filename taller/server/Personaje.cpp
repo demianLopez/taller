@@ -8,6 +8,7 @@ Personaje::Personaje() {
 	listenerTouchingGround = NULL;
 	this->currentAnimation = A_STAND_LEFT;
 	this->atravesandoRampa = false;
+	this->activeUpdate = true;
 }
 
 int Personaje::getIndex() {
@@ -69,6 +70,9 @@ void Personaje::setEntityIndex(int index) {
 }
 
 void Personaje::update() {
+	if(!activeUpdate){
+		return;
+	}
 	//cout << "cantidad de contactos: " << listenerTouchingGround->getNumberOfContacts() << endl;
 	b2Vec2 currentVel = this->body->GetLinearVelocity();
 

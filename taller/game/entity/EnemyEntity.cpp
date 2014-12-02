@@ -28,7 +28,7 @@ void EnemyEntity::render(Graphics* g, unsigned int delta) {
 	}
 	Image * snowBall = Global::gameResources->getSnowBalLevel(animation);
 	if(snowBall != NULL){
-		g->drawImage(snowBall, sdlPos.x, sdlPos.y);
+		g->drawImage(snowBall, sdlPos.x, sdlPos.y, -57 * rotation);
 	}
 	g->drawAtCenter(false);
 }

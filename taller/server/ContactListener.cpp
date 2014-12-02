@@ -25,19 +25,19 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	if (first == NULL || second == NULL)
 		return;
 
-	Personaje *aPlayer;
+	Jugador *aPlayer;
 	Polygon *aPolygon;
 
 	// Para ver si puede saltar
 	if (first->type == ContactContainer::SENSORDELPIE
 			&& second->type == ContactContainer::POLYGON) {
-		aPlayer = (Personaje*) first->containedThing;
+		aPlayer = (Jugador*) first->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts++;
 		return;
 	}
 	if (first->type == ContactContainer::POLYGON
 			&& second->type == ContactContainer::SENSORDELPIE) {
-		aPlayer = (Personaje*) second->containedThing;
+		aPlayer = (Jugador*) second->containedThing;
 		aPlayer->getListenerTouchingGround()->numberOfContacts++;
 		return;
 	}
@@ -45,32 +45,37 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	// Contacto enemigo/jugador
 	if (first->type == ContactContainer::ENEMY
 			&& second->type == ContactContainer::JUGADOR) {
-		aPlayer = (Personaje*) second->containedThing;
-		if(!((Enemigo *) first->containedThing)->isInmovil()){
+		aPlayer = (Jugador *) second->containedThing;
+		Enemigo * enemy = (Enemigo *)first->containedThing;
+		if(!enemy->isInmovil()){
 			aPlayer->hit();
 		}
+
+		aPlayer->touchingEnemy(enemy);
 		return;
 	}
 	if (first->type == ContactContainer::JUGADOR
 			&& second->type == ContactContainer::ENEMY) {
-		aPlayer = (Personaje*) first->containedThing;
-		if(!((Enemigo *) second->containedThing)->isInmovil()){
+		aPlayer = (Jugador*) first->containedThing;
+		Enemigo * enemy = (Enemigo *)second->containedThing;
+		if(!enemy->isInmovil()){
 			aPlayer->hit();
 		}
+		aPlayer->touchingEnemy(enemy);
 		return;
 	}
 
 	// Atravezar rampas desde abajo
 	if (first->type == ContactContainer::SENSORDELACABEZA
 			&& second->type == ContactContainer::POLYGON) {
-		aPlayer = (Personaje*) first->containedThing;
+		aPlayer = (Jugador*) first->containedThing;
 		aPolygon = (Polygon*) second->containedThing;
 		aPlayer->getHeadListener()->addHeadContact(aPolygon);
 		return;
 	}
 	if (first->type == ContactContainer::POLYGON
 				&& second->type == ContactContainer::SENSORDELACABEZA) {
-			aPlayer = (Personaje*) second->containedThing;
+			aPlayer = (Jugador*) second->containedThing;
 			aPolygon = (Polygon*) first->containedThing;
 			aPlayer->getHeadListener()->addHeadContact(aPolygon);
 			return;
@@ -78,7 +83,7 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	if ( (first->type == ContactContainer::JUGADOR
 			|| first->type == ContactContainer::ENEMY)
 			&& second->type == ContactContainer::POLYGON) {
-		aPlayer = (Personaje*) first->containedThing;
+		aPlayer = (Jugador*) first->containedThing;
 		aPolygon = (Polygon*) second->containedThing;
 
 		if (canGoThrough(aPlayer, aPolygon)){
@@ -91,7 +96,7 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	if (first->type == ContactContainer::POLYGON
 			&& (second->type == ContactContainer::JUGADOR
 				|| second->type == ContactContainer::ENEMY)) {
-		aPlayer = (Personaje*) second->containedThing;
+		aPlayer = (Jugador*) second->containedThing;
 		aPolygon = (Polygon*) first->containedThing;
 
 		if (canGoThrough(aPlayer, aPolygon)){
@@ -170,6 +175,16 @@ void ContactListener::EndContact(b2Contact* contact) {
 			aPlayer->getHeadListener()->removeHeadContact(aPolygon);
 			return;
 	}
+	if (first->type == ContactContainer::ENEMY
+			&& second->type == ContactContainer::JUGADOR) {
+		Jugador *p = (Jugador *) second->containedThing;
+		p->touchingEnemy(NULL);
+	}
+	if (first->type == ContactContainer::JUGADOR
+			&& second->type == ContactContainer::ENEMY) {
+		Jugador *p = (Jugador *) first->containedThing;
+		p->touchingEnemy(NULL);
+	}
 	if ( (first->type == ContactContainer::JUGADOR
 			|| first->type == ContactContainer::ENEMY)
 			&& second->type == ContactContainer::POLYGON) {
@@ -185,7 +200,6 @@ void ContactListener::EndContact(b2Contact* contact) {
 		aPlayer->atravesandoRampa = false;
 		return;
 	}
-
 }
 
 int ContactListener::getNumberOfContacts() {

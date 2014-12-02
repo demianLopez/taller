@@ -17,6 +17,8 @@ protected:
 	ContactListener *listenerTouchingGround;
 	ContactListener *headListener;
 	AnimationCode currentAnimation;
+
+	bool activeUpdate;
 public:
 	Personaje();
 	virtual ~Personaje();

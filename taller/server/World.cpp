@@ -122,12 +122,17 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	b2PolygonShape box_shape;
 	box_shape.SetAsBox(longX, longY); //seteo los vertices del poligono
 
+	b2CircleShape circle_shape;
+	float32 radius = 1.0;
+	circle_shape.m_radius = radius;
+
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &box_shape;
 	body_fixture.density = 1;
 	body_fixture.friction = 0.05;
 	body_fixture.filter.categoryBits = 0x0002; // Categoria para evitar que 2 jugadores colisionen.
 	body_fixture.filter.groupIndex = 2;
+
 
 	b2BodyDef body_definition;
 	body_definition.type = b2_dynamicBody;
@@ -165,6 +170,34 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	ContactListener * headListener = new ContactListener();
 
 	enemy->setHeadListener(headListener);
+}
+
+void World::initializeEnemySnowBall(Enemigo * enemy){
+
+	b2CircleShape circle_shape;
+	float32 radius = 1.9;
+	circle_shape.m_radius = radius;
+
+	b2FixtureDef body_fixture;
+	body_fixture.shape = &circle_shape;
+	body_fixture.density = 0.5;
+	body_fixture.friction = 0.5;
+	body_fixture.filter.categoryBits = 0x0002; // Categoria para evitar que 2 jugadores colisionen.
+	body_fixture.filter.groupIndex = 2;
+
+
+	b2BodyDef body_definition;
+	body_definition.type = b2_dynamicBody;
+	body_definition.position.Set(enemy->getx(),enemy->gety());
+
+	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
+	b2Fixture *fixture = body->CreateFixture(&body_fixture);
+
+	fixture->SetUserData(
+				new ContactContainer(ContactContainer::ENEMY, enemy));
+	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
+
+	enemy->setBox2DDefinitions(body, fixture);
 }
 
 void World::initializeProjectile(Disparo * projectile){
@@ -732,6 +765,8 @@ void World::updateEnemy(Enemigo * e){
 	m.addChar(e->getIndex());
 	m.addFloat(&e->getPosition()->x);
 	m.addFloat(&e->getPosition()->y);
+	float rotation = e->getRotation();
+	m.addFloat(&rotation);
 	m.addAnimationCode(e->getCurrentAnimation());
 	m.addEndChar();
 

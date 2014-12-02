@@ -100,6 +100,10 @@ public:
 	void addAfterChange(B2DAfterChange * ac);
 	void realizeAfterChange();
 
+	//La unica solucion que encuentro al patear al enemigo es borrar todo  su cuerpo y armar
+	//uno nuevo
+	void initializeEnemySnowBall(Enemigo * enemy);
+
 private:
 	void updateTiming(Jugador* j);
 	void updatePolygon(Polygon* p);
@@ -111,6 +115,7 @@ private:
 
 	void initializePlayerBody(Jugador* player);
 	void initializeEnemyBody(Enemigo * enemy);
+
 	void initializeProjectile(Disparo * projectile);
 
 	bool wordLoop;

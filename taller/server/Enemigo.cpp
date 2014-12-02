@@ -14,19 +14,49 @@
 #include "ContactListener.h"
 #include <stdlib.h>
 #include <iostream>
+#include "Data.h"
 
 Enemigo::Enemigo(Move_pattern * movePattern) {
 	this->movePattern = movePattern;
 	this->dead = false;
 	this->patron = 0;
+	this->nivelNieve = 0;
+	this->inmovil = false;
+	this->pateado = false;
+	this->timeInmovil = 0;
 }
 
 bool Enemigo::isDead(){
 	return this->dead;
 }
+
+void Enemigo::tryKick(){
+	if(this->nivelNieve == 4){
+		pateado = true;
+		this->posx = this->body->GetPosition().x;
+		this->posy = this->body->GetPosition().y;
+		this->body->DestroyFixture(this->fixture);
+		Data::world->getBox2DWorld()->DestroyBody(this->body);
+		Data::world->initializeEnemySnowBall(this);
+		this->activeUpdate = false;
+	}
+}
+
+bool Enemigo::kicked(){
+	return pateado;
+}
+
+float Enemigo::getRotation(){
+	if(pateado){
+		return this->body->GetAngle();
+	}
+
+	return 0;
+}
+
 //esto se llama cada 1 segundo!
 void Enemigo::checkStatus(){
-	if(this->inmovil){
+	if(this->inmovil && !pateado){
 		this->timeInmovil --;
 
 		if(this->timeInmovil == 0){
@@ -42,13 +72,12 @@ void Enemigo::hit() {
 	if(!inmovil){
 		inmovil = true;
 
-
-		if(nivelNieve > 4){
-			nivelNieve = 4;
-		}
-
 		this->setMovingLeft(false);
 		this->setMovingRight(false);
+	}
+
+	if(nivelNieve > 4){
+		nivelNieve = 4;
 	}
 }
 
