@@ -57,6 +57,23 @@ bool Enemigo::isInmovil(){
 }
 
 void Enemigo::evaluateAnimation() {
+	if(this->inmovil){
+		switch(nivelNieve){
+			case 1:
+				currentAnimation = SNOW_LEVEL_1;
+				break;
+			case 2:
+				currentAnimation = SNOW_LEVEL_2;
+				break;
+			case 3:
+				currentAnimation = SNOW_LEVEL_3;
+				break;
+			case 4:
+				currentAnimation = SNOW_LEVEL_4;
+		}
+		return;
+	}
+
 	if (this->mirandoParaLaDerecha) {
 		if (this->isOnAir()
 				&& this->getListenerTouchingGround()->getNumberOfContacts()

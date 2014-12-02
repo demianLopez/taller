@@ -18,6 +18,8 @@ static const char * PLAYER_WALK_BW_PATH = "Resources/mainCharWalkBW.png";
 static const char * PLAYER_JUMP_BW_PATH = "Resources/mainCharJumpBW.png";
 static const char * EMOTICONS_PATH = "Resources/balloon-emoticons-go.png";
 static const char * BOSS_ANIM_PATH = "Resources/bos_20.png";
+static const char * ENEMY1_SPRITE = "Resources/enemy1.png";
+static const char * SNOWBALL_LEVELS = "Resources/snowballLevels.png";
 
 
 Resources::Resources() {
@@ -52,6 +54,27 @@ Animation * Resources::getPlayerAnimationLeft() {
 
 Animation * Resources::getPlayerAnimationRight() {
 	return this->characterAnimationRight;
+}
+
+Animation * Resources::getEnemyAnimationByCode(AnimationCode animationCode){
+	switch (animationCode) {
+	case A_STAND_RIGHT:
+		return this->enemyStaticRight;
+	case A_STAND_LEFT:
+		return this->enemyStaticLeft;
+	case A_WALK_RIGHT:
+		return this->enemyWalkRight;
+		break;
+	case A_WALK_LEFT:
+		return this->enemyWalkLeft;
+		break;
+	case A_JUMP_RIGHT:
+		return this->enemyAirRight;
+	case A_JUMP_LEFT:
+		return this->enemyAirLeft;
+	}
+
+	return this->enemyOnSnowBall;
 }
 
 Animation * Resources::getAnimationByAnimationCode(AnimationCode animationCode,
@@ -186,6 +209,60 @@ void Resources::loadColoredAnimations() {
 		}
 	}
 
+	//ENEMY 1
+
+	enemy1Sprite = new SpriteSheet(ENEMY1_SPRITE, 88,98);
+
+	enemyWalkRight = new Animation();
+	enemyWalkRight->addFrame(enemy1Sprite->getSubImage(4,1), 75);
+	enemyWalkRight->addFrame(enemy1Sprite->getSubImage(5,1), 75);
+	enemyWalkRight->addFrame(enemy1Sprite->getSubImage(6,1), 75);
+
+	enemyWalkLeft = new Animation();
+	enemyWalkLeft->addFrame(enemy1Sprite->getSubImage(0,0), 75);
+	enemyWalkLeft->addFrame(enemy1Sprite->getSubImage(1,0), 75);
+	enemyWalkLeft->addFrame(enemy1Sprite->getSubImage(2,0), 75);
+
+	enemyStaticLeft = new Animation();
+	enemyStaticLeft->addFrame(enemy1Sprite->getSubImage(3,0), 1000);
+
+	enemyStaticRight = new Animation();
+	enemyStaticRight->addFrame(enemy1Sprite->getSubImage(3,1), 1000);
+
+	enemyAirLeft = new Animation();
+	enemyAirLeft->addFrame(enemy1Sprite->getSubImage(4, 0), 1000);
+
+	enemyAirRight = new Animation();
+	enemyAirRight->addFrame(enemy1Sprite->getSubImage(2, 1), 1000);
+
+	enemyOnSnowBall = new Animation();
+	enemyOnSnowBall->addFrame(enemy1Sprite->getSubImage(5, 0), 75);
+	enemyOnSnowBall->addFrame(enemy1Sprite->getSubImage(6, 0), 75);
+
+	snowBallLevels = new SpriteSheet(SNOWBALL_LEVELS, 76, 76);
+	snowBallLevel1 = snowBallLevels->getSubImage(0, 0);
+	snowBallLevel2 = snowBallLevels->getSubImage(1, 0);
+	snowBallLevel3 = snowBallLevels->getSubImage(2, 0);
+	snowBallLevel4 = snowBallLevels->getSubImage(3, 0);
+}
+
+Image* Resources::getSnowBalLevel(AnimationCode snowBallLevel) {
+	switch(snowBallLevel){
+		case SNOW_LEVEL_1:
+			return snowBallLevel1;
+			break;
+		case SNOW_LEVEL_2:
+			return snowBallLevel2;
+			break;
+		case SNOW_LEVEL_3:
+			return snowBallLevel3;
+			break;
+		case SNOW_LEVEL_4:
+			return snowBallLevel4;
+			break;
+	}
+
+	return NULL;
 }
 
 void Resources::loadBWAnimations() {
@@ -407,6 +484,23 @@ Resources::~Resources() {
 	delete this->exclamationAnimation;
 	delete this->heartAnimation;
 	delete this->emoticons;
+
+	delete enemyWalkRight;
+	delete enemyWalkLeft;
+	delete enemyStaticLeft;
+	delete enemyStaticRight;
+	delete enemyAirLeft;
+	delete enemyAirRight;
+	delete enemyOnSnowBall;
+
+	delete enemy1Sprite;
+
+	delete snowBallLevel1;
+	delete snowBallLevel2;
+	delete snowBallLevel3;
+	delete snowBallLevel4;
+
+	delete snowBallLevels;
 
 	//delete this->bossAnimationLeft;
 	//delete this->enemigo;

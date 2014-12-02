@@ -41,6 +41,10 @@ public:
 	Animation * getAnimationByAnimationCode(AnimationCode animationCode,
 			bool offline = false);
 
+	Animation * getEnemyAnimationByCode(AnimationCode animationCode);
+
+	Image * getSnowBalLevel(AnimationCode snowBallLevel);
+
 	Animation * getSleepingEmoticon();
 	Animation * getExclamationAnimation();
 
@@ -95,6 +99,24 @@ private:
 	Animation * topJumpRightBW;
 	Animation * topJumpLeftBW;
 	/***** Fin animacion personaje*****/
+	/*Enemigos*/
+
+	SpriteSheet * enemy1Sprite;
+	Animation * enemyWalkRight;
+	Animation * enemyWalkLeft;
+	Animation * enemyStaticLeft;
+	Animation * enemyStaticRight;
+	Animation * enemyAirLeft;
+	Animation * enemyAirRight;
+	Animation * enemyOnSnowBall;
+
+	SpriteSheet * snowBallLevels;
+	Image * snowBallLevel1;
+	Image * snowBallLevel2;
+	Image * snowBallLevel3;
+	Image * snowBallLevel4;
+
+
 
 	SpriteSheet * emoticons;
 	Animation * sleepingEmoticon;

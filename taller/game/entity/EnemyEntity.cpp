@@ -21,9 +21,15 @@ EnemyEntity::EnemyEntity(int index) : MovementEntity(index) {
 void EnemyEntity::render(Graphics* g, unsigned int delta) {
 	g->drawAtCenter(true);
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
-	g->drawAnimation(
-		Global::gameResources->getAnimationByAnimationCode(animation),
-		sdlPos.x, sdlPos.y);
+	if(animation != SNOW_LEVEL_4){
+		g->drawAnimation(
+				Global::gameResources->getEnemyAnimationByCode(this->animation),
+				sdlPos.x, sdlPos.y);
+	}
+	Image * snowBall = Global::gameResources->getSnowBalLevel(animation);
+	if(snowBall != NULL){
+		g->drawImage(snowBall, sdlPos.x, sdlPos.y);
+	}
 	g->drawAtCenter(false);
 }
 
