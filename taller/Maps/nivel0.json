@@ -1,6 +1,6 @@
 {
 	"escenario": {
-		"nombreMapa": "Un lindo mapa de SnowBros",
+		"nombreMapa": "Snowbross-Nivel-0",
 		"siguienteNivel": "Maps/nivel1.json",
 		"minJugadores": 1,
 		"cantidadJugadores": 4,
@@ -10,93 +10,141 @@
 		"anchoun": 80,
 		"imagen_fondo": "Resources/font1.png",
 		"personaje": {
-			"x1": 20.0,
-			"y1": 20.0,
-			"x2": 30.0,
-			"y2": 40.0,
-			"x3": 20.0,
-			"y3": 10.0,
-			"x4": 40.0,
-			"y4": 10.0
+			"x1": 5.0,
+			"y1": 2.0,
+			"x2": 70.0,
+			"y2": 2.0,
+			"x3": 15.0,
+			"y3": 25.0,
+			"x4": 55.0,
+			"y4": 25.0
 		},
 		"enemigos": [
 			{
-				"tipo": "e1",
-				"posx": 2.0,
+				"tipo": 1,
+				"posx": 25.0,
 				"posy": 4.0
+			},
+			{
+				"tipo": 1,
+				"posx": 35.0,
+				"posy": 4.0
+			},
+			{
+				"tipo": 1,
+				"posx": 3.0,
+				"posy": 30.0
+			},
+			{
+				"tipo": 1,
+				"posx": 60.0,
+				"posy": 30.0
 			}
 			],
 		"objetos": [
 			{
 				"tipo": "rect",
 				"x": 5, 
-				"y": 20.0, 
+				"y": 15.0, 
 				"color": "#FF00FF",
 				"rot": 0.0, 
 				"masa": 1.0, 
-				"estatico": false,
+				"estatico": true,
 				"ancho": 8.0,
 				"alto": 2.8 
 			}, 
 			{
 				"tipo": "rect",
-				"x": 23.5, 
-				"y": 19.3, 
+				"x": 20.0, 
+				"y": 15.0, 
 				"color": "#000033",
 				"rot": 0.0, 
 				"masa": 1.0, 
 				"estatico": true,
-				"ancho": 15.0,
+				"ancho": 8.0,
 				"alto": 2.8 
 			},
 			{
 				"tipo": "rect",
-				"x": 23.5, 
-				"y": 10.3, 
+				"x": 35.0, 
+				"y": 15.0, 
 				"color": "#000033",
 				"rot": 0.0, 
 				"masa": 1.0, 
 				"estatico": true,
-				"ancho": 15.0,
+				"ancho": 8.0,
 				"alto": 2.8 
 			},
-			{ 
-				"tipo": "paral",
-				"x": 36.0, 
-				"y": 24.3,
-				"color": "#000033", 
-				"rot": 270.0, 
-				"masa": 2.0, 
-				"estatico": true, 
-				"base": 2.8,
-				"alto": 10.0,
-				"angulo": -45.0
-			}, 
 			{
 				"tipo": "rect",
-				"x": 48.4, 
-				"y": 29.5, 
+				"x": 50.0, 
+				"y": 15.0, 
 				"color": "#000033",
 				"rot": 0.0, 
 				"masa": 1.0, 
 				"estatico": true,
-				"ancho": 15.0,
+				"ancho": 8.0,
 				"alto": 2.8
 			}, 
-			{ 
-				"tipo": "circ", 
-				"x": 45.0, 
-				"y": 50.0, 
-				"color": "#FF0000", 
-				"rot": 90.0, 
-				"masa": 2.0, 
-				"estatico": false,
-				"radio": 1.9
-			}, 
 			{
 				"tipo": "rect",
-				"x": 68.5, 
-				"y": 29.35, 
+				"x": 65.0, 
+				"y": 15.0, 
+				"color": "#000033",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 8.0,
+				"alto": 2.8 
+			},
+			{
+				"tipo": "rect",
+				"x": 80.0, 
+				"y": 15.0, 
+				"color": "#000033",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 8.0,
+				"alto": 2.8 
+			},
+			{
+				"tipo": "rect",
+				"x": 15.0, 
+				"y": 28.0, 
+				"color": "#000033",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 20.0,
+				"alto": 2.8 
+			},
+			{
+				"tipo": "rect",
+				"x": 40.0, 
+				"y": 28.0, 
+				"color": "#000033",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 20.0,
+				"alto": 2.8 
+			},
+			{
+				"tipo": "rect",
+				"x": 65.0, 
+				"y": 28.0, 
+				"color": "#000033",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 20.0,
+				"alto": 2.8 
+			},
+			{
+				"tipo": "rect",
+				"x": 25.0, 
+				"y": 40.0, 
 				"color": "#000033",
 				"rot": 0.0, 
 				"masa": 1.0, 
@@ -106,49 +154,59 @@
 			},
 			{
 				"tipo": "rect",
-				"x": 0.0, 
-				"y": 0.0, 
+				"x": 60.0, 
+				"y": 40.0, 
 				"color": "#000033",
 				"rot": 0.0, 
 				"masa": 1.0, 
 				"estatico": true,
-				"ancho": 180.0,
-				"alto": 0.01 
+				"ancho": 10.0,
+				"alto": 2.8 
 			},
 			{
 				"tipo": "rect",
-				"x": -0.1, 
-				"y": 0.0, 
-				"color": "#FFFFFF",
-				"rot": 90.0, 
-				"masa": 1.0, 
-				"estatico": true,
-				"ancho": 180.0,
-				"alto": 0.01 
-			},
-			{
-				"tipo": "rect",
-				"x": 80.1, 
-				"y": 0.0, 
-				"color": "#FFFFFF",
-				"rot": 90.0, 
-				"masa": 1.0, 
-				"estatico": true,
-				"ancho": 180.0,
-				"alto": 0.01 
-			}, 		 		     
-			{ 
-				"tipo": "poli", 
-				"x": 17.0, 
-				"y": 50.0, 
-				"radio": 3.5, 
-				"escala": 3.0,
-				"color": "#FF00FF", 
+				"x": 1.0, 
+				"y": 1.5, 
+				"color": "#000033",
 				"rot": 0.0, 
-				"masa": 2.0, 
-				"estatico": false,
-				"lados": 3
-			}		
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 60.0,
+				"alto": 2.8 
+			},
+			{
+				"tipo": "rect",
+				"x": 60.0, 
+				"y": 1.5, 
+				"color": "#000033",
+				"rot": 0.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 60.0,
+				"alto": 2.8 
+			},
+			{
+				"tipo": "rect",
+				"x": 0.0, 
+				"y": 0.0, 
+				"color": "#FFFFFF",
+				"rot": 90.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 180.0,
+				"alto": 0.01 
+			},
+			{
+				"tipo": "rect",
+				"x": 80.0, 
+				"y": 0.0, 
+				"color": "#FFFFFF",
+				"rot": 90.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 180.0,
+				"alto": 0.01 
+			}
 		] 
 	} 
 }

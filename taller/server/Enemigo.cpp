@@ -24,6 +24,7 @@ Enemigo::Enemigo(Move_pattern * movePattern) {
 	this->inmovil = false;
 	this->pateado = false;
 	this->timeInmovil = 0;
+	this->movementSpeedX -= 10;
 }
 
 bool Enemigo::isDead(){
