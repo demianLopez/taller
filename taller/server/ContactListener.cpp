@@ -154,6 +154,11 @@ void ContactListener::BeginContact(b2Contact* contact) {
 				impactado->golpeadoPorBola(enemy);
 				break;
 			}
+
+			case ContactContainer::JUGADOR: {
+				enemy->seLlevoAJugador((Jugador *)otroObjetivo);
+				break;
+			}
 		}
 
 		return;

@@ -18,6 +18,8 @@ Jugador::Jugador(Client_handler * client, char * name) {
 	this->invulnerable = false;
 	shootRealized = 0;
 	this->enemy = NULL;
+	this->enBolaDeNieve = false;
+	this->acabaDePatear = false;
 }
 
 void Jugador::enableSuperSpeed(){
@@ -37,6 +39,12 @@ void Jugador::updateOnClientUserStats(){
 
 void Jugador::touchingEnemy(Enemigo * enemy){
 	this->enemy = enemy;
+}
+
+void Jugador::golpeadoPorBola(Enemigo * e){
+	this->enBolaDeNieve = true;
+	this->enemigoBolaDeNieve = e;
+	Data::world->addAfterChange(this);
 }
 
 int Jugador::getPlayerLives(){
@@ -73,9 +81,57 @@ bool Jugador::isOffline() {
 	return offline;
 }
 
+void Jugador::jumpSnowBall(){
+	int indx = this->getIndex();
+
+	float posX = this->enemigoBolaDeNieve->getPosition()->x;
+	float posY = this->enemigoBolaDeNieve->getPosition()->y;
+
+	Message m;
+	m.addCommandCode(FORCE_POSITION);
+	m.addChar(indx);
+	m.addFloat(&posX);
+	m.addFloat(&posY);
+	m.addChar(false);
+	m.addEndChar();
+
+	Data::world->sendToWorldPlayers(&m);
+
+	Message c;
+	c.addCommandCode(LOCK_CAMERA_ENTITY);
+	c.addChar(indx);
+	c.addEndChar();
+
+	this->client->send_message(&c);
+	this->body->SetActive(true);
+	this->body->SetTransform(b2Vec2(posX, posY), 0);
+
+	Message p;
+
+	p.addCommandCode(ACTIVE_ENTITY);
+	p.addChar(this->getIndex());
+	p.addChar(true);
+	p.addEndChar();
+
+	Data::world->sendToWorldPlayers(&p);
+
+	this->enBolaDeNieve = false;
+	this->enemigoBolaDeNieve = NULL;
+
+
+
+}
+
 void Jugador::shoot(){
+	if(enBolaDeNieve){
+		this->acabaDePatear = true;
+		enemigoBolaDeNieve->salioDeBola(this);
+		this->jumpSnowBall();
+		return;
+	}
 	if(this->enemy != NULL){
 		enemy->tryKick(this);
+		return;
 	}
 	if(this->shootRealized < 10){
 		this->shootRealized++;
@@ -222,6 +278,30 @@ void Jugador::hit(){
 }
 
 void Jugador::change(){
+	if(enBolaDeNieve){
+		this->body->SetActive(false);
+
+		Message p;
+
+		p.addCommandCode(ACTIVE_ENTITY);
+		p.addChar(this->getIndex());
+		p.addChar(false);
+		p.addEndChar();
+
+		Data::world->sendToWorldPlayers(&p);
+
+
+		Message c;
+		c.addCommandCode(LOCK_CAMERA_ENTITY);
+		c.addChar(this->enemigoBolaDeNieve->getIndex());
+		c.addEndChar();
+
+		this->client->send_message(&c);
+
+		return;
+
+	}
+
 	if(this->afterB2DEvent == 1){
 		this->deadEvent();
 	} else {

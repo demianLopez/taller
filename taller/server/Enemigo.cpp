@@ -28,6 +28,19 @@ Enemigo::Enemigo() {
 	this->shooted = false;
 }
 
+void Enemigo::salioDeBola(Jugador * j){
+	playerContainer.erase(std::remove(playerContainer.begin(), playerContainer.end(), j), playerContainer.end());
+}
+
+void Enemigo::seLlevoAJugador(Jugador* j){
+	if(j->acabaDePatear){
+		j->acabaDePatear = false;
+		return;
+	}
+	this->playerContainer.push_back(j);
+	j->golpeadoPorBola(this);
+}
+
 bool Enemigo::isDead(){
 	return this->dead;
 }
@@ -45,6 +58,7 @@ void Enemigo::tryKick(Jugador * kickerPlayer){
 		this->activeUpdate = false;
 
 		this->kickedBy = kickerPlayer;
+		kickedBy->acabaDePatear = true;
 
 		if(direction < 0){
 			body->ApplyLinearImpulse(b2Vec2(-60, 0), body->GetWorldCenter(), true);
@@ -203,6 +217,12 @@ void Enemigo::destroyMiSnowBall(){
 	this->kickedBy->score += points;
 	this->kickedBy->updateOnClientUserStats();
 	this->deadEvent();
+
+	for(auto * p : playerContainer){
+		p->jumpSnowBall();
+	}
+
+	playerContainer.clear();
 }
 
 void Enemigo::golpeadoPorBola(Enemigo * e){
@@ -239,8 +259,8 @@ void Enemigo::movimientoLoco(){
 	if(this->type == 1){
 		valor = rand() % 8;
 	} else {
-		//valor = rand() % 9;
-		valor = 8;
+		valor = rand() % 9;
+		//valor = 8;
 	}
 	//if (valor == this->patron){
 		//valor++;

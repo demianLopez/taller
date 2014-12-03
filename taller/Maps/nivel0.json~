@@ -21,7 +21,7 @@
 		},
 		"enemigos": [
 			{
-				"tipo": 2,
+				"tipo": 1,
 				"posx": 25.0,
 				"posy": 4.0
 			},

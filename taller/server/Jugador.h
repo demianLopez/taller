@@ -38,17 +38,27 @@ private:
 
 	Enemigo * enemy;
 
+	bool enBolaDeNieve;
+	Enemigo * enemigoBolaDeNieve;
+
 	/*
 	 const float VELOCIDAD_MAXIMA_BUFF_X = VELOCIDAD_MAXIMA_DEFAULT_X * 1.5;
 	 */
 
 	int superSpeedTime;
 
+
+
 public:
 	void enableSuperSpeed();
+	bool acabaDePatear;
 	void touchingEnemy(Enemigo * enemigo);
 	void updateOnClientUserStats();
 	Jugador * clonePlayer();
+
+	void jumpSnowBall();
+
+	void golpeadoPorBola(Enemigo * e);
 
 	bool isInvulnerable();
 	bool isDead();

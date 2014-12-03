@@ -46,6 +46,9 @@ public:
 	void shoot();
 	void endShoot();
 
+	void seLlevoAJugador(Jugador* j);
+	void salioDeBola(Jugador * j);
+
 private:
 	int patron;
 	Move_pattern * movePattern;
@@ -63,6 +66,8 @@ private:
 	bool pateado;
 
 	vector<Enemigo*> enemyContainer;
+	vector<Jugador*> playerContainer;
+
 	Jugador * kickedBy;
 
 	bool shooted;
