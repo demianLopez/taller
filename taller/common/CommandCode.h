@@ -43,6 +43,7 @@ const CommandCode INSTANTIATE_PROJECTILES = 26;
 const CommandCode SHOOT_PROJECTILE = 27;
 const CommandCode INSTANTIATE_BONUS = 28;
 const CommandCode PUT_BONUS = 29;
+const CommandCode ADD_WATER = 30;
 
 const KeyCode MOVE_LEFT_DOWN = 0;
 const KeyCode MOVE_RIGHT_DOWN = 1;

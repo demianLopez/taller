@@ -16,6 +16,7 @@
 #include "Disparo.h"
 #include "B2DAfterChange.h"
 #include "Item.h"
+#include "Water.h"
 
 class Projectile;
 
@@ -45,6 +46,7 @@ public:
 
 	b2World* getBox2DWorld();
 	vector<Polygon*> getPolygonList();
+	Water* getWater();
 
 	bool isOutOfWorld(b2Vec2 position);
 
@@ -144,6 +146,7 @@ private:
 
 	vector<Polygon*> polygonList;
 	vector<B2DAfterChange*> afterChangeList;
+	Water* myWater;
 
 	//BOX 2D
 	b2World* box2DWorld;

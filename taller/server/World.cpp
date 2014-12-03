@@ -55,6 +55,11 @@ World::World(b2Vec2* gravity) {
 	}
 
 	box2DWorld->SetContactListener(new ContactListener());
+
+	this->myWater = NULL;
+	// LAS SIGUIENTES LINEAS NO VAN, BORRARLAS CUANDO SE CREE BIEN EL AGUA.
+	this->myWater = new Water(88);
+	myWater->setPosition(15,11);
 }
 
 
@@ -162,6 +167,19 @@ void World::sendWorldInfo(Client_handler * client){
 	pe.addChar(1);
 	pe.addEndChar();
 	client->send_message(&pe);
+	
+	if(this->myWater){
+		Message waterMessage;
+		waterMessage.addCommandCode(ADD_WATER);
+		waterMessage.addChar(myWater->getIndex());
+		float x = myWater->getPosition().x;
+		float y = myWater->getPosition().y;
+		waterMessage.addFloat(&x);
+		waterMessage.addFloat(&y);
+		waterMessage.addEndChar();
+
+		client->send_message(&waterMessage);
+	}
 }
 
 void World::initializeEnemyBody(Enemigo * enemy){
@@ -534,6 +552,10 @@ bool World::isOutOfWorld(b2Vec2 position) {
 
 vector<Polygon *> World::getPolygonList() {
 	return this->polygonList;
+}
+
+Water* World::getWater(){
+	return this->myWater;
 }
 
 void World::start() {

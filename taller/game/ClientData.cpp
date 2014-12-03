@@ -13,6 +13,7 @@
 #include "entity/EnemyEntity.h"
 #include "entity/ProjectileEntity.h"
 #include "entity/BonusEntity.h"
+#include "entity/WaterEntity.h"
 #include "../common/UpdateRequest.h"
 
 ClientData::ClientData() {
@@ -206,6 +207,20 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 
 		pEnt->setWorld(Global::gameWorld);
 		Global::gameWorld->addEntity(pEnt);
+		return cCode;
+	}
+
+	if (cCode == ADD_WATER) {
+		int index = m->getChar();
+		float pX = m->getFloat();
+		float pY = m->getFloat();
+
+		WaterEntity * waterEntity = new WaterEntity(index);
+		waterEntity->setPosition(pX, pY);
+
+		waterEntity->setWorld(Global::gameWorld);
+		Global::gameWorld->addEntity(waterEntity);
+
 		return cCode;
 	}
 
