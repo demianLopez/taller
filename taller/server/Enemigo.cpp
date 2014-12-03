@@ -207,7 +207,6 @@ void Enemigo::destroyMiSnowBall(){
 void Enemigo::golpeadoPorBola(Enemigo * e){
 	Data::world->addAfterChange(this);
 	e->addEnemyToList(this);
-	this->deadEvent();
 }
 
 void Enemigo::deadEvent(){
@@ -224,6 +223,7 @@ void Enemigo::change(){
 	m.addEndChar();
 
 	Data::world->sendToWorldPlayers(&m);
+	this->deadEvent();
 }
 
 void Enemigo::movimientoLoco(){

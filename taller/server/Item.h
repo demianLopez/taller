@@ -17,11 +17,15 @@ public:
 	bool isOnMap();
 	void setOnMap(bool onMap);
 	void setBox2DDefinitions(b2Body * body, b2Fixture * fixture);
+
+	void putAt(float posX, float posY, int type);
 	virtual ~Item();
 
 private:
 	int index;
 	bool onMap;
+
+	int type;
 
 	b2Body * body;
 	b2Fixture * fixture;

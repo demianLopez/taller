@@ -78,6 +78,20 @@ b2Vec2 * World::getBox2DWorldSize() {
 
 void World::evaluateBonusCreation(float posX, float posY){
 
+	Item * usableItem = NULL;
+	for(auto * i : bonusList){
+		if(!i->isOnMap()){
+			usableItem = i;
+			break;
+		}
+	}
+
+	if(usableItem == NULL){
+		return;
+	}
+
+	usableItem->putAt(posX, posY, 0);
+
 }
 
 void World::sendWorldInfo(Client_handler * client){
@@ -123,6 +137,15 @@ void World::sendWorldInfo(Client_handler * client){
 	p.addEndChar();
 
 	client->send_message(&p);
+
+	Message b;
+	b.addCommandCode(INSTANTIATE_BONUS);
+	b.addChar(bonusList[0]->getIndex());
+	b.addChar(bonusList[bonusList.size() - 1]->getIndex());
+	b.addEndChar();
+
+	client->send_message(&b);
+
 }
 
 void World::initializeEnemyBody(Enemigo * enemy){

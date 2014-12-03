@@ -127,6 +127,18 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		return cCode;
 	}
 
+	if(cCode == PUT_BONUS){
+		int index = m->getChar();
+		float xPos = m->getFloat();
+		float yPos = m->getFloat();
+		int type = m->getChar();
+
+		BonusEntity * bE = (BonusEntity*) Global::gameWorld->searchEntity(index);
+		bE->putAt(xPos, yPos, type);
+
+		return cCode;
+	}
+
 	if (cCode == INITIALIZE_MAP) {
 		float tX = m->getFloat();
 		float tY = m->getFloat();

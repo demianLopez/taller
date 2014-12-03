@@ -20,7 +20,14 @@ public:
 			unsigned int currentTime);
 	void initialize();
 
+	void putAt(float posX, float posY, int bonusType);
+
+
 	virtual ~BonusEntity();
+private:
+	int type;
+	float posX;
+	float posY;
 };
 
 #endif /* BONUSENTITY_H_ */

@@ -5,7 +5,13 @@
  *      Author: demian
  */
 
-#include <entity/BonusEntity.h>
+#include "BonusEntity.h"
+#include "../../common/UpdateRequest.h"
+#include "../engine/Graphics.h"
+#include "../GameWorld.h"
+#include "../Global.h"
+#include "../Resources.h"
+#include "../VectorXY.h"
 
 BonusEntity::BonusEntity(int index) : GameEntity(index) {
 	// TODO Auto-generated constructor stub
@@ -13,6 +19,13 @@ BonusEntity::BonusEntity(int index) : GameEntity(index) {
 }
 
 void BonusEntity::render(Graphics* g, unsigned int dela) {
+	g->drawAtCenter(true);
+	VectorXY b2DPos = VectorXY(posX, posY);
+	VectorXY sdlPos = this->gameWorld->box2DToSDL(&b2DPos);
+	g->drawAnimation(
+		Global::gameResources->getSleepingEmoticon(),
+		sdlPos.x, sdlPos.y);
+	g->drawAtCenter(false);
 }
 
 void BonusEntity::update(unsigned int delta) {
@@ -22,6 +35,14 @@ void BonusEntity::addUpdateRequest(UpdateRequest* u, unsigned int currentTime) {
 }
 
 void BonusEntity::initialize() {
+}
+
+
+void BonusEntity::putAt(float posX, float posY, int bonusType) {
+	this->posX = posX;
+	this->posY = posY;
+	this->type = bonusType;
+	this->active = true;
 }
 
 BonusEntity::~BonusEntity() {
