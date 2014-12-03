@@ -10,6 +10,7 @@ Personaje::Personaje() {
 	this->atravesandoRampa = false;
 	this->activeUpdate = true;
 	this->superSpeed = false;
+	this->inWater = false;
 }
 
 int Personaje::getIndex() {
@@ -47,11 +48,30 @@ void Personaje::setHeadListener(ContactListener *aListener){
 	headListener = aListener;
 }
 
+void Personaje::enteredWater(){
+	inWater = true;
+}
+
+void Personaje::exitedWater(){
+	inWater = false;
+}
+
+bool Personaje::isInWater(){
+	return inWater;
+}
+
 void Personaje::evaluateAnimation() {
 // redefinir en cada personaje
 }
 
 void Personaje::jump() {
+	if(isInWater()){
+		cout << "jump" << endl;
+		b2Vec2 currentVel = this->body->GetLinearVelocity();
+		this->body->SetLinearVelocity(b2Vec2(currentVel.x, movementSpeedY/3));
+		this->goingUp = true;
+		return;
+	}
 	if (listenerTouchingGround->getNumberOfContacts() == 0 || this->atravesandoRampa)
 		return; //Esto medio que esta repetido, ya se checkea en SnowBross.
 	b2Vec2 currentVel = this->body->GetLinearVelocity();

@@ -21,6 +21,8 @@ protected:
 	bool activeUpdate;
 
 	bool superSpeed;
+
+	bool inWater;
 public:
 	Personaje();
 	virtual ~Personaje();
@@ -44,6 +46,10 @@ public:
 
 	ContactListener* getHeadListener();
 	void setHeadListener(ContactListener *aListener);
+
+	void enteredWater();
+	void exitedWater();
+	bool isInWater();
 
 	void update();
 	bool atravesandoRampa;

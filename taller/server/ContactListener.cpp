@@ -215,8 +215,17 @@ void ContactListener::BeginContact(b2Contact* contact) {
 
 		return;
 	}
+
+
 	if(first->type == ContactContainer::AGUA || second->type == ContactContainer::AGUA){
-		std::cout<<"agua"<<std::endl;
+		if(first->type == ContactContainer::JUGADOR || second->type == ContactContainer::ENEMY){
+			if(first->type == ContactContainer::JUGADOR || first->type == ContactContainer::ENEMY){
+				aPlayer = (Personaje*)first->containedThing;
+			}else{
+				aPlayer = (Personaje*)second->containedThing;
+			}
+			aPlayer->enteredWater();
+		}
 	}
 
 
@@ -288,6 +297,18 @@ void ContactListener::EndContact(b2Contact* contact) {
 		aPlayer->atravesandoRampa = false;
 		return;
 	}
+
+	if(first->type == ContactContainer::AGUA || second->type == ContactContainer::AGUA){
+		if(first->type == ContactContainer::JUGADOR || second->type == ContactContainer::ENEMY){
+			if(first->type == ContactContainer::JUGADOR || first->type == ContactContainer::ENEMY){
+				aPlayer = (Personaje*)first->containedThing;
+			}else{
+				aPlayer = (Personaje*)second->containedThing;
+			}
+			aPlayer->exitedWater();
+		}
+	}
+
 }
 
 int ContactListener::getNumberOfContacts() {
