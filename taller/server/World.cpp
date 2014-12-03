@@ -160,7 +160,7 @@ void World::initializeEnemyBody(Enemigo * enemy){
 
 	enemy->setListenerTouchingGround(footListener);
 
-	box_shape.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, longY), 0);
+	box_shape.SetAsBox(longX - 0.2, 0.8, b2Vec2(0, longY), 0);
 	body_fixture.shape = &box_shape;
 	body_fixture.density = 0;
 
@@ -282,7 +282,7 @@ void World::initializePlayerBody(Jugador * player) {
 
 	player->setListenerTouchingGround(footListener);
 
-	dynamicBox.SetAsBox(longX - 0.2, 0.4, b2Vec2(0, longY), 0);
+	dynamicBox.SetAsBox(longX - 0.2, 0.8, b2Vec2(0, longY), 0);
 	body_fixture.shape = &dynamicBox;
 	body_fixture.density = 0;
 
@@ -635,8 +635,8 @@ void World::worldLoop(World * world) {
 
 		if(world->getPlayerList().size() > 0){
 			for(auto * e : world->getEnemyList()){
-				//e->evaluateMovement(world->getPlayerList()[0]);
-				e->movimientoLoco();
+				e->evaluateMovement(world->getPlayerList()[0]);
+				//e->movimientoLoco();
 				e->update();
 			}
 		}
