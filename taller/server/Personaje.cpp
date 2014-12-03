@@ -103,7 +103,7 @@ void Personaje::update() {
 	if (movingRight) {
 		if (!movingLeft || !wasMovingLeftFirst) {
 			body->ApplyLinearImpulse(
-					b2Vec2(25 - body->GetLinearVelocity().x * 2, 0),
+					b2Vec2(movementSpeedX - body->GetLinearVelocity().x * 2, 0),
 					body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(movementSpeedX, currentVel.y));
 			mirandoParaLaDerecha = true;
 			this->evaluateAnimation();
@@ -113,7 +113,7 @@ void Personaje::update() {
 	if (movingLeft) {
 		if (!movingRight || wasMovingLeftFirst) {
 			body->ApplyLinearImpulse(
-					b2Vec2(-25 - body->GetLinearVelocity().x * 2, 0),
+					b2Vec2(-movementSpeedX - body->GetLinearVelocity().x * 2, 0),
 					body->GetWorldCenter(), true); //this->body->SetLinearVelocity(b2Vec2(-movementSpeedX, currentVel.y));
 			mirandoParaLaDerecha = false;
 			this->evaluateAnimation();
