@@ -58,8 +58,6 @@ World::World(b2Vec2* gravity) {
 
 
 	this->myWater = NULL;
-
-	this->setWater();
 }
 
 Jugador * World::getFirstAlive(){
@@ -208,8 +206,8 @@ void World::sendWorldInfo(Client_handler * client){
 		waterMessage.addChar(myWater->getIndex());
 		float w = myWater->getSize().x * 2;
 		float h = myWater->getSize().y * 2;
-		float x = myWater->getPosition().x - w/2;
-		float y = myWater->getPosition().y - h/2;
+		float x = myWater->getPosition().x;
+		float y = myWater->getPosition().y;
 		waterMessage.addFloat(&x);
 		waterMessage.addFloat(&y);
 		waterMessage.addFloat(&w);
@@ -609,9 +607,9 @@ Water* World::getWater(){
 
 void World::setWater(){
 	float pX = 15.0;
-	float pY = 15.0;
-	float w = 15.0;
-	float h = 15.0;
+	float pY = 8.0;
+	float w = 16.0;
+	float h = 8.0;
 	myWater = new Water(this->getAvavibleIndex());
 	myWater->setPosition(pX, pY, w, h);
 	this->instantiateWater(pX, pY, w, h);

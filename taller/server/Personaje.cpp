@@ -49,10 +49,12 @@ void Personaje::setHeadListener(ContactListener *aListener){
 }
 
 void Personaje::enteredWater(){
+	movementSpeedX -= 10;
 	inWater = true;
 }
 
 void Personaje::exitedWater(){
+	movementSpeedX += 10;
 	inWater = false;
 }
 
@@ -66,9 +68,8 @@ void Personaje::evaluateAnimation() {
 
 void Personaje::jump() {
 	if(isInWater()){
-		cout << "jump" << endl;
 		b2Vec2 currentVel = this->body->GetLinearVelocity();
-		this->body->SetLinearVelocity(b2Vec2(currentVel.x, movementSpeedY/3));
+		this->body->SetLinearVelocity(b2Vec2(currentVel.x, movementSpeedY/2));
 		this->goingUp = true;
 		return;
 	}

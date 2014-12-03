@@ -28,6 +28,27 @@ void ContactListener::BeginContact(b2Contact* contact) {
 
 	Personaje *aPlayer;
 	Polygon *aPolygon;
+	if(first->type == ContactContainer::AGUA || second->type == ContactContainer::AGUA){
+
+
+		void * impactoObjeto;
+		int tipoImpacto;
+
+		if(first->type == ContactContainer::AGUA){
+			impactoObjeto = second->containedThing;
+			tipoImpacto = second->type;
+		} else {
+			impactoObjeto = first->containedThing;
+			tipoImpacto = first->type;
+		}
+
+		switch(tipoImpacto){
+			case ContactContainer::JUGADOR:
+			case ContactContainer::ENEMY:
+				aPlayer = (Personaje*)impactoObjeto;
+				aPlayer->enteredWater();
+		}
+	}
 
 	// Para ver si puede saltar
 	if (first->type == ContactContainer::SENSORDELPIE
@@ -122,7 +143,9 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			objetivo = first->containedThing;
 		}
 
-		disparo->destroy();
+		if(tipoImpactado != ContactContainer::AGUA){
+			disparo->destroy();
+		}
 
 		if(tipoImpactado == ContactContainer::ENEMY){
 			Enemigo * e;
@@ -217,16 +240,7 @@ void ContactListener::BeginContact(b2Contact* contact) {
 	}
 
 
-	if(first->type == ContactContainer::AGUA || second->type == ContactContainer::AGUA){
-		if(first->type == ContactContainer::JUGADOR || second->type == ContactContainer::ENEMY){
-			if(first->type == ContactContainer::JUGADOR || first->type == ContactContainer::ENEMY){
-				aPlayer = (Personaje*)first->containedThing;
-			}else{
-				aPlayer = (Personaje*)second->containedThing;
-			}
-			aPlayer->enteredWater();
-		}
-	}
+
 
 
 
@@ -243,6 +257,28 @@ void ContactListener::EndContact(b2Contact* contact) {
 
 	Personaje *aPlayer;
 	Polygon *aPolygon;
+
+	if(first->type == ContactContainer::AGUA || second->type == ContactContainer::AGUA){
+
+		void * impactoObjeto;
+		int tipoImpacto;
+
+		if(first->type == ContactContainer::AGUA){
+			impactoObjeto = second->containedThing;
+			tipoImpacto = second->type;
+		} else {
+			impactoObjeto = first->containedThing;
+			tipoImpacto = first->type;
+		}
+
+		switch(tipoImpacto){
+			case ContactContainer::JUGADOR:
+			case ContactContainer::ENEMY:
+				aPlayer = (Personaje*)impactoObjeto;
+				aPlayer->exitedWater();
+		}
+	}
+
 
 	if (first->type == ContactContainer::SENSORDELPIE
 			&& second->type == ContactContainer::POLYGON) {
@@ -298,16 +334,6 @@ void ContactListener::EndContact(b2Contact* contact) {
 		return;
 	}
 
-	if(first->type == ContactContainer::AGUA || second->type == ContactContainer::AGUA){
-		if(first->type == ContactContainer::JUGADOR || second->type == ContactContainer::ENEMY){
-			if(first->type == ContactContainer::JUGADOR || first->type == ContactContainer::ENEMY){
-				aPlayer = (Personaje*)first->containedThing;
-			}else{
-				aPlayer = (Personaje*)second->containedThing;
-			}
-			aPlayer->exitedWater();
-		}
-	}
 
 }
 

@@ -75,7 +75,6 @@ void LevelState::exit(Game * game) {
 
 	delete this->lightAnimation;
 	delete this->spriteLightAnimation;
-	delete this->gameWorld;
 	delete this->backParticleEmiter;
 	delete this->frontParticleEmiter;
 	delete this->worldImage;
