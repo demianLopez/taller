@@ -20,9 +20,10 @@ void WaterEntity::initialize(){
 
 void WaterEntity::render(Graphics * g, unsigned int dela){
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
+	VectorXY sdlSize = this->gameWorld->box2DToSDLSize(&size);
 
 	g->drawAtCenter(true);
-	g->drawImage(this->waterImage, sdlPos.x, sdlPos.y);
+	g->drawImage(this->waterImage, sdlPos.x, sdlPos.y, sdlSize.x, sdlSize.y);
 	g->drawAtCenter(false);
 }
 
