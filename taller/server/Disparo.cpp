@@ -18,6 +18,18 @@ void Disparo::setOnUse(bool onUse){
 	this->onUse = onUse;
 }
 
+void Disparo::checkStatus(){
+	if(!this->onUse){
+		return;
+	}
+
+	lifeTime--;
+	if(lifeTime <= 0){
+		this->destroy();
+		lifeTime = 0;
+	}
+}
+
 
 bool Disparo::isOnUse(){
 	return onUse;
@@ -81,6 +93,7 @@ void Disparo::enemyShoot(float pX, float pY, Enemigo * e) {
 }
 
 void Disparo::shoot(float pX, float pY, Jugador * shootedBy) {
+	this->lifeTime = 5;
 	this->body->SetTransform(b2Vec2(pX, pY), 0);
 	this->body->SetActive(true);
 

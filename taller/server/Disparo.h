@@ -22,6 +22,8 @@ public:
 	bool isOnUse();
 	void destroy();
 
+	void checkStatus();
+
 	void change();
 
 	void setBox2DDefinitions(b2Body * body, b2Fixture * fixture);
@@ -44,6 +46,8 @@ private:
 	Enemigo * enemyShotedBy;
 
 	bool enemyShooted;
+
+	int lifeTime;
 };
 
 #endif /* DISPARO_H_ */
