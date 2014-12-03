@@ -38,13 +38,20 @@ World::World(b2Vec2* gravity) {
 	for(int i = 0; i < 40; i++){
 		Disparo * p = new Disparo(this->getAvavibleIndex());
 		this->projectileList.push_back(p);
-		this->initializeProjectile(p);
+		this->initializeProjectile(p, 0);
 	}
 
 	for(int i = 0; i < 6; i ++){
 		Item * it = new Item(this->getAvavibleIndex());
 		this->bonusList.push_back(it);
 		this->initializeBonus(it);
+	}
+
+	for(int i = 0; i < 4; i++){
+		Disparo * p = new Disparo(this->getAvavibleIndex());
+		this->projectileList.push_back(p);
+		this->initializeProjectile(p, 1);
+		this->enemyProjectile.push_back(p);
 	}
 
 	box2DWorld->SetContactListener(new ContactListener());
@@ -135,6 +142,7 @@ void World::sendWorldInfo(Client_handler * client){
 	p.addCommandCode(INSTANTIATE_PROJECTILES);
 	p.addChar(projectileList[0]->getIndex());
 	p.addChar(projectileList[projectileList.size() - 1]->getIndex());
+	p.addChar(0);
 	p.addEndChar();
 
 	client->send_message(&p);
@@ -147,6 +155,13 @@ void World::sendWorldInfo(Client_handler * client){
 
 	client->send_message(&b);
 
+	Message pe;
+	pe.addCommandCode(INSTANTIATE_PROJECTILES);
+	pe.addChar(enemyProjectile[0]->getIndex());
+	pe.addChar(enemyProjectile[enemyProjectile.size() - 1]->getIndex());
+	pe.addChar(1);
+	pe.addEndChar();
+	client->send_message(&pe);
 }
 
 void World::initializeEnemyBody(Enemigo * enemy){
@@ -274,7 +289,7 @@ void World::initializeBonus(Item * item){
 
 }
 
-void World::initializeProjectile(Disparo * projectile){
+void World::initializeProjectile(Disparo * projectile, int type){
 	b2CircleShape circle_shape;
 
 	float32 radius = 0.15;
@@ -284,6 +299,7 @@ void World::initializeProjectile(Disparo * projectile){
 	body_fixture.shape = &circle_shape;
 	body_fixture.density = 1;
 	body_fixture.friction = 0.5;
+	body_fixture.isSensor = true;
 
 	b2BodyDef body_definition;
 	body_definition.type = b2_dynamicBody;
@@ -293,8 +309,15 @@ void World::initializeProjectile(Disparo * projectile){
 	b2Body * body = this->box2DWorld->CreateBody(&body_definition);
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);
 
-	fixture->SetUserData(new ContactContainer(ContactContainer::DISPARO_JUGADOR, projectile)); // Para detectar colisiones.
+	if(type == 1){
+		body->SetGravityScale(0);
+	}
 
+	if(type == 0){
+		fixture->SetUserData(new ContactContainer(ContactContainer::DISPARO_JUGADOR, projectile)); // Para detectar colisiones.
+	} else {
+		fixture->SetUserData(new ContactContainer(ContactContainer::DISPARO_ENEMIGO, projectile)); // Para detectar colisiones.
+	}
 	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 
 	projectile->setBox2DDefinitions(body, fixture);
@@ -546,6 +569,36 @@ vector<Enemigo*> World::getEnemyList() {
 
 void World::addPlayerPos(float x, float y){
 	this->playerPos.push_back(new b2Vec2(x, y));
+}
+
+void World::enemyShooting(Enemigo * e){
+
+	Disparo * pLibre = NULL;
+
+	for(auto * p : enemyProjectile){
+		if(!p->isOnUse()){
+			pLibre = p;
+			break;
+		}
+	}
+
+	if(pLibre == NULL){
+		return;
+	}
+
+	float pX = e->getPosition()->x;
+	float pY = e->getPosition()->y;
+
+	pLibre->enemyShoot(pX, pY, e);
+
+	Message m;
+	m.addCommandCode(SHOOT_PROJECTILE);
+	m.addChar(pLibre->getIndex());
+	m.addFloat(&pX);
+	m.addFloat(&pY);
+	m.addEndChar();
+
+	this->sendToWorldPlayers(&m);
 }
 
 void World::playerShooting(Jugador* j) {

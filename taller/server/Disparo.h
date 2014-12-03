@@ -11,6 +11,7 @@
 #include <Box2D/Box2D.h>
 #include "Jugador.h"
 #include "B2DAfterChange.h"
+#include "Enemigo.h"
 
 class Disparo : public B2DAfterChange{
 public:
@@ -29,6 +30,7 @@ public:
 	float getRotation();
 
 	void shoot(float pX, float pY, Jugador * shootedBy);
+	void enemyShoot(float pX, float pY, Enemigo * shootedBy);
 
 	void setOnUse(bool onUse);
 private:
@@ -39,6 +41,9 @@ private:
 	b2Fixture * fixture;
 
 	Jugador * shootedBy;
+	Enemigo * enemyShotedBy;
+
+	bool enemyShooted;
 };
 
 #endif /* DISPARO_H_ */

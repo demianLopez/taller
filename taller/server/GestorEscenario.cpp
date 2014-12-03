@@ -144,7 +144,7 @@ World * GestorEscenario::obtenerMundo() {
 	delete[] elEscenario.pos;
 
 	for(auto enemigo : enemigos){
-		Enemigo * enemy = new Enemigo(NULL);
+		Enemigo * enemy = new Enemigo();
 		enemy->colocar(enemigo.tipo,enemigo.posx,enemigo.posy);
 
 		world->addEnemy(enemy);

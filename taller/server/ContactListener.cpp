@@ -183,7 +183,33 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		return;
 
 	}
+	if(first->type == ContactContainer::DISPARO_ENEMIGO || second->type == ContactContainer::DISPARO_ENEMIGO){
+		Disparo * disparo;
+		int tipoImpactado;
+		void * objetivo;
 
+		if(first->type == ContactContainer::DISPARO_ENEMIGO) {
+			disparo = (Disparo *) first->containedThing;
+			tipoImpactado = second->type;
+			objetivo = second->containedThing;
+		} else {
+			disparo = (Disparo *) second->containedThing;
+			tipoImpactado = first->type;
+			objetivo = first->containedThing;
+		}
+
+		if(tipoImpactado != ContactContainer::ENEMY){
+			disparo->destroy();
+		}
+
+		if(tipoImpactado == ContactContainer::JUGADOR){
+			Jugador * e;
+			e = (Jugador *) objetivo;
+			e->hit();
+		}
+
+		return;
+	}
 
 
 

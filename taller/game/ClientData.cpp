@@ -224,9 +224,10 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 	if(cCode == INSTANTIATE_PROJECTILES){
 		int nMin = m->getChar();
 		int nMax = m->getChar();
+		int type = m->getChar();
 
 		for(int i = nMin; i <= nMax; i++){
-			ProjectileEntity * p = new ProjectileEntity(i);
+			ProjectileEntity * p = new ProjectileEntity(i, type);
 			p->setActive(false);
 			Global::gameWorld->addEntity(p);
 		}
