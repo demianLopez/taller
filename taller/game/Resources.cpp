@@ -22,6 +22,8 @@ static const char * ENEMY1_SPRITE = "Resources/enemy1.png";
 static const char * SNOWBALL_LEVELS = "Resources/snowballLevels.png";
 static const char * BONUS = "Resources/bonus.png";
 static const char * SHOOT = "Resources/shoot.png";
+static const char * ENEMY2_SPRITE = "Resources/enemy2.png";
+static const char * ENEMY_PROJECTILE = "Resources/enemyShoot.png";
 
 
 Resources::Resources() {
@@ -60,6 +62,27 @@ Animation * Resources::getPlayerAnimationLeft() {
 
 Animation * Resources::getPlayerAnimationRight() {
 	return this->characterAnimationRight;
+}
+
+Animation * Resources::getEnemy2AnimationByCode(AnimationCode animationCode){
+	switch (animationCode) {
+	case A_STAND_RIGHT:
+		return this->enemy2StaticRight;
+	case A_STAND_LEFT:
+		return this->enemy2StaticLeft;
+	case A_WALK_RIGHT:
+		return this->enemy2WalkRight;
+		break;
+	case A_WALK_LEFT:
+		return this->enemy2WalkLeft;
+		break;
+	case A_JUMP_RIGHT:
+		return this->enemy2AirRight;
+	case A_JUMP_LEFT:
+		return this->enemy2AirLeft;
+	}
+
+	return this->enemy2OnSnowBall;
 }
 
 Animation * Resources::getEnemyAnimationByCode(AnimationCode animationCode){
@@ -249,11 +272,42 @@ void Resources::loadColoredAnimations() {
 	enemyOnSnowBall->addFrame(enemy1Sprite->getSubImage(5, 0), 75);
 	enemyOnSnowBall->addFrame(enemy1Sprite->getSubImage(6, 0), 75);
 
+	//ENMY2
+	enemy2Sprite = new SpriteSheet(ENEMY2_SPRITE, 80, 90);
+
+	enemy2WalkRight = new Animation();
+	enemy2WalkRight->addFrame(enemy2Sprite->getSubImage(4,1), 75);
+	enemy2WalkRight->addFrame(enemy2Sprite->getSubImage(5,1), 75);
+	enemy2WalkRight->addFrame(enemy2Sprite->getSubImage(6,1), 75);
+
+	enemy2WalkLeft = new Animation();
+	enemy2WalkLeft->addFrame(enemy2Sprite->getSubImage(0,0), 75);
+	enemy2WalkLeft->addFrame(enemy2Sprite->getSubImage(1,0), 75);
+	enemy2WalkLeft->addFrame(enemy2Sprite->getSubImage(2,0), 75);
+
+	enemy2StaticLeft = new Animation();
+	enemy2StaticLeft->addFrame(enemy2Sprite->getSubImage(3,0), 1000);
+
+	enemy2StaticRight = new Animation();
+	enemy2StaticRight->addFrame(enemy2Sprite->getSubImage(3,1), 1000);
+
+	enemy2AirLeft = new Animation();
+	enemy2AirLeft->addFrame(enemy2Sprite->getSubImage(6,0), 1000);
+
+	enemy2AirRight = new Animation();
+	enemy2AirRight->addFrame(enemy2Sprite->getSubImage(0,1), 1000);
+
+	enemy2OnSnowBall = new Animation();
+	enemy2OnSnowBall->addFrame(enemy2Sprite->getSubImage(4,0), 75);
+	enemy2OnSnowBall->addFrame(enemy2Sprite->getSubImage(5,0), 75);
+	//SNOWBALL
+
 	snowBallLevels = new SpriteSheet(SNOWBALL_LEVELS, 76, 76);
 	snowBallLevel1 = snowBallLevels->getSubImage(0, 0);
 	snowBallLevel2 = snowBallLevels->getSubImage(1, 0);
 	snowBallLevel3 = snowBallLevels->getSubImage(2, 0);
 	snowBallLevel4 = snowBallLevels->getSubImage(3, 0);
+
 
 
 	//BONUS!
@@ -269,6 +323,8 @@ void Resources::loadColoredAnimations() {
 	shootAnimation = new Animation();
 	shootAnimation->addFrame(shootSprite->getSubImage(0, 0), 50);
 	shootAnimation->addFrame(shootSprite->getSubImage(1, 0), 50);
+
+	enemyProjectile = new Image(ENEMY_PROJECTILE);
 }
 
 Image* Resources::getSnowBalLevel(AnimationCode snowBallLevel) {
@@ -472,6 +528,10 @@ Image * Resources::getBonusByType(int type){
 	return bonus4;
 }
 
+Image * Resources::getEnemyProjectile(){
+	return this->enemyProjectile;
+}
+
 Resources::~Resources() {
 	if (this->backgroundImage != NULL) {
 		delete backgroundImage;
@@ -533,6 +593,16 @@ Resources::~Resources() {
 
 	delete enemy1Sprite;
 
+	delete enemy2WalkRight;
+	delete enemy2WalkLeft;
+	delete enemy2StaticLeft;
+	delete enemy2StaticRight;
+	delete enemy2AirLeft;
+	delete enemy2AirRight;
+	delete enemy2OnSnowBall;
+
+	delete enemy2Sprite;
+
 	delete snowBallLevel1;
 	delete snowBallLevel2;
 	delete snowBallLevel3;
@@ -546,6 +616,8 @@ Resources::~Resources() {
 	delete bonus4;
 
 	delete bonusSprites;
+
+	delete enemyProjectile;
 
 	delete shootAnimation;
 	delete shootSprite;

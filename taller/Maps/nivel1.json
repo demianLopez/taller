@@ -1,7 +1,7 @@
 {
 	"escenario": {
 		"nombreMapa": "Snowbross-Nivel-1",
-		"siguienteNivel": "Maps/nivel0.json",
+		"siguienteNivel": "Maps/nivel2.json",
 		"minJugadores": 1,
 		"cantidadJugadores": 4,
 		"altopx": 600,
@@ -21,7 +21,7 @@
 		},
 		"enemigos": [
 			{
-				"tipo": 1,
+				"tipo": 2,
 				"posx": 25.0,
 				"posy": 4.0
 			},
@@ -31,7 +31,7 @@
 				"posy": 4.0
 			},
 			{
-				"tipo": 1,
+				"tipo": 2,
 				"posx": 3.0,
 				"posy": 30.0
 			},

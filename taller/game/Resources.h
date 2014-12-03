@@ -46,6 +46,7 @@ public:
 			bool offline = false);
 
 	Animation * getEnemyAnimationByCode(AnimationCode animationCode);
+	Animation * getEnemy2AnimationByCode(AnimationCode animationCode);
 
 	Image * getSnowBalLevel(AnimationCode snowBallLevel);
 
@@ -58,6 +59,7 @@ public:
 	TTF_Font * getGuiFont();
 
 	Animation * getHeartAnimation();
+	Image * getEnemyProjectile();
 
 	virtual ~Resources();
 
@@ -121,6 +123,15 @@ private:
 	Animation * enemyAirRight;
 	Animation * enemyOnSnowBall;
 
+	SpriteSheet * enemy2Sprite;
+	Animation * enemy2WalkRight;
+	Animation * enemy2WalkLeft;
+	Animation * enemy2StaticLeft;
+	Animation * enemy2StaticRight;
+	Animation * enemy2AirLeft;
+	Animation * enemy2AirRight;
+	Animation * enemy2OnSnowBall;
+
 	SpriteSheet * snowBallLevels;
 	Image * snowBallLevel1;
 	Image * snowBallLevel2;
@@ -138,6 +149,8 @@ private:
 	SpriteSheet * enemigo;
 	Animation * bossAnimationRight;
 	Animation * bossAnimationLeft;
+
+	Image * enemyProjectile;
 
 	TTF_Font * nameFonts;
 	TTF_Font * GUI_Font;

@@ -207,8 +207,10 @@ void World::initializeEnemyBody(Enemigo * enemy){
 	body_fixture.shape = &box_shape;
 	body_fixture.density = 1;
 	body_fixture.friction = 0.05;
-	body_fixture.filter.categoryBits = 0x0002; // Categoria para evitar que 2 jugadores colisionen.
-	body_fixture.filter.groupIndex = -3;
+
+	body_fixture.filter.categoryBits = 0x0004;// Categoria para evitar que 2 jugadores colisionen.
+	body_fixture.filter.maskBits = 0x0008 | 0x0001 | 0x0020;
+	//body_fixture.filter.groupIndex = -3;
 
 
 	b2BodyDef body_definition;
@@ -259,11 +261,10 @@ void World::initializeEnemySnowBall(Enemigo * enemy){
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &circle_shape;
 	body_fixture.density = 0.1;
-	body_fixture.friction = 0.5;
-	body_fixture.filter.categoryBits = 0x0002; // Categoria para evitar que 2 jugadores colisionen.
 	body_fixture.restitution = 1.0;
 
-	body_fixture.filter.groupIndex = -3;
+	body_fixture.filter.categoryBits = 0x0002;
+	body_fixture.filter.maskBits = 0x0008;
 
 
 	b2BodyDef body_definition;
@@ -298,6 +299,9 @@ void World::initializeBonus(Item * item){
 
 	b2FixtureDef body_fixture;
 	body_fixture.shape = &box_shape;
+
+	body_fixture.filter.categoryBits = 0x0010;
+	body_fixture.filter.maskBits = 0x0001;
 	body_fixture.isSensor = true;
 
 
@@ -307,7 +311,6 @@ void World::initializeBonus(Item * item){
 
 	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);
-	fixture->SetSensor(true);
 
 	fixture->SetUserData(
 				new ContactContainer(ContactContainer::BONUS, item));
@@ -328,7 +331,9 @@ void World::initializeProjectile(Disparo * projectile, int type){
 	body_fixture.shape = &circle_shape;
 	body_fixture.density = 1;
 	body_fixture.friction = 0.5;
-	//body_fixture.isSensor = true;
+	body_fixture.isSensor = true;
+	body_fixture.filter.categoryBits = 0x0020;
+	body_fixture.filter.maskBits = 0x0001 | 0x0004 | 0x0008;
 
 	b2BodyDef body_definition;
 	body_definition.type = b2_dynamicBody;
@@ -365,8 +370,10 @@ void World::initializePlayerBody(Jugador * player) {
 	body_fixture.shape = &box_shape;
 	body_fixture.density = 1;
 	body_fixture.friction = 0.05;
-	body_fixture.filter.categoryBits = 0x0002; // Categoria para evitar que 2 jugadores colisionen.
-	body_fixture.filter.groupIndex = -2;
+
+	body_fixture.filter.categoryBits = 0x0001; // Categoria para evitar que 2 jugadores colisionen.
+	body_fixture.filter.maskBits = 0x0008 | 0x0004 | 0x0010 | 0x0020;
+	//body_fixture.filter.groupIndex = -2;
 
 	b2BodyDef body_definition;
 	body_definition.type = b2_dynamicBody;
@@ -523,6 +530,7 @@ void World::instantiateEnemy(Enemigo * e, Client_handler * client){
 	Message m;
 	m.addCommandCode(ADD_ENEMY_DATA);
 	m.addChar(e->getIndex());
+	m.addChar(e->getType());
 	m.addFloat(&e->getPosition()->x);
 	m.addFloat(&e->getPosition()->y);
 	m.addAnimationCode(e->getCurrentAnimation());

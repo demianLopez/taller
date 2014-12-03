@@ -179,6 +179,8 @@ b2Vec2 * Polygon::getPosition() {
 
 void Polygon::create_body(b2BodyDef* body_definition,
 		b2FixtureDef* body_fixture, World * world) {
+	body_fixture->filter.categoryBits = 0x0008;
+	body_fixture->filter.maskBits = 0x0001 | 0x0002 | 0x0004 | 0x0020;
 	this->world = world;
 	b2World * bWorld = world->getBox2DWorld();
 	this->body = bWorld->CreateBody(body_definition);

@@ -12,11 +12,13 @@
 
 class EnemyEntity: public MovementEntity {
 public:
-	EnemyEntity(int index);
+	EnemyEntity(int index, int type);
 	void render(Graphics * g, unsigned int delta);
 	void initialize();
 	void applyUpdate(UpdateRequest * u);
 	virtual ~EnemyEntity();
+private:
+	int type;
 };
 
 #endif /* ENEMYENTITY_H_ */

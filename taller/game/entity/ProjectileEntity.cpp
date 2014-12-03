@@ -20,9 +20,13 @@ ProjectileEntity::ProjectileEntity(int index,int type) : MovementEntity(index) {
 void ProjectileEntity::render(Graphics* g, unsigned int delta) {
 	g->drawAtCenter(true);
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
+	if(type == 0){
 	g->drawAnimation(
 		Global::gameResources->getShootAnimation(),
 		sdlPos.x, sdlPos.y);
+	} else {
+		g->drawImage(Global::gameResources->getEnemyProjectile(), sdlPos.x, sdlPos.y);
+	}
 	g->drawAtCenter(false);
 }
 

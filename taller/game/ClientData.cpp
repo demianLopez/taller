@@ -185,11 +185,12 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 
 	if(cCode == ADD_ENEMY_DATA){
 		char index = m->getChar();
+		int type = m->getChar();
 		float pX = m->getFloat();
 		float pY = m->getFloat();
 		AnimationCode anim = m->getAnimationCode();
 
-		EnemyEntity * enemyEntity = new EnemyEntity(index);
+		EnemyEntity * enemyEntity = new EnemyEntity(index, type);
 		enemyEntity->setPosition(pX, pY);
 		enemyEntity->setAnimation(anim);
 

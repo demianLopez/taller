@@ -239,7 +239,8 @@ void Enemigo::movimientoLoco(){
 	if(this->type == 1){
 		valor = rand() % 8;
 	} else {
-		valor = rand() % 9;
+		//valor = rand() % 9;
+		valor = 8;
 	}
 	//if (valor == this->patron){
 		//valor++;
