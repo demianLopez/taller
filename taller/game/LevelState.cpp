@@ -289,6 +289,7 @@ void LevelState::keyEvent(SDL_Event e, Game * game) {
 			break;
 		case SDLK_SPACE:
 			this->keyCodeData.push_back(SPACE);
+			Global::gameResources->golpe->play();
 			break;
 		case SDLK_z:
 		case SDLK_KP_MINUS:
