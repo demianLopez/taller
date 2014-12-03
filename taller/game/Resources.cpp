@@ -112,6 +112,7 @@ void Resources::loadMusicAndSounds(){
 	gameOver = new Music("Resources/Sonidos/gameover.mp3");
 	levelPass = new Music("Resources/Sonidos/winlevel.mp3");
 
+	golpe = new Sound("Resources/Sonidos/disparo.wav");
 
 }
 

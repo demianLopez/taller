@@ -8,7 +8,7 @@
 #include <engine/Sound.h>
 
 Sound::Sound(const char * ruta) {
-	 gSound = Mix_LoadWAV( "21_sound_effects_and_music/scratch.wav" );
+	 gSound = Mix_LoadWAV( ruta);
 	 if( gSound == NULL ) {
 		 printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
 	 }
