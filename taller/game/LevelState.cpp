@@ -10,7 +10,7 @@
 #include <iostream>
 #include "Global.h"
 #include "entity/GameEntity.h"
-
+#include "engine/Music.h"
 const float ZOOM_INCREMENT = 0.02;
 
 LevelState::LevelState() {
@@ -402,6 +402,8 @@ void LevelState::setMessage(char * message) {
 }
 
 void LevelState::enter() {
+	Music::stop();
+	Global::gameResources->levelState->play(-1);
 	VectorXY wSize = this->gameWorld->getBox2DWorldSize();
 	this->worldImage = new Image(wSize.x * 20, wSize.y * 20);
 	this->gameWorld->generateGraphics();

@@ -19,7 +19,7 @@ MainMenu::MainMenu() {
 }
 
 void MainMenu::enter(){
-
+	Global::gameResources->mainMenu->play(-1);
 }
 
 void MainMenu::init(Game * game) {

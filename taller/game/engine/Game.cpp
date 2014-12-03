@@ -92,7 +92,7 @@ bool Game::instantiate() {
 
 	Logger::customLog("Game.cpp", Logger::INFO, "Inicilizando componentes SDL");
 
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
 		Logger::customLog("Game.cpp", Logger::ERROR,
 				"SDL No pudo inicializar correctamente");
 		success = false;
@@ -124,6 +124,13 @@ bool Game::instantiate() {
 			} else {
 				Logger::customLog("Game.cpp", Logger::INFO,
 						"Inicializado SDL_image");
+
+				 if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ) {
+					 printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+					 success = false;
+				 }
+
+
 				if (TTF_Init() == -1) {
 					Logger::customLog("Game.cpp", Logger::ERROR,
 							"No se pudo inicializar componente SDL_ttf");
@@ -284,6 +291,7 @@ void Game::gameClose() {
 	this->gRenderer = NULL;
 
 	//Quit SDL subsystems
+	Mix_Quit();
 	SDL_Quit();
 	Logger::customLog("Game.cpp", Logger::INFO, "SDL cerrado: OK");
 	IMG_Quit();

@@ -138,6 +138,11 @@ void ChangeState::setLevelData(string* players, int* scores, bool winLevel,
 }
 
 void ChangeState::enter() {
+	if(winLevel){
+		Global::gameResources->levelPass->play(1);
+	} else {
+		Global::gameResources->gameOver->play(1);
+	}
 	delete Global::gameWorld;
 	Global::gameWorld = NULL;
 	imReady = false;

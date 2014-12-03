@@ -14,6 +14,8 @@ class Animation;
 
 #include "../common/CommandCode.h"
 #include "engine/LibIncludes.h"
+#include "engine/Music.h"
+#include "engine/Sound.h"
 
 class Resources {
 public:
@@ -21,6 +23,14 @@ public:
 
 	void loadBackground(const char * bPath);
 	void loadImage(const char * iPath);
+	void loadMusicAndSounds();
+
+	Music * mainMenu;
+	Music * levelState;
+	Music * gameOver;
+	Music * levelPass;
+
+	Sound * golpe;
 
 	Image * getBonusByType(int type);
 

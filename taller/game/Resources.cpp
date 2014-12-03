@@ -106,6 +106,15 @@ Animation * Resources::getEnemyAnimationByCode(AnimationCode animationCode){
 	return this->enemyOnSnowBall;
 }
 
+void Resources::loadMusicAndSounds(){
+	mainMenu = new Music("Resources/Sonidos/mainmenu.mp3");
+	levelState = new Music("Resources/Sonidos/levelstate.mp3");
+	gameOver = new Music("Resources/Sonidos/gameover.mp3");
+	levelPass = new Music("Resources/Sonidos/winlevel.mp3");
+
+
+}
+
 Animation * Resources::getAnimationByAnimationCode(AnimationCode animationCode,
 		bool offline) {
 	if (!offline) {
@@ -621,6 +630,11 @@ Resources::~Resources() {
 
 	delete shootAnimation;
 	delete shootSprite;
+
+	delete mainMenu;
+	delete gameOver;
+	delete levelState;
+	delete levelPass;
 
 	//delete this->bossAnimationLeft;
 	//delete this->enemigo;

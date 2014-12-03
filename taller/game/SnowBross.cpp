@@ -28,6 +28,7 @@ void SnowBross::initializeGameStates() {
 void SnowBross::initGame() {
 	Resources * resources = new Resources();
 	resources->loadAnimations();
+	resources->loadMusicAndSounds();
 
 	Global::gameResources = resources;
 }
