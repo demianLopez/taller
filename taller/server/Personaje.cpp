@@ -9,6 +9,7 @@ Personaje::Personaje() {
 	this->currentAnimation = A_STAND_LEFT;
 	this->atravesandoRampa = false;
 	this->activeUpdate = true;
+	this->superSpeed = false;
 }
 
 int Personaje::getIndex() {
@@ -72,6 +73,14 @@ void Personaje::setEntityIndex(int index) {
 void Personaje::update() {
 	if(!activeUpdate){
 		return;
+	}
+
+	int movementSpeedX;
+
+	if(this->superSpeed){
+		movementSpeedX = this->movementRunSpeed;
+	} else {
+		movementSpeedX = this->movementSpeedX;
 	}
 	//cout << "cantidad de contactos: " << listenerTouchingGround->getNumberOfContacts() << endl;
 	b2Vec2 currentVel = this->body->GetLinearVelocity();

@@ -20,6 +20,8 @@ static const char * EMOTICONS_PATH = "Resources/balloon-emoticons-go.png";
 static const char * BOSS_ANIM_PATH = "Resources/bos_20.png";
 static const char * ENEMY1_SPRITE = "Resources/enemy1.png";
 static const char * SNOWBALL_LEVELS = "Resources/snowballLevels.png";
+static const char * BONUS = "Resources/bonus.png";
+static const char * SHOOT = "Resources/shoot.png";
 
 
 Resources::Resources() {
@@ -46,6 +48,10 @@ Resources::Resources() {
 
 void Resources::loadBackground(const char *bPath) {
 	this->backgroundImage = new Image(bPath);
+}
+
+Animation * Resources::getShootAnimation(){
+	return this->shootAnimation;
 }
 
 Animation * Resources::getPlayerAnimationLeft() {
@@ -95,6 +101,10 @@ Animation * Resources::getAnimationByAnimationCode(AnimationCode animationCode,
 			return this->characterAirRight;
 		case A_JUMP_LEFT:
 			return this->characterAirLeft;
+		case SUPER_RUN_LEFT:
+			return this->characterAnimationLeft;
+		case SUPER_RUN_RIGHT:
+			return this->characterAnimationRight;
 		}
 	} else {
 		switch (animationCode) {
@@ -114,7 +124,7 @@ Animation * Resources::getAnimationByAnimationCode(AnimationCode animationCode,
 			return this->characterAirLeftBW;
 		}
 	}
-	return NULL; //Si llego aca algo esta mal
+	return characterStaticRight; //Si llego aca algo esta mal
 }
 
 void Resources::loadColoredAnimations() {
@@ -244,6 +254,21 @@ void Resources::loadColoredAnimations() {
 	snowBallLevel2 = snowBallLevels->getSubImage(1, 0);
 	snowBallLevel3 = snowBallLevels->getSubImage(2, 0);
 	snowBallLevel4 = snowBallLevels->getSubImage(3, 0);
+
+
+	//BONUS!
+
+	bonusSprites = new SpriteSheet(BONUS, 47, 47);
+
+	bonus1 = bonusSprites->getSubImage(0, 0);
+	bonus2 = bonusSprites->getSubImage(1, 1);
+	bonus3 = bonusSprites->getSubImage(3, 1);
+	bonus4 = bonusSprites->getSubImage(3, 0);
+
+	shootSprite = new SpriteSheet(SHOOT, 24, 34);
+	shootAnimation = new Animation();
+	shootAnimation->addFrame(shootSprite->getSubImage(0, 0), 50);
+	shootAnimation->addFrame(shootSprite->getSubImage(1, 0), 50);
 }
 
 Image* Resources::getSnowBalLevel(AnimationCode snowBallLevel) {
@@ -434,6 +459,19 @@ Animation * Resources::getHeartAnimation() {
 	return this->heartAnimation;
 }
 
+Image * Resources::getBonusByType(int type){
+	switch(type){
+	case 1:
+		return bonus1;
+	case 2:
+		return bonus2;
+	case 3:
+		return bonus3;
+	}
+
+	return bonus4;
+}
+
 Resources::~Resources() {
 	if (this->backgroundImage != NULL) {
 		delete backgroundImage;
@@ -501,6 +539,16 @@ Resources::~Resources() {
 	delete snowBallLevel4;
 
 	delete snowBallLevels;
+
+	delete bonus1;
+	delete bonus2;
+	delete bonus3;
+	delete bonus4;
+
+	delete bonusSprites;
+
+	delete shootAnimation;
+	delete shootSprite;
 
 	//delete this->bossAnimationLeft;
 	//delete this->enemigo;

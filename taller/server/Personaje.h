@@ -19,6 +19,8 @@ protected:
 	AnimationCode currentAnimation;
 
 	bool activeUpdate;
+
+	bool superSpeed;
 public:
 	Personaje();
 	virtual ~Personaje();

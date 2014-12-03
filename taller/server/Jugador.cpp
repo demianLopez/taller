@@ -20,6 +20,11 @@ Jugador::Jugador(Client_handler * client, char * name) {
 	this->enemy = NULL;
 }
 
+void Jugador::enableSuperSpeed(){
+	this->superSpeed = true;
+	this->superSpeedTime = 10;
+}
+
 void Jugador::updateOnClientUserStats(){
 	Message m;
 	m.addCommandCode(UPDATE_PLAYER_STAT);
@@ -146,6 +151,13 @@ void Jugador::checkStatus() {
 			this->invulnerable = false;
 		}
 	}
+
+	if(superSpeed){
+		this->superSpeedTime--;
+		if(superSpeedTime <= 0){
+			this->superSpeed = false;
+		}
+	}
 }
 
 Client_handler * Jugador::getClient() {
@@ -174,6 +186,10 @@ void Jugador::change(){
 
 void Jugador::evaluateAnimation() {
 	if (this->mirandoParaLaDerecha) {
+		if(this->superSpeed){
+			currentAnimation = SUPER_RUN_RIGHT;
+			return;
+		}
 		if (this->isOnAir() &&
 		((this->getListenerTouchingGround()->getNumberOfContacts() == 0) ||
 		  this->atravesandoRampa) ) {
@@ -190,6 +206,10 @@ void Jugador::evaluateAnimation() {
 		return;
 	}
 
+	if(this->superSpeed){
+		currentAnimation = SUPER_RUN_LEFT;
+		return;
+	}
 	if (this->isOnAir() &&
 	((this->getListenerTouchingGround()->getNumberOfContacts() == 0) ||
 	  this->atravesandoRampa) ) {

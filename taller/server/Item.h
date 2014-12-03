@@ -9,8 +9,11 @@
 #define ITEM_H_
 
 #include <Box2D/Box2D.h>
+#include "Jugador.h"
+#include "B2DAfterChange.h"
 
-class Item {
+
+class Item: public B2DAfterChange {
 public:
 	Item(int index);
 	int getIndex();
@@ -21,6 +24,9 @@ public:
 	void putAt(float posX, float posY, int type);
 	virtual ~Item();
 
+	void consumir(Jugador * player);
+	void change();
+
 private:
 	int index;
 	bool onMap;
@@ -29,6 +35,8 @@ private:
 
 	b2Body * body;
 	b2Fixture * fixture;
+
+	Jugador * playerAfected;
 };
 
 #endif /* ITEM_H_ */

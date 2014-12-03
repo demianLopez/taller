@@ -79,6 +79,7 @@ b2Vec2 * World::getBox2DWorldSize() {
 void World::evaluateBonusCreation(float posX, float posY){
 
 	Item * usableItem = NULL;
+	int type = rand() % 4 ;
 	for(auto * i : bonusList){
 		if(!i->isOnMap()){
 			usableItem = i;
@@ -90,7 +91,7 @@ void World::evaluateBonusCreation(float posX, float posY){
 		return;
 	}
 
-	usableItem->putAt(posX, posY, 0);
+	usableItem->putAt(posX, posY, type);
 
 }
 

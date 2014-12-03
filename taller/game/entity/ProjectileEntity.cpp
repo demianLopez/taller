@@ -22,7 +22,7 @@ void ProjectileEntity::render(Graphics* g, unsigned int delta) {
 	g->drawAtCenter(true);
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 	g->drawAnimation(
-		Global::gameResources->getSleepingEmoticon(),
+		Global::gameResources->getShootAnimation(),
 		sdlPos.x, sdlPos.y);
 	g->drawAtCenter(false);
 }

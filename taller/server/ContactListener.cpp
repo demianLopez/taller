@@ -3,6 +3,7 @@
 #include "Jugador.h"
 #include "Disparo.h"
 #include "Enemigo.h"
+#include "Item.h"
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -147,16 +148,6 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		}
 
 		switch(tipoOtro){
-			/*case ContactContainer::POLYGON:
-			{
-				Polygon * p = (Polygon*)otroObjetivo;
-				float posy = enemy->getPosition()->y -p->getPosition()->y;
-
-				if(posy < 0.5 && posy > -0.5){
-					enemy->golpeadoPorBola(NULL);
-				}
-				break;
-			}*/
 			case ContactContainer::ENEMY:
 			{
 				Enemigo * impactado = (Enemigo*)otroObjetivo;
@@ -164,6 +155,32 @@ void ContactListener::BeginContact(b2Contact* contact) {
 				break;
 			}
 		}
+
+		return;
+	}
+
+	if (first->type == ContactContainer::BONUS
+			|| second->type == ContactContainer::BONUS) {
+
+		Item * item;
+		int tipoOtro;
+		void * otroObjetivo;
+
+		if(first->type == ContactContainer::BONUS){
+			item = (Item*)first->containedThing;
+			tipoOtro = second->type;
+			otroObjetivo = second->containedThing;
+		} else {
+			item = (Item*)second->containedThing;
+			tipoOtro = first->type;
+			otroObjetivo = first->containedThing;
+		}
+
+		if(tipoOtro == ContactContainer::JUGADOR){
+			item->consumir((Jugador*)otroObjetivo);
+		}
+
+		return;
 
 	}
 

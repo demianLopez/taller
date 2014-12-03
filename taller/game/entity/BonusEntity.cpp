@@ -22,9 +22,7 @@ void BonusEntity::render(Graphics* g, unsigned int dela) {
 	g->drawAtCenter(true);
 	VectorXY b2DPos = VectorXY(posX, posY);
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&b2DPos);
-	g->drawAnimation(
-		Global::gameResources->getSleepingEmoticon(),
-		sdlPos.x, sdlPos.y);
+	g->drawImage(Global::gameResources->getBonusByType(type), sdlPos.x, sdlPos.y);
 	g->drawAtCenter(false);
 }
 
