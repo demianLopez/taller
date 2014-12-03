@@ -231,10 +231,12 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		int index = m->getChar();
 		float pX = m->getFloat();
 		float pY = m->getFloat();
+		float w = m->getFloat();
+		float h = m->getFloat();
 
 		WaterEntity * waterEntity = new WaterEntity(index);
 		waterEntity->setPosition(pX, pY);
-
+		waterEntity->size = VectorXY(w, h);
 		waterEntity->setWorld(Global::gameWorld);
 		Global::gameWorld->addEntity(waterEntity);
 

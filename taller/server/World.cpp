@@ -56,7 +56,10 @@ World::World(b2Vec2* gravity) {
 
 	box2DWorld->SetContactListener(new ContactListener());
 
+
 	this->myWater = NULL;
+
+	this->setWater();
 }
 
 Jugador * World::getFirstAlive(){
@@ -203,10 +206,14 @@ void World::sendWorldInfo(Client_handler * client){
 		Message waterMessage;
 		waterMessage.addCommandCode(ADD_WATER);
 		waterMessage.addChar(myWater->getIndex());
-		float x = myWater->getPosition().x;
-		float y = myWater->getPosition().y;
+		float w = myWater->getSize().x * 2;
+		float h = myWater->getSize().y * 2;
+		float x = myWater->getPosition().x - w/2;
+		float y = myWater->getPosition().y - h/2;
 		waterMessage.addFloat(&x);
 		waterMessage.addFloat(&y);
+		waterMessage.addFloat(&w);
+		waterMessage.addFloat(&h);
 		waterMessage.addEndChar();
 
 		client->send_message(&waterMessage);
@@ -601,8 +608,13 @@ Water* World::getWater(){
 }
 
 void World::setWater(){
-	myWater = new Water(88);
-	myWater->setPosition(15.65,10.2);
+	float pX = 15.65;
+	float pY = 10.2;
+	float w = 15.0;
+	float h = 6.5;
+	myWater = new Water(this->getAvavibleIndex());
+	myWater->setPosition(pX, pY, w, h);
+	this->instantiateWater(pX, pY, w, h);
 }
 
 void World::start() {

@@ -18,11 +18,13 @@ public:
 	int getIndex();
 	VectorXY getPosition();
 
-	void setPosition(float x, float y);
+	void setPosition(float x, float y, float width, float height);
+	VectorXY getSize();
 
 private:
 	int index;
 	VectorXY position;
+	VectorXY size;
 };
 
 #endif /* SERVER_WATER_H_ */
