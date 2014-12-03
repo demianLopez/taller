@@ -28,6 +28,8 @@ public:
 
 	void setRotation(float rotation);
 
+	virtual void forcePosition(float posX, float posY) { }
+
 	void setWorld(GameWorld * gameWorld);
 	virtual void initialize() = 0;
 	void setPosition(float x, float y);

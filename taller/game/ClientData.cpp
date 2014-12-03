@@ -114,6 +114,21 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		return cCode;
 	}
 
+	if(cCode == FORCE_POSITION){
+		int index = m->getChar();
+		float posX = m->getFloat();
+		float posY = m->getFloat();
+
+		bool forceCamara = m->getChar();
+
+		Global::gameWorld->searchEntity(index)->forcePosition(posX, posY);
+		if(forceCamara){
+			Global::gameWorld->setMainEntity(index);
+			Global::levelState->restartCameraPosition();
+		}
+		return cCode;
+	}
+
 	if (cCode == ERROR_MESSAGE) {
 		char * msg;
 		char * title;
@@ -261,7 +276,6 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		Global::levelState->setWorld(Global::gameWorld);
 		Global::playerLife = m->getChar();
 		Global::playerScore = m->getChar();
-		Global::game->enterState(1);
 		return cCode;
 	}
 

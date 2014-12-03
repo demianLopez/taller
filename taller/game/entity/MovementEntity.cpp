@@ -18,6 +18,12 @@ MovementEntity::MovementEntity(int index) : GameEntity(index) {
 	firstUpdate = false;
 }
 
+void MovementEntity::forcePosition(float posX, float posY){
+	this->position = VectorXY(posX, posY);
+	this->lastPosition = VectorXY(posX, posY);
+	this->nextPosition = VectorXY(posX, posY);
+}
+
 void MovementEntity::setedActive(bool active){
 	this->lastPosition = position;
 	this->nextPosition = position;

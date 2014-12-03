@@ -18,6 +18,10 @@ MainMenu::MainMenu() {
 	this->backgroundImage = NULL;
 }
 
+void MainMenu::enter(){
+
+}
+
 void MainMenu::init(Game * game) {
 	this->buttonConnect = new Button("Conectar");
 	this->buttonConnect->setSize(256, 80);

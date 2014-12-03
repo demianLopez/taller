@@ -88,6 +88,7 @@ void LevelState::exit(Game * game) {
 }
 
 void LevelState::restartCameraPosition() {
+	levelStateMutex.lock();
 	int screenW = Global::game->getScreenWidth();
 	int screenH = Global::game->getScreenHeight();
 	VectorXY mainEntityPos = Global::gameWorld->getMainEntity()->getPosition();
@@ -95,6 +96,7 @@ void LevelState::restartCameraPosition() {
 
 	this->globalX = mainEntitySdlPos.x - screenW / 2;
 	this->globalY = mainEntitySdlPos.y - screenH / 2;
+	levelStateMutex.unlock();
 }
 
 void LevelState::render(Graphics *g, Game * game, unsigned int delta) {
@@ -415,6 +417,12 @@ void LevelState::enter() {
 		this->maxZoomScale = yMax;
 	} else {
 		this->maxZoomScale = xMax;
+	}
+
+
+	if (this->hasMessage) {
+		this->hasMessage = false;
+		this->messageTime = 0;
 	}
 }
 

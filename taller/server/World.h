@@ -62,6 +62,8 @@ public:
 	void addPlayer(Jugador* jugador, bool reconecting);
 	void addEnemy(Enemigo * enemy);
 
+	Jugador * getFirstAlive();
+
 	vector<Jugador*> getPlayerList();
 	Jugador* getPlayer(int userIndex);
 
@@ -108,6 +110,8 @@ public:
 	//uno nuevo
 	void initializeEnemySnowBall(Enemigo * enemy);
 	void evaluateBonusCreation(float posX, float posY);
+
+	b2Vec2 * getPlayerInitialPos(int index);
 private:
 	void updateTiming(Jugador* j);
 	void updatePolygon(Polygon* p);
@@ -116,14 +120,14 @@ private:
 	void updateEnemy(Enemigo* e);
 
 
-
-
 	void sendUpdates();
 
 	void initializePlayerBody(Jugador* player);
 	void initializeEnemyBody(Enemigo * enemy);
 	void initializeProjectile(Disparo * projectile, int type);
 	void initializeBonus(Item * item);
+
+
 
 	bool wordLoop;
 	bool isRestarting;

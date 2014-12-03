@@ -25,6 +25,8 @@ public:
 	virtual void applyUpdate(UpdateRequest * u) = 0;
 	void setUpdateable(bool updateable);
 
+	void forcePosition(float posX, float posY);
+
 	virtual ~MovementEntity();
 private:
 	void setedActive(bool active);

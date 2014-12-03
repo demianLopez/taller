@@ -62,6 +62,16 @@ World::World(b2Vec2* gravity) {
 	myWater->setPosition(15,11);
 }
 
+Jugador * World::getFirstAlive(){
+	for(auto * p : playerList){
+		if(!p->isDead()){
+			return p;
+		}
+	}
+
+	return NULL;
+}
+
 
 bool World::isWaitingForPlayers(){
 	return this->waitingPlayers;
@@ -277,6 +287,7 @@ void World::initializeEnemySnowBall(Enemigo * enemy){
 	//fixture->SetSensor(true);
 	enemy->setBox2DDefinitions(body, fixture);
 }
+
 
 void World::initializeBonus(Item * item){
 	double longX = 0.6f;
@@ -663,6 +674,10 @@ void World::realizeAfterChange() {
 	}
 
 	afterChangeList.clear();
+}
+
+b2Vec2* World::getPlayerInitialPos(int index) {
+	return this->playerPos[index % 4];
 }
 
 void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {

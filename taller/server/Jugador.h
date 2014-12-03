@@ -22,6 +22,8 @@ private:
 	vector<KeyCode> keyCode;
 	Client_handler * client;
 
+	vector<Jugador *> mySpector;
+
 	bool offline;
 
 	void evaluateAnimation();
@@ -75,6 +77,7 @@ public:
 
 
 	Jugador(Client_handler * client, char * name);
+	void addSpectingMe(Jugador * j);
 
 	void setClient(Client_handler * client);
 
@@ -88,6 +91,8 @@ public:
 	Client_handler * getClient();
 
 	char tipoDeObjeto; // Para contact listener.
+	int afterB2DEvent;
+
 };
 
 #endif /* JUGADOR_H_ */

@@ -40,7 +40,9 @@ VectorXY GameWorld::getBox2DWorldSize() {
 }
 
 void GameWorld::setMainEntity(int index) {
+	this->updateMutex.lock();
 	this->mainEntity = this->searchEntity(index);
+	this->updateMutex.unlock();
 }
 
 GameEntity * GameWorld::searchEntity(int index) {

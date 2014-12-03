@@ -132,6 +132,39 @@ void Jugador::deadEvent(){
 	m.addEndChar();
 
 	Data::world->sendToWorldPlayers(&m);
+
+
+	Message p;
+	p.addCommandCode(ACTIVE_ENTITY);
+	p.addChar(this->getIndex());
+	p.addChar(false);
+	p.addEndChar();
+
+	Data::world->sendToWorldPlayers(&p);
+
+	Jugador * toSpectate = Data::world->getFirstAlive();
+
+	if(toSpectate == NULL){
+		return;
+	}
+
+	Message c;
+	c.addCommandCode(LOCK_CAMERA_ENTITY);
+	c.addChar(toSpectate->getIndex());
+	c.addEndChar();
+
+	toSpectate->addSpectingMe(this);
+
+	for(auto * p : mySpector){
+
+		toSpectate->addSpectingMe(p);
+		if(!p->isOffline()){
+			p->getClient()->send_message(&c);
+		}
+	}
+
+	this->client->send_message(&c);
+
 }
 
 bool Jugador::isInvulnerable(){
@@ -164,6 +197,10 @@ Client_handler * Jugador::getClient() {
 	return this->client;
 }
 
+void Jugador::addSpectingMe(Jugador * j){
+	this->mySpector.push_back(j);
+}
+
 void Jugador::hit(){
 	if(invulnerable || offline){
 		return;
@@ -175,13 +212,45 @@ void Jugador::hit(){
 	this->lives--;
 	this->updateOnClientUserStats();
 
+	this->afterB2DEvent = 0;
+
 	if(this->isDead()){
-		Data::world->addAfterChange(this);
+		this->afterB2DEvent = 1;
 	}
+
+	Data::world->addAfterChange(this);
 }
 
 void Jugador::change(){
-	this->deadEvent();
+	if(this->afterB2DEvent == 1){
+		this->deadEvent();
+	} else {
+
+		int indx = this->getIndex();
+
+		float posX = Data::world->getPlayerInitialPos(indx)->x;
+		float posY = Data::world->getPlayerInitialPos(indx)->y;
+
+
+		Message m;
+		m.addCommandCode(FORCE_POSITION);
+		m.addChar(indx);
+		m.addFloat(&posX);
+		m.addFloat(&posY);
+		m.addChar(false);
+		m.addEndChar();
+
+		Data::world->sendToWorldPlayers(&m);
+
+		Message c;
+		c.addCommandCode(LOCK_CAMERA_ENTITY);
+		c.addChar(indx);
+		c.addEndChar();
+
+		this->client->send_message(&c);
+
+		this->body->SetTransform(b2Vec2(posX, posY), 0);
+	}
 }
 
 void Jugador::evaluateAnimation() {

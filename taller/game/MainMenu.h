@@ -31,6 +31,7 @@ public:
 	virtual void render(Graphics *g, Game * game, unsigned int delta);
 	virtual void update(unsigned int delta);
 	virtual void keyEvent(SDL_Event e, Game * game);
+	void enter();
 
 	void setServerInfo(char * mapName, char pPlaying, char pMax);
 private:
