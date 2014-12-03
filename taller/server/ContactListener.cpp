@@ -14,7 +14,12 @@ ContactListener::ContactListener() {
 }
 
 bool canGoThrough(Personaje* aPlayer, Polygon* aPolygon){
+	if(aPlayer->puedeCaer){
+		aPlayer->puedeCaer = false;
+		return true;
+	}
 	return aPlayer->getHeadListener()->isHeadTouching(aPolygon);
+
 }
 
 void ContactListener::BeginContact(b2Contact* contact) {

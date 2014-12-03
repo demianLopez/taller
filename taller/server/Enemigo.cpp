@@ -296,7 +296,6 @@ void Enemigo::movimientoLoco(){
 			this->setMovingRight(false);
 			this->setMovingLeft(false);
 			this->puedeCaer = true;
-			this->jump();
 			break;
 		case 3:
 			this->setMovingRight(true);

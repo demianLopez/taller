@@ -29,7 +29,6 @@ public:
 	void colocar(int type,double posx, double posy);
 	void movimientoLoco();
 
-	bool puedeCaer;
 
 	void checkStatus();
 	bool isInmovil();

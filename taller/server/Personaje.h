@@ -26,7 +26,7 @@ protected:
 public:
 	Personaje();
 	virtual ~Personaje();
-
+	bool puedeCaer;
 	void setEntityIndex(int index);
 
 	void moveLeft(bool isButtonDown);
