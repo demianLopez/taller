@@ -34,6 +34,7 @@ public:
 	void tryKick(Jugador * kickerPlayer);
 
 	void change();
+	void deadEvent();
 
 	float getRotation();
 	virtual ~Enemigo();

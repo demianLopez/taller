@@ -41,6 +41,12 @@ World::World(b2Vec2* gravity) {
 		this->initializeProjectile(p);
 	}
 
+	for(int i = 0; i < 6; i ++){
+		Item * it = new Item(this->getAvavibleIndex());
+		this->bonusList.push_back(it);
+		this->initializeBonus(it);
+	}
+
 	box2DWorld->SetContactListener(new ContactListener());
 }
 
@@ -68,6 +74,10 @@ int World::getMaxPlayers() {
 
 b2Vec2 * World::getBox2DWorldSize() {
 	return this->Box2DWorldSize;
+}
+
+void World::evaluateBonusCreation(float posX, float posY){
+
 }
 
 void World::sendWorldInfo(Client_handler * client){
@@ -184,6 +194,7 @@ void World::initializeEnemySnowBall(Enemigo * enemy){
 	body_fixture.density = 0.1;
 	body_fixture.friction = 0.5;
 	body_fixture.filter.categoryBits = 0x0002; // Categoria para evitar que 2 jugadores colisionen.
+	body_fixture.restitution = 1.0;
 
 	body_fixture.filter.groupIndex = -3;
 
@@ -208,6 +219,35 @@ void World::initializeEnemySnowBall(Enemigo * enemy){
 	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 	//fixture->SetSensor(true);
 	enemy->setBox2DDefinitions(body, fixture);
+}
+
+void World::initializeBonus(Item * item){
+	double longX = 0.6f;
+	double longY = 0.6f;
+
+	b2PolygonShape box_shape;
+	box_shape.SetAsBox(longX, longY); //seteo los vertices del poligono
+
+	b2FixtureDef body_fixture;
+	body_fixture.shape = &box_shape;
+	body_fixture.isSensor = true;
+
+
+	b2BodyDef body_definition;
+	body_definition.type = b2_staticBody;
+	body_definition.position.Set(0, 0);
+
+	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
+	b2Fixture *fixture = body->CreateFixture(&body_fixture);
+	//fixture->SetSensor(true);
+
+	fixture->SetUserData(
+				new ContactContainer(ContactContainer::BONUS, item));
+	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
+	body->SetActive(false);
+
+	item->setBox2DDefinitions(body, fixture);
+
 }
 
 void World::initializeProjectile(Disparo * projectile){

@@ -15,6 +15,7 @@
 #include "polygons/Polygon.h"
 #include "Disparo.h"
 #include "B2DAfterChange.h"
+#include "Item.h"
 
 class Projectile;
 
@@ -103,7 +104,7 @@ public:
 	//La unica solucion que encuentro al patear al enemigo es borrar todo  su cuerpo y armar
 	//uno nuevo
 	void initializeEnemySnowBall(Enemigo * enemy);
-
+	void evaluateBonusCreation(float posX, float posY);
 private:
 	void updateTiming(Jugador* j);
 	void updatePolygon(Polygon* p);
@@ -111,12 +112,14 @@ private:
 	void updatePeople(Jugador* p);
 	void updateEnemy(Enemigo* e);
 
+
+
 	void sendUpdates();
 
 	void initializePlayerBody(Jugador* player);
 	void initializeEnemyBody(Enemigo * enemy);
-
 	void initializeProjectile(Disparo * projectile);
+	void initializeBonus(Item * item);
 
 	bool wordLoop;
 	bool isRestarting;
@@ -128,6 +131,7 @@ private:
 
 	vector<b2Vec2*> playerPos;
 	vector<Disparo*> projectileList;
+	vector<Item*> bonusList;
 
 	ContactListener* contactListener;
 
