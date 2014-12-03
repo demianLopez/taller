@@ -147,10 +147,22 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		}
 
 		switch(tipoOtro){
+			/*case ContactContainer::POLYGON:
+			{
+				Polygon * p = (Polygon*)otroObjetivo;
+				float posy = enemy->getPosition()->y -p->getPosition()->y;
+
+				if(posy < 0.5 && posy > -0.5){
+					enemy->golpeadoPorBola(NULL);
+				}
+				break;
+			}*/
 			case ContactContainer::ENEMY:
+			{
 				Enemigo * impactado = (Enemigo*)otroObjetivo;
 				impactado->golpeadoPorBola(enemy);
 				break;
+			}
 		}
 
 	}

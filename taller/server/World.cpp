@@ -823,11 +823,11 @@ void World::verifyLevelEndConditions(){
 		someoneEnemyAlive = someoneEnemyAlive || !e->isDead();
 	}
 
-	/*if(!someoneEnemyAlive){
+	if(!someoneEnemyAlive){
 		this->isRestarting = true;
 		this->nextLevel();
 		return;
-	}*/
+	}
 
 
 	bool someoneAlive = false;

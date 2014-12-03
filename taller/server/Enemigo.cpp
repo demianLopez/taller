@@ -30,21 +30,24 @@ bool Enemigo::isDead(){
 	return this->dead;
 }
 
-void Enemigo::tryKick(float playerPosX){
+void Enemigo::tryKick(Jugador * kickerPlayer){
 	if(this->nivelNieve == 4 && !pateado){
 		pateado = true;
+		this->snowBallTime = 3;
 		this->posx = this->body->GetPosition().x;
 		this->posy = this->body->GetPosition().y;
-		float direction = posx - playerPosX;
+		float direction = posx - kickerPlayer->getPosition()->x;
 		this->body->DestroyFixture(this->fixture);
 		Data::world->getBox2DWorld()->DestroyBody(this->body);
 		Data::world->initializeEnemySnowBall(this);
 		this->activeUpdate = false;
 
+		this->kickedBy = kickerPlayer;
+
 		if(direction < 0){
-			body->ApplyLinearImpulse(b2Vec2(-40, 0), body->GetWorldCenter(), true);
+			body->ApplyLinearImpulse(b2Vec2(-60, 0), body->GetWorldCenter(), true);
 		} else {
-			body->ApplyLinearImpulse(b2Vec2(40, 0), body->GetWorldCenter(), true);
+			body->ApplyLinearImpulse(b2Vec2(60, 0), body->GetWorldCenter(), true);
 		}
 	}
 }
@@ -63,6 +66,15 @@ float Enemigo::getRotation(){
 
 //esto se llama cada 1 segundo!
 void Enemigo::checkStatus(){
+	if(this->dead){
+		return;
+	}
+	if(pateado){
+		this->snowBallTime --;
+		if(snowBallTime <= 0){
+			this->destroyMiSnowBall();
+		}
+	}
 	if(this->inmovil && !pateado){
 		this->timeInmovil --;
 
@@ -90,6 +102,10 @@ void Enemigo::hit() {
 
 bool Enemigo::isInmovil(){
 	return this->inmovil;
+}
+
+void Enemigo::addEnemyToList(Enemigo * e){
+	this->enemyContainer.push_back(e);
 }
 
 void Enemigo::evaluateAnimation() {
@@ -170,8 +186,27 @@ void Enemigo::evaluateMovement(Jugador* nearPlayer) {
 	}
 }
 
+void Enemigo::destroyMiSnowBall(){
+	this->body->SetActive(false);
+	Message m;
+	m.addCommandCode(ACTIVE_ENTITY);
+	m.addChar(this->getIndex());
+	m.addChar(false);
+	m.addEndChar();
+
+	Data::world->sendToWorldPlayers(&m);
+
+	int enemyKill = this->enemyContainer.size() + 1;
+	unsigned int points = enemyKill * 5;
+	this->kickedBy->score += points;
+	this->kickedBy->updateOnClientUserStats();
+	this->dead = true;
+}
+
 void Enemigo::golpeadoPorBola(Enemigo * e){
 	Data::world->addAfterChange(this);
+	e->addEnemyToList(this);
+	this->dead = true;
 }
 
 void Enemigo::change(){

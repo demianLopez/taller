@@ -13,6 +13,9 @@
 #include "Jugador.h"
 #include "B2DAfterChange.h"
 
+#include <vector>
+using std::vector;
+
 class Enemigo: public Personaje, public B2DAfterChange {
 public:
 	Enemigo(Move_pattern * movePattern);
@@ -28,12 +31,15 @@ public:
 	void checkStatus();
 	bool isInmovil();
 	bool kicked();
-	void tryKick(float platerPosX);
+	void tryKick(Jugador * kickerPlayer);
 
 	void change();
 
 	float getRotation();
 	virtual ~Enemigo();
+
+	void addEnemyToList(Enemigo * e);
+	void destroyMiSnowBall();
 
 	void golpeadoPorBola(Enemigo * e);
 private:
@@ -48,7 +54,12 @@ private:
 	int timeInmovil;
 	int nivelNieve;
 
+	int snowBallTime;
+
 	bool pateado;
+
+	vector<Enemigo*> enemyContainer;
+	Jugador * kickedBy;
 };
 
 #endif /* ENEMIGO_H_ */
