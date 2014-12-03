@@ -85,6 +85,7 @@ public:
 	bool isWaitingForPlayers();
 
 	void playerShooting(Jugador * j);
+	void enemyShooting(Enemigo * e);
 
 	void sendWorldInfo(Client_handler* client);
 	void checkPlayerCount();
@@ -116,11 +117,12 @@ private:
 
 
 
+
 	void sendUpdates();
 
 	void initializePlayerBody(Jugador* player);
 	void initializeEnemyBody(Enemigo * enemy);
-	void initializeProjectile(Disparo * projectile);
+	void initializeProjectile(Disparo * projectile, int type);
 	void initializeBonus(Item * item);
 
 	bool wordLoop;
@@ -134,6 +136,7 @@ private:
 	vector<b2Vec2*> playerPos;
 	vector<Disparo*> projectileList;
 	vector<Item*> bonusList;
+	vector<Disparo *> enemyProjectile;
 
 	ContactListener* contactListener;
 

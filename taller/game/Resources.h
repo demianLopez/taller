@@ -22,7 +22,11 @@ public:
 	void loadBackground(const char * bPath);
 	void loadImage(const char * iPath);
 
+	Image * getBonusByType(int type);
+
 	void loadAnimations();
+
+	Animation * getShootAnimation();
 
 	Animation * getPlayerAnimationLeft();
 	Animation * getPlayerAnimationRight();
@@ -73,6 +77,13 @@ private:
 	Animation * characterWalkRight;
 	Animation * characterWalkLeft;
 
+	SpriteSheet * bonusSprites;
+
+	Image * bonus1;
+	Image * bonus2;
+	Image * bonus3;
+	Image * bonus4;
+
 	SpriteSheet * characterJump;
 	Animation * characterStaticLeft;
 	Animation * characterStaticRight;
@@ -116,7 +127,8 @@ private:
 	Image * snowBallLevel3;
 	Image * snowBallLevel4;
 
-
+	SpriteSheet * shootSprite;
+	Animation * shootAnimation;
 
 	SpriteSheet * emoticons;
 	Animation * sleepingEmoticon;

@@ -63,6 +63,8 @@ const AnimationCode SNOW_LEVEL_1 = 6;
 const AnimationCode SNOW_LEVEL_2 = 7;
 const AnimationCode SNOW_LEVEL_3 = 8;
 const AnimationCode SNOW_LEVEL_4 = 9;
+const AnimationCode SUPER_RUN_LEFT = 10;
+const AnimationCode SUPER_RUN_RIGHT = 11;
 
 const EntityType P_SOLID = 0;
 const EntityType P_RECTANGLE = 1;

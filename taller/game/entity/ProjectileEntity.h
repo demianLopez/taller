@@ -12,11 +12,13 @@
 
 class ProjectileEntity: public MovementEntity {
 public:
-	ProjectileEntity(int index);
+	ProjectileEntity(int index, int type);
 	void render(Graphics * g, unsigned int delta);
 	void initialize();
 	void applyUpdate(UpdateRequest * u);
 	virtual ~ProjectileEntity();
+private:
+	int type;
 };
 
 #endif /* PROJECTILEENTITY_H_ */

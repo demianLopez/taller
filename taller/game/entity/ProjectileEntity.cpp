@@ -13,16 +13,15 @@
 #include "../Resources.h"
 #include "../VectorXY.h"
 
-ProjectileEntity::ProjectileEntity(int index) : MovementEntity(index) {
-	// TODO Auto-generated constructor stub
-
+ProjectileEntity::ProjectileEntity(int index,int type) : MovementEntity(index) {
+	this->type = type;
 }
 
 void ProjectileEntity::render(Graphics* g, unsigned int delta) {
 	g->drawAtCenter(true);
 	VectorXY sdlPos = this->gameWorld->box2DToSDL(&position);
 	g->drawAnimation(
-		Global::gameResources->getSleepingEmoticon(),
+		Global::gameResources->getShootAnimation(),
 		sdlPos.x, sdlPos.y);
 	g->drawAtCenter(false);
 }

@@ -18,6 +18,7 @@ public:
 	static const int DISPARO_JUGADOR = 6;
 	static const int SNOW_BALL_ENEMY = 7;
 	static const int BONUS = 8;
+	static const int DISPARO_ENEMIGO = 9;
 
 	int type;
 	void *containedThing;

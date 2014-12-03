@@ -11,10 +11,60 @@
 
 Item::Item(int index) {
 	this->index = index;
+	this->onMap = false;
+	this->playerAfected = NULL;
+	this->fixture = NULL;
+	this->body = NULL;
+	this->type = 0;
 }
 
 Item::~Item() {
 
+}
+
+void Item::change(){
+	if(!this->onMap){
+		return;
+	}
+	this->body->SetActive(false);
+	this->onMap = false;
+
+	switch(type){
+		case 0:
+			playerAfected->score += 2;
+			playerAfected->updateOnClientUserStats();
+			break;
+		case 1:
+			playerAfected->score += 4;
+			playerAfected->updateOnClientUserStats();
+			break;
+		case 2:
+			playerAfected->enableSuperSpeed();
+			break;
+		case 3:
+			if(playerAfected->lives == 5){
+				playerAfected->score += 5;
+			} else {
+				playerAfected->lives ++;
+			}
+			playerAfected->updateOnClientUserStats();
+			break;
+	}
+
+	this->playerAfected = NULL;
+
+	Message m;
+	m.addCommandCode(ACTIVE_ENTITY);
+	m.addChar(this->index);
+	m.addChar(false);
+	m.addEndChar();
+
+	Data::world->sendToWorldPlayers(&m);
+}
+
+void Item::consumir(Jugador * player){
+	Data::world->addAfterChange(this);
+	this->playerAfected = player;
 }
 
 

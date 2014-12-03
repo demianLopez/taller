@@ -18,7 +18,7 @@ using std::vector;
 
 class Enemigo: public Personaje, public B2DAfterChange {
 public:
-	Enemigo(Move_pattern * movePattern);
+	Enemigo();
 	void hit();
 	void evaluateMovement(Jugador * nearPlayer);
 	void evaluateAnimation();
@@ -43,6 +43,9 @@ public:
 	void destroyMiSnowBall();
 
 	void golpeadoPorBola(Enemigo * e);
+	void shoot();
+	void endShoot();
+
 private:
 	int patron;
 	Move_pattern * movePattern;
@@ -61,6 +64,9 @@ private:
 
 	vector<Enemigo*> enemyContainer;
 	Jugador * kickedBy;
+
+	bool shooted;
+
 };
 
 #endif /* ENEMIGO_H_ */

@@ -17,6 +17,7 @@ CosaConMovimiento::CosaConMovimiento() {
 	// Esto puede redefinirse en cada hijo, por defecto vale esto.
 	this->movementSpeedX = MOVEMENT_SPEED_X_DEFAULT;
 	this->movementSpeedY = MOVEMENT_SPEED_Y_DEFAULT;
+	this->movementRunSpeed = MOVEMENT_SPEED_RUN;
 
 	this->mirandoParaLaDerecha = true;
 	this->wasMovingLeftFirst = false;

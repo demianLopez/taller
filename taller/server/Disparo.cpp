@@ -11,6 +11,7 @@
 Disparo::Disparo(int index) {
 	onUse = false;
 	this->index = index;
+	enemyShooted = false;
 }
 
 void Disparo::setOnUse(bool onUse){
@@ -43,8 +44,14 @@ void Disparo::change(){
 
 	if(!this->onUse) { return; }
 	this->body->SetActive(false);
-	this->shootedBy->decreaseShoot();
-	this->shootedBy = NULL;
+
+	if(this->enemyShooted){
+		this->enemyShotedBy->endShoot();
+		this->enemyShotedBy = NULL;
+	} else {
+		this->shootedBy->decreaseShoot();
+		this->shootedBy = NULL;
+	}
 	this->setOnUse(false);
 
 	Message m;
@@ -57,12 +64,29 @@ void Disparo::change(){
 
 }
 
+void Disparo::enemyShoot(float pX, float pY, Enemigo * e) {
+	this->body->SetTransform(b2Vec2(pX, pY), 0);
+	this->body->SetActive(true);
+
+	this->enemyShotedBy = e;
+	body->SetLinearVelocity(b2Vec2(0, 0));
+	if(e->estaMirandoParaLaDerecha()){
+		body->ApplyLinearImpulse(b2Vec2(1, 0), body->GetWorldCenter(), true);
+	} else {
+		body->ApplyLinearImpulse(b2Vec2(-1, 0), body->GetWorldCenter(), true);
+	}
+
+	this->setOnUse(true);
+	this->enemyShooted = true;
+}
+
 void Disparo::shoot(float pX, float pY, Jugador * shootedBy) {
 	this->body->SetTransform(b2Vec2(pX, pY), 0);
 	this->body->SetActive(true);
 
 	this->shootedBy = shootedBy;
 
+	body->SetLinearVelocity(b2Vec2(0, 0));
 	if(shootedBy->estaMirandoParaLaDerecha()){
 		body->ApplyLinearImpulse(b2Vec2(10, 0), body->GetWorldCenter(), true);
 	} else {

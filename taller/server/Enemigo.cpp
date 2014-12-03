@@ -16,7 +16,7 @@
 #include <iostream>
 #include "Data.h"
 
-Enemigo::Enemigo(Move_pattern * movePattern) {
+Enemigo::Enemigo() {
 	this->movePattern = movePattern;
 	this->dead = false;
 	this->patron = 0;
@@ -25,6 +25,7 @@ Enemigo::Enemigo(Move_pattern * movePattern) {
 	this->pateado = false;
 	this->timeInmovil = 0;
 	this->movementSpeedX -= 10;
+	this->shooted = false;
 }
 
 bool Enemigo::isDead(){
@@ -165,7 +166,7 @@ Enemigo::~Enemigo() {
 }
 
 void Enemigo::evaluateMovement(Jugador* nearPlayer) {
-	if(inmovil) {
+	if(inmovil || dead) {
 		return;
 	}
 
@@ -227,11 +228,19 @@ void Enemigo::change(){
 }
 
 void Enemigo::movimientoLoco(){
-	if(inmovil) {
+	if(inmovil || dead) {
 		return;
 	}
 	srand (time(NULL) + posx);
-	int valor = rand() % 8 ;
+	int valor;
+
+	//Esto para agregar la accion de disparar al enemigo!
+	//Sumamente villero, pero a estas alturas quiero tener andando todo
+	if(this->type == 1){
+		valor = rand() % 8;
+	} else {
+		valor = rand() % 9;
+	}
 	//if (valor == this->patron){
 		//valor++;
 	//}
@@ -271,12 +280,28 @@ void Enemigo::movimientoLoco(){
 			this->setMovingRight(false);
 			this->setMovingLeft(true);
 			break;
+		case 8:
+			this->shoot();
+			break;
 		default:
 			this->setMovingRight(true);
 			this->setMovingLeft(false);
 			break;
 	}
 	this->patron = valor;
+}
+
+void Enemigo::endShoot(){
+	this->shooted = false;
+}
+
+void Enemigo::shoot(){
+	if(this->shooted){
+		return;
+	}
+
+	Data::world->enemyShooting(this);
+	this->shooted = true;
 }
 
 void Enemigo::colocar(int type, double posx, double posy) {
