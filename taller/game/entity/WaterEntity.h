@@ -31,7 +31,7 @@ public:
 	//void setPosition(float x, float y);
 	//VectorXY getPosition();
 
-
+	VectorXY size;
 	Image * waterImage;
 };
 

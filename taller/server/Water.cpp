@@ -19,8 +19,13 @@ VectorXY Water::getPosition(){
 	return position;
 }
 
-void Water::setPosition(float x, float y) {
+void Water::setPosition(float x, float y, float width, float height) {
 	this->position = VectorXY(x, y);
+	this->size = VectorXY(width, height);
+}
+
+VectorXY Water::getSize(){
+	return this->size;
 }
 
 Water::~Water() {
