@@ -278,7 +278,7 @@ void World::initializeBonus(Item * item){
 
 	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
 	b2Fixture *fixture = body->CreateFixture(&body_fixture);
-	//fixture->SetSensor(true);
+	fixture->SetSensor(true);
 
 	fixture->SetUserData(
 				new ContactContainer(ContactContainer::BONUS, item));
@@ -299,7 +299,7 @@ void World::initializeProjectile(Disparo * projectile, int type){
 	body_fixture.shape = &circle_shape;
 	body_fixture.density = 1;
 	body_fixture.friction = 0.5;
-	body_fixture.isSensor = true;
+	//body_fixture.isSensor = true;
 
 	b2BodyDef body_definition;
 	body_definition.type = b2_dynamicBody;
