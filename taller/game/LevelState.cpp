@@ -430,7 +430,7 @@ void LevelState::enter() {
 
 LevelState::~LevelState() {
 	if (serverMessage != NULL) {
-		delete serverMessage;
+		delete[] serverMessage;
 	}
 }
 

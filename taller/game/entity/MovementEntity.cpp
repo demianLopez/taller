@@ -16,6 +16,8 @@ MovementEntity::MovementEntity(int index) : GameEntity(index) {
 	this->lastRotation = 0;
 	this->lastUpdateTime = 0;
 	firstUpdate = false;
+	this->updateable = false; // por defecto lo seteo en false
+	this->difTime = 1; //idem
 }
 
 void MovementEntity::forcePosition(float posX, float posY){

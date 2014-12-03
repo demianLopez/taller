@@ -169,7 +169,8 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		float pY = m->getFloat();
 		AnimationCode anim = m->getAnimationCode();
 
-		char * pName = new char[50]; //Lo Libera PlayerEntity
+		//char * pName = new char[50]; //Lo Libera PlayerEntity
+		char *pName; //Lo libera player entity (en la siguiente linea se le asigna memoria).
 		m->getCharArray(&pName);
 
 		PlayerEntity * pEntity = new PlayerEntity(index);

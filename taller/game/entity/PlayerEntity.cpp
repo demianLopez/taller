@@ -17,15 +17,13 @@
 #include "../VectorXY.h"
 
 PlayerEntity::PlayerEntity(int index) :
-
 		MovementEntity(index) {
-	// TODO Auto-generated constructor stub
-
 
 	this->lName = 0;
 	this->invulnerable = false;
-
-
+	this->offline = false; // Por defecto lo seteo en false
+	this->blinkingTime = 1; //idem
+	this->pName = NULL;
 }
 
 /* Recibe name con memoria ya alocada. Se encarga de liberarla. */
@@ -86,6 +84,6 @@ void PlayerEntity::render(Graphics * g, unsigned int delta) {
 }
 
 PlayerEntity::~PlayerEntity() {
-	delete this->pName;
+	if(this->pName) delete[] this->pName;
 }
 

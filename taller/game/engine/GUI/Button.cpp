@@ -8,6 +8,12 @@
 #include "Button.h"
 
 Button::Button(const char * text) {
+	this->posX = 0;
+	this->posY = 0;
+
+	this->width = 0;
+	this->height = 0;
+
 	this->text = text;
 
 	this->btnSprite = new SpriteSheet("Resources/btn_tiled.png", 256, 80);
