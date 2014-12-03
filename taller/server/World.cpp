@@ -601,6 +601,14 @@ void World::nextSecond() {
 		p->checkStatus();
 	}
 
+	for(auto * p : this->projectileList){
+		p->checkStatus();
+	}
+
+	for(auto * p : this->enemyProjectile){
+		p->checkStatus();
+	}
+
 	for(auto * e : this->enemyList){
 		e->checkStatus();
 	}

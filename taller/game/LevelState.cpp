@@ -426,6 +426,8 @@ void LevelState::enter() {
 		this->hasMessage = false;
 		this->messageTime = 0;
 	}
+
+	this->zoomScale = (1.0 + maxZoomScale)/2;
 }
 
 LevelState::~LevelState() {

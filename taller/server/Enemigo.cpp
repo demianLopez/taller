@@ -82,6 +82,21 @@ float Enemigo::getRotation(){
 
 //esto se llama cada 1 segundo!
 void Enemigo::checkStatus(){
+	if(this->body->GetPosition().y < -1.0){
+		float myPosX = body->GetPosition().x;
+		float nextPosY = Data::world->getBox2DWorldSize()->y + 1;
+		this->body->SetTransform(b2Vec2(myPosX, nextPosY), 0);
+
+		Message m;
+		m.addCommandCode(FORCE_POSITION);
+		m.addChar(this->getIndex());
+		m.addFloat(&myPosX);
+		m.addFloat(&nextPosY);
+		m.addChar(false);
+		m.addEndChar();
+
+		Data::world->sendToWorldPlayers(&m);
+	}
 	if(this->dead){
 		return;
 	}

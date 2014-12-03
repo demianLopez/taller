@@ -131,7 +131,6 @@ void Jugador::shoot(){
 	}
 	if(this->enemy != NULL){
 		enemy->tryKick(this);
-		return;
 	}
 	if(this->shootRealized < 10){
 		this->shootRealized++;
@@ -232,6 +231,31 @@ bool Jugador::isDead(){
 }
 
 void Jugador::checkStatus() {
+	if(this->body->GetPosition().y < -1.0){
+		float myPosX = body->GetPosition().x;
+		float nextPosY = Data::world->getBox2DWorldSize()->y + 1;
+		this->body->SetTransform(b2Vec2(myPosX, nextPosY), 0);
+
+		Message m;
+		m.addCommandCode(FORCE_POSITION);
+		m.addChar(this->getIndex());
+		m.addFloat(&myPosX);
+		m.addFloat(&nextPosY);
+		m.addChar(false);
+		m.addEndChar();
+
+		Data::world->sendToWorldPlayers(&m);
+
+		Message c;
+		c.addCommandCode(LOCK_CAMERA_ENTITY);
+		c.addChar(this->getIndex());
+		c.addEndChar();
+		if(!this->offline){
+			client->send_message(&c);
+		}
+	}
+
+
 	if(invulnerable){
 		//b2Vec2 pos(10, 10);
 		//this->body->SetTransform(pos, 0);
