@@ -47,6 +47,7 @@ public:
 	b2World* getBox2DWorld();
 	vector<Polygon*> getPolygonList();
 	Water* getWater();
+	void setWater();
 
 	bool isOutOfWorld(b2Vec2 position);
 

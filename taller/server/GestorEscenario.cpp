@@ -134,6 +134,13 @@ World * GestorEscenario::obtenerMundo() {
 
 	world->setNextLevelName((char *)elEscenario.sigNivel.c_str());
 	world->setCurrentLevelName(escenarioActual);
+
+	//Water HARDCODEADO
+	//char mapWithWater[] = "Maps/nivel2.json";
+	if(escenarioActual[10] == '2'){
+		world->setWater();
+	}
+
 	world->setMinPlayers(elEscenario.minJug);
 
 	world->addPlayerPos(elEscenario.pos[0], elEscenario.pos[1]);

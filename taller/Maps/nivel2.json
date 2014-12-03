@@ -54,19 +54,8 @@
 		"objetos": [
 			{
 				"tipo": "rect",
-				"x": 5, 
-				"y": 10.0, 
-				"color": "#FF00FF",
-				"rot": 0.0, 
-				"masa": 1.0, 
-				"estatico": true,
-				"ancho": 10.0,
-				"alto": 2.8 
-			}, 
-			{
-				"tipo": "rect",
-				"x": 20.0, 
-				"y": 20.0, 
+				"x": 10.0, 
+				"y": 19.0, 
 				"color": "#000033",
 				"rot": 0.0, 
 				"masa": 1.0, 
@@ -142,6 +131,17 @@
 			},
 			{
 				"tipo": "rect",
+				"x": 32.0, 
+				"y": 10.0, 
+				"color": "#FFFFFF",
+				"rot": 90.0, 
+				"masa": 1.0, 
+				"estatico": true,
+				"ancho": 15.0,
+				"alto": 2.8
+			},
+			{
+				"tipo": "rect",
 				"x": 0.0, 
 				"y": 0.0, 
 				"color": "#FFFFFF",
@@ -149,7 +149,7 @@
 				"masa": 1.0, 
 				"estatico": true,
 				"ancho": 180.0,
-				"alto": 0.01 
+				"alto": 1.0
 			},
 			{
 				"tipo": "rect",
@@ -160,7 +160,7 @@
 				"masa": 1.0, 
 				"estatico": true,
 				"ancho": 180.0,
-				"alto": 0.01 
+				"alto": 1.0
 			}
 		] 
 	} 

@@ -57,9 +57,6 @@ World::World(b2Vec2* gravity) {
 	box2DWorld->SetContactListener(new ContactListener());
 
 	this->myWater = NULL;
-	// LAS SIGUIENTES LINEAS NO VAN, BORRARLAS CUANDO SE CREE BIEN EL AGUA.
-	this->myWater = new Water(88);
-	myWater->setPosition(15,11);
 }
 
 Jugador * World::getFirstAlive(){
@@ -577,6 +574,11 @@ vector<Polygon *> World::getPolygonList() {
 
 Water* World::getWater(){
 	return this->myWater;
+}
+
+void World::setWater(){
+	myWater = new Water(88);
+	myWater->setPosition(15.65,10.2);
 }
 
 void World::start() {

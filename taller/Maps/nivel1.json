@@ -215,7 +215,7 @@
 				"masa": 1.0, 
 				"estatico": true,
 				"ancho": 180.0,
-				"alto": 0.01 
+				"alto": 1.0
 			},
 			{
 				"tipo": "rect",
@@ -226,7 +226,7 @@
 				"masa": 1.0, 
 				"estatico": true,
 				"ancho": 180.0,
-				"alto": 0.01 
+				"alto": 1.0
 			}
 		] 
 	} 
