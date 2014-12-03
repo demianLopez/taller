@@ -131,6 +131,31 @@ void ContactListener::BeginContact(b2Contact* contact) {
 
 		return;
 	}
+	if (first->type == ContactContainer::SNOW_BALL_ENEMY
+			|| second->type == ContactContainer::SNOW_BALL_ENEMY) {
+		Enemigo * enemy;
+		int tipoOtro;
+		void * otroObjetivo;
+		if(first->type == ContactContainer::SNOW_BALL_ENEMY){
+			enemy = (Enemigo*)first->containedThing;
+			tipoOtro = second->type;
+			otroObjetivo = second->containedThing;
+		} else {
+			enemy = (Enemigo*)second->containedThing;
+			tipoOtro = first->type;
+			otroObjetivo = first->containedThing;
+		}
+
+		switch(tipoOtro){
+			case ContactContainer::ENEMY:
+				Enemigo * impactado = (Enemigo*)otroObjetivo;
+				impactado->golpeadoPorBola(enemy);
+				break;
+		}
+
+	}
+
+
 
 
 }

@@ -70,7 +70,7 @@ bool Jugador::isOffline() {
 
 void Jugador::shoot(){
 	if(this->enemy != NULL){
-		enemy->tryKick();
+		enemy->tryKick(this->body->GetPosition().x);
 	}
 	if(this->shootRealized < 10){
 		this->shootRealized++;

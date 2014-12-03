@@ -30,15 +30,22 @@ bool Enemigo::isDead(){
 	return this->dead;
 }
 
-void Enemigo::tryKick(){
-	if(this->nivelNieve == 4){
+void Enemigo::tryKick(float playerPosX){
+	if(this->nivelNieve == 4 && !pateado){
 		pateado = true;
 		this->posx = this->body->GetPosition().x;
 		this->posy = this->body->GetPosition().y;
+		float direction = posx - playerPosX;
 		this->body->DestroyFixture(this->fixture);
 		Data::world->getBox2DWorld()->DestroyBody(this->body);
 		Data::world->initializeEnemySnowBall(this);
 		this->activeUpdate = false;
+
+		if(direction < 0){
+			body->ApplyLinearImpulse(b2Vec2(-40, 0), body->GetWorldCenter(), true);
+		} else {
+			body->ApplyLinearImpulse(b2Vec2(40, 0), body->GetWorldCenter(), true);
+		}
 	}
 }
 
@@ -163,11 +170,26 @@ void Enemigo::evaluateMovement(Jugador* nearPlayer) {
 	}
 }
 
+void Enemigo::golpeadoPorBola(Enemigo * e){
+	Data::world->addAfterChange(this);
+}
+
+void Enemigo::change(){
+	this->body->SetActive(false);
+	Message m;
+	m.addCommandCode(ACTIVE_ENTITY);
+	m.addChar(this->getIndex());
+	m.addChar(false);
+	m.addEndChar();
+
+	Data::world->sendToWorldPlayers(&m);
+}
+
 void Enemigo::movimientoLoco(){
 	if(inmovil) {
 		return;
 	}
-	srand (time(NULL));
+	srand (time(NULL) + posx);
 	int valor = rand() % 8 ;
 	//if (valor == this->patron){
 		//valor++;

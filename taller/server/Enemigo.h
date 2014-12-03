@@ -11,8 +11,9 @@
 #include "Personaje.h"
 #include "moving_objects/move_patterns/move_pattern.h"
 #include "Jugador.h"
+#include "B2DAfterChange.h"
 
-class Enemigo: public Personaje {
+class Enemigo: public Personaje, public B2DAfterChange {
 public:
 	Enemigo(Move_pattern * movePattern);
 	void hit();
@@ -27,10 +28,14 @@ public:
 	void checkStatus();
 	bool isInmovil();
 	bool kicked();
-	void tryKick();
+	void tryKick(float platerPosX);
+
+	void change();
 
 	float getRotation();
 	virtual ~Enemigo();
+
+	void golpeadoPorBola(Enemigo * e);
 private:
 	int patron;
 	Move_pattern * movePattern;
