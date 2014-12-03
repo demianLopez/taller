@@ -60,6 +60,7 @@ World::World(b2Vec2* gravity) {
 	// LAS SIGUIENTES LINEAS NO VAN, BORRARLAS CUANDO SE CREE BIEN EL AGUA.
 	this->myWater = new Water(88);
 	myWater->setPosition(15,11);
+
 }
 
 Jugador * World::getFirstAlive(){
@@ -75,6 +76,30 @@ Jugador * World::getFirstAlive(){
 
 bool World::isWaitingForPlayers(){
 	return this->waitingPlayers;
+}
+
+void World::instantiateWater(float posX, float posY, float height, float width){
+	b2PolygonShape box_shape;
+	box_shape.SetAsBox(height, width); //seteo los vertices del poligono
+
+	b2FixtureDef body_fixture;
+	body_fixture.shape = &box_shape;
+
+	body_fixture.filter.categoryBits = 0x0008;
+	body_fixture.filter.maskBits = 0x0001 | 0x0002 | 0x0004 | 0x0020;
+	body_fixture.isSensor = true;
+
+
+	b2BodyDef body_definition;
+	body_definition.type = b2_staticBody;
+	body_definition.position.Set(posX, posY);
+
+	b2Body* body = this->box2DWorld->CreateBody(&body_definition);
+	b2Fixture *fixture = body->CreateFixture(&body_fixture);
+
+	fixture->SetUserData(
+				new ContactContainer(ContactContainer::AGUA, NULL));
+	body->SetSleepingAllowed(true); //Los objetos tienen que poder dormir para no consumir recursos de mas
 }
 
 b2World * World::getBox2DWorld() {

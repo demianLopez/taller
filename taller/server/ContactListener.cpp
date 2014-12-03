@@ -215,6 +215,9 @@ void ContactListener::BeginContact(b2Contact* contact) {
 
 		return;
 	}
+	if(first->type == ContactContainer::AGUA || second->type == ContactContainer::AGUA){
+		std::cout<<"agua"<<std::endl;
+	}
 
 
 

@@ -37,6 +37,8 @@ public:
 
 	void setMapData(string* mapName, int maxPlayers);
 
+	void instantiateWater(float posX, float posY, float height, float width);
+
 	void setUnits(int wU, int hU);
 	b2Vec2* getBox2DWorldSize();
 

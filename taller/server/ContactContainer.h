@@ -19,6 +19,7 @@ public:
 	static const int SNOW_BALL_ENEMY = 7;
 	static const int BONUS = 8;
 	static const int DISPARO_ENEMIGO = 9;
+	static const int AGUA = 10;
 
 	int type;
 	void *containedThing;
