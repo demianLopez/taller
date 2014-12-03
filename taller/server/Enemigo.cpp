@@ -200,13 +200,18 @@ void Enemigo::destroyMiSnowBall(){
 	unsigned int points = enemyKill * 5;
 	this->kickedBy->score += points;
 	this->kickedBy->updateOnClientUserStats();
-	this->dead = true;
+	this->deadEvent();
 }
 
 void Enemigo::golpeadoPorBola(Enemigo * e){
 	Data::world->addAfterChange(this);
 	e->addEnemyToList(this);
+	this->deadEvent();
+}
+
+void Enemigo::deadEvent(){
 	this->dead = true;
+	Data::world->evaluateBonusCreation(this->body->GetPosition().x, this->body->GetPosition().y);
 }
 
 void Enemigo::change(){

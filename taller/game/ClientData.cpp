@@ -12,6 +12,7 @@
 #include "entity/PlayerEntity.h"
 #include "entity/EnemyEntity.h"
 #include "entity/ProjectileEntity.h"
+#include "entity/BonusEntity.h"
 #include "../common/UpdateRequest.h"
 
 ClientData::ClientData() {
@@ -193,6 +194,18 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 
 		pEnt->setWorld(Global::gameWorld);
 		Global::gameWorld->addEntity(pEnt);
+		return cCode;
+	}
+
+	if(cCode == INSTANTIATE_BONUS){
+		char min = m->getChar();
+		char max = m->getChar();
+
+		for(int i = min; i <= max; i++){
+			BonusEntity * bE = new BonusEntity(i);
+			bE->setActive(false);
+			Global::gameWorld->addEntity(bE);
+		}
 		return cCode;
 	}
 
