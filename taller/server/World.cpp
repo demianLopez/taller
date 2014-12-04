@@ -607,7 +607,7 @@ Water* World::getWater(){
 
 void World::setWater(){
 	float pX = 15.0;
-	float pY = 8.0;
+	float pY = 8.5;
 	float w = 16.0;
 	float h = 8.0;
 	myWater = new Water(99);
