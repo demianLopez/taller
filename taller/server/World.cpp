@@ -610,7 +610,7 @@ void World::setWater(){
 	float pY = 8.0;
 	float w = 16.0;
 	float h = 8.0;
-	myWater = new Water(this->getAvavibleIndex());
+	myWater = new Water(99);
 	myWater->setPosition(pX, pY, w, h);
 	this->instantiateWater(pX, pY, w, h);
 }
