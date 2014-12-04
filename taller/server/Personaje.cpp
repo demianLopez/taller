@@ -11,7 +11,6 @@ Personaje::Personaje() {
 	this->activeUpdate = true;
 	this->superSpeed = false;
 	this->inWater = false;
-	puedeCaer = false;
 }
 
 int Personaje::getIndex() {
