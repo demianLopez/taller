@@ -301,6 +301,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		string * playerNames = new string[playerCount];
 		int * playerScores = new int[playerCount];
 		bool * playerConected = new bool[playerCount];
+		bool * muertes = new bool[playerCount];
 
 		for(int i = 0; i < playerCount; i++){
 			char * name;
@@ -308,11 +309,13 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 			playerNames[i] = string(name);
 			playerScores[i] = m->getChar();
 			playerConected[i] = m->getChar();
+			muertes[i] = m->getChar();
 			delete[] name;
 		}
 
 		bool winGame  = m->getChar();
-		Global::changeState->setLevelData(playerNames, playerScores, winGame, playerCount, playerConected);
+		bool muerto = m->getChar();
+		Global::changeState->setLevelData(playerNames, playerScores, winGame, playerCount, playerConected, muertes, muerto);
 		Global::game->enterState(2);
 		return cCode;
 	}

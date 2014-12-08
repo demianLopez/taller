@@ -67,8 +67,14 @@ void ChangeState::render(Graphics* g, Game* game, unsigned int delta) {
 		bool online = playerConected[i];
 
 		if(online){
-			g->setColor(0, 255, 0);
-			g->drawText(550, hy, "Conectado");
+
+			if(murio[i]){
+				g->setColor(255, 0, 0);
+				g->drawText(550, hy, "Game Over");
+			} else {
+				g->setColor(0, 255, 0);
+				g->drawText(550, hy, "Conectado");
+			}
 		} else {
 			g->setColor(255, 0, 0);
 			g->drawText(550, hy, "Desconectado");
@@ -78,7 +84,7 @@ void ChangeState::render(Graphics* g, Game* game, unsigned int delta) {
 
 	}
 
-	if(imReady){
+	if(imReady || tuMuerte){
 		g->drawText(300, 520, "Esperando Jugadores");
 	} else {
 		g->resetGraphics();
@@ -128,13 +134,15 @@ void ChangeState::exit(Game* game) {
 }
 
 void ChangeState::setLevelData(string* players, int* scores, bool winLevel,
-		int playerCount, bool* playerConected) {
+		int playerCount, bool* playerConected, bool * murio, bool tuMuerte) {
 
 	this->players = players;
 	this->scores = scores;
 	this->winLevel = winLevel;
 	this->playerCount = playerCount;
 	this->playerConected = playerConected;
+	this->murio = murio;
+	this->tuMuerte = tuMuerte;
 }
 
 void ChangeState::enter() {

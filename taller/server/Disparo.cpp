@@ -12,6 +12,7 @@ Disparo::Disparo(int index) {
 	onUse = false;
 	this->index = index;
 	enemyShooted = false;
+	lifeTime = 1;
 }
 
 void Disparo::setOnUse(bool onUse){

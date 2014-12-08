@@ -391,7 +391,7 @@ void LevelState::update(unsigned int delta) {
 void LevelState::setMessage(char * message) {
 	levelStateMutex.lock();
 	if (serverMessage != NULL) {
-		delete serverMessage;
+		delete[] serverMessage;
 		serverMessage = NULL;
 	}
 	this->serverMessage = message;

@@ -739,19 +739,28 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 	currentLevel->waitWorldThread();
 	//Lo unico que se transfiere de nivel a nivel es la lista de jugadores!
 	vector<Jugador *> pList = currentLevel->getPlayerList();
-	Message m;
-	m.addCommandCode(END_LEVEL);
-	m.addChar(pList.size());
-	for(auto * p : pList){
-		string n(p->getName());
-		m.addCharArray(n.c_str(), n.size());
-		m.addChar(p->getPlayerScore());
-		m.addChar(!p->isOffline());
+
+	for(auto * pm : pList){
+		Message m;
+		m.addCommandCode(END_LEVEL);
+		m.addChar(pList.size());
+		for(auto * p : pList){
+			string n(p->getName());
+			m.addCharArray(n.c_str(), n.size());
+			m.addChar(p->getPlayerScore());
+			m.addChar(!p->isOffline());
+			m.addChar(p->isDead());
+		}
+
+		m.addChar(wonLevel);
+		m.addChar(pm->isDead());
+		m.addEndChar();
+
+		if(!pm->isOffline()){
+			pm->getClient()->send_message(&m);
+		}
 	}
 
-	m.addChar(wonLevel);
-	m.addEndChar();
-	currentLevel->sendToWorldPlayers(&m);
 
 	//Esperamos que todos se pongan en READY!
 	bool notReady = true;
@@ -760,7 +769,7 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 		bool someoneNotReady = true;
 		for(auto * p : pList){
 			p->playerBusy.lock();
-			someoneNotReady = someoneNotReady && (p->isReady || p->isOffline());
+			someoneNotReady = someoneNotReady && (p->isReady || p->isOffline() || p->isDead());
 			p->playerBusy.unlock();
 		}
 
@@ -833,6 +842,12 @@ void World::worldLoop(World * world) {
 	unsigned int updateCount = 0;
 
 	unsigned int elapsedTime = 0;
+
+	for(auto * p: world->getPlayerList()){
+		if(p->isDead()){
+			p->deadEvent(false);
+		}
+	}
 
 	while (world->isOnLoop()) {
 

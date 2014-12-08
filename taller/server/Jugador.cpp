@@ -168,6 +168,8 @@ void Jugador::apllyCodes() {
 Jugador *  Jugador::clonePlayer() {
 	Jugador * newPlayer = new Jugador(this->client, this->name);
 	newPlayer->setOffline(this->isOffline());
+	newPlayer->lives = this->lives;
+	newPlayer->score = this->score;
 	return newPlayer;
 }
 
@@ -175,18 +177,20 @@ void Jugador::decreaseShoot(){
     	this->shootRealized --;
 }
 
-void Jugador::deadEvent(){
+void Jugador::deadEvent(bool msg){
 	this->body->SetActive(false);
 
-	Message m;
-	m.addCommandCode(SHOW_MESSAGE);
-	string pM("");
-	pM.append(this->getName());
-	pM.append(" ha muerto");
-	m.addCharArray(pM.c_str(), pM.size());
-	m.addEndChar();
+	if(msg){
+		Message m;
+		m.addCommandCode(SHOW_MESSAGE);
+		string pM("");
+		pM.append(this->getName());
+		pM.append(" ha muerto");
+		m.addCharArray(pM.c_str(), pM.size());
+		m.addEndChar();
 
-	Data::world->sendToWorldPlayers(&m);
+		Data::world->sendToWorldPlayers(&m);
+	}
 
 
 	Message p;
@@ -327,7 +331,7 @@ void Jugador::change(){
 	}
 
 	if(this->afterB2DEvent == 1){
-		this->deadEvent();
+		this->deadEvent(true);
 	} else {
 
 		int indx = this->getIndex();

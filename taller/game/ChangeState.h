@@ -20,7 +20,7 @@ public:
 	ChangeState();
 	virtual ~ChangeState();
 	void setLevelData(std::string * players, int * scores, bool winLevel,
-			int playerCount, bool * playerConected);
+			int playerCount, bool * playerConected, bool * murio, bool moriste);
 private:
 	void update(unsigned int delta);
 	void render(Graphics *g, Game * game, unsigned int delta);
@@ -45,6 +45,8 @@ private:
 	int* scores;
 	bool winLevel;
 	int playerCount;
+	bool * murio;
+	bool tuMuerte;
 
 };
 

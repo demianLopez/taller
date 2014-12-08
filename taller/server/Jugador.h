@@ -27,7 +27,7 @@ private:
 	bool offline;
 
 	void evaluateAnimation();
-	void deadEvent();
+
 
 
 
@@ -55,6 +55,7 @@ public:
 	void touchingEnemy(Enemigo * enemigo);
 	void updateOnClientUserStats();
 	Jugador * clonePlayer();
+	void deadEvent(bool msg);
 
 	void jumpSnowBall();
 
