@@ -28,8 +28,6 @@ public:
 	double gety(){ return posy; };
 	void colocar(int type,double posx, double posy);
 	void movimientoLoco();
-
-
 	void checkStatus();
 	bool isInmovil();
 	bool kicked();

@@ -26,7 +26,6 @@ Enemigo::Enemigo() {
 	this->timeInmovil = 0;
 	this->movementSpeedX -= 10;
 	this->shooted = false;
-	this->puedeCaer = false;
 }
 
 void Enemigo::salioDeBola(Jugador * j){
@@ -295,7 +294,7 @@ void Enemigo::movimientoLoco(){
 		case 2:
 			this->setMovingRight(false);
 			this->setMovingLeft(false);
-			this->puedeCaer = true;
+			this->jump();
 			break;
 		case 3:
 			this->setMovingRight(true);
