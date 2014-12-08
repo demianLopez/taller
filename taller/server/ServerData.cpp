@@ -83,9 +83,21 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 			string oPlayer(p->getName());
 			if (oPlayer.compare(nm) == 0) {
 				if (p->isOffline()) {
-					reconecting = true;
-					reconectedPlayer = p;
+					if(Data::world->isOnLoop() || Data::world->changin){
+						envio.addCommandCode(ERROR_MESSAGE);
+						envio.addCharArray("Jugador desconectado\0", 22);
+						envio.addCharArray(
+								"Ha abandonado una partida en curso, debera esperar a que termine para unirse nuevamente\0",
+								89);
+						envio.addEndChar();
+						client->send_message(&envio);
+						return cCode;
+					} else {
+						reconecting = true;
+						reconectedPlayer = p;
+					}
 					break;
+
 				} else {
 					envio.addCommandCode(ERROR_MESSAGE);
 					envio.addCharArray("Jugador Online\0", 15);

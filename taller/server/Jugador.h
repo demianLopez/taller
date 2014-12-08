@@ -54,7 +54,7 @@ public:
 	bool acabaDePatear;
 	void touchingEnemy(Enemigo * enemigo);
 	void updateOnClientUserStats();
-	Jugador * clonePlayer();
+	Jugador * clonePlayer(bool lives);
 	void deadEvent(bool msg);
 
 	void jumpSnowBall();

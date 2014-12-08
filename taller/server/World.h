@@ -28,6 +28,7 @@ class Polygon;
 
 class World {
 public:
+	bool changin;
 	World(b2Vec2* gravity);
 
 	int updatesPerSecond;

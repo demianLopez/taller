@@ -165,11 +165,13 @@ void Jugador::apllyCodes() {
 	keyCode.clear();
 }
 
-Jugador *  Jugador::clonePlayer() {
+Jugador *  Jugador::clonePlayer(bool lives) {
 	Jugador * newPlayer = new Jugador(this->client, this->name);
 	newPlayer->setOffline(this->isOffline());
-	newPlayer->lives = this->lives;
-	newPlayer->score = this->score;
+		if(lives){
+			newPlayer->lives = this->lives;
+			newPlayer->score = this->score;
+		}
 	return newPlayer;
 }
 

@@ -34,6 +34,8 @@ World::World(b2Vec2* gravity) {
 	this->lastEntityIndex = 0;
 	this->waitingPlayers = true;
 	this->isRestarting = false;
+	this->wordLoop =false;
+	this->changin = false;
 
 	for(int i = 0; i < 40; i++){
 		Disparo * p = new Disparo(this->getAvavibleIndex());
@@ -512,17 +514,21 @@ void World::addPlayer(Jugador * jugador, bool reconecting) {
 		this->initializePlayerBody(jugador);
 	}
 
+
+
 	for (auto * p : playerList) {
 		if (!reconecting) {
 			if (p->getIndex() != jugador->getIndex()) {
 				//Le avisamos a los demas que alguien se conecto
 				this->instantiatePlayer(jugador, p->getClient());
+
 			}
 		}
 
 		//Te mandamos la informacion de los demas player conectados
 		//incluyendote
-		this->instantiatePlayer(p, jugador->getClient());
+
+			this->instantiatePlayer(p, jugador->getClient());
 	}
 
 
@@ -735,6 +741,7 @@ b2Vec2* World::getPlayerInitialPos(int index) {
 }
 
 void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
+	currentLevel->changin = true;
 	currentLevel->stop();
 	currentLevel->waitWorldThread();
 	//Lo unico que se transfiere de nivel a nivel es la lista de jugadores!
@@ -769,7 +776,7 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 		bool someoneNotReady = true;
 		for(auto * p : pList){
 			p->playerBusy.lock();
-			someoneNotReady = someoneNotReady && (p->isReady || p->isOffline() || p->isDead());
+			someoneNotReady = someoneNotReady && (p->isReady || p->isOffline() || (p->isDead() && wonLevel));
 			p->playerBusy.unlock();
 		}
 
@@ -784,32 +791,36 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 	delete currentLevel;
 
 	Data::world = w;
-
 	for(auto * player : pList){
-		w->sendWorldInfo(player->getClient());
+		if(wonLevel || !player->isOffline()){
+			if(!player->isOffline()){
+				w->sendWorldInfo(player->getClient());
+			}
 
-		Jugador * nJugador = player->clonePlayer();
-		w->addPlayer(nJugador, false);
+			Jugador * nJugador = player->clonePlayer(wonLevel);
+			w->addPlayer(nJugador, false);
 
-		Message * mainEntity = new Message();
-		mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
-		char mEntity = nJugador->getIndex();
-		mainEntity->addChar(mEntity);
-		mainEntity->addEndChar();
-		nJugador->getClient()->send_message(mainEntity);
-		delete mainEntity;
+			if(!player->isOffline()){
+				Message * mainEntity = new Message();
+				mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
+				char mEntity = nJugador->getIndex();
+				mainEntity->addChar(mEntity);
+				mainEntity->addEndChar();
+				nJugador->getClient()->send_message(mainEntity);
+				delete mainEntity;
 
-		Message * finalData = new Message();
-		finalData->addCommandCode(INITIALIZE_GRAPHICS);
-		finalData->addChar(nJugador->getPlayerLives());
-		finalData->addChar(nJugador->getPlayerScore());
-		finalData->addEndChar();
-		nJugador->getClient()->send_message(finalData);
-
-
-		delete finalData;
+				Message * finalData = new Message();
+				finalData->addCommandCode(INITIALIZE_GRAPHICS);
+				finalData->addChar(nJugador->getPlayerLives());
+				finalData->addChar(nJugador->getPlayerScore());
+				finalData->addEndChar();
+				nJugador->getClient()->send_message(finalData);
 
 
+				delete finalData;
+			}
+
+		}
 		delete player;
 	}
 	pList.clear();
@@ -823,7 +834,7 @@ void World::nextLevel(){
 }
 
 void World::restartLevel(){
-	new thread(World::changeLevel, this, (char *)this->currentLevelName.c_str(), false);
+	new thread(World::changeLevel, this, (char *)"Maps/nivel0.json", false);
 }
 
 void World::setCurrentLevelName(char* currentLevelName) {

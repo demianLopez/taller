@@ -84,7 +84,7 @@ void ChangeState::render(Graphics* g, Game* game, unsigned int delta) {
 
 	}
 
-	if(imReady || tuMuerte){
+	if(imReady || (tuMuerte && this->winLevel)){
 		g->drawText(300, 520, "Esperando Jugadores");
 	} else {
 		g->resetGraphics();
