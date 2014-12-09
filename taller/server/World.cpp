@@ -1175,6 +1175,11 @@ void World::verifyLevelEndConditions(){
 		this->isRestarting = true;
 		this->restartLevel();
 	}
+
+	if(!someoneConnected){
+		this->isRestarting = true;
+		this->wonGame();
+	}
 }
 
 

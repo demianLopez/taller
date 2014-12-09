@@ -117,6 +117,11 @@ public:
 	void evaluateBonusCreation(float posX, float posY);
 
 	b2Vec2 * getPlayerInitialPos(int index);
+
+	int getMinPlayers() const {
+		return minPlayers;
+	}
+
 private:
 	void updateTiming(Jugador* j);
 	void updatePolygon(Polygon* p);

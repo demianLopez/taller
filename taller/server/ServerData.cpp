@@ -113,7 +113,7 @@ char ServerData::dataArribal(Message * m, Client_handler * client) {
 		// Ver si ya esta lleno.
 		if (!reconecting) {
 			if (Data::world->getPlayerList().size()
-					>= Data::world->getMaxPlayers()) {
+					>= Data::world->getMinPlayers()) {
 				envio.addCommandCode(ERROR_MESSAGE);
 				envio.addCharArray("Lugares\0", 8);
 				envio.addCharArray("No hay mas lugar\0", 17);
