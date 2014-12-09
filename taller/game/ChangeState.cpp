@@ -44,8 +44,13 @@ void ChangeState::render(Graphics* g, Game* game, unsigned int delta) {
 	g->setFont(Global::gameResources->getGuiFont());
 
 	if(this->winLevel){
+
 		g->setColor(0, 255, 0);
-		g->drawText(300, 150, "Nivel Superado");
+		if(ganaste){
+			g->drawText(300, 150, "JUEGO COMPLETADO");
+		} else {
+			g->drawText(300, 150, "Nivel Superado");
+		}
 	} else {
 		g->setColor(255, 0, 0);
 		g->drawText(300, 150, "Juego Terminado");

@@ -319,6 +319,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		bool winGame  = m->getChar();
 		bool winAllGame = m->getChar();
 		bool muerto = m->getChar();
+		Global::changeState->ganaste = winAllGame;
 		Global::changeState->setLevelData(playerNames, playerScores, winGame, playerCount, playerConected, muertes, muerto);
 		Global::game->enterState(2);
 		return cCode;

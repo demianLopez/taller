@@ -21,6 +21,7 @@ public:
 	virtual ~ChangeState();
 	void setLevelData(std::string * players, int * scores, bool winLevel,
 			int playerCount, bool * playerConected, bool * murio, bool moriste);
+	bool ganaste;
 private:
 	void update(unsigned int delta);
 	void render(Graphics *g, Game * game, unsigned int delta);
