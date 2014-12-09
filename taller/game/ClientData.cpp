@@ -179,7 +179,9 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		pEntity->setPlayerName(pName);
 
 		pEntity->setWorld(Global::gameWorld);
-		Global::gameWorld->addEntity(pEntity);
+		if(Global::gameWorld != NULL){
+			Global::gameWorld->addEntity(pEntity);
+		}
 
 		return cCode;
 	}
@@ -238,8 +240,9 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		waterEntity->setPosition(pX, pY);
 		waterEntity->size = VectorXY(w, h);
 		waterEntity->setWorld(Global::gameWorld);
-		Global::gameWorld->addEntity(waterEntity);
-
+		if(Global::gameWorld != NULL){
+			Global::gameWorld->addEntity(waterEntity);
+		}
 		return cCode;
 	}
 
@@ -314,6 +317,7 @@ char ClientData::dataArribal(Message * m, Client_handler * client) {
 		}
 
 		bool winGame  = m->getChar();
+		bool winAllGame = m->getChar();
 		bool muerto = m->getChar();
 		Global::changeState->setLevelData(playerNames, playerScores, winGame, playerCount, playerConected, muertes, muerto);
 		Global::game->enterState(2);

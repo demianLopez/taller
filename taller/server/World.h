@@ -98,6 +98,7 @@ public:
 
 	void nextLevel();
 	void restartLevel();
+	void wonGame();
 
 	void nextSecond();
 
@@ -137,6 +138,7 @@ private:
 	bool isRestarting;
 	static void worldLoop(World * world);
 	static void changeLevel(World * currentLevel, char * nextLevel, bool wonLevel);
+	static void wonGameChange(World * currentLevel);
 
 	vector<Jugador*> playerList;
 	vector<Enemigo*> enemyList;

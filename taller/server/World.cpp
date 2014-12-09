@@ -740,6 +740,99 @@ b2Vec2* World::getPlayerInitialPos(int index) {
 	return this->playerPos[index % 4];
 }
 
+void World::wonGame() {
+	new thread(World::wonGameChange, this);
+}
+
+void World::wonGameChange(World* currentLevel) {
+	currentLevel->changin = true;
+	currentLevel->stop();
+	currentLevel->waitWorldThread();
+	//Lo unico que se transfiere de nivel a nivel es la lista de jugadores!
+	vector<Jugador *> pList = currentLevel->getPlayerList();
+
+	for(auto * pm : pList){
+		Message m;
+		m.addCommandCode(END_LEVEL);
+		m.addChar(pList.size());
+		for(auto * p : pList){
+			string n(p->getName());
+			m.addCharArray(n.c_str(), n.size());
+			m.addChar(p->getPlayerScore());
+			m.addChar(!p->isOffline());
+			m.addChar(p->isDead());
+		}
+
+		m.addChar(true);
+		m.addChar(true);
+		m.addChar(false);
+		m.addEndChar();
+
+		if(!pm->isOffline()){
+			pm->getClient()->send_message(&m);
+		}
+	}
+
+
+	//Esperamos que todos se pongan en READY!
+	bool notReady = true;
+
+	while(notReady){
+		bool someoneNotReady = true;
+		for(auto * p : pList){
+			p->playerBusy.lock();
+			someoneNotReady = someoneNotReady && (p->isReady || p->isOffline());
+			p->playerBusy.unlock();
+		}
+
+		notReady = !someoneNotReady;
+	}
+
+	LectorJson * lj = new LectorJson();
+	lj->cargarEscenario("Maps/nivel0.json");
+	GestorEscenario * ge = lj->obtenerGestorEscenario();
+	World * w = ge->obtenerMundo();
+
+	delete currentLevel;
+
+	Data::world = w;
+	for(auto * player : pList){
+		if(!player->isOffline()){
+
+			w->sendWorldInfo(player->getClient());
+
+
+			Jugador * nJugador = player->clonePlayer(false);
+			w->addPlayer(nJugador, false);
+
+
+			Message * mainEntity = new Message();
+			mainEntity->addCommandCode(LOCK_CAMERA_ENTITY);
+			char mEntity = nJugador->getIndex();
+			mainEntity->addChar(mEntity);
+			mainEntity->addEndChar();
+			nJugador->getClient()->send_message(mainEntity);
+			delete mainEntity;
+
+			Message * finalData = new Message();
+			finalData->addCommandCode(INITIALIZE_GRAPHICS);
+			finalData->addChar(nJugador->getPlayerLives());
+			finalData->addChar(nJugador->getPlayerScore());
+			finalData->addEndChar();
+			nJugador->getClient()->send_message(finalData);
+
+
+			delete finalData;
+
+		}
+		delete player;
+	}
+	pList.clear();
+
+	w->checkPlayerCount();
+	delete lj;
+}
+
 void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 	currentLevel->changin = true;
 	currentLevel->stop();
@@ -760,6 +853,7 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 		}
 
 		m.addChar(wonLevel);
+		m.addChar(false); //wonGame
 		m.addChar(pm->isDead());
 		m.addEndChar();
 
@@ -830,7 +924,13 @@ void World::changeLevel(World * currentLevel, char * nextLevel, bool wonLevel) {
 }
 
 void World::nextLevel(){
-	new thread(World::changeLevel, this, (char *)this->nextLevelName.c_str(), true);
+	string cLevel(this->nextLevelName);
+	string fLevel("Maps/nivel0.json");
+	if(cLevel.compare(fLevel) == 0){
+		this->wonGame();
+	} else {
+		new thread(World::changeLevel, this, (char *)this->nextLevelName.c_str(), true);
+	}
 }
 
 void World::restartLevel(){
@@ -1076,4 +1176,5 @@ void World::verifyLevelEndConditions(){
 		this->restartLevel();
 	}
 }
+
 
